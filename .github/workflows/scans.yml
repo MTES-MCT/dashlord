@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: init
-        uses: "SocialGouv/dashlord-init-action@master"
+        uses: "SocialGouv/dashlord-init-action@tristanrobert/issue2"
 
   scans:
     runs-on: ubuntu-latest
@@ -115,6 +115,15 @@ jobs:
           apiKey: ${{ secrets.UPDOWNIO_API_KEY }}
           url: ${{ matrix.url }}
           output: scans/updownio.json
+
+      - name: Dependabot vulnerabilities alerts
+        continue-on-error: true
+        uses: "MTES-MCT/dependabotalerts-action@main"
+        with:
+          token: ${{ secrets.DEPENDABOT_TOKEN }}
+          url: ${{ matrix.url }}
+          repos: ${{ matrix.repositories }}
+          output: scans/dependabotalerts.json
 
       - uses: SocialGouv/dashlord-save-action@master
         with:
