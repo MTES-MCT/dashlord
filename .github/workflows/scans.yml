@@ -41,6 +41,10 @@ jobs:
       - run: |
           mkdir scans
 
+      - run: |
+          echo url: ${{ matrix.urls.url }}
+          echo repositories: ${{ matrix.urls.repositories }}
+
       - uses: actions/cache@v2
         with:
           path: "**/node_modules"
@@ -115,9 +119,6 @@ jobs:
           apiKey: ${{ secrets.UPDOWNIO_API_KEY }}
           url: ${{ matrix.urls.url }}
           output: scans/updownio.json
-
-      - run: |
-          echo ${{ matrix.urls.url }}
 
       - name: Dependabot vulnerabilities alerts
         continue-on-error: true
