@@ -131,6 +131,14 @@ jobs:
           maxAlerts: 20
           output: scans/dependabotalerts.json
 
+      - name: Code quality alerts
+        continue-on-error: true
+        uses: "MTES-MCT/codescanalerts-action@main"
+        with:
+          token: ${{ secrets.CODESCANALERTS_TOKEN }}
+          repositories: ${{ join(matrix.urls.repositories) }}
+          output: scans/codescanalerts.json
+
       - uses: SocialGouv/dashlord-save-action@master
         with:
           url: ${{ matrix.urls.url }}
