@@ -1,0 +1,52 @@
+[
+  {
+    "templateID": "open-redirect",
+    "info": {
+      "name": "Open URL redirect detection",
+      "author": "afaq & @melbadry9 & @Elmahdi & @pxmme1337 & @Regala_ & @andirrahmani1 & @geeknik",
+      "severity": "low",
+      "description": "A user-controlled input redirect users to an external website.",
+      "tags": "redirect"
+    },
+    "type": "http",
+    "host": "https://aides-territoires.beta.gouv.fr",
+    "matched": "https://aides-territoires.beta.gouv.fr///example.com/%2F..",
+    "request": "GET ///example.com/%2F.. HTTP/1.1\r\nHost: aides-territoires.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 301 Moved Permanently\r\nConnection: close\r\nContent-Type: text/html; charset=utf-8\r\nDate: Tue, 04 May 2021 09:07:07 GMT\r\nLocation: //example.com//../\r\nReferrer-Policy: same-origin\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Request-Id: f7953fe1-97b6-4d6c-affd-e7ad53ba2e92\r\nContent-Length: 0\r\n\r\n",
+    "ip": "5.104.101.30",
+    "timestamp": "2021-05-04T09:07:07.651383197Z"
+  },
+  {
+    "templateID": "open-redirect",
+    "info": {
+      "name": "Open URL redirect detection",
+      "author": "afaq & @melbadry9 & @Elmahdi & @pxmme1337 & @Regala_ & @andirrahmani1 & @geeknik",
+      "severity": "low",
+      "description": "A user-controlled input redirect users to an external website.",
+      "tags": "redirect"
+    },
+    "type": "http",
+    "host": "https://aides-territoires.beta.gouv.fr",
+    "matched": "https://aides-territoires.beta.gouv.fr/example.com",
+    "request": "GET /example.com HTTP/1.1\r\nHost: aides-territoires.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 301 Moved Permanently\r\nConnection: close\r\nContent-Type: text/html; charset=utf-8\r\nDate: Tue, 04 May 2021 09:07:09 GMT\r\nLocation: example.com/\r\nReferrer-Policy: same-origin\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Request-Id: 7ab04aa3-4464-4e5f-b437-71b5134f1150\r\nContent-Length: 0\r\n\r\n",
+    "ip": "5.104.101.30",
+    "timestamp": "2021-05-04T09:07:09.259521311Z"
+  },
+  {
+    "templateID": "waf-detect",
+    "info": {
+      "name": "WAF Detection",
+      "author": "dwisiswant0",
+      "severity": "info"
+    },
+    "matcher_name": "apachegeneric",
+    "type": "http",
+    "host": "https://aides-territoires.beta.gouv.fr",
+    "matched": "https://aides-territoires.beta.gouv.fr/",
+    "request": "POST / HTTP/1.1\r\nHost: aides-territoires.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
+    "response": "HTTP/1.1 403 Forbidden\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Type: text/html\r\nDate: Tue, 04 May 2021 09:07:17 GMT\r\nReferrer-Policy: same-origin\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Request-Id: 01b08e6c-969c-4182-8874-fc22a14e8428\r\n\r\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n  <meta name=\"robots\" content=\"NONE,NOARCHIVE\">\n  <title>403 Forbidden</title>\n  <style type=\"text/css\">\n    html * { padding:0; margin:0; }\n    body * { padding:10px 20px; }\n    body * * { padding:0; }\n    body { font:small sans-serif; background:#eee; color:#000; }\n    body>div { border-bottom:1px solid #ddd; }\n    h1 { font-weight:normal; margin-bottom:.4em; }\n    h1 span { font-size:60%; color:#666; font-weight:normal; }\n    #info { background:#f6f6f6; }\n    #info ul { margin: 0.5em 4em; }\n    #info p, #summary p { padding-top:10px; }\n    #summary { background: #ffc; }\n    #explanation { background:#eee; border-bottom: 0px none; }\n  </style>\n</head>\n<body>\n<div id=\"summary\">\n  <h1>Interdit <span>(403)</span></h1>\n  <p>La vérification CSRF a échoué. La requête a été interrompue.</p>\n\n  <p>Vous voyez ce message parce que ce site HTTPS exige que le navigateur Web envoie un en-tête « Referer », ce qu’il n&#x27;a pas fait. Cet en-tête est exigé pour des raisons de sécurité, afin de s’assurer que le navigateur n’ait pas été piraté par un intervenant externe.</p>\n  <p>Si vous avez désactivé l’envoi des en-têtes « Referer » par votre navigateur, veuillez les réactiver, au moins pour ce site ou pour les connexions HTTPS, ou encore pour les requêtes de même origine (« same-origin »).</p>\n  <p>Si vous utilisez la balise &lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt; ou que vous incluez l’en-tête « Referrer-Policy: no-referrer », il est préférable de les enlever. La protection CSRF exige que l’en-tête ``Referer`` effectue un contrôle de référant strict. Si vous vous souciez de la confidentialité, utilisez des alternatives comme &lt;a rel=&quot;noreferrer&quot; …&gt; pour les liens vers des sites tiers.</p>\n\n\n</div>\n\n<div id=\"explanation\">\n  <p><small>Des informations plus détaillées sont affichées lorsque la variable DEBUG vaut True.</small></p>\n</div>\n\n</body>\n</html>\n",
+    "ip": "5.104.101.30",
+    "timestamp": "2021-05-04T09:07:17.760899656Z"
+  }
+]
