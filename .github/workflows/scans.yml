@@ -46,6 +46,8 @@ jobs:
       - run: |
           echo url: ${{ matrix.urls.url }}
           echo repositories: ${{ join(matrix.urls.repositories) }}
+          echo tools enabled: ${{ join(matrix.urls.tools.enabled) }}
+          echo tools disabled: ${{ join(matrix.urls.tools.disabled) }}
 
       - uses: actions/cache@v2
         with:
@@ -55,7 +57,7 @@ jobs:
       - name: Wappalyzer scan
         uses: "socialgouv/wappalyzer-action@master"
         id: wappalyzer 
-        if: ${{ (matrix.urls.tools.disabled != NaN && !contains(matrix.urls.tools.disabled, steps.wappalyzer.id)) || (matrix.urls.tools.enabled != NaN && contains(matrix.urls.tools.enabled, steps.wappalyzer.id)) }}
+        if: ${{ (matrix.urls.tools.disabled[0] != null && !contains(matrix.urls.tools.disabled, steps.wappalyzer.id)) || (matrix.urls.tools.enabled[0] != null && contains(matrix.urls.tools.enabled, steps.wappalyzer.id)) }}
         continue-on-error: true
         with:
           url: "${{ matrix.urls.url }}"
@@ -64,7 +66,7 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.4.0
         id: zaproxy 
-        if: ${{ (matrix.urls.tools.disabled != NaN && !contains(matrix.urls.tools.disabled, steps.zaproxy.id)) || (matrix.urls.tools.enabled != NaN && contains(matrix.urls.tools.enabled, steps.zaproxy.id)) }}
+        if: ${{ (matrix.urls.tools.disabled[0] != null && !contains(matrix.urls.tools.disabled, steps.zaproxy.id)) || (matrix.urls.tools.enabled[0] != null && contains(matrix.urls.tools.enabled, steps.zaproxy.id)) }}
         continue-on-error: true
         with:
           token: "" # disable issue creation
@@ -76,7 +78,7 @@ jobs:
         continue-on-error: true
         uses: treosh/lighthouse-ci-action@v7
         id: lighthouse 
-        if: ${{ (matrix.urls.tools.disabled != NaN && !contains(matrix.urls.tools.disabled, steps.lighthouse.id)) || (matrix.urls.tools.enabled != NaN && contains(matrix.urls.tools.enabled, steps.lighthouse.id)) }}
+        if: ${{ (matrix.urls.tools.disabled[0] != null && !contains(matrix.urls.tools.disabled, steps.lighthouse.id)) || (matrix.urls.tools.enabled[0] != null && contains(matrix.urls.tools.enabled, steps.lighthouse.id)) }}
         with:
           urls: "${{ matrix.urls.url }}"
           uploadArtifacts: false
@@ -87,7 +89,7 @@ jobs:
         continue-on-error: true
         uses: SocialGouv/httpobs-action@master
         id: httpobs 
-        if: ${{ (matrix.urls.tools.disabled != NaN && !contains(matrix.urls.tools.disabled, steps.httpobs.id)) || (matrix.urls.tools.enabled != NaN && contains(matrix.urls.tools.enabled, steps.httpobs.id)) }}
+        if: ${{ (matrix.urls.tools.disabled[0] != null && !contains(matrix.urls.tools.disabled, steps.httpobs.id)) || (matrix.urls.tools.enabled[0] != null && contains(matrix.urls.tools.enabled, steps.httpobs.id)) }}
         with:
           url: "${{ matrix.urls.url }}"
           output: "scans/http.json"
@@ -96,7 +98,7 @@ jobs:
         continue-on-error: true
         uses: SocialGouv/thirdparties-action@master
         id: thirdparties 
-        if: ${{ (matrix.urls.tools.disabled != NaN && !contains(matrix.urls.tools.disabled, steps.thirdparties.id)) || (matrix.urls.tools.enabled != NaN && contains(matrix.urls.tools.enabled, steps.thirdparties.id)) }}
+        if: ${{ (matrix.urls.tools.disabled[0] != null && !contains(matrix.urls.tools.disabled, steps.thirdparties.id)) || (matrix.urls.tools.enabled[0] != null && contains(matrix.urls.tools.enabled, steps.thirdparties.id)) }}
         with:
           url: "${{ matrix.urls.url }}"
           output: "scans/thirdparties.json"
@@ -112,7 +114,7 @@ jobs:
         continue-on-error: true
         uses: "mbogh/test-ssl-action@v1.1"
         id: testssl 
-        if: ${{ (matrix.urls.tools.disabled != NaN && !contains(matrix.urls.tools.disabled, steps.testssl.id)) || (matrix.urls.tools.enabled != NaN && contains(matrix.urls.tools.enabled, steps.testssl.id)) }}
+        if: ${{ (matrix.urls.tools.disabled[0] != null && !contains(matrix.urls.tools.disabled, steps.testssl.id)) || (matrix.urls.tools.enabled[0] != null && contains(matrix.urls.tools.enabled, steps.testssl.id)) }}
         with:
           host: ${{ steps.hostname.outputs.value }}
           output: scans
@@ -123,7 +125,7 @@ jobs:
         continue-on-error: true
         uses: "MTES-MCT/nmap-action@main"
         id: nmap 
-        if: ${{ (matrix.urls.tools.disabled != NaN && !contains(matrix.urls.tools.disabled, steps.nmap.id)) || (matrix.urls.tools.enabled != NaN && contains(matrix.urls.tools.enabled, steps.nmap.id)) }}
+        if: ${{ (matrix.urls.tools.disabled[0] != null && !contains(matrix.urls.tools.disabled, steps.nmap.id)) || (matrix.urls.tools.enabled[0] != null && contains(matrix.urls.tools.enabled, steps.nmap.id)) }}
         with:
           host: ${{ steps.hostname.outputs.value }}
           outputDir: 'scans'
@@ -135,7 +137,7 @@ jobs:
         continue-on-error: true
         uses: "SocialGouv/dashlord-nuclei-action@master"
         id: nuclei 
-        if: ${{ (matrix.urls.tools.disabled != NaN && !contains(matrix.urls.tools.disabled, steps.nuclei.id)) || (matrix.urls.tools.enabled != NaN && contains(matrix.urls.tools.enabled, steps.nuclei.id)) }}
+        if: ${{ (matrix.urls.tools.disabled[0] != null && !contains(matrix.urls.tools.disabled, steps.nuclei.id)) || (matrix.urls.tools.enabled[0] != null && contains(matrix.urls.tools.enabled, steps.nuclei.id)) }}
         with:
           url: ${{ matrix.urls.url }}
           output: "scans/nuclei.log"
@@ -144,7 +146,7 @@ jobs:
         continue-on-error: true
         uses: "MTES-MCT/updownio-action@main"
         id: updownio 
-        if: ${{ (matrix.urls.tools.disabled != NaN && !contains(matrix.urls.tools.disabled, steps.updownio.id)) || (matrix.urls.tools.enabled != NaN && contains(matrix.urls.tools.enabled, steps.updownio.id)) }}
+        if: ${{ (matrix.urls.tools.disabled[0] != null && !contains(matrix.urls.tools.disabled, steps.updownio.id)) || (matrix.urls.tools.enabled[0] != null && contains(matrix.urls.tools.enabled, steps.updownio.id)) }}
         with:
           apiKey: ${{ secrets.UPDOWNIO_API_KEY }}
           url: ${{ matrix.urls.url }}
@@ -154,7 +156,7 @@ jobs:
         continue-on-error: true
         uses: "MTES-MCT/dependabotalerts-action@main"
         id: dependabot 
-        if: ${{ (matrix.urls.tools.disabled != NaN && !contains(matrix.urls.tools.disabled, steps.dependabot.id)) || (matrix.urls.tools.enabled != NaN && contains(matrix.urls.tools.enabled, steps.dependabot.id)) }}
+        if: ${{ (matrix.urls.tools.disabled[0] != null && !contains(matrix.urls.tools.disabled, steps.dependabot.id)) || (matrix.urls.tools.enabled[0] != null && contains(matrix.urls.tools.enabled, steps.dependabot.id)) }}
         with:
           token: ${{ secrets.DEPENDABOTALERTS_TOKEN }}
           repositories: ${{ join(matrix.urls.repositories) }}
@@ -165,7 +167,7 @@ jobs:
         continue-on-error: true
         uses: "MTES-MCT/codescanalerts-action@main"
         id: codescan 
-        if: ${{ (matrix.urls.tools.disabled != NaN && !contains(matrix.urls.tools.disabled, steps.codescan.id)) || (matrix.urls.tools.enabled != NaN && contains(matrix.urls.tools.enabled, steps.codescan.id)) }}
+        if: ${{ (matrix.urls.tools.disabled[0] != null && !contains(matrix.urls.tools.disabled, steps.codescan.id)) || (matrix.urls.tools.enabled[0] != null && contains(matrix.urls.tools.enabled, steps.codescan.id)) }}
         with:
           token: ${{ secrets.CODESCANALERTS_TOKEN }}
           repositories: ${{ join(matrix.urls.repositories) }}
@@ -174,7 +176,7 @@ jobs:
       - name: Screenshot Website
         uses: swinton/screenshot-website@v1.x
         id: screenshot 
-        if: ${{ (matrix.urls.tools.disabled != NaN && !contains(matrix.urls.tools.disabled, steps.screenshot.id)) || (matrix.urls.tools.enabled != NaN && contains(matrix.urls.tools.enabled, steps.screenshot.id)) }}
+        if: ${{ (matrix.urls.tools.disabled[0] != null && !contains(matrix.urls.tools.disabled, steps.screenshot.id)) || (matrix.urls.tools.enabled[0] != null && contains(matrix.urls.tools.enabled, steps.screenshot.id)) }}
         timeout-minutes: 1
         with:
           source: "${{ matrix.urls.url }}"
