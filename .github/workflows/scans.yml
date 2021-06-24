@@ -159,6 +159,15 @@ jobs:
           token: ${{ secrets.CODESCANALERTS_TOKEN }}
           repositories: ${{ join(matrix.sites.repositories) }}
           output: scans/codescanalerts.json
+
+      - name: Stats page
+        continue-on-error: true
+        uses: "MTES-MCT/stats-action@tristanrobert/issue25"
+        if: ${{ matrix.sites.tools.stats }}
+        with:
+          url: ${{ matrix.sites.url }}
+          uri: 'stats'
+          output: scans/stats.json
           
       - name: Screenshot Website
         uses: swinton/screenshot-website@v1.x
