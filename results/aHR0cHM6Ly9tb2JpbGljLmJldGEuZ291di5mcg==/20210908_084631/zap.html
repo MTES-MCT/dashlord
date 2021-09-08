@@ -1,0 +1,2424 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ZAP Scanning Report</title>
+        <style>
+body{
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #000;
+  font-size: 13px;
+}
+h1{
+  text-align: center;
+  font-weight: bold;
+  font-size: 32px
+}
+h3{
+  font-size: 16px;
+}
+table{
+  border: none;
+  font-size: 13px;
+}
+td, th {
+  padding: 3px 4px;
+  word-break: break-word;
+}
+th{
+  font-weight: bold;
+}
+.results th{
+  text-align: left;
+}
+.spacer{
+  margin: 10px;
+}
+.spacer-lg{
+  margin: 40px;
+}
+.indent1{
+  padding: 4px 20px;
+}
+.indent2{
+  padding: 4px 40px;
+}
+.risk-high{
+  background-color: red;
+  color: #FFF;
+}
+.risk-medium{
+  background-color: orange;
+  color: #FFF;
+}
+.risk-low{
+  background-color: yellow;
+  color: #000;
+}
+.risk-info{
+  background-color: blue;
+  color: #FFF;
+}
+.summary th{
+  color: #FFF;
+}
+.alerts th{
+  color: #FFF;
+}
+.left-header{
+  display: inline-block;
+}
+.time-stamp{
+  float: right;
+}
+</style>
+    </head>
+    <body>
+        <h1>
+            <img src="data:image/png;base64,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">
+ZAP Scanning Report
+
+        </h1>
+        <p>
+</p>
+        <h3 class="left-header">Summary of Alerts</h3>
+        <h3 class="time-stamp">Generated on Wed, 8 Sep 2021 08:37:13</h3>
+        <table width="45%" class="summary">
+            <tr bgcolor="#666666">
+                <th width="45%" height="24">Risk 
+      Level</th><th width="55%" align="center">Number 
+      of Alerts</th>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td><a href="#high">High</a></td><td align="center">0</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td><a href="#medium">Medium</a></td><td align="center">5</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td><a href="#low">Low</a></td><td align="center">5</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td><a href="#info">Informational</a></td><td align="center">6</td>
+            </tr>
+        </table>
+        <div class="spacer-lg"></div>
+        <h3>Alerts</h3>
+        <table width="75%" class="alerts">
+            <tr bgcolor="#666666">
+                <th width="60%" height="24">Name</th><th width="20%" align="center">Risk Level</th><th width="20%" align="center">Number of Instances</th>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Content Security Policy (CSP) Header Not Set</td><td align="center">Medium</td><td align="center">3</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Cross-Domain Misconfiguration</td><td align="center">Medium</td><td align="center">2</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>CSP: style-src unsafe-inline</td><td align="center">Medium</td><td align="center">5</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>CSP: Wildcard Directive</td><td align="center">Medium</td><td align="center">5</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Sub Resource Integrity Attribute Missing</td><td align="center">Medium</td><td align="center">12</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Cross-Domain JavaScript Source File Inclusion</td><td align="center">Low</td><td align="center">12</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Dangerous JS Functions</td><td align="center">Low</td><td align="center">2</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Incomplete or No Cache-control Header Set</td><td align="center">Low</td><td align="center">12</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Permissions Policy Header Not Set</td><td align="center">Low</td><td align="center">11</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Strict-Transport-Security Header Not Set</td><td align="center">Low</td><td align="center">3</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Base64 Disclosure</td><td align="center">Informational</td><td align="center">3</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Information Disclosure - Suspicious Comments</td><td align="center">Informational</td><td align="center">4</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Modern Web Application</td><td align="center">Informational</td><td align="center">11</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Storable and Cacheable Content</td><td align="center">Informational</td><td align="center">1</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Storable but Non-Cacheable Content</td><td align="center">Informational</td><td align="center">11</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Timestamp Disclosure - Unix</td><td align="center">Informational</td><td align="center">6</td>
+            </tr>
+        </table>
+        <div class="spacer-lg"></div>
+        <h3>Alert Detail</h3>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-medium">
+                <th width="20%"><a name="medium"></a>Medium (High)</th><th width="80%">Content Security Policy (CSP) Header Not Set</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page &mdash; covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/api/oauth/token</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/api/fc/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/graphql</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">POST</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">3</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header, to achieve optimal browser support: "Content-Security-Policy" for Chrome 25+, Firefox 23+ and Safari 7+, "X-Content-Security-Policy" for Firefox 4.0+ and Internet Explorer 10+, and "X-WebKit-CSP" for Chrome 14+ and Safari 6+.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>http://www.w3.org/TR/CSP/</p><p>http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html</p><p>http://www.html5rocks.com/en/tutorials/security/content-security-policy/</p><p>http://caniuse.com/#feat=contentsecuritypolicy</p><p>http://content-security-policy.com/</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">693</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">15</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-medium">
+                <th width="20%"><a name="medium"></a>Medium (Medium)</th><th width="80%">Cross-Domain Misconfiguration</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>Web browser data loading may be possible, due to a Cross Origin Resource Sharing (CORS) misconfiguration on the web server</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/api/oauth/token</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">Access-Control-Allow-Origin: *</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/api/fc/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">Access-Control-Allow-Origin: *</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">2</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).</p><p>Configure the "Access-Control-Allow-Origin" HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>The CORS misconfiguration on the web server permits cross-domain read requests from arbitrary third party domains, using unauthenticated APIs on this domain. Web browser implementations do not permit arbitrary third parties to read the response from authenticated APIs, however. This reduces the risk somewhat. This misconfiguration could be used by an attacker to access data that is available in an unauthenticated manner, but which uses some other form of security, such as IP address white-listing.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>http://www.hpenterprisesecurity.com/vulncat/en/vulncat/vb/html5_overly_permissive_cors_policy.html</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">264</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">14</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-medium">
+                <th width="20%"><a name="medium"></a>Medium (Medium)</th><th width="80%">CSP: style-src unsafe-inline</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>style-src includes unsafe-inline.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">object-src 'self'; connect-src 'self' https://client.crisp.chat https://api-adresse.data.gouv.fr https://*.ingest.sentry.io wss://client.relay.crisp.chat https://stats.data.gouv.fr; base-uri 'self'; default-src 'self'; script-src 'self' https://client.crisp.chat https://stats.data.gouv.fr; img-src 'self' data: https://client.crisp.chat https://stats.data.gouv.fr; style-src 'self' 'unsafe-inline' https://client.crisp.chat; font-src 'self' https://client.crisp.chat; frame-src https://metabase.mobilic.beta.gouv.fr</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">object-src 'self'; connect-src 'self' https://client.crisp.chat https://api-adresse.data.gouv.fr https://*.ingest.sentry.io wss://client.relay.crisp.chat https://stats.data.gouv.fr; base-uri 'self'; default-src 'self'; script-src 'self' https://client.crisp.chat https://stats.data.gouv.fr; img-src 'self' data: https://client.crisp.chat https://stats.data.gouv.fr; style-src 'self' 'unsafe-inline' https://client.crisp.chat; font-src 'self' https://client.crisp.chat; frame-src https://metabase.mobilic.beta.gouv.fr</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">object-src 'self'; connect-src 'self' https://client.crisp.chat https://api-adresse.data.gouv.fr https://*.ingest.sentry.io wss://client.relay.crisp.chat https://stats.data.gouv.fr; base-uri 'self'; default-src 'self'; script-src 'self' https://client.crisp.chat https://stats.data.gouv.fr; img-src 'self' data: https://client.crisp.chat https://stats.data.gouv.fr; style-src 'self' 'unsafe-inline' https://client.crisp.chat; font-src 'self' https://client.crisp.chat; frame-src https://metabase.mobilic.beta.gouv.fr</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">object-src 'self'; connect-src 'self' https://client.crisp.chat https://api-adresse.data.gouv.fr https://*.ingest.sentry.io wss://client.relay.crisp.chat https://stats.data.gouv.fr; base-uri 'self'; default-src 'self'; script-src 'self' https://client.crisp.chat https://stats.data.gouv.fr; img-src 'self' data: https://client.crisp.chat https://stats.data.gouv.fr; style-src 'self' 'unsafe-inline' https://client.crisp.chat; font-src 'self' https://client.crisp.chat; frame-src https://metabase.mobilic.beta.gouv.fr</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/sitemap.xml</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">object-src 'self'; connect-src 'self' https://client.crisp.chat https://api-adresse.data.gouv.fr https://*.ingest.sentry.io wss://client.relay.crisp.chat https://stats.data.gouv.fr; base-uri 'self'; default-src 'self'; script-src 'self' https://client.crisp.chat https://stats.data.gouv.fr; img-src 'self' data: https://client.crisp.chat https://stats.data.gouv.fr; style-src 'self' 'unsafe-inline' https://client.crisp.chat; font-src 'self' https://client.crisp.chat; frame-src https://metabase.mobilic.beta.gouv.fr</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">5</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure that your web server, application server, load balancer, etc. is properly configured to set the Content-Security-Policy header.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>http://www.w3.org/TR/CSP2/</p><p>http://www.w3.org/TR/CSP/</p><p>http://caniuse.com/#search=content+security+policy</p><p>http://content-security-policy.com/</p><p>https://github.com/shapesecurity/salvation</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">693</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">15</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-medium">
+                <th width="20%"><a name="medium"></a>Medium (Medium)</th><th width="80%">CSP: Wildcard Directive</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: </p><p>frame-ancestors, form-action</p><p></p><p>The directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/sitemap.xml</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">object-src 'self'; connect-src 'self' https://client.crisp.chat https://api-adresse.data.gouv.fr https://*.ingest.sentry.io wss://client.relay.crisp.chat https://stats.data.gouv.fr; base-uri 'self'; default-src 'self'; script-src 'self' https://client.crisp.chat https://stats.data.gouv.fr; img-src 'self' data: https://client.crisp.chat https://stats.data.gouv.fr; style-src 'self' 'unsafe-inline' https://client.crisp.chat; font-src 'self' https://client.crisp.chat; frame-src https://metabase.mobilic.beta.gouv.fr</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">object-src 'self'; connect-src 'self' https://client.crisp.chat https://api-adresse.data.gouv.fr https://*.ingest.sentry.io wss://client.relay.crisp.chat https://stats.data.gouv.fr; base-uri 'self'; default-src 'self'; script-src 'self' https://client.crisp.chat https://stats.data.gouv.fr; img-src 'self' data: https://client.crisp.chat https://stats.data.gouv.fr; style-src 'self' 'unsafe-inline' https://client.crisp.chat; font-src 'self' https://client.crisp.chat; frame-src https://metabase.mobilic.beta.gouv.fr</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">object-src 'self'; connect-src 'self' https://client.crisp.chat https://api-adresse.data.gouv.fr https://*.ingest.sentry.io wss://client.relay.crisp.chat https://stats.data.gouv.fr; base-uri 'self'; default-src 'self'; script-src 'self' https://client.crisp.chat https://stats.data.gouv.fr; img-src 'self' data: https://client.crisp.chat https://stats.data.gouv.fr; style-src 'self' 'unsafe-inline' https://client.crisp.chat; font-src 'self' https://client.crisp.chat; frame-src https://metabase.mobilic.beta.gouv.fr</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">object-src 'self'; connect-src 'self' https://client.crisp.chat https://api-adresse.data.gouv.fr https://*.ingest.sentry.io wss://client.relay.crisp.chat https://stats.data.gouv.fr; base-uri 'self'; default-src 'self'; script-src 'self' https://client.crisp.chat https://stats.data.gouv.fr; img-src 'self' data: https://client.crisp.chat https://stats.data.gouv.fr; style-src 'self' 'unsafe-inline' https://client.crisp.chat; font-src 'self' https://client.crisp.chat; frame-src https://metabase.mobilic.beta.gouv.fr</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">object-src 'self'; connect-src 'self' https://client.crisp.chat https://api-adresse.data.gouv.fr https://*.ingest.sentry.io wss://client.relay.crisp.chat https://stats.data.gouv.fr; base-uri 'self'; default-src 'self'; script-src 'self' https://client.crisp.chat https://stats.data.gouv.fr; img-src 'self' data: https://client.crisp.chat https://stats.data.gouv.fr; style-src 'self' 'unsafe-inline' https://client.crisp.chat; font-src 'self' https://client.crisp.chat; frame-src https://metabase.mobilic.beta.gouv.fr</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">5</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure that your web server, application server, load balancer, etc. is properly configured to set the Content-Security-Policy header.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>http://www.w3.org/TR/CSP2/</p><p>http://www.w3.org/TR/CSP/</p><p>http://caniuse.com/#search=content+security+policy</p><p>http://content-security-policy.com/</p><p>https://github.com/shapesecurity/salvation</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">693</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">15</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-medium">
+                <th width="20%"><a name="medium"></a>Medium (High)</th><th width="80%">Sub Resource Integrity Attribute Missing</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The integrity attribute is missing on a script or link tag served by an external server. The integrity tag prevents an attacker who have gained access to this server from injecting a malicious content. </p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/oauth</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/signup</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/how-to</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/graphql</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/principles</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/push-activity</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/playground</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Source+Code+Pro:400,700" rel="stylesheet"/&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/auth</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/errors</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/changelog</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/playground</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/intro</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">12</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Provide a valid integrity attribute to the tag.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://developer.mozilla.org/en/docs/Web/Security/Subresource_Integrity</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">345</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">15</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-low">
+                <a name="low"></a><th width="20%">Low (Medium)</th><th width="80%">Cross-Domain JavaScript Source File Inclusion</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The page includes one or more script files from a third-party domain.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/read-activities</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">https://buttons.github.io/buttons.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/intro</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">https://buttons.github.io/buttons.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/playground</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">https://buttons.github.io/buttons.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/signup</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">https://buttons.github.io/buttons.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/errors</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">https://buttons.github.io/buttons.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/principles</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">https://buttons.github.io/buttons.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/push-activity</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">https://buttons.github.io/buttons.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/how-to</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">https://buttons.github.io/buttons.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/changelog</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">https://buttons.github.io/buttons.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/oauth</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">https://buttons.github.io/buttons.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/graphql</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">https://buttons.github.io/buttons.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/auth</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">https://buttons.github.io/buttons.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script type="text/javascript" src="https://buttons.github.io/buttons.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">12</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure JavaScript source files are loaded from only trusted sources, and the sources can't be controlled by end users of the application.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p></p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">829</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">15</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-low">
+                <a name="low"></a><th width="20%">Low (Low)</th><th width="80%">Dangerous JS Functions</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>A dangerous JS function seems to be in use that would leave the site vulnerable.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~playground.8bbdba42.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">eval</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~main.dad037bb.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">eval</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">2</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>See the references for security advice on the use of these functions.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://angular.io/guide/security</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">749</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-low">
+                <a name="low"></a><th width="20%">Low (Medium)</th><th width="80%">Incomplete or No Cache-control Header Set</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/splashscreens/iphone5_splash.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/splashscreens/iphone6_splash.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/fc-callback</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/sitemap.xml</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/manifest.json</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/splashscreens/iphoneplus_splash.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/splashscreens/iphonex_splash.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache; max-age=0</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/robots.txt</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">12</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Whenever possible ensure the cache-control HTTP header is set with no-cache, no-store, must-revalidate.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">525</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-low">
+                <a name="low"></a><th width="20%">Low (Medium)</th><th width="80%">Permissions Policy Header Not Set</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/fc-callback</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/splashscreens/iphone5_splash.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/sitemap.xml</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~main~playground.0cd67d56.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/main.2b55a571.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/runtime-main.aa17e338.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~main.dad037bb.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/api/fc/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">11</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy</p><p>https://developers.google.com/web/updates/2018/06/feature-policy</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">693</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">15</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-low">
+                <a name="low"></a><th width="20%">Low (High)</th><th width="80%">Strict-Transport-Security Header Not Set</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/api/oauth/token</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/api/fc/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/docs/graphql</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">POST</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">3</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>http://caniuse.com/stricttransportsecurity</p><p>http://tools.ietf.org/html/rfc6797</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">319</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">15</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Medium)</th><th width="80%">Base64 Disclosure</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>Base64 encoded data was disclosed by the application/web server. Note: in the interests of performance not all base64 strings in the response were analyzed individually, the entire response should be looked at by the analyst/security team/developer(s).</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/main.2b55a571.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">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</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~playground.8bbdba42.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">nnrrrmrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrmmmmmmmnNmmmmmmrrmmNmmmmrr1111111111</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~main.dad037bb.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">3</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Manually confirm that the Base64 data does not leak sensitive information, and that the data cannot be aggregated/used to exploit other vulnerabilities.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>�PNG</p><p>\x001a</p><p>\x0000\x0000\x0000
+IHDR\x0000\x0000\x0000�\x0000\x0000\x0000�\x0008\x0006\x0000\x0000\x0000��A&gt;\x0000\x0000\x0000\x0001sRGB\x0000��\x001c�\x0000\x0000\x0014�IDATx��{x�ՙ�?gfr���dB\x0012��</p><p>Fw����\x0017l�rق�ti���Z��h-���\x0005�V</p><p>n�\x0011��v�cն \x0015�\x0002����[.\x0015]�R\x001b\x0008�\x0016\x0002�U�$��'�d��?&amp;3I !��2���&lt;�&lt;a�9�}g�w�y&#127;���������������������������������"ۨ\;�MD�\x0013�r:	j\x0011N\x0007j\x0011�\x0002^\x0014�\x0002�Jp��%\x000b�.\x0010V�\x0008B\x0018\x0008�8\x0000�E�,6�V8iVJ\x0005s���ʈ\x0016���\x0005#|\x0001�b\x0011.\x0006�4��;</p><p>�\x0013\x001b�y]lSJ�L��sF�`\x0002\x00019\x001d���Ţ���,��E��ج\x0014ϩ\x0004/x�jo6�͈\x0010L  �b�r�\x0006�\x000b�-�&gt;�҃�Y\x0014�m�z�W\x001dεCz)X�\x0004\x0002R)��\x0008
+(�\x0002�\�4\x000ci�T���R*�k��Pp�\x0011\x0011\x0015\x0008�U\x0012܌�\��\x0005��6a�׫�+׾\x001c/\x0005#\x0018\x0011)</p><p>��\x000b,\x0004�1��\x0018��N���=.V+���'\x0013</p><p>B0��|.\x000e�Q��\�b\x0006\x0002���]�Gmϵ/&Ntilde;ׂ	\x0006eT\x0002�\x0006�&amp;�}5\x0000\x0001\x001e��Y���M�6B0(\x0017ą?(�)��%���&#127;v��&lt;\x001e�R�}\x0019�|��L#"���ܞ�m'�X\x0000��\x0004l\x000b��g"bϵ?G�W=L4*'w��\x0007\x0005�r�K&gt; ����לN�^�}I�7=L  _�u��\x0012K\x001f</p><p>&amp;ź�\x0019\x000c�Wr�K��\x0010�?(7�bez�Ϣ\x000f�/\x0001��!�i�]�&lt;\x0010�?(w\x0001Ks�G�#��\x001e���ڍ��0��&lt;�b~.}(4Dx��U�ϕ��	�\x0012�vr)��\x000cI��,�Ģ\x001d���= Kra;�i\x000fȍ��F��Ҫ}�%\x0012\x0011]���׋R,\x000e��Y��Mc���\x0011�)t</p><p>u�Q�|*@4�l��f�i��Ψ�w����\x000e��+�s�.�{��p�2�*֬\x000b�̺\x0010\x0000�Uvn�����\x0016i�\x0014�����\x001e�ڐ-�Y�aB!�,�</p><p>�6[Z�&lt;�����ʸ��*�Ɨ�̺\x0010\x0007��Ψ�=�&gt;L(�`��Jf���kw\x0017Ϭ�,%��7:yf]�ɓ\\&#127;]\x0015�E��w�岷�%`M{H�f�`6�ttȩ�\x0004�1 �i��(����_^�\x0019��\��J\x0000^�KgF�[������	u�L��ń�e4��Y</p><p>�kot��ٙ�e/g�\x00163�\x001b��F�\x0003&#127;�L�&amp;Q�\x0012�1\x001c���0f�`DDu�X��&uml;:O���!��ק��J;�f��m=���-̓�\x001e��'�J\x00111=�0]0� �Q�g��\x0013\x001e�\x0017�A\x0016�m�T��C2M)\x0016�i&acirc;\x000f�X\x0014\x0008��?N�\x0004#"�\x0008\x000f�i��(l����\x0014�f����Ane���\x0016\x0018g\x0006B�Ȭ�Mٚ\x0011��ɱ\x001en�R�������\x000c��-�q��-/F��N�\x0016�\x0000,��m��\x001c�{7'�9:�~��1�q��l\x0019_�ȥٷ�E�[�QYiF\x001e�)=LW\x000f\x000f\x0000%Z�n}1JgG\x0002��A\x001f�!�Ŧ\x0006&#127;����Ȥ�P��\x001f�L[[������UhF)ܱn��Q��=L ,\x0017K\x0002]	?��UP_7�0���C�x��d�4's�\x000c?�;c��A__vGհe\x0017��Ft���?�{L&#127;�l���iFq�?$�+�j���\x001a��H�;���B#	�6�JC\x0005�\x001e�KQ|��:-t�8'\x0010�����P�(�\x0005�\x0016�H\x0018�&amp;�	�=$S��F�w,\x000e���U�ё\x0018�o�3�\x0019u�k��\x0015��m�C&amp;(���6�`\\x000f#d%���e���8;ވ\x0002������q��/9��W߈\x0012�\x0010\x000e\x001d���NNϰl�"���������\x0017��ܣk�dMi\x0008����!WI��T%�粘ΌiN6m��j��U��\x0000�6��\x0005\x0013K3*?w��G�\x0008��\x001f\x0000I\x0001]5'��</p><p>�g��vC�{�kM�������s���\x0011</p><p>I�ۭZ�Ve�`�&#149;Je'\x0019�ܥx�W546�hlꢾ�d�K���=�E}]1�M1�]�	u%\x00197x�K�r�\x0018\x001a����%N}]q�=[�Q=	�\x0000��[�1�0�o\x001aR�qP_W|\B�O�"�
+]�R\x0019�fyE��t\x000bFw\x000c�\x001e�O+��[���(�o\x000f˧�֣?���.\x0016�P	���\x0008�\x0018v�fa.\x0002�'�t	�/�S�)�NXd\x0007\x0005�</p><p>\x0004�RO\x001d�\x0004#!&amp;��"��\x0012J�&#1081259;$�\x0014�&#127;�3���\x001d�&Ouml;\x001e&gt;j��u{\x0007���,����*\x00075�vƟY�'�4-)��(�\x0000�\x0016�'\x0018+~I��\x0014c�� ;�����T۩��s��\x001dD"	\x000e\x001d���7:X�6�ө\x0018&#127;V	�]ʔI��9���4\x000bFDl�\x0010uz��\x0004�\x000b���΂�W0��q�9����46�x�O\x0011\x001e\�g��\x0010
+��Y\x0011��:\x0011�)�\x0012&yuml;�h4\x000b&amp;\x0014�\x001f�&lt;�\x00137�pDX���\x0000�̘�Y��&amp;\x000eg�t��\x0014��&#127;\x0008��r?[^�r�
+�pe�\x0018�\x0011{o۽���f���̼: /�4��f��&Auml;&#137;!�Ҽ��HThl�˶��+��T\x0003f����ŝU46�X|�!\x0016���M7V2�\x0013�-9ēwuɮ`�y���k^��ɲ��\x0019]m��_���_���-qV�\x000e��]]��,���&amp;��5v��J��rwz\x001d��������㟶��V��Z�x�\x0002��=�4�=�9\x0001{����ܾ�0ӧ:�?ϛ\x0016K8"&lt;�D�M��T��|j|)
+��8���\x0006�����}]��f'�6G�1��w�N�U�R&lt;z_
+\x000bnk��\x000eq��U��4Ji��kns&#127;@6��Hk���l�A��y��E�\x0008G��?j��L���H
+O�P�ɓʹdzfǎD;�m��l�\x001e�cc\x001c,�~Ez�</p><p>G�\x001f��\x0015\x0011Œ[���i��+�JӬ��I7\x00037�\x0017\x0002K�\x001e"\x0014N����k���Y��
+�C�[�d,\x0016\x0000g���n\x0016�PCW��`Q\x001b����Y�.�M7�hi��ɕƟ"/</p><p>���\x0005#h7Zh46���\x0014����J\x000fC)��\x001b[���U�,��\x000b���s�u�Tx�\x0003DS;���s&lt;l�\x001e5�8\x0011���4\x000bF��Bc�� \x0013����$/�\x000fS���\x0006�f��p���h���'�{@��.j��&lt;��Ὄ��A�:�	1$�z���xү��\x0010&amp;\x0018J0o�(�bI�,S\��y&#127;7k7�ӯ/����ގ\x0019��X�1�M���T�ӽˇ-q�=\x001bf�r�\x000f\x0014:��"&amp;Or���p����+���Ζ?G�4�\x0013��\x0010���5 %s��(�\x0004L�Tn����{�D�M��\x0004r��R^��H6��\x001e�</p><p>��	L�&Ouml;8\x001f�ęP�w���;:�=�İ��H�e��&#417596;�o\x0013�\x0005���\x00167rX�k-�=�U#_0�+��^��#&frac34;\x0003=L\x0018on�?a|);w��z���HԘ\\x0012=?v=C�f�\x0016</p><p>��E�?�&#127;��\x0019��O�K���1�@���[�\x0019���\x0003�J����ee}K\x000e)Ɲj�H�?$	#&#127;H�D\x0012�nr3����z0�\x000c��$\x0007�\x0001\x000e�([\x0010�\�A���j�x&#127;���\x001d0Φ(&gt;�ZV�L��|�B��8\x0002�#K�6\x001c��&#127;� &atilde;\x0016����!i�\x000b�����ɫ��z\x0000#ٻ�\x000b�S���\x000f[��5����1z�N�`�'�`R��v�k�;����b��Q����\x0005\x0013���_�oTB����,\x0018���\x0001�N��s���9m�#�`��u}��n\x000e\x001d6��i�����\x0001�@&#127;��e䶔����j-�c�N%\x0004���/\x0014fLs��\x001d��;�����vS�=��Aj���&lt;�pD��V\x0017�]6L��\x0010إ��\x001c��[KRl�U�\x0000���R"\x0011a�H���s��m��O�2�\x001d�G��\x001cc�\x000f�\x000e8Z�!L$"�{�A��:�L�`d�\x000bfL���S��X\x001dLO�͘�d�T'�
+\x0018v����nV��3}�s@�Mre�IM�As?:�L�`��m��
+Q���y^D`���\x0001�}���\x0003���\x0016�{\x0007�y��6N\x001b�`�\x000f�2\x000fV&lt;\x001d$\x0012\x0011\x001afg��9\x000c]\x0015n��@�`*�j\x0017إ��B�ܥ�=��u�F�i\x0007�.Ų;���h;���ʶ�aj\x0019��/F���V�8�h@���Q�=\x001b�˼��.\x0002�(�t��\x0019q&gt;��݅��9n�Ou��\x0013�\x0001�������S����\x0000�?�ƞ��n\x0007��9ƽ�ne݆\x0000ӧ:YvGՀE·\x001e\x000f�p���\x001a5\x0006�\x0010�\x0017(��RK�=F�\x0005���\x0004�1ł�Z��5β�W
+����\x0014c��Av�1���駕���9��o�oOs\x0017��qv�C�0����x\x0006|�Tr��j;߻��Ew\x001ebt��ŷTe|��!\x0010���(S��TbH#���</p><p>\x0006\x001d�ς����&#127;���m��M1^���K;:\x0007��XSm炉�̘�&lt;�`�M��,��τ��,�ݡм��\x001f����j\x0007�[����Tm��wTx��Z</p><p>�ǐ�f\x0011�V*;���T����\x0001����@7W]�I\x000f'��=����46Ŏ�\x00038�\x0019Ӝ��j�\x0015�;��~a\x001b��M\x0006�o�\x001d�{�\x001e_Z�\x0008O\x001fW�!0D0\x000e\x001b���/1���w�\x001b#W���&#127;r�,���\x000b\x0011��S��~��Y�\&gt;`�u����_(U��C��c,�?�}���n�\x0010�\x000bW4$E�jM���C4�\x000e\x001bO\x001d�'\x001c\x001cC\x0004�v�����Y�d#�{�q�w���B\x0010V�	���\x0010c?��3�%\0���j{z\x00011��ٝ&gt;��W:�w�����P�\�\x0014G�oJ4�M1^�\x0012劆</p><p>&amp;��7\x0014\x001d�h��n�j\x001d���|Z�轱�sz�������\x0014��[����xgO��Ρ�l���'SM�Й\x0016ȑ&lt;��ϖ�Q\x0014\x001c%\x0016H�</p><p>�Z�gʅ�aE#��&gt;�2d��Ў�\x001f��P�cd��ʁ�'χI��;���j{Ƨ1\x001cx����Z�5�˔\x000b\x0007�_d��1$�Mah��(�T���:\x000b��0��$TW9(+S\x001c�`��6��\x001ckx\x0012X�Ɂ!0t#�ϣ�\x0003&#127;3��\x0013\x0015�Kq���t/2\x0014\x0013�qrEC\x0005[_���cG�oOo�\x0018���%\x0004n�z\x0019cH�7)!����d��F�&amp;�}2\0&gt;�Z�\x000f��f\x001c6t"�Y4�T&lt;��\x001aۻ�I7:���a\��	|ʦ�h\x0011͛���VC�����n�z[\x0014\x000f�Q��J�J(Ә&amp;\x0010L̞~��O\x001a�i�"R\x001e\x0008�\x000f�\x001e�ͦ��| $O����~\x001d�3ʪ��P����|�mN\x0005�)a\x000cEJX	Ԭ?�?ɰ�ɴM�J�p{P�mt\x0000�\x0013�xO�oO��D\x0002\x0012�"H���n�%\x0005dS�&#127;��PT\x00046;8�Pd�v�4�3&lt;����޽]����\x0002Gb���y�����Z	7h)��\x0003�\x0018t�z��c������+\x001c�ǎ��ْ�)*��\x0012()&#148;&gt;&lt;Sќ|R\x0011o��y���M�]T���\x001f�</p><p>�gZ&amp;���C�ޣ�H$���A�7�������崐�h\x001awu$\x001c\x000e���vM\x0017�R�;\x0014���\x0004�)EF�\x001c6\x001b��C0���.D�ePbbZϑ��t�7}��S��|�a�
+�й���u�A�����{z ֝\x001c���,�F�\x0003\x001c\x000e(.N�5S(G��c�Ƿ�\x0014�SᵗM&lt;�i���\x0019?�A�\x001d�[/�?��F���u�?(K����+%�x�&#127;�+�|.2�)�+���n����@������@\x0011n�yՒ闾�iA-Q�\x0015�m��/�?��F�����?(�\x0002\x000b�mw�rw�GݒM�9�i�\x0007e9pm.l�\x0014��&gt;�[�0�v�m\x0010@DT ģX���\x0013\x0015\x001e5/\x0017�s2�*��&pound;��\x0014�ra��Q�Ź\x0012\x000b䨇�?(�\x0000����&lt;'.p�ϣ\x000c_\x001f:\x001e��!�\x001c�w�	S\#�.e�Ro�ژkG�B0\x0000������ߕ�\x0013��%�\x0010�q�P�R&#127;ɵ+�G�\x0001���\x0008�\x001c��\��'����R)eJn�\x0016���\x0014\x0015J�Wx�eJ�\x0011�lW�Ȥ[�\x001fUxԬ|\x0012\x000b�Y\x000fӟPH��\x0011~����%�\x0008��P\�v��s��`�` 9_�\x000f�-\x0005�\x0000�r��\x001c\x0002n��yB�\x0019tf�ׂI\x0011\x000cʨDR4ߢ@|&gt;\x000e\x0004��
+\x0016z&lt;�P��\x0019�����#�\x0019\x0015g\x0011p)\x0005�� \x0008�\x001fb�_}.�f��ɔ����#�\x0019�&Yacute;(.ɵ/�\x00106��[\x000bI()</p><p>R0)\x0002\x00019_�g\x0005#\x001ca��۽^�J�]�JA\x000b&amp;E  �b�\x0001���#�2]Ѓ�\x0005�\x001a%��z��\;��\x0011!���BR����p\x0011&acute;L�B�B�(�-6�F\x0012�\x001a	"�ψ\x0013L&#127;D�8\x0010a�Jp��%��&amp;�zG)6���q�E)5b'\x001dG�`�DD&lt;�(�*��\x0008���\x0008c\x0001/�r\x0011\</p><p>�Q$�n\x0017�\x0005�J\x0011A\x0008\x0003\x0001\x0014\x0007�f\x0014{���u�W)\x0015&lt;�Y\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b\x000b]�?�\x000f֥��w$\x0000\x0000\x0000\x0000IEND�B`�</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">200</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Low)</th><th width="80%">Information Disclosure - Suspicious Comments</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The response appears to contain suspicious comments which may help an attacker. Note: Matches made within script blocks or files are against the entire content not only comments.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~main.dad037bb.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">bug</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~main~playground.0cd67d56.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">query</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~playground.8bbdba42.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">bug</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/main.2b55a571.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">query</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">4</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>The following pattern was used: \bBUG\b and was detected in the element starting with: "(this.webpackJsonpmobilic=this.webpackJsonpmobilic||[]).push([[5],[,,,,,,,function(e,t,n){"use strict";function r(e){var t,n,o="", see evidence field for the suspicious comment/snippet.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p></p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">200</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Medium)</th><th width="80%">Modern Web Application</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script src="/static/js/runtime-main.aa17e338.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/sitemap.xml</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script src="/static/js/runtime-main.aa17e338.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/splashscreens/iphone6_splash.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script src="/static/js/runtime-main.aa17e338.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/splashscreens/iphone5_splash.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script src="/static/js/runtime-main.aa17e338.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/fc-callback</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script src="/static/js/runtime-main.aa17e338.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~main~playground.0cd67d56.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script src="/static/js/runtime-main.aa17e338.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/splashscreens/iphonex_splash.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script src="/static/js/runtime-main.aa17e338.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/splashscreens/iphoneplus_splash.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script src="/static/js/runtime-main.aa17e338.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script src="/static/js/runtime-main.aa17e338.js"&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~main.dad037bb.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">11</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>This is an informational alert and so no changes are required.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>No links have been found while there are scripts, which is an indication that this is a modern web application.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p></p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Medium)</th><th width="80%">Storable and Cacheable Content</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users.  If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where "shared" caching servers such as "proxy" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/api/fc/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">1</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. </p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">524</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Medium)</th><th width="80%">Storable but Non-Cacheable Content</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The response contents are storable by caching components such as proxy servers, but will not be retrieved directly from the cache, without validating the request upstream, in response to similar requests from other users. </p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/sitemap.xml</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/safari-mask-icon.svg</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/fc-callback</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/robots.txt</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/oauth/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/favicon.svg</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/logo180.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/developers/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-cache</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">max-age=0</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">11</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p></p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">524</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Low)</th><th width="80%">Timestamp Disclosure - Unix</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>A timestamp was disclosed by the application/web server - Unix</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~main~playground.0cd67d56.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">1073741823</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~main~playground.0cd67d56.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">0123456789</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~main~playground.0cd67d56.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">1073741821</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/favicon.svg</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">00390625</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/static/js/vendors~main~playground.0cd67d56.chunk.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">1073741822</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://mobilic.beta.gouv.fr/safari-mask-icon.svg</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">00390625</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">6</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>1073741823, which evaluates to: 2004-01-10 13:37:03</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">200</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+    </body>
+</html>
