@@ -1,0 +1,1617 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ZAP Scanning Report</title>
+        <style>
+body{
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #000;
+  font-size: 13px;
+}
+h1{
+  text-align: center;
+  font-weight: bold;
+  font-size: 32px
+}
+h3{
+  font-size: 16px;
+}
+table{
+  border: none;
+  font-size: 13px;
+}
+td, th {
+  padding: 3px 4px;
+  word-break: break-word;
+}
+th{
+  font-weight: bold;
+}
+.results th{
+  text-align: left;
+}
+.spacer{
+  margin: 10px;
+}
+.spacer-lg{
+  margin: 40px;
+}
+.indent1{
+  padding: 4px 20px;
+}
+.indent2{
+  padding: 4px 40px;
+}
+.risk-high{
+  background-color: red;
+  color: #FFF;
+}
+.risk-medium{
+  background-color: orange;
+  color: #FFF;
+}
+.risk-low{
+  background-color: yellow;
+  color: #000;
+}
+.risk-info{
+  background-color: blue;
+  color: #FFF;
+}
+.summary th{
+  color: #FFF;
+}
+.alerts th{
+  color: #FFF;
+}
+.left-header{
+  display: inline-block;
+}
+.time-stamp{
+  float: right;
+}
+</style>
+    </head>
+    <body>
+        <h1>
+            <img src="data:image/png;base64,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">
+ZAP Scanning Report
+
+        </h1>
+        <p>
+</p>
+        <h3 class="left-header">Summary of Alerts</h3>
+        <h3 class="time-stamp">Generated on Tue, 28 Sep 2021 09:06:12</h3>
+        <table width="45%" class="summary">
+            <tr bgcolor="#666666">
+                <th width="45%" height="24">Risk 
+      Level</th><th width="55%" align="center">Number 
+      of Alerts</th>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td><a href="#high">High</a></td><td align="center">0</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td><a href="#medium">Medium</a></td><td align="center">3</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td><a href="#low">Low</a></td><td align="center">4</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td><a href="#info">Informational</a></td><td align="center">7</td>
+            </tr>
+        </table>
+        <div class="spacer-lg"></div>
+        <h3>Alerts</h3>
+        <table width="75%" class="alerts">
+            <tr bgcolor="#666666">
+                <th width="60%" height="24">Name</th><th width="20%" align="center">Risk Level</th><th width="20%" align="center">Number of Instances</th>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Content Security Policy (CSP) Header Not Set</td><td align="center">Medium</td><td align="center">3</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Source Code Disclosure - Java</td><td align="center">Medium</td><td align="center">1</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>X-Frame-Options Header Not Set</td><td align="center">Medium</td><td align="center">3</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Incomplete or No Cache-control Header Set</td><td align="center">Low</td><td align="center">2</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Permissions Policy Header Not Set</td><td align="center">Low</td><td align="center">5</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Strict-Transport-Security Header Not Set</td><td align="center">Low</td><td align="center">11</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>X-Content-Type-Options Header Missing</td><td align="center">Low</td><td align="center">11</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Base64 Disclosure</td><td align="center">Informational</td><td align="center">2</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Content-Type Header Missing</td><td align="center">Informational</td><td align="center">1</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Information Disclosure - Suspicious Comments</td><td align="center">Informational</td><td align="center">2</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Modern Web Application</td><td align="center">Informational</td><td align="center">3</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Non-Storable Content</td><td align="center">Informational</td><td align="center">1</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Storable and Cacheable Content</td><td align="center">Informational</td><td align="center">10</td>
+            </tr>
+            <tr bgcolor="#e8e8e8">
+                <td>Timestamp Disclosure - Unix</td><td align="center">Informational</td><td align="center">8</td>
+            </tr>
+        </table>
+        <div class="spacer-lg"></div>
+        <h3>Alert Detail</h3>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-medium">
+                <th width="20%"><a name="medium"></a>Medium (High)</th><th width="80%">Content Security Policy (CSP) Header Not Set</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page &mdash; covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/salarie-secteur-prive</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/je-suis-employeur</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">3</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header, to achieve optimal browser support: "Content-Security-Policy" for Chrome 25+, Firefox 23+ and Safari 7+, "X-Content-Security-Policy" for Firefox 4.0+ and Internet Explorer 10+, and "X-WebKit-CSP" for Chrome 14+ and Safari 6+.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>http://www.w3.org/TR/CSP/</p><p>http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html</p><p>http://www.html5rocks.com/en/tutorials/security/content-security-policy/</p><p>http://caniuse.com/#feat=contentsecuritypolicy</p><p>http://content-security-policy.com/</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">693</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">15</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-medium">
+                <th width="20%"><a name="medium"></a>Medium (Medium)</th><th width="80%">Source Code Disclosure - Java</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>Application Source Code was disclosed by the web server - Java</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/polyfills.35a5ca1855eb057f016a.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">class a{constructor(e,t){this._parent=e,this._name=t?t.name||"unnamed":"&lt;root&gt;",this._properties=t&amp;&amp;t.properties||{},this._zoneDelegate=new l(this,this._parent&amp;&amp;this._parent._zoneDelegate,t)}static assertZonePatched(){if(e.Promise!==C.ZoneAwarePromise)throw new Error("Zone.js has detected that ZoneAwarePromise `(window|global).Promise` has been overwritten.\nMost likely cause is that a Promise polyfill has been loaded after Zone.js (Polyfilling Promise api is not necessary when zone.js is loaded. If you must load one, do so before loading zone.js.)")}static get root(){let e=a.current;for(;e.parent;)e=e.parent;return e}static get current(){return z.zone}static get currentTask(){return j}static __load_patch(t,r){if(C.hasOwnProperty(t)){if(i)throw Error("Already loaded patch: "+t)}else if(!e["__Zone_disable_"+t]){const s="Zone:"+t;n(s),C[t]=r(e,a,O),o(s,s)}}get parent(){return this._parent}get name(){return this._name}get(e){const t=this.getZoneWith(e);if(t)return t._properties[e]}getZoneWith(e){let t=this;for(;t;){if(t._properties.hasOwnProperty(e))return t;t=t._parent}return null}fork(e){if(!e)throw new Error("ZoneSpec required!");return this._zoneDelegate.fork(this,e)}wrap(e,t){if("function"!=typeof e)throw new Error("Expecting function got: "+e);const n=this._zoneDelegate.intercept(this,e,t),o=this;return function(){return o.runGuarded(n,this,arguments,t)}}run(e,t,n,o){z={parent:z,zone:this};try{return this._zoneDelegate.invoke(this,e,t,n,o)}finally{z=z.parent}}runGuarded(e,t=null,n,o){z={parent:z,zone:this};try{try{return this._zoneDelegate.invoke(this,e,t,n,o)}catch(r){if(this._zoneDelegate.handleError(this,r))throw r}}finally{z=z.parent}}runTask(e,t,n){if(e.zone!=this)throw new Error("A task can only be run in the zone of creation! (Creation: "+(e.zone||y).name+"; Execution: "+this.name+")");if(e.state===v&amp;&amp;(e.type===P||e.type===D))return;const o=e.state!=E;o&amp;&amp;e._transitionTo(E,T),e.runCount++;const r=j;j=e,z={parent:z,zone:this};try{e.type==D&amp;&amp;e.data&amp;&amp;!e.data.isPeriodic&amp;&amp;(e.cancelFn=void 0);try{return this._zoneDelegate.invokeTask(this,e,t,n)}catch(s){if(this._zoneDelegate.handleError(this,s))throw s}}finally{e.state!==v&amp;&amp;e.state!==Z&amp;&amp;(e.type==P||e.data&amp;&amp;e.data.isPeriodic?o&amp;&amp;e._transitionTo(T,E):(e.runCount=0,this._updateTaskCount(e,-1),o&amp;&amp;e._transitionTo(v,E,v))),z=z.parent,j=r}}scheduleTask(e){if(e.zone&amp;&amp;e.zone!==this){let t=this;for(;t;){if(t===e.zone)throw Error(`can not reschedule task to ${this.name} which is descendants of the original zone ${e.zone.name}`);t=t.parent}}e._transitionTo(b,v);const t=[];e._zoneDelegates=t,e._zone=this;try{e=this._zoneDelegate.scheduleTask(this,e)}catch(n){throw e._transitionTo(Z,b,v),this._zoneDelegate.handleError(this,n),n}return e._zoneDelegates===t&amp;&amp;this._updateTaskCount(e,1),e.state==b&amp;&amp;e._transitionTo(T,b),e}scheduleMicroTask(e,t,n,o){return this.scheduleTask(new u(S,e,t,n,o,void 0))}scheduleMacroTask(e,t,n,o,r){return this.scheduleTask(new u(D,e,t,n,o,r))}scheduleEventTask(e,t,n,o,r){return this.scheduleTask(new u(P,e,t,n,o,r))}cancelTask(e){if(e.zone!=this)throw new Error("A task can only be cancelled in the zone of creation! (Creation: "+(e.zone||y).name+"; Execution: "+this.name+")");e._transitionTo(w,T,E);try{this._zoneDelegate.cancelTask(this,e)}catch(t){throw e._transitionTo(Z,w),this._zoneDelegate.handleError(this,t),t}return this._updateTaskCount(e,-1),e._transitionTo(v,w),e.runCount=0,e}_updateTaskCount(e,t){const n=e._zoneDelegates;-1==t&amp;&amp;(e._zoneDelegates=null);for(let o=0;o&lt;n.length;o++)n[o]._updateTaskCount(e.type,t)}}a.__symbol__=s;const c={name:"",onHasTask:(e,t,n,o)=&gt;e.hasTask(n,o),onScheduleTask:(e,t,n,o)=&gt;e.scheduleTask(n,o),onInvokeTask:(e,t,n,o,r,s)=&gt;e.invokeTask(n,o,r,s),onCancelTask:(e,t,n,o)=&gt;e.cancelTask(n,o)};class l{constructor(e,t,n){this._taskCounts={microTask:0,macroTask:0,eventTask:0},this.zone=e,this._parentDelegate=t,this._forkZS=n&amp;&amp;(n&amp;&amp;n.onFork?n:t._forkZS),this._forkDlgt=n&amp;&amp;(n.onFork?t:t._forkDlgt),this._forkCurrZone=n&amp;&amp;(n.onFork?this.zone:t._forkCurrZone),this._interceptZS=n&amp;&amp;(n.onIntercept?n:t._interceptZS),this._interceptDlgt=n&amp;&amp;(n.onIntercept?t:t._interceptDlgt),this._interceptCurrZone=n&amp;&amp;(n.onIntercept?this.zone:t._interceptCurrZone),this._invokeZS=n&amp;&amp;(n.onInvoke?n:t._invokeZS),this._invokeDlgt=n&amp;&amp;(n.onInvoke?t:t._invokeDlgt),this._invokeCurrZone=n&amp;&amp;(n.onInvoke?this.zone:t._invokeCurrZone),this._handleErrorZS=n&amp;&amp;(n.onHandleError?n:t._handleErrorZS),this._handleErrorDlgt=n&amp;&amp;(n.onHandleError?t:t._handleErrorDlgt),this._handleErrorCurrZone=n&amp;&amp;(n.onHandleError?this.zone:t._handleErrorCurrZone),this._scheduleTaskZS=n&amp;&amp;(n.onScheduleTask?n:t._scheduleTaskZS),this._scheduleTaskDlgt=n&amp;&amp;(n.onScheduleTask?t:t._scheduleTaskDlgt),this._scheduleTaskCurrZone=n&amp;&amp;(n.onScheduleTask?this.zone:t._scheduleTaskCurrZone),this._invokeTaskZS=n&amp;&amp;(n.onInvokeTask?n:t._invokeTaskZS),this._invokeTaskDlgt=n&amp;&amp;(n.onInvokeTask?t:t._invokeTaskDlgt),this._invokeTaskCurrZone=n&amp;&amp;(n.onInvokeTask?this.zone:t._invokeTaskCurrZone),this._cancelTaskZS=n&amp;&amp;(n.onCancelTask?n:t._cancelTaskZS),this._cancelTaskDlgt=n&amp;&amp;(n.onCancelTask?t:t._cancelTaskDlgt),this._cancelTaskCurrZone=n&amp;&amp;(n.onCancelTask?this.zone:t._cancelTaskCurrZone),this._hasTaskZS=null,this._hasTaskDlgt=null,this._hasTaskDlgtOwner=null,this._hasTaskCurrZone=null;const o=n&amp;&amp;n.onHasTask;(o||t&amp;&amp;t._hasTaskZS)&amp;&amp;(this._hasTaskZS=o?n:c,this._hasTaskDlgt=t,this._hasTaskDlgtOwner=this,this._hasTaskCurrZone=e,n.onScheduleTask||(this._scheduleTaskZS=c,this._scheduleTaskDlgt=t,this._scheduleTaskCurrZone=this.zone),n.onInvokeTask||(this._invokeTaskZS=c,this._invokeTaskDlgt=t,this._invokeTaskCurrZone=this.zone),n.onCancelTask||(this._cancelTaskZS=c,this._cancelTaskDlgt=t,this._cancelTaskCurrZone=this.zone))}fork(e,t){return this._forkZS?this._forkZS.onFork(this._forkDlgt,this.zone,e,t):new a(e,t)}intercept(e,t,n){return this._interceptZS?this._interceptZS.onIntercept(this._interceptDlgt,this._interceptCurrZone,e,t,n):t}invoke(e,t,n,o,r){return this._invokeZS?this._invokeZS.onInvoke(this._invokeDlgt,this._invokeCurrZone,e,t,n,o,r):t.apply(n,o)}handleError(e,t){return!this._handleErrorZS||this._handleErrorZS.onHandleError(this._handleErrorDlgt,this._handleErrorCurrZone,e,t)}scheduleTask(e,t){let n=t;if(this._scheduleTaskZS)this._hasTaskZS&amp;&amp;n._zoneDelegates.push(this._hasTaskDlgtOwner),n=this._scheduleTaskZS.onScheduleTask(this._scheduleTaskDlgt,this._scheduleTaskCurrZone,e,t),n||(n=t);else if(t.scheduleFn)t.scheduleFn(t);else{if(t.type!=S)throw new Error("Task is missing scheduleFn.");k(t)}return n}invokeTask(e,t,n,o){return this._invokeTaskZS?this._invokeTaskZS.onInvokeTask(this._invokeTaskDlgt,this._invokeTaskCurrZone,e,t,n,o):t.callback.apply(n,o)}cancelTask(e,t){let n;if(this._cancelTaskZS)n=this._cancelTaskZS.onCancelTask(this._cancelTaskDlgt,this._cancelTaskCurrZone,e,t);else{if(!t.cancelFn)throw Error("Task is not cancelable");n=t.cancelFn(t)}return n}hasTask(e,t){try{this._hasTaskZS&amp;&amp;this._hasTaskZS.onHasTask(this._hasTaskDlgt,this._hasTaskCurrZone,e,t)}catch(n){this.handleError(e,n)}}_updateTaskCount(e,t){const n=this._taskCounts,o=n[e],r=n[e]=o+t;if(r&lt;0)throw new Error("More tasks executed then were scheduled.");0!=o&amp;&amp;0!=r||this.hasTask(this.zone,{microTask:n.microTask&gt;0,macroTask:n.macroTask&gt;0,eventTask:n.eventTask&gt;0,change:e})}}class u{constructor(t,n,o,r,s,i){if(this._zone=null,this.runCount=0,this._zoneDelegates=null,this._state="notScheduled",this.type=t,this.source=n,this.data=r,this.scheduleFn=s,this.cancelFn=i,!o)throw new Error("callback is not defined");this.callback=o;const a=this;this.invoke=t===P&amp;&amp;r&amp;&amp;r.useG?u.invokeTask:function(){return u.invokeTask.call(e,a,this,arguments)}}static invokeTask(e,t,n){e||(e=this),I++;try{return e.runCount++,e.zone.runTask(e,t,n)}finally{1==I&amp;&amp;m(),I--}}get zone(){return this._zone}get state(){return this._state}cancelScheduleRequest(){this._transitionTo(v,b)}_transitionTo(e,t,n){if(this._state!==t&amp;&amp;this._state!==n)throw new Error(`${this.type} '${this.source}': can not transition to '${e}', expecting state '${t}'${n?" or '"+n+"'":""}, was '${this._state}'.`);this._state=e,e==v&amp;&amp;(this._zoneDelegates=null)}toString(){return this.data&amp;&amp;void 0!==this.data.handleId?this.data.handleId.toString():Object.prototype.toString.call(this)}toJSON(){return{type:this.type,state:this.state,source:this.source,zone:this.zone.name,runCount:this.runCount}}}const h=s("setTimeout"),p=s("Promise"),f=s("then");let d,g=[],_=!1;function k(t){if(0===I&amp;&amp;0===g.length)if(d||e[p]&amp;&amp;(d=e[p].resolve(0)),d){let e=d[f];e||(e=d.then),e.call(d,m)}else e[h](m,0);t&amp;&amp;g.push(t)}function m(){if(!_){for(_=!0;g.length;){const t=g;g=[];for(let n=0;n&lt;t.length;n++){const o=t[n];try{o.zone.runTask(o,null,null)}catch(e){O.onUnhandledError(e)}}}O.microtaskDrainDone(),_=!1}}const y={name:"NO ZONE"},v="notScheduled",b="scheduling",T="scheduled",E="running",w="canceling",Z="unknown",S="microTask",D="macroTask",P="eventTask",C={},O={symbol:s,currentZoneFrame:()=&gt;z,onUnhandledError:N,microtaskDrainDone:N,scheduleMicroTask:k,showUncaughtError:()=&gt;!a[s("ignoreConsoleErrorUncaughtError")],patchEventTarget:()=&gt;[],patchOnProperties:N,patchMethod:()=&gt;N,bindArguments:()=&gt;[],patchThen:()=&gt;N,patchMacroTask:()=&gt;N,setNativePromise:e=&gt;{e&amp;&amp;"function"==typeof e.resolve&amp;&amp;(d=e.resolve(0))},patchEventPrototype:()=&gt;N,isIEOrEdge:()=&gt;!1,getGlobalObjects:()=&gt;{},ObjectDefineProperty:()=&gt;N,ObjectGetOwnPropertyDescriptor:()=&gt;{},ObjectCreate:()=&gt;{},ArraySlice:()=&gt;[],patchClass:()=&gt;N,wrapWithCurrentZone:()=&gt;N,filterProperties:()=&gt;[],attachOriginToPatched:()=&gt;N,_redefineProperty:()=&gt;N,patchCallbacks:()=&gt;N};let z={parent:null,zone:new a(null,null)},j=null,I=0;function N(){}o("Zone","Zone"),e.Zone=a}("undefined"!=typeof window&amp;&amp;window||"undefined"!=typeof self&amp;&amp;self||global),Zone.__load_patch("ZoneAwarePromise",(e,t,n)=&gt;{const o=Object.getOwnPropertyDescriptor,r=Object.defineProperty,s=n.symbol,i=[],a=!0===e[s("DISABLE_WRAPPING_UNCAUGHT_PROMISE_REJECTION")],c=s("Promise"),l=s("then");n.onUnhandledError=e=&gt;{if(n.showUncaughtError()){const t=e&amp;&amp;e.rejection;t?console.error("Unhandled Promise rejection:",t instanceof Error?t.message:t,"; Zone:",e.zone.name,"; Task:",e.task&amp;&amp;e.task.source,"; Value:",t,t instanceof Error?t.stack:void 0):console.error(e)}},n.microtaskDrainDone=()=&gt;{for(;i.length;){const t=i.shift();try{t.zone.runGuarded(()=&gt;{throw t})}catch(e){h(e)}}};const u=s("unhandledPromiseRejectionHandler");function h(e){n.onUnhandledError(e);try{const n=t[u];"function"==typeof n&amp;&amp;n.call(this,e)}catch(o){}}function p(e){return e&amp;&amp;e.then}function f(e){return e}function d(e){return O.reject(e)}const g=s("state"),_=s("value"),k=s("finally"),m=s("parentPromiseValue"),y=s("parentPromiseState"),v=null,b=!0,T=!1;function E(e,t){return n=&gt;{try{Z(e,t,n)}catch(o){Z(e,!1,o)}}}const w=s("currentTaskTrace");function Z(e,o,s){const c=function(){let e=!1;return function(t){return function(){e||(e=!0,t.apply(null,arguments))}}}();if(e===s)throw new TypeError("Promise resolved with itself");if(e[g]===v){let h=null;try{"object"!=typeof s&amp;&amp;"function"!=typeof s||(h=s&amp;&amp;s.then)}catch(u){return c(()=&gt;{Z(e,!1,u)})(),e}if(o!==T&amp;&amp;s instanceof O&amp;&amp;s.hasOwnProperty(g)&amp;&amp;s.hasOwnProperty(_)&amp;&amp;s[g]!==v)D(s),Z(e,s[g],s[_]);else if(o!==T&amp;&amp;"function"==typeof h)try{h.call(s,c(E(e,o)),c(E(e,!1)))}catch(u){c(()=&gt;{Z(e,!1,u)})()}else{e[g]=o;const c=e[_];if(e[_]=s,e[k]===k&amp;&amp;o===b&amp;&amp;(e[g]=e[y],e[_]=e[m]),o===T&amp;&amp;s instanceof Error){const e=t.currentTask&amp;&amp;t.currentTask.data&amp;&amp;t.currentTask.data.__creationTrace__;e&amp;&amp;r(s,w,{configurable:!0,enumerable:!1,writable:!0,value:e})}for(let t=0;t&lt;c.length;)P(e,c[t++],c[t++],c[t++],c[t++]);if(0==c.length&amp;&amp;o==T){e[g]=0;let o=s;if(!a)try{throw new Error("Uncaught (in promise): "+((l=s)&amp;&amp;l.toString===Object.prototype.toString?(l.constructor&amp;&amp;l.constructor.name||"")+": "+JSON.stringify(l):l?l.toString():Object.prototype.toString.call(l))+(s&amp;&amp;s.stack?"\n"+s.stack:""))}catch(u){o=u}o.rejection=s,o.promise=e,o.zone=t.current,o.task=t.currentTask,i.push(o),n.scheduleMicroTask()}}}var l;return e}const S=s("rejectionHandledHandler");function D(e){if(0===e[g]){try{const n=t[S];n&amp;&amp;"function"==typeof n&amp;&amp;n.call(this,{rejection:e[_],promise:e})}catch(n){}e[g]=T;for(let t=0;t&lt;i.length;t++)e===i[t].promise&amp;&amp;i.splice(t,1)}}function P(e,t,n,o,r){D(e);const s=e[g],i=s?"function"==typeof o?o:f:"function"==typeof r?r:d;t.scheduleMicroTask("Promise.then",()=&gt;{try{const o=e[_],r=!!n&amp;&amp;k===n[k];r&amp;&amp;(n[m]=o,n[y]=s);const a=t.run(i,void 0,r&amp;&amp;i!==d&amp;&amp;i!==f?[]:[o]);Z(n,!0,a)}catch(o){Z(n,!1,o)}},n)}const C=function(){};class O{static toString(){return"function ZoneAwarePromise() { [native code] }"}static resolve(e){return Z(new this(null),b,e)}static reject(e){return Z(new this(null),T,e)}static race(e){let t,n,o=new this((e,o)=&gt;{t=e,n=o});function r(e){t(e)}function s(e){n(e)}for(let i of e)p(i)||(i=this.resolve(i)),i.then(r,s);return o}static all(e){return O.allWithCallback(e)}static allSettled(e){return(this&amp;&amp;this.prototype instanceof O?this:O).allWithCallback(e,{thenCallback:e=&gt;({status:"fulfilled",value:e}),errorCallback:e=&gt;({status:"rejected",reason:e})})}static allWithCallback(e,t){let n,o,r=new this((e,t)=&gt;{n=e,o=t}),s=2,i=0;const a=[];for(let l of e){p(l)||(l=this.resolve(l));const e=i;try{l.then(o=&gt;{a[e]=t?t.thenCallback(o):o,s--,0===s&amp;&amp;n(a)},r=&gt;{t?(a[e]=t.errorCallback(r),s--,0===s&amp;&amp;n(a)):o(r)})}catch(c){o(c)}s++,i++}return s-=2,0===s&amp;&amp;n(a),r}constructor(e){const t=this;if(!(t instanceof O))throw new Error("Must be an instanceof Promise.");t[g]=v,t[_]=[];try{e&amp;&amp;e(E(t,b),E(t,T))}catch(n){Z(t,!1,n)}}get[Symbol.toStringTag](){return"Promise"}get[Symbol.species](){return O}then(e,n){let o=this.constructor[Symbol.species];o&amp;&amp;"function"==typeof o||(o=this.constructor||O);const r=new o(C),s=t.current;return this[g]==v?this[_].push(s,r,e,n):P(this,s,r,e,n),r}catch(e){return this.then(null,e)}finally(e){let n=this.constructor[Symbol.species];n&amp;&amp;"function"==typeof n||(n=O);const o=new n(C);o[k]=k;const r=t.current;return this[g]==v?this[_].push(r,o,e,e):P(this,r,o,e,e),o}}O.resolve=O.resolve,O.reject=O.reject,O.race=O.race,O.all=O.all;const z=e[c]=e.Promise,j=t.__symbol__("ZoneAwarePromise");let I=o(e,"Promise");I&amp;&amp;!I.configurable||(I&amp;&amp;delete I.writable,I&amp;&amp;delete I.value,I||(I={configurable:!0,enumerable:!0}),I.get=function(){return e[j]?e[j]:e[c]},I.set=function(t){t===O?e[j]=t:(e[c]=t,t.prototype[l]||R(t),n.setNativePromise(t))},r(e,"Promise",I)),e.Promise=O;const N=s("thenPatched");function R(e){const t=e.prototype,n=o(t,"then");if(n&amp;&amp;(!1===n.writable||!n.configurable))return;const r=t.then;t[l]=r,e.prototype.then=function(e,t){return new O((e,t)=&gt;{r.call(this,e,t)}).then(e,t)},e[N]=!0}if(n.patchThen=R,z){R(z);const t=e.fetch;"function"==typeof t&amp;&amp;(e[n.symbol("fetch")]=t,e.fetch=(x=t,function(){let e=x.apply(this,arguments);if(e instanceof O)return e;let t=e.constructor;return t[N]||R(t),e}))}var x;return Promise[t.__symbol__("uncaughtPromiseErrors")]=i,O});const e=Object.getOwnPropertyDescriptor,t=Object.defineProperty,n=Object.getPrototypeOf,o=Object.create,r=Array.prototype.slice,s="addEventListener",i="removeEventListener",a=Zone.__symbol__(s),c=Zone.__symbol__(i),l="true",u="false",h=Zone.__symbol__("");function p(e,t){return Zone.current.wrap(e,t)}function f(e,t,n,o,r){return Zone.current.scheduleMacroTask(e,t,n,o,r)}const d=Zone.__symbol__,g="undefined"!=typeof window,_=g?window:void 0,k=g&amp;&amp;_||"object"==typeof self&amp;&amp;self||global,m=[null];function y(e,t){for(let n=e.length-1;n&gt;=0;n--)"function"==typeof e[n]&amp;&amp;(e[n]=p(e[n],t+"_"+n));return e}function v(e){return!e||!1!==e.writable&amp;&amp;!("function"==typeof e.get&amp;&amp;void 0===e.set)}const b="undefined"!=typeof WorkerGlobalScope&amp;&amp;self instanceof WorkerGlobalScope,T=!("nw"in k)&amp;&amp;void 0!==k.process&amp;&amp;"[object process]"==={}.toString.call(k.process),E=!T&amp;&amp;!b&amp;&amp;!(!g||!_.HTMLElement),w=void 0!==k.process&amp;&amp;"[object process]"==={}.toString.call(k.process)&amp;&amp;!b&amp;&amp;!(!g||!_.HTMLElement),Z={},S=function(e){if(!(e=e||k.event))return;let t=Z[e.type];t||(t=Z[e.type]=d("ON_PROPERTY"+e.type));const n=this||e.target||k,o=n[t];let r;if(E&amp;&amp;n===_&amp;&amp;"error"===e.type){const t=e;r=o&amp;&amp;o.call(this,t.message,t.filename,t.lineno,t.colno,t.error),!0===r&amp;&amp;e.preventDefault()}else r=o&amp;&amp;o.apply(this,arguments),null==r||r||e.preventDefault();return r};function D(n,o,r){let s=e(n,o);if(!s&amp;&amp;r&amp;&amp;e(r,o)&amp;&amp;(s={enumerable:!0,configurable:!0}),!s||!s.configurable)return;const i=d("on"+o+"patched");if(n.hasOwnProperty(i)&amp;&amp;n[i])return;delete s.writable,delete s.value;const a=s.get,c=s.set,l=o.substr(2);let u=Z[l];u||(u=Z[l]=d("ON_PROPERTY"+l)),s.set=function(e){let t=this;t||n!==k||(t=k),t&amp;&amp;(t[u]&amp;&amp;t.removeEventListener(l,S),c&amp;&amp;c.apply(t,m),"function"==typeof e?(t[u]=e,t.addEventListener(l,S,!1)):t[u]=null)},s.get=function(){let e=this;if(e||n!==k||(e=k),!e)return null;const t=e[u];if(t)return t;if(a){let t=a&amp;&amp;a.call(this);if(t)return s.set.call(this,t),"function"==typeof e.removeAttribute&amp;&amp;e.removeAttribute(o),t}return null},t(n,o,s),n[i]=!0}function P(e,t,n){if(t)for(let o=0;o&lt;t.length;o++)D(e,"on"+t[o],n);else{const t=[];for(const n in e)"on"==n.substr(0,2)&amp;&amp;t.push(n);for(let o=0;o&lt;t.length;o++)D(e,t[o],n)}}const C=d("originalInstance");function O(e){const n=k[e];if(!n)return;k[d(e)]=n,k[e]=function(){const t=y(arguments,e);switch(t.length){case 0:this[C]=new n;break;case 1:this[C]=new n(t[0]);break;case 2:this[C]=new n(t[0],t[1]);break;case 3:this[C]=new n(t[0],t[1],t[2]);break;case 4:this[C]=new n(t[0],t[1],t[2],t[3]);break;default:throw new Error("Arg list too long.")}},I(k[e],n);const o=new n((function(){}));let r;for(r in o)"XMLHttpRequest"===e&amp;&amp;"responseBlob"===r||function(n){"function"==typeof o[n]?k[e].prototype[n]=function(){return this[C][n].apply(this[C],arguments)}:t(k[e].prototype,n,{set:function(t){"function"==typeof t?(this[C][n]=p(t,e+"."+n),I(this[C][n],t)):this[C][n]=t},get:function(){return this[C][n]}})}(r);for(r in n)"prototype"!==r&amp;&amp;n.hasOwnProperty(r)&amp;&amp;(k[e][r]=n[r])}function z(t,o,r){let s=t;for(;s&amp;&amp;!s.hasOwnProperty(o);)s=n(s);!s&amp;&amp;t[o]&amp;&amp;(s=t);const i=d(o);let a=null;if(s&amp;&amp;!(a=s[i])&amp;&amp;(a=s[i]=s[o],v(s&amp;&amp;e(s,o)))){const e=r(a,i,o);s[o]=function(){return e(this,arguments)},I(s[o],a)}return a}function j(e,t,n){let o=null;function r(e){const t=e.data;return t.args[t.cbIdx]=function(){e.invoke.apply(this,arguments)},o.apply(t.target,t.args),e}o=z(e,t,e=&gt;function(t,o){const s=n(t,o);return s.cbIdx&gt;=0&amp;&amp;"function"==typeof o[s.cbIdx]?f(s.name,o[s.cbIdx],s,r):e.apply(t,o)})}function I(e,t){e[d("OriginalDelegate")]=t}let N=!1,R=!1;function x(){try{const e=_.navigator.userAgent;if(-1!==e.indexOf("MSIE ")||-1!==e.indexOf("Trident/"))return!0}catch(e){}return!1}function M(){if(N)return R;N=!0;try{const e=_.navigator.userAgent;-1===e.indexOf("MSIE ")&amp;&amp;-1===e.indexOf("Trident/")&amp;&amp;-1===e.indexOf("Edge/")||(R=!0)}catch(e){}return R}Zone.__load_patch("toString",e=&gt;{const t=Function.prototype.toString,n=d("OriginalDelegate"),o=d("Promise"),r=d("Error"),s=function(){if("function"==typeof this){const s=this[n];if(s)return"function"==typeof s?t.call(s):Object.prototype.toString.call(s);if(this===Promise){const n=e[o];if(n)return t.call(n)}if(this===Error){const n=e[r];if(n)return t.call(n)}}return t.call(this)};s[n]=t,Function.prototype.toString=s;const i=Object.prototype.toString;Object.prototype.toString=function(){return this instanceof Promise?"[object Promise]":i.call(this)}});let L=!1;if("undefined"!=typeof window)try{const e=Object.defineProperty({},"passive",{get:function(){L=!0}});window.addEventListener("test",e,e),window.removeEventListener("test",e,e)}catch(he){L=!1}const A={useG:!0},H={},F={},G=new RegExp("^"+h+"(\\w+)(true|false)$"),B=d("propagationStopped");function q(e,t){const n=(t?t(e):e)+u,o=(t?t(e):e)+l,r=h+n,s=h+o;H[e]={},H[e].false=r,H[e].true=s}function W(e,t,o){const r=o&amp;&amp;o.add||s,a=o&amp;&amp;o.rm||i,c=o&amp;&amp;o.listeners||"eventListeners",p=o&amp;&amp;o.rmAll||"removeAllListeners",f=d(r),g="."+r+":",_=function(e,t,n){if(e.isRemoved)return;const o=e.callback;"object"==typeof o&amp;&amp;o.handleEvent&amp;&amp;(e.callback=e=&gt;o.handleEvent(e),e.originalDelegate=o),e.invoke(e,t,[n]);const r=e.options;r&amp;&amp;"object"==typeof r&amp;&amp;r.once&amp;&amp;t[a].call(t,n.type,e.originalDelegate?e.originalDelegate:e.callback,r)},k=function(t){if(!(t=t||e.event))return;const n=this||t.target||e,o=n[H[t.type].false];if(o)if(1===o.length)_(o[0],n,t);else{const e=o.slice();for(let o=0;o&lt;e.length&amp;&amp;(!t||!0!==t[B]);o++)_(e[o],n,t)}},m=function(t){if(!(t=t||e.event))return;const n=this||t.target||e,o=n[H[t.type].true];if(o)if(1===o.length)_(o[0],n,t);else{const e=o.slice();for(let o=0;o&lt;e.length&amp;&amp;(!t||!0!==t[B]);o++)_(e[o],n,t)}};function y(t,o){if(!t)return!1;let s=!0;o&amp;&amp;void 0!==o.useG&amp;&amp;(s=o.useG);const i=o&amp;&amp;o.vh;let _=!0;o&amp;&amp;void 0!==o.chkDup&amp;&amp;(_=o.chkDup);let y=!1;o&amp;&amp;void 0!==o.rt&amp;&amp;(y=o.rt);let v=t;for(;v&amp;&amp;!v.hasOwnProperty(r);)v=n(v);if(!v&amp;&amp;t[r]&amp;&amp;(v=t),!v)return!1;if(v[f])return!1;const b=o&amp;&amp;o.eventNameToString,E={},w=v[f]=v[r],Z=v[d(a)]=v[a],S=v[d(c)]=v[c],D=v[d(p)]=v[p];let P;function C(e,t){return!L&amp;&amp;"object"==typeof e&amp;&amp;e?!!e.capture:L&amp;&amp;t?"boolean"==typeof e?{capture:e,passive:!0}:e?"object"==typeof e&amp;&amp;!1!==e.passive?Object.assign(Object.assign({},e),{passive:!0}):e:{passive:!0}:e}o&amp;&amp;o.prepend&amp;&amp;(P=v[d(o.prepend)]=v[o.prepend]);const O=s?function(e){if(!E.isExisting)return w.call(E.target,E.eventName,E.capture?m:k,E.options)}:function(e){return w.call(E.target,E.eventName,e.invoke,E.options)},z=s?function(e){if(!e.isRemoved){const t=H[e.eventName];let n;t&amp;&amp;(n=t[e.capture?l:u]);const o=n&amp;&amp;e.target[n];if(o)for(let r=0;r&lt;o.length;r++)if(o[r]===e){o.splice(r,1),e.isRemoved=!0,0===o.length&amp;&amp;(e.allRemoved=!0,e.target[n]=null);break}}if(e.allRemoved)return Z.call(e.target,e.eventName,e.capture?m:k,e.options)}:function(e){return Z.call(e.target,e.eventName,e.invoke,e.options)},j=o&amp;&amp;o.diff?o.diff:function(e,t){const n=typeof t;return"function"===n&amp;&amp;e.callback===t||"object"===n&amp;&amp;e.originalDelegate===t},N=Zone[d("BLACK_LISTED_EVENTS")],R=e[d("PASSIVE_EVENTS")],x=function(t,n,r,a,c=!1,h=!1){return function(){const p=this||e;let f=arguments[0];o&amp;&amp;o.transferEventName&amp;&amp;(f=o.transferEventName(f));let d=arguments[1];if(!d)return t.apply(this,arguments);if(T&amp;&amp;"uncaughtException"===f)return t.apply(this,arguments);let g=!1;if("function"!=typeof d){if(!d.handleEvent)return t.apply(this,arguments);g=!0}if(i&amp;&amp;!i(t,d,p,arguments))return;const k=L&amp;&amp;!!R&amp;&amp;-1!==R.indexOf(f),m=C(arguments[2],k);if(N)for(let e=0;e&lt;N.length;e++)if(f===N[e])return k?t.call(p,f,d,m):t.apply(this,arguments);const y=!!m&amp;&amp;("boolean"==typeof m||m.capture),v=!(!m||"object"!=typeof m)&amp;&amp;m.once,w=Zone.current;let Z=H[f];Z||(q(f,b),Z=H[f]);const S=Z[y?l:u];let D,P=p[S],O=!1;if(P){if(O=!0,_)for(let e=0;e&lt;P.length;e++)if(j(P[e],d))return}else P=p[S]=[];const z=p.constructor.name,I=F[z];I&amp;&amp;(D=I[f]),D||(D=z+n+(b?b(f):f)),E.options=m,v&amp;&amp;(E.options.once=!1),E.target=p,E.capture=y,E.eventName=f,E.isExisting=O;const x=s?A:void 0;x&amp;&amp;(x.taskData=E);const M=w.scheduleEventTask(D,d,x,r,a);return E.target=null,x&amp;&amp;(x.taskData=null),v&amp;&amp;(m.once=!0),(L||"boolean"!=typeof M.options)&amp;&amp;(M.options=m),M.target=p,M.capture=y,M.eventName=f,g&amp;&amp;(M.originalDelegate=d),h?P.unshift(M):P.push(M),c?p:void 0}};return v[r]=x(w,g,O,z,y),P&amp;&amp;(v.prependListener=x(P,".prependListener:",(function(e){return P.call(E.target,E.eventName,e.invoke,E.options)}),z,y,!0)),v[a]=function(){const t=this||e;let n=arguments[0];o&amp;&amp;o.transferEventName&amp;&amp;(n=o.transferEventName(n));const r=arguments[2],s=!!r&amp;&amp;("boolean"==typeof r||r.capture),a=arguments[1];if(!a)return Z.apply(this,arguments);if(i&amp;&amp;!i(Z,a,t,arguments))return;const c=H[n];let p;c&amp;&amp;(p=c[s?l:u]);const f=p&amp;&amp;t[p];if(f)for(let e=0;e&lt;f.length;e++){const o=f[e];if(j(o,a))return f.splice(e,1),o.isRemoved=!0,0===f.length&amp;&amp;(o.allRemoved=!0,t[p]=null,"string"==typeof n)&amp;&amp;(t[h+"ON_PROPERTY"+n]=null),o.zone.cancelTask(o),y?t:void 0}return Z.apply(this,arguments)},v[c]=function(){const t=this||e;let n=arguments[0];o&amp;&amp;o.transferEventName&amp;&amp;(n=o.transferEventName(n));const r=[],s=U(t,b?b(n):n);for(let e=0;e&lt;s.length;e++){const t=s[e];r.push(t.originalDelegate?t.originalDelegate:t.callback)}return r},v[p]=function(){const t=this||e;let n=arguments[0];if(n){o&amp;&amp;o.transferEventName&amp;&amp;(n=o.transferEventName(n));const e=H[n];if(e){const o=t[e.false],r=t[e.true];if(o){const e=o.slice();for(let t=0;t&lt;e.length;t++){const o=e[t];this[a].call(this,n,o.originalDelegate?o.originalDelegate:o.callback,o.options)}}if(r){const e=r.slice();for(let t=0;t&lt;e.length;t++){const o=e[t];this[a].call(this,n,o.originalDelegate?o.originalDelegate:o.callback,o.options)}}}}else{const e=Object.keys(t);for(let t=0;t&lt;e.length;t++){const n=G.exec(e[t]);let o=n&amp;&amp;n[1];o&amp;&amp;"removeListener"!==o&amp;&amp;this[p].call(this,o)}this[p].call(this,"removeListener")}if(y)return this},I(v[r],w),I(v[a],Z),D&amp;&amp;I(v[p],D),S&amp;&amp;I(v[c],S),!0}let v=[];for(let n=0;n&lt;t.length;n++)v[n]=y(t[n],o);return v}function U(e,t){if(!t){const n=[];for(let o in e){const r=G.exec(o);let s=r&amp;&amp;r[1];if(s&amp;&amp;(!t||s===t)){const t=e[o];if(t)for(let e=0;e&lt;t.length;e++)n.push(t[e])}}return n}let n=H[t];n||(q(t),n=H[t]);const o=e[n.false],r=e[n.true];return o?r?o.concat(r):o.slice():r?r.slice():[]}function V(e,t){const n=e.Event;n&amp;&amp;n.prototype&amp;&amp;t.patchMethod(n.prototype,"stopImmediatePropagation",e=&gt;function(t,n){t[B]=!0,e&amp;&amp;e.apply(t,n)})}function $(e,t,n,o,r){const s=Zone.__symbol__(o);if(t[s])return;const i=t[s]=t[o];t[o]=function(s,a,c){return a&amp;&amp;a.prototype&amp;&amp;r.forEach((function(t){const r=`${n}.${o}::`+t,s=a.prototype;if(s.hasOwnProperty(t)){const n=e.ObjectGetOwnPropertyDescriptor(s,t);n&amp;&amp;n.value?(n.value=e.wrapWithCurrentZone(n.value,r),e._redefineProperty(a.prototype,t,n)):s[t]&amp;&amp;(s[t]=e.wrapWithCurrentZone(s[t],r))}else s[t]&amp;&amp;(s[t]=e.wrapWithCurrentZone(s[t],r))})),i.call(t,s,a,c)},e.attachOriginToPatched(t[o],i)}const X=["absolutedeviceorientation","afterinput","afterprint","appinstalled","beforeinstallprompt","beforeprint","beforeunload","devicelight","devicemotion","deviceorientation","deviceorientationabsolute","deviceproximity","hashchange","languagechange","message","mozbeforepaint","offline","online","paint","pageshow","pagehide","popstate","rejectionhandled","storage","unhandledrejection","unload","userproximity","vrdisplayconnected","vrdisplaydisconnected","vrdisplaypresentchange"],J=["encrypted","waitingforkey","msneedkey","mozinterruptbegin","mozinterruptend"],Y=["load"],K=["blur","error","focus","load","resize","scroll","messageerror"],Q=["bounce","finish","start"],ee=["loadstart","progress","abort","error","load","progress","timeout","loadend","readystatechange"],te=["upgradeneeded","complete","abort","success","error","blocked","versionchange","close"],ne=["close","error","open","message"],oe=["error","message"],re=["abort","animationcancel","animationend","animationiteration","auxclick","beforeinput","blur","cancel","canplay","canplaythrough","change","compositionstart","compositionupdate","compositionend","cuechange","click","close","contextmenu","curechange","dblclick","drag","dragend","dragenter","dragexit","dragleave","dragover","drop","durationchange","emptied","ended","error","focus","focusin","focusout","gotpointercapture","input","invalid","keydown","keypress","keyup","load","loadstart","loadeddata","loadedmetadata","lostpointercapture","mousedown","mouseenter","mouseleave","mousemove","mouseout","mouseover","mouseup","mousewheel","orientationchange","pause","play","playing","pointercancel","pointerdown","pointerenter","pointerleave","pointerlockchange","mozpointerlockchange","webkitpointerlockerchange","pointerlockerror","mozpointerlockerror","webkitpointerlockerror","pointermove","pointout","pointerover","pointerup","progress","ratechange","reset","resize","scroll","seeked","seeking","select","selectionchange","selectstart","show","sort","stalled","submit","suspend","timeupdate","volumechange","touchcancel","touchmove","touchstart","touchend","transitioncancel","transitionend","waiting","wheel"].concat(["webglcontextrestored","webglcontextlost","webglcontextcreationerror"],["autocomplete","autocompleteerror"],["toggle"],["afterscriptexecute","beforescriptexecute","DOMContentLoaded","freeze","fullscreenchange","mozfullscreenchange","webkitfullscreenchange","msfullscreenchange","fullscreenerror","mozfullscreenerror","webkitfullscreenerror","msfullscreenerror","readystatechange","visibilitychange","resume"],X,["beforecopy","beforecut","beforepaste","copy","cut","paste","dragstart","loadend","animationstart","search","transitionrun","transitionstart","webkitanimationend","webkitanimationiteration","webkitanimationstart","webkittransitionend"],["activate","afterupdate","ariarequest","beforeactivate","beforedeactivate","beforeeditfocus","beforeupdate","cellchange","controlselect","dataavailable","datasetchanged","datasetcomplete","errorupdate","filterchange","layoutcomplete","losecapture","move","moveend","movestart","propertychange","resizeend","resizestart","rowenter","rowexit","rowsdelete","rowsinserted","command","compassneedscalibration","deactivate","help","mscontentzoom","msmanipulationstatechanged","msgesturechange","msgesturedoubletap","msgestureend","msgesturehold","msgesturestart","msgesturetap","msgotpointercapture","msinertiastart","mslostpointercapture","mspointercancel","mspointerdown","mspointerenter","mspointerhover","mspointerleave","mspointermove","mspointerout","mspointerover","mspointerup","pointerout","mssitemodejumplistitemremoved","msthumbnailclick","stop","storagecommit"]);function se(e,t,n){if(!n||0===n.length)return t;const o=n.filter(t=&gt;t.target===e);if(!o||0===o.length)return t;const r=o[0].ignoreProperties;return t.filter(e=&gt;-1===r.indexOf(e))}function ie(e,t,n,o){e&amp;&amp;P(e,se(e,t,n),o)}function ae(e,t){if(T&amp;&amp;!w)return;if(Zone[e.symbol("patchEvents")])return;const o="undefined"!=typeof WebSocket,r=t.__Zone_ignore_on_properties;if(E){const e=window,t=x?[{target:e,ignoreProperties:["error"]}]:[];ie(e,re.concat(["messageerror"]),r?r.concat(t):r,n(e)),ie(Document.prototype,re,r),void 0!==e.SVGElement&amp;&amp;ie(e.SVGElement.prototype,re,r),ie(Element.prototype,re,r),ie(HTMLElement.prototype,re,r),ie(HTMLMediaElement.prototype,J,r),ie(HTMLFrameSetElement.prototype,X.concat(K),r),ie(HTMLBodyElement.prototype,X.concat(K),r),ie(HTMLFrameElement.prototype,Y,r),ie(HTMLIFrameElement.prototype,Y,r);const o=e.HTMLMarqueeElement;o&amp;&amp;ie(o.prototype,Q,r);const s=e.Worker;s&amp;&amp;ie(s.prototype,oe,r)}const s=t.XMLHttpRequest;s&amp;&amp;ie(s.prototype,ee,r);const i=t.XMLHttpRequestEventTarget;i&amp;&amp;ie(i&amp;&amp;i.prototype,ee,r),"undefined"!=typeof IDBIndex&amp;&amp;(ie(IDBIndex.prototype,te,r),ie(IDBRequest.prototype,te,r),ie(IDBOpenDBRequest.prototype,te,r),ie(IDBDatabase.prototype,te,r),ie(IDBTransaction.prototype,te,r),ie(IDBCursor.prototype,te,r)),o&amp;&amp;ie(WebSocket.prototype,ne,r)}Zone.__load_patch("util",(n,a,c)=&gt;{c.patchOnProperties=P,c.patchMethod=z,c.bindArguments=y,c.patchMacroTask=j;const f=a.__symbol__("BLACK_LISTED_EVENTS"),d=a.__symbol__("UNPATCHED_EVENTS");n[d]&amp;&amp;(n[f]=n[d]),n[f]&amp;&amp;(a[f]=a[d]=n[f]),c.patchEventPrototype=V,c.patchEventTarget=W,c.isIEOrEdge=M,c.ObjectDefineProperty=t,c.ObjectGetOwnPropertyDescriptor=e,c.ObjectCreate=o,c.ArraySlice=r,c.patchClass=O,c.wrapWithCurrentZone=p,c.filterProperties=se,c.attachOriginToPatched=I,c._redefineProperty=Object.defineProperty,c.patchCallbacks=$,c.getGlobalObjects=()=&gt;({globalSources:F,zoneSymbolEventNames:H,eventNames:re,isBrowser:E,isMix:w,isNode:T,TRUE_STR:l,FALSE_STR:u,ZONE_SYMBOL_PREFIX:h,ADD_EVENT_LISTENER_STR:s,REMOVE_EVENT_LISTENER_STR:i})});const ce=d("zoneTask");function le(e,t,n,o){let r=null,s=null;n+=o;const i={};function a(t){const n=t.data;return n.args[0]=function(){try{t.invoke.apply(this,arguments)}finally{t.data&amp;&amp;t.data.isPeriodic||("number"==typeof n.handleId?delete i[n.handleId]:n.handleId&amp;&amp;(n.handleId[ce]=null))}},n.handleId=r.apply(e,n.args),t}function c(e){return s(e.data.handleId)}r=z(e,t+=o,n=&gt;function(r,s){if("function"==typeof s[0]){const e=f(t,s[0],{isPeriodic:"Interval"===o,delay:"Timeout"===o||"Interval"===o?s[1]||0:void 0,args:s},a,c);if(!e)return e;const n=e.data.handleId;return"number"==typeof n?i[n]=e:n&amp;&amp;(n[ce]=e),n&amp;&amp;n.ref&amp;&amp;n.unref&amp;&amp;"function"==typeof n.ref&amp;&amp;"function"==typeof n.unref&amp;&amp;(e.ref=n.ref.bind(n),e.unref=n.unref.bind(n)),"number"==typeof n||n?n:e}return n.apply(e,s)}),s=z(e,n,t=&gt;function(n,o){const r=o[0];let s;"number"==typeof r?s=i[r]:(s=r&amp;&amp;r[ce],s||(s=r)),s&amp;&amp;"string"==typeof s.type?"notScheduled"!==s.state&amp;&amp;(s.cancelFn&amp;&amp;s.data.isPeriodic||0===s.runCount)&amp;&amp;("number"==typeof r?delete i[r]:r&amp;&amp;(r[ce]=null),s.zone.cancelTask(s)):t.apply(e,o)})}function ue(e,t){if(Zone[t.symbol("patchEventTarget")])return;const{eventNames:n,zoneSymbolEventNames:o,TRUE_STR:r,FALSE_STR:s,ZONE_SYMBOL_PREFIX:i}=t.getGlobalObjects();for(let c=0;c&lt;n.length;c++){const e=n[c],t=i+(e+s),a=i+(e+r);o[e]={},o[e][s]=t,o[e][r]=a}const a=e.EventTarget;return a&amp;&amp;a.prototype?(t.patchEventTarget(e,[a&amp;&amp;a.prototype]),!0):void 0}Zone.__load_patch("legacy",e=&gt;{const t=e[Zone.__symbol__("legacyPatch")];t&amp;&amp;t()}),Zone.__load_patch("timers",e=&gt;{const t="set",n="clear";le(e,t,n,"Timeout"),le(e,t,n,"Interval"),le(e,t,n,"Immediate")}),Zone.__load_patch("requestAnimationFrame",e=&gt;{le(e,"request","cancel","AnimationFrame"),le(e,"mozRequest","mozCancel","AnimationFrame"),le(e,"webkitRequest","webkitCancel","AnimationFrame")}),Zone.__load_patch("blocking",(e,t)=&gt;{const n=["alert","prompt","confirm"];for(let o=0;o&lt;n.length;o++)z(e,n[o],(n,o,r)=&gt;function(o,s){return t.current.run(n,e,s,r)})}),Zone.__load_patch("EventTarget",(e,t,n)=&gt;{(function(e,t){t.patchEventPrototype(e,t)})(e,n),ue(e,n);const o=e.XMLHttpRequestEventTarget;o&amp;&amp;o.prototype&amp;&amp;n.patchEventTarget(e,[o.prototype]),O("MutationObserver"),O("WebKitMutationObserver"),O("IntersectionObserver"),O("FileReader")}),Zone.__load_patch("on_property",(e,t,n)=&gt;{ae(n,e)}),Zone.__load_patch("customElements",(e,t,n)=&gt;{!function(e,t){const{isBrowser:n,isMix:o}=t.getGlobalObjects();(n||o)&amp;&amp;e.customElements&amp;&amp;"customElements"in e&amp;&amp;t.patchCallbacks(t,e.customElements,"customElements","define",["connectedCallback","disconnectedCallback","adoptedCallback","attributeChangedCallback"])}(e,n)}),Zone.__load_patch("XHR",(e,t)=&gt;{!function(e){const u=e.XMLHttpRequest;if(!u)return;const h=u.prototype;let p=h[a],g=h[c];if(!p){const t=e.XMLHttpRequestEventTarget;if(t){const e=t.prototype;p=e[a],g=e[c]}}const _="readystatechange",k="scheduled";function m(e){const o=e.data,i=o.target;i[s]=!1,i[l]=!1;const u=i[r];p||(p=i[a],g=i[c]),u&amp;&amp;g.call(i,_,u);const h=i[r]=()=&gt;{if(i.readyState===i.DONE)if(!o.aborted&amp;&amp;i[s]&amp;&amp;e.state===k){const n=i[t.__symbol__("loadfalse")];if(n&amp;&amp;n.length&gt;0){const r=e.invoke;e.invoke=function(){const n=i[t.__symbol__("loadfalse")];for(let t=0;t&lt;n.length;t++)n[t]===e&amp;&amp;n.splice(t,1);o.aborted||e.state!==k||r.call(e)},n.push(e)}else e.invoke()}else o.aborted||!1!==i[s]||(i[l]=!0)};return p.call(i,_,h),i[n]||(i[n]=e),w.apply(i,o.args),i[s]=!0,e}function y(){}function v(e){const t=e.data;return t.aborted=!0,Z.apply(t.target,t.args)}const b=z(h,"open",()=&gt;function(e,t){return e[o]=0==t[2],e[i]=t[1],b.apply(e,t)}),T=d("fetchTaskAborting"),E=d("fetchTaskScheduling"),w=z(h,"send",()=&gt;function(e,n){if(!0===t.current[E])return w.apply(e,n);if(e[o])return w.apply(e,n);{const t={target:e,url:e[i],isPeriodic:!1,args:n,aborted:!1},o=f("XMLHttpRequest.send",y,t,m,v);e&amp;&amp;!0===e[l]&amp;&amp;!t.aborted&amp;&amp;o.state===k&amp;&amp;o.invoke()}}),Z=z(h,"abort",()=&gt;function(e,o){const r=e[n];if(r&amp;&amp;"string"==typeof r.type){if(null==r.cancelFn||r.data&amp;&amp;r.data.aborted)return;r.zone.cancelTask(r)}else if(!0===t.current[T])return Z.apply(e,o)})}(e);const n=d("xhrTask"),o=d("xhrSync"),r=d("xhrListener"),s=d("xhrScheduled"),i=d("xhrURL"),l=d("xhrErrorBeforeScheduled")}),Zone.__load_patch("geolocation",t=&gt;{t.navigator&amp;&amp;t.navigator.geolocation&amp;&amp;function(t,n){const o=t.constructor.name;for(let r=0;r&lt;n.length;r++){const s=n[r],i=t[s];if(i){if(!v(e(t,s)))continue;t[s]=(e=&gt;{const t=function(){return e.apply(this,y(arguments,o+"."+s))};return I(t,e),t})(i)}}}(t.navigator.geolocation,["getCurrentPosition","watchPosition"])}),Zone.__load_patch("PromiseRejectionEvent",(e,t)=&gt;{function n(t){return function(n){U(e,t).forEach(o=&gt;{const r=e.PromiseRejectionEvent;if(r){const e=new r(t,{promise:n.promise,reason:n.rejection});o.invoke(e)}})}}e.PromiseRejectionEvent&amp;&amp;(t[d("unhandledPromiseRejectionHandler")]=n("unhandledrejection"),t[d("rejectionHandledHandler")]=n("rejectionhandled"))})})?o.call(t,n,t,e):o)||(e.exports=r)}}</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">1</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure that application Source Code is not available with alternative extensions, and ensure that source code is not present within other files or data deployed to the web server, or served by the web server. </p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>class a{constructor(e,t){this._parent=e,this._name=t?t.name||"unnamed":"&lt;root&gt;",this._properties=t&amp;&amp;t.properties||{},this._zoneDelegate=new l(this,this._parent&amp;&amp;this._parent._zoneDelegate,t)}static assertZonePatched(){if(e.Promise!==C.ZoneAwarePromise)throw new Error("Zone.js has detected that ZoneAwarePromise `(window|global).Promise` has been overwritten.\nMost likely cause is that a Promise polyfill has been loaded after Zone.js (Polyfilling Promise api is not necessary when zone.js is loaded. If you must load one, do so before loading zone.js.)")}static get root(){let e=a.current;for(;e.parent;)e=e.parent;return e}static get current(){return z.zone}static get currentTask(){return j}static __load_patch(t,r){if(C.hasOwnProperty(t)){if(i)throw Error("Already loaded patch: "+t)}else if(!e["__Zone_disable_"+t]){const s="Zone:"+t;n(s),C[t]=r(e,a,O),o(s,s)}}get parent(){return this._parent}get name(){return this._name}get(e){const t=this.getZoneWith(e);if(t)return t._properties[e]}getZoneWith(e){let t=this;for(;t;){if(t._properties.hasOwnProperty(e))return t;t=t._parent}return null}fork(e){if(!e)throw new Error("ZoneSpec required!");return this._zoneDelegate.fork(this,e)}wrap(e,t){if("function"!=typeof e)throw new Error("Expecting function got: "+e);const n=this._zoneDelegate.intercept(this,e,t),o=this;return function(){return o.runGuarded(n,this,arguments,t)}}run(e,t,n,o){z={parent:z,zone:this};try{return this._zoneDelegate.invoke(this,e,t,n,o)}finally{z=z.parent}}runGuarded(e,t=null,n,o){z={parent:z,zone:this};try{try{return this._zoneDelegate.invoke(this,e,t,n,o)}catch(r){if(this._zoneDelegate.handleError(this,r))throw r}}finally{z=z.parent}}runTask(e,t,n){if(e.zone!=this)throw new Error("A task can only be run in the zone of creation! (Creation: "+(e.zone||y).name+"; Execution: "+this.name+")");if(e.state===v&amp;&amp;(e.type===P||e.type===D))return;const o=e.state!=E;o&amp;&amp;e._transitionTo(E,T),e.runCount++;const r=j;j=e,z={parent:z,zone:this};try{e.type==D&amp;&amp;e.data&amp;&amp;!e.data.isPeriodic&amp;&amp;(e.cancelFn=void 0);try{return this._zoneDelegate.invokeTask(this,e,t,n)}catch(s){if(this._zoneDelegate.handleError(this,s))throw s}}finally{e.state!==v&amp;&amp;e.state!==Z&amp;&amp;(e.type==P||e.data&amp;&amp;e.data.isPeriodic?o&amp;&amp;e._transitionTo(T,E):(e.runCount=0,this._updateTaskCount(e,-1),o&amp;&amp;e._transitionTo(v,E,v))),z=z.parent,j=r}}scheduleTask(e){if(e.zone&amp;&amp;e.zone!==this){let t=this;for(;t;){if(t===e.zone)throw Error(`can not reschedule task to ${this.name} which is descendants of the original zone ${e.zone.name}`);t=t.parent}}e._transitionTo(b,v);const t=[];e._zoneDelegates=t,e._zone=this;try{e=this._zoneDelegate.scheduleTask(this,e)}catch(n){throw e._transitionTo(Z,b,v),this._zoneDelegate.handleError(this,n),n}return e._zoneDelegates===t&amp;&amp;this._updateTaskCount(e,1),e.state==b&amp;&amp;e._transitionTo(T,b),e}scheduleMicroTask(e,t,n,o){return this.scheduleTask(new u(S,e,t,n,o,void 0))}scheduleMacroTask(e,t,n,o,r){return this.scheduleTask(new u(D,e,t,n,o,r))}scheduleEventTask(e,t,n,o,r){return this.scheduleTask(new u(P,e,t,n,o,r))}cancelTask(e){if(e.zone!=this)throw new Error("A task can only be cancelled in the zone of creation! (Creation: "+(e.zone||y).name+"; Execution: "+this.name+")");e._transitionTo(w,T,E);try{this._zoneDelegate.cancelTask(this,e)}catch(t){throw e._transitionTo(Z,w),this._zoneDelegate.handleError(this,t),t}return this._updateTaskCount(e,-1),e._transitionTo(v,w),e.runCount=0,e}_updateTaskCount(e,t){const n=e._zoneDelegates;-1==t&amp;&amp;(e._zoneDelegates=null);for(let o=0;o&lt;n.length;o++)n[o]._updateTaskCount(e.type,t)}}a.__symbol__=s;const c={name:"",onHasTask:(e,t,n,o)=&gt;e.hasTask(n,o),onScheduleTask:(e,t,n,o)=&gt;e.scheduleTask(n,o),onInvokeTask:(e,t,n,o,r,s)=&gt;e.invokeTask(n,o,r,s),onCancelTask:(e,t,n,o)=&gt;e.cancelTask(n,o)};class l{constructor(e,t,n){this._taskCounts={microTask:0,macroTask:0,eventTask:0},this.zone=e,this._parentDelegate=t,this._forkZS=n&amp;&amp;(n&amp;&amp;n.onFork?n:t._forkZS),this._forkDlgt=n&amp;&amp;(n.onFork?t:t._forkDlgt),this._forkCurrZone=n&amp;&amp;(n.onFork?this.zone:t._forkCurrZone),this._interceptZS=n&amp;&amp;(n.onIntercept?n:t._interceptZS),this._interceptDlgt=n&amp;&amp;(n.onIntercept?t:t._interceptDlgt),this._interceptCurrZone=n&amp;&amp;(n.onIntercept?this.zone:t._interceptCurrZone),this._invokeZS=n&amp;&amp;(n.onInvoke?n:t._invokeZS),this._invokeDlgt=n&amp;&amp;(n.onInvoke?t:t._invokeDlgt),this._invokeCurrZone=n&amp;&amp;(n.onInvoke?this.zone:t._invokeCurrZone),this._handleErrorZS=n&amp;&amp;(n.onHandleError?n:t._handleErrorZS),this._handleErrorDlgt=n&amp;&amp;(n.onHandleError?t:t._handleErrorDlgt),this._handleErrorCurrZone=n&amp;&amp;(n.onHandleError?this.zone:t._handleErrorCurrZone),this._scheduleTaskZS=n&amp;&amp;(n.onScheduleTask?n:t._scheduleTaskZS),this._scheduleTaskDlgt=n&amp;&amp;(n.onScheduleTask?t:t._scheduleTaskDlgt),this._scheduleTaskCurrZone=n&amp;&amp;(n.onScheduleTask?this.zone:t._scheduleTaskCurrZone),this._invokeTaskZS=n&amp;&amp;(n.onInvokeTask?n:t._invokeTaskZS),this._invokeTaskDlgt=n&amp;&amp;(n.onInvokeTask?t:t._invokeTaskDlgt),this._invokeTaskCurrZone=n&amp;&amp;(n.onInvokeTask?this.zone:t._invokeTaskCurrZone),this._cancelTaskZS=n&amp;&amp;(n.onCancelTask?n:t._cancelTaskZS),this._cancelTaskDlgt=n&amp;&amp;(n.onCancelTask?t:t._cancelTaskDlgt),this._cancelTaskCurrZone=n&amp;&amp;(n.onCancelTask?this.zone:t._cancelTaskCurrZone),this._hasTaskZS=null,this._hasTaskDlgt=null,this._hasTaskDlgtOwner=null,this._hasTaskCurrZone=null;const o=n&amp;&amp;n.onHasTask;(o||t&amp;&amp;t._hasTaskZS)&amp;&amp;(this._hasTaskZS=o?n:c,this._hasTaskDlgt=t,this._hasTaskDlgtOwner=this,this._hasTaskCurrZone=e,n.onScheduleTask||(this._scheduleTaskZS=c,this._scheduleTaskDlgt=t,this._scheduleTaskCurrZone=this.zone),n.onInvokeTask||(this._invokeTaskZS=c,this._invokeTaskDlgt=t,this._invokeTaskCurrZone=this.zone),n.onCancelTask||(this._cancelTaskZS=c,this._cancelTaskDlgt=t,this._cancelTaskCurrZone=this.zone))}fork(e,t){return this._forkZS?this._forkZS.onFork(this._forkDlgt,this.zone,e,t):new a(e,t)}intercept(e,t,n){return this._interceptZS?this._interceptZS.onIntercept(this._interceptDlgt,this._interceptCurrZone,e,t,n):t}invoke(e,t,n,o,r){return this._invokeZS?this._invokeZS.onInvoke(this._invokeDlgt,this._invokeCurrZone,e,t,n,o,r):t.apply(n,o)}handleError(e,t){return!this._handleErrorZS||this._handleErrorZS.onHandleError(this._handleErrorDlgt,this._handleErrorCurrZone,e,t)}scheduleTask(e,t){let n=t;if(this._scheduleTaskZS)this._hasTaskZS&amp;&amp;n._zoneDelegates.push(this._hasTaskDlgtOwner),n=this._scheduleTaskZS.onScheduleTask(this._scheduleTaskDlgt,this._scheduleTaskCurrZone,e,t),n||(n=t);else if(t.scheduleFn)t.scheduleFn(t);else{if(t.type!=S)throw new Error("Task is missing scheduleFn.");k(t)}return n}invokeTask(e,t,n,o){return this._invokeTaskZS?this._invokeTaskZS.onInvokeTask(this._invokeTaskDlgt,this._invokeTaskCurrZone,e,t,n,o):t.callback.apply(n,o)}cancelTask(e,t){let n;if(this._cancelTaskZS)n=this._cancelTaskZS.onCancelTask(this._cancelTaskDlgt,this._cancelTaskCurrZone,e,t);else{if(!t.cancelFn)throw Error("Task is not cancelable");n=t.cancelFn(t)}return n}hasTask(e,t){try{this._hasTaskZS&amp;&amp;this._hasTaskZS.onHasTask(this._hasTaskDlgt,this._hasTaskCurrZone,e,t)}catch(n){this.handleError(e,n)}}_updateTaskCount(e,t){const n=this._taskCounts,o=n[e],r=n[e]=o+t;if(r&lt;0)throw new Error("More tasks executed then were scheduled.");0!=o&amp;&amp;0!=r||this.hasTask(this.zone,{microTask:n.microTask&gt;0,macroTask:n.macroTask&gt;0,eventTask:n.eventTask&gt;0,change:e})}}class u{constructor(t,n,o,r,s,i){if(this._zone=null,this.runCount=0,this._zoneDelegates=null,this._state="notScheduled",this.type=t,this.source=n,this.data=r,this.scheduleFn=s,this.cancelFn=i,!o)throw new Error("callback is not defined");this.callback=o;const a=this;this.invoke=t===P&amp;&amp;r&amp;&amp;r.useG?u.invokeTask:function(){return u.invokeTask.call(e,a,this,arguments)}}static invokeTask(e,t,n){e||(e=this),I++;try{return e.runCount++,e.zone.runTask(e,t,n)}finally{1==I&amp;&amp;m(),I--}}get zone(){return this._zone}get state(){return this._state}cancelScheduleRequest(){this._transitionTo(v,b)}_transitionTo(e,t,n){if(this._state!==t&amp;&amp;this._state!==n)throw new Error(`${this.type} '${this.source}': can not transition to '${e}', expecting state '${t}'${n?" or '"+n+"'":""}, was '${this._state}'.`);this._state=e,e==v&amp;&amp;(this._zoneDelegates=null)}toString(){return this.data&amp;&amp;void 0!==this.data.handleId?this.data.handleId.toString():Object.prototype.toString.call(this)}toJSON(){return{type:this.type,state:this.state,source:this.source,zone:this.zone.name,runCount:this.runCount}}}const h=s("setTimeout"),p=s("Promise"),f=s("then");let d,g=[],_=!1;function k(t){if(0===I&amp;&amp;0===g.length)if(d||e[p]&amp;&amp;(d=e[p].resolve(0)),d){let e=d[f];e||(e=d.then),e.call(d,m)}else e[h](m,0);t&amp;&amp;g.push(t)}function m(){if(!_){for(_=!0;g.length;){const t=g;g=[];for(let n=0;n&lt;t.length;n++){const o=t[n];try{o.zone.runTask(o,null,null)}catch(e){O.onUnhandledError(e)}}}O.microtaskDrainDone(),_=!1}}const y={name:"NO ZONE"},v="notScheduled",b="scheduling",T="scheduled",E="running",w="canceling",Z="unknown",S="microTask",D="macroTask",P="eventTask",C={},O={symbol:s,currentZoneFrame:()=&gt;z,onUnhandledError:N,microtaskDrainDone:N,scheduleMicroTask:k,showUncaughtError:()=&gt;!a[s("ignoreConsoleErrorUncaughtError")],patchEventTarget:()=&gt;[],patchOnProperties:N,patchMethod:()=&gt;N,bindArguments:()=&gt;[],patchThen:()=&gt;N,patchMacroTask:()=&gt;N,setNativePromise:e=&gt;{e&amp;&amp;"function"==typeof e.resolve&amp;&amp;(d=e.resolve(0))},patchEventPrototype:()=&gt;N,isIEOrEdge:()=&gt;!1,getGlobalObjects:()=&gt;{},ObjectDefineProperty:()=&gt;N,ObjectGetOwnPropertyDescriptor:()=&gt;{},ObjectCreate:()=&gt;{},ArraySlice:()=&gt;[],patchClass:()=&gt;N,wrapWithCurrentZone:()=&gt;N,filterProperties:()=&gt;[],attachOriginToPatched:()=&gt;N,_redefineProperty:()=&gt;N,patchCallbacks:()=&gt;N};let z={parent:null,zone:new a(null,null)},j=null,I=0;function N(){}o("Zone","Zone"),e.Zone=a}("undefined"!=typeof window&amp;&amp;window||"undefined"!=typeof self&amp;&amp;self||global),Zone.__load_patch("ZoneAwarePromise",(e,t,n)=&gt;{const o=Object.getOwnPropertyDescriptor,r=Object.defineProperty,s=n.symbol,i=[],a=!0===e[s("DISABLE_WRAPPING_UNCAUGHT_PROMISE_REJECTION")],c=s("Promise"),l=s("then");n.onUnhandledError=e=&gt;{if(n.showUncaughtError()){const t=e&amp;&amp;e.rejection;t?console.error("Unhandled Promise rejection:",t instanceof Error?t.message:t,"; Zone:",e.zone.name,"; Task:",e.task&amp;&amp;e.task.source,"; Value:",t,t instanceof Error?t.stack:void 0):console.error(e)}},n.microtaskDrainDone=()=&gt;{for(;i.length;){const t=i.shift();try{t.zone.runGuarded(()=&gt;{throw t})}catch(e){h(e)}}};const u=s("unhandledPromiseRejectionHandler");function h(e){n.onUnhandledError(e);try{const n=t[u];"function"==typeof n&amp;&amp;n.call(this,e)}catch(o){}}function p(e){return e&amp;&amp;e.then}function f(e){return e}function d(e){return O.reject(e)}const g=s("state"),_=s("value"),k=s("finally"),m=s("parentPromiseValue"),y=s("parentPromiseState"),v=null,b=!0,T=!1;function E(e,t){return n=&gt;{try{Z(e,t,n)}catch(o){Z(e,!1,o)}}}const w=s("currentTaskTrace");function Z(e,o,s){const c=function(){let e=!1;return function(t){return function(){e||(e=!0,t.apply(null,arguments))}}}();if(e===s)throw new TypeError("Promise resolved with itself");if(e[g]===v){let h=null;try{"object"!=typeof s&amp;&amp;"function"!=typeof s||(h=s&amp;&amp;s.then)}catch(u){return c(()=&gt;{Z(e,!1,u)})(),e}if(o!==T&amp;&amp;s instanceof O&amp;&amp;s.hasOwnProperty(g)&amp;&amp;s.hasOwnProperty(_)&amp;&amp;s[g]!==v)D(s),Z(e,s[g],s[_]);else if(o!==T&amp;&amp;"function"==typeof h)try{h.call(s,c(E(e,o)),c(E(e,!1)))}catch(u){c(()=&gt;{Z(e,!1,u)})()}else{e[g]=o;const c=e[_];if(e[_]=s,e[k]===k&amp;&amp;o===b&amp;&amp;(e[g]=e[y],e[_]=e[m]),o===T&amp;&amp;s instanceof Error){const e=t.currentTask&amp;&amp;t.currentTask.data&amp;&amp;t.currentTask.data.__creationTrace__;e&amp;&amp;r(s,w,{configurable:!0,enumerable:!1,writable:!0,value:e})}for(let t=0;t&lt;c.length;)P(e,c[t++],c[t++],c[t++],c[t++]);if(0==c.length&amp;&amp;o==T){e[g]=0;let o=s;if(!a)try{throw new Error("Uncaught (in promise): "+((l=s)&amp;&amp;l.toString===Object.prototype.toString?(l.constructor&amp;&amp;l.constructor.name||"")+": "+JSON.stringify(l):l?l.toString():Object.prototype.toString.call(l))+(s&amp;&amp;s.stack?"\n"+s.stack:""))}catch(u){o=u}o.rejection=s,o.promise=e,o.zone=t.current,o.task=t.currentTask,i.push(o),n.scheduleMicroTask()}}}var l;return e}const S=s("rejectionHandledHandler");function D(e){if(0===e[g]){try{const n=t[S];n&amp;&amp;"function"==typeof n&amp;&amp;n.call(this,{rejection:e[_],promise:e})}catch(n){}e[g]=T;for(let t=0;t&lt;i.length;t++)e===i[t].promise&amp;&amp;i.splice(t,1)}}function P(e,t,n,o,r){D(e);const s=e[g],i=s?"function"==typeof o?o:f:"function"==typeof r?r:d;t.scheduleMicroTask("Promise.then",()=&gt;{try{const o=e[_],r=!!n&amp;&amp;k===n[k];r&amp;&amp;(n[m]=o,n[y]=s);const a=t.run(i,void 0,r&amp;&amp;i!==d&amp;&amp;i!==f?[]:[o]);Z(n,!0,a)}catch(o){Z(n,!1,o)}},n)}const C=function(){};class O{static toString(){return"function ZoneAwarePromise() { [native code] }"}static resolve(e){return Z(new this(null),b,e)}static reject(e){return Z(new this(null),T,e)}static race(e){let t,n,o=new this((e,o)=&gt;{t=e,n=o});function r(e){t(e)}function s(e){n(e)}for(let i of e)p(i)||(i=this.resolve(i)),i.then(r,s);return o}static all(e){return O.allWithCallback(e)}static allSettled(e){return(this&amp;&amp;this.prototype instanceof O?this:O).allWithCallback(e,{thenCallback:e=&gt;({status:"fulfilled",value:e}),errorCallback:e=&gt;({status:"rejected",reason:e})})}static allWithCallback(e,t){let n,o,r=new this((e,t)=&gt;{n=e,o=t}),s=2,i=0;const a=[];for(let l of e){p(l)||(l=this.resolve(l));const e=i;try{l.then(o=&gt;{a[e]=t?t.thenCallback(o):o,s--,0===s&amp;&amp;n(a)},r=&gt;{t?(a[e]=t.errorCallback(r),s--,0===s&amp;&amp;n(a)):o(r)})}catch(c){o(c)}s++,i++}return s-=2,0===s&amp;&amp;n(a),r}constructor(e){const t=this;if(!(t instanceof O))throw new Error("Must be an instanceof Promise.");t[g]=v,t[_]=[];try{e&amp;&amp;e(E(t,b),E(t,T))}catch(n){Z(t,!1,n)}}get[Symbol.toStringTag](){return"Promise"}get[Symbol.species](){return O}then(e,n){let o=this.constructor[Symbol.species];o&amp;&amp;"function"==typeof o||(o=this.constructor||O);const r=new o(C),s=t.current;return this[g]==v?this[_].push(s,r,e,n):P(this,s,r,e,n),r}catch(e){return this.then(null,e)}finally(e){let n=this.constructor[Symbol.species];n&amp;&amp;"function"==typeof n||(n=O);const o=new n(C);o[k]=k;const r=t.current;return this[g]==v?this[_].push(r,o,e,e):P(this,r,o,e,e),o}}O.resolve=O.resolve,O.reject=O.reject,O.race=O.race,O.all=O.all;const z=e[c]=e.Promise,j=t.__symbol__("ZoneAwarePromise");let I=o(e,"Promise");I&amp;&amp;!I.configurable||(I&amp;&amp;delete I.writable,I&amp;&amp;delete I.value,I||(I={configurable:!0,enumerable:!0}),I.get=function(){return e[j]?e[j]:e[c]},I.set=function(t){t===O?e[j]=t:(e[c]=t,t.prototype[l]||R(t),n.setNativePromise(t))},r(e,"Promise",I)),e.Promise=O;const N=s("thenPatched");function R(e){const t=e.prototype,n=o(t,"then");if(n&amp;&amp;(!1===n.writable||!n.configurable))return;const r=t.then;t[l]=r,e.prototype.then=function(e,t){return new O((e,t)=&gt;{r.call(this,e,t)}).then(e,t)},e[N]=!0}if(n.patchThen=R,z){R(z);const t=e.fetch;"function"==typeof t&amp;&amp;(e[n.symbol("fetch")]=t,e.fetch=(x=t,function(){let e=x.apply(this,arguments);if(e instanceof O)return e;let t=e.constructor;return t[N]||R(t),e}))}var x;return Promise[t.__symbol__("uncaughtPromiseErrors")]=i,O});const e=Object.getOwnPropertyDescriptor,t=Object.defineProperty,n=Object.getPrototypeOf,o=Object.create,r=Array.prototype.slice,s="addEventListener",i="removeEventListener",a=Zone.__symbol__(s),c=Zone.__symbol__(i),l="true",u="false",h=Zone.__symbol__("");function p(e,t){return Zone.current.wrap(e,t)}function f(e,t,n,o,r){return Zone.current.scheduleMacroTask(e,t,n,o,r)}const d=Zone.__symbol__,g="undefined"!=typeof window,_=g?window:void 0,k=g&amp;&amp;_||"object"==typeof self&amp;&amp;self||global,m=[null];function y(e,t){for(let n=e.length-1;n&gt;=0;n--)"function"==typeof e[n]&amp;&amp;(e[n]=p(e[n],t+"_"+n));return e}function v(e){return!e||!1!==e.writable&amp;&amp;!("function"==typeof e.get&amp;&amp;void 0===e.set)}const b="undefined"!=typeof WorkerGlobalScope&amp;&amp;self instanceof WorkerGlobalScope,T=!("nw"in k)&amp;&amp;void 0!==k.process&amp;&amp;"[object process]"==={}.toString.call(k.process),E=!T&amp;&amp;!b&amp;&amp;!(!g||!_.HTMLElement),w=void 0!==k.process&amp;&amp;"[object process]"==={}.toString.call(k.process)&amp;&amp;!b&amp;&amp;!(!g||!_.HTMLElement),Z={},S=function(e){if(!(e=e||k.event))return;let t=Z[e.type];t||(t=Z[e.type]=d("ON_PROPERTY"+e.type));const n=this||e.target||k,o=n[t];let r;if(E&amp;&amp;n===_&amp;&amp;"error"===e.type){const t=e;r=o&amp;&amp;o.call(this,t.message,t.filename,t.lineno,t.colno,t.error),!0===r&amp;&amp;e.preventDefault()}else r=o&amp;&amp;o.apply(this,arguments),null==r||r||e.preventDefault();return r};function D(n,o,r){let s=e(n,o);if(!s&amp;&amp;r&amp;&amp;e(r,o)&amp;&amp;(s={enumerable:!0,configurable:!0}),!s||!s.configurable)return;const i=d("on"+o+"patched");if(n.hasOwnProperty(i)&amp;&amp;n[i])return;delete s.writable,delete s.value;const a=s.get,c=s.set,l=o.substr(2);let u=Z[l];u||(u=Z[l]=d("ON_PROPERTY"+l)),s.set=function(e){let t=this;t||n!==k||(t=k),t&amp;&amp;(t[u]&amp;&amp;t.removeEventListener(l,S),c&amp;&amp;c.apply(t,m),"function"==typeof e?(t[u]=e,t.addEventListener(l,S,!1)):t[u]=null)},s.get=function(){let e=this;if(e||n!==k||(e=k),!e)return null;const t=e[u];if(t)return t;if(a){let t=a&amp;&amp;a.call(this);if(t)return s.set.call(this,t),"function"==typeof e.removeAttribute&amp;&amp;e.removeAttribute(o),t}return null},t(n,o,s),n[i]=!0}function P(e,t,n){if(t)for(let o=0;o&lt;t.length;o++)D(e,"on"+t[o],n);else{const t=[];for(const n in e)"on"==n.substr(0,2)&amp;&amp;t.push(n);for(let o=0;o&lt;t.length;o++)D(e,t[o],n)}}const C=d("originalInstance");function O(e){const n=k[e];if(!n)return;k[d(e)]=n,k[e]=function(){const t=y(arguments,e);switch(t.length){case 0:this[C]=new n;break;case 1:this[C]=new n(t[0]);break;case 2:this[C]=new n(t[0],t[1]);break;case 3:this[C]=new n(t[0],t[1],t[2]);break;case 4:this[C]=new n(t[0],t[1],t[2],t[3]);break;default:throw new Error("Arg list too long.")}},I(k[e],n);const o=new n((function(){}));let r;for(r in o)"XMLHttpRequest"===e&amp;&amp;"responseBlob"===r||function(n){"function"==typeof o[n]?k[e].prototype[n]=function(){return this[C][n].apply(this[C],arguments)}:t(k[e].prototype,n,{set:function(t){"function"==typeof t?(this[C][n]=p(t,e+"."+n),I(this[C][n],t)):this[C][n]=t},get:function(){return this[C][n]}})}(r);for(r in n)"prototype"!==r&amp;&amp;n.hasOwnProperty(r)&amp;&amp;(k[e][r]=n[r])}function z(t,o,r){let s=t;for(;s&amp;&amp;!s.hasOwnProperty(o);)s=n(s);!s&amp;&amp;t[o]&amp;&amp;(s=t);const i=d(o);let a=null;if(s&amp;&amp;!(a=s[i])&amp;&amp;(a=s[i]=s[o],v(s&amp;&amp;e(s,o)))){const e=r(a,i,o);s[o]=function(){return e(this,arguments)},I(s[o],a)}return a}function j(e,t,n){let o=null;function r(e){const t=e.data;return t.args[t.cbIdx]=function(){e.invoke.apply(this,arguments)},o.apply(t.target,t.args),e}o=z(e,t,e=&gt;function(t,o){const s=n(t,o);return s.cbIdx&gt;=0&amp;&amp;"function"==typeof o[s.cbIdx]?f(s.name,o[s.cbIdx],s,r):e.apply(t,o)})}function I(e,t){e[d("OriginalDelegate")]=t}let N=!1,R=!1;function x(){try{const e=_.navigator.userAgent;if(-1!==e.indexOf("MSIE ")||-1!==e.indexOf("Trident/"))return!0}catch(e){}return!1}function M(){if(N)return R;N=!0;try{const e=_.navigator.userAgent;-1===e.indexOf("MSIE ")&amp;&amp;-1===e.indexOf("Trident/")&amp;&amp;-1===e.indexOf("Edge/")||(R=!0)}catch(e){}return R}Zone.__load_patch("toString",e=&gt;{const t=Function.prototype.toString,n=d("OriginalDelegate"),o=d("Promise"),r=d("Error"),s=function(){if("function"==typeof this){const s=this[n];if(s)return"function"==typeof s?t.call(s):Object.prototype.toString.call(s);if(this===Promise){const n=e[o];if(n)return t.call(n)}if(this===Error){const n=e[r];if(n)return t.call(n)}}return t.call(this)};s[n]=t,Function.prototype.toString=s;const i=Object.prototype.toString;Object.prototype.toString=function(){return this instanceof Promise?"[object Promise]":i.call(this)}});let L=!1;if("undefined"!=typeof window)try{const e=Object.defineProperty({},"passive",{get:function(){L=!0}});window.addEventListener("test",e,e),window.removeEventListener("test",e,e)}catch(he){L=!1}const A={useG:!0},H={},F={},G=new RegExp("^"+h+"(\\w+)(true|false)$"),B=d("propagationStopped");function q(e,t){const n=(t?t(e):e)+u,o=(t?t(e):e)+l,r=h+n,s=h+o;H[e]={},H[e].false=r,H[e].true=s}function W(e,t,o){const r=o&amp;&amp;o.add||s,a=o&amp;&amp;o.rm||i,c=o&amp;&amp;o.listeners||"eventListeners",p=o&amp;&amp;o.rmAll||"removeAllListeners",f=d(r),g="."+r+":",_=function(e,t,n){if(e.isRemoved)return;const o=e.callback;"object"==typeof o&amp;&amp;o.handleEvent&amp;&amp;(e.callback=e=&gt;o.handleEvent(e),e.originalDelegate=o),e.invoke(e,t,[n]);const r=e.options;r&amp;&amp;"object"==typeof r&amp;&amp;r.once&amp;&amp;t[a].call(t,n.type,e.originalDelegate?e.originalDelegate:e.callback,r)},k=function(t){if(!(t=t||e.event))return;const n=this||t.target||e,o=n[H[t.type].false];if(o)if(1===o.length)_(o[0],n,t);else{const e=o.slice();for(let o=0;o&lt;e.length&amp;&amp;(!t||!0!==t[B]);o++)_(e[o],n,t)}},m=function(t){if(!(t=t||e.event))return;const n=this||t.target||e,o=n[H[t.type].true];if(o)if(1===o.length)_(o[0],n,t);else{const e=o.slice();for(let o=0;o&lt;e.length&amp;&amp;(!t||!0!==t[B]);o++)_(e[o],n,t)}};function y(t,o){if(!t)return!1;let s=!0;o&amp;&amp;void 0!==o.useG&amp;&amp;(s=o.useG);const i=o&amp;&amp;o.vh;let _=!0;o&amp;&amp;void 0!==o.chkDup&amp;&amp;(_=o.chkDup);let y=!1;o&amp;&amp;void 0!==o.rt&amp;&amp;(y=o.rt);let v=t;for(;v&amp;&amp;!v.hasOwnProperty(r);)v=n(v);if(!v&amp;&amp;t[r]&amp;&amp;(v=t),!v)return!1;if(v[f])return!1;const b=o&amp;&amp;o.eventNameToString,E={},w=v[f]=v[r],Z=v[d(a)]=v[a],S=v[d(c)]=v[c],D=v[d(p)]=v[p];let P;function C(e,t){return!L&amp;&amp;"object"==typeof e&amp;&amp;e?!!e.capture:L&amp;&amp;t?"boolean"==typeof e?{capture:e,passive:!0}:e?"object"==typeof e&amp;&amp;!1!==e.passive?Object.assign(Object.assign({},e),{passive:!0}):e:{passive:!0}:e}o&amp;&amp;o.prepend&amp;&amp;(P=v[d(o.prepend)]=v[o.prepend]);const O=s?function(e){if(!E.isExisting)return w.call(E.target,E.eventName,E.capture?m:k,E.options)}:function(e){return w.call(E.target,E.eventName,e.invoke,E.options)},z=s?function(e){if(!e.isRemoved){const t=H[e.eventName];let n;t&amp;&amp;(n=t[e.capture?l:u]);const o=n&amp;&amp;e.target[n];if(o)for(let r=0;r&lt;o.length;r++)if(o[r]===e){o.splice(r,1),e.isRemoved=!0,0===o.length&amp;&amp;(e.allRemoved=!0,e.target[n]=null);break}}if(e.allRemoved)return Z.call(e.target,e.eventName,e.capture?m:k,e.options)}:function(e){return Z.call(e.target,e.eventName,e.invoke,e.options)},j=o&amp;&amp;o.diff?o.diff:function(e,t){const n=typeof t;return"function"===n&amp;&amp;e.callback===t||"object"===n&amp;&amp;e.originalDelegate===t},N=Zone[d("BLACK_LISTED_EVENTS")],R=e[d("PASSIVE_EVENTS")],x=function(t,n,r,a,c=!1,h=!1){return function(){const p=this||e;let f=arguments[0];o&amp;&amp;o.transferEventName&amp;&amp;(f=o.transferEventName(f));let d=arguments[1];if(!d)return t.apply(this,arguments);if(T&amp;&amp;"uncaughtException"===f)return t.apply(this,arguments);let g=!1;if("function"!=typeof d){if(!d.handleEvent)return t.apply(this,arguments);g=!0}if(i&amp;&amp;!i(t,d,p,arguments))return;const k=L&amp;&amp;!!R&amp;&amp;-1!==R.indexOf(f),m=C(arguments[2],k);if(N)for(let e=0;e&lt;N.length;e++)if(f===N[e])return k?t.call(p,f,d,m):t.apply(this,arguments);const y=!!m&amp;&amp;("boolean"==typeof m||m.capture),v=!(!m||"object"!=typeof m)&amp;&amp;m.once,w=Zone.current;let Z=H[f];Z||(q(f,b),Z=H[f]);const S=Z[y?l:u];let D,P=p[S],O=!1;if(P){if(O=!0,_)for(let e=0;e&lt;P.length;e++)if(j(P[e],d))return}else P=p[S]=[];const z=p.constructor.name,I=F[z];I&amp;&amp;(D=I[f]),D||(D=z+n+(b?b(f):f)),E.options=m,v&amp;&amp;(E.options.once=!1),E.target=p,E.capture=y,E.eventName=f,E.isExisting=O;const x=s?A:void 0;x&amp;&amp;(x.taskData=E);const M=w.scheduleEventTask(D,d,x,r,a);return E.target=null,x&amp;&amp;(x.taskData=null),v&amp;&amp;(m.once=!0),(L||"boolean"!=typeof M.options)&amp;&amp;(M.options=m),M.target=p,M.capture=y,M.eventName=f,g&amp;&amp;(M.originalDelegate=d),h?P.unshift(M):P.push(M),c?p:void 0}};return v[r]=x(w,g,O,z,y),P&amp;&amp;(v.prependListener=x(P,".prependListener:",(function(e){return P.call(E.target,E.eventName,e.invoke,E.options)}),z,y,!0)),v[a]=function(){const t=this||e;let n=arguments[0];o&amp;&amp;o.transferEventName&amp;&amp;(n=o.transferEventName(n));const r=arguments[2],s=!!r&amp;&amp;("boolean"==typeof r||r.capture),a=arguments[1];if(!a)return Z.apply(this,arguments);if(i&amp;&amp;!i(Z,a,t,arguments))return;const c=H[n];let p;c&amp;&amp;(p=c[s?l:u]);const f=p&amp;&amp;t[p];if(f)for(let e=0;e&lt;f.length;e++){const o=f[e];if(j(o,a))return f.splice(e,1),o.isRemoved=!0,0===f.length&amp;&amp;(o.allRemoved=!0,t[p]=null,"string"==typeof n)&amp;&amp;(t[h+"ON_PROPERTY"+n]=null),o.zone.cancelTask(o),y?t:void 0}return Z.apply(this,arguments)},v[c]=function(){const t=this||e;let n=arguments[0];o&amp;&amp;o.transferEventName&amp;&amp;(n=o.transferEventName(n));const r=[],s=U(t,b?b(n):n);for(let e=0;e&lt;s.length;e++){const t=s[e];r.push(t.originalDelegate?t.originalDelegate:t.callback)}return r},v[p]=function(){const t=this||e;let n=arguments[0];if(n){o&amp;&amp;o.transferEventName&amp;&amp;(n=o.transferEventName(n));const e=H[n];if(e){const o=t[e.false],r=t[e.true];if(o){const e=o.slice();for(let t=0;t&lt;e.length;t++){const o=e[t];this[a].call(this,n,o.originalDelegate?o.originalDelegate:o.callback,o.options)}}if(r){const e=r.slice();for(let t=0;t&lt;e.length;t++){const o=e[t];this[a].call(this,n,o.originalDelegate?o.originalDelegate:o.callback,o.options)}}}}else{const e=Object.keys(t);for(let t=0;t&lt;e.length;t++){const n=G.exec(e[t]);let o=n&amp;&amp;n[1];o&amp;&amp;"removeListener"!==o&amp;&amp;this[p].call(this,o)}this[p].call(this,"removeListener")}if(y)return this},I(v[r],w),I(v[a],Z),D&amp;&amp;I(v[p],D),S&amp;&amp;I(v[c],S),!0}let v=[];for(let n=0;n&lt;t.length;n++)v[n]=y(t[n],o);return v}function U(e,t){if(!t){const n=[];for(let o in e){const r=G.exec(o);let s=r&amp;&amp;r[1];if(s&amp;&amp;(!t||s===t)){const t=e[o];if(t)for(let e=0;e&lt;t.length;e++)n.push(t[e])}}return n}let n=H[t];n||(q(t),n=H[t]);const o=e[n.false],r=e[n.true];return o?r?o.concat(r):o.slice():r?r.slice():[]}function V(e,t){const n=e.Event;n&amp;&amp;n.prototype&amp;&amp;t.patchMethod(n.prototype,"stopImmediatePropagation",e=&gt;function(t,n){t[B]=!0,e&amp;&amp;e.apply(t,n)})}function $(e,t,n,o,r){const s=Zone.__symbol__(o);if(t[s])return;const i=t[s]=t[o];t[o]=function(s,a,c){return a&amp;&amp;a.prototype&amp;&amp;r.forEach((function(t){const r=`${n}.${o}::`+t,s=a.prototype;if(s.hasOwnProperty(t)){const n=e.ObjectGetOwnPropertyDescriptor(s,t);n&amp;&amp;n.value?(n.value=e.wrapWithCurrentZone(n.value,r),e._redefineProperty(a.prototype,t,n)):s[t]&amp;&amp;(s[t]=e.wrapWithCurrentZone(s[t],r))}else s[t]&amp;&amp;(s[t]=e.wrapWithCurrentZone(s[t],r))})),i.call(t,s,a,c)},e.attachOriginToPatched(t[o],i)}const X=["absolutedeviceorientation","afterinput","afterprint","appinstalled","beforeinstallprompt","beforeprint","beforeunload","devicelight","devicemotion","deviceorientation","deviceorientationabsolute","deviceproximity","hashchange","languagechange","message","mozbeforepaint","offline","online","paint","pageshow","pagehide","popstate","rejectionhandled","storage","unhandledrejection","unload","userproximity","vrdisplayconnected","vrdisplaydisconnected","vrdisplaypresentchange"],J=["encrypted","waitingforkey","msneedkey","mozinterruptbegin","mozinterruptend"],Y=["load"],K=["blur","error","focus","load","resize","scroll","messageerror"],Q=["bounce","finish","start"],ee=["loadstart","progress","abort","error","load","progress","timeout","loadend","readystatechange"],te=["upgradeneeded","complete","abort","success","error","blocked","versionchange","close"],ne=["close","error","open","message"],oe=["error","message"],re=["abort","animationcancel","animationend","animationiteration","auxclick","beforeinput","blur","cancel","canplay","canplaythrough","change","compositionstart","compositionupdate","compositionend","cuechange","click","close","contextmenu","curechange","dblclick","drag","dragend","dragenter","dragexit","dragleave","dragover","drop","durationchange","emptied","ended","error","focus","focusin","focusout","gotpointercapture","input","invalid","keydown","keypress","keyup","load","loadstart","loadeddata","loadedmetadata","lostpointercapture","mousedown","mouseenter","mouseleave","mousemove","mouseout","mouseover","mouseup","mousewheel","orientationchange","pause","play","playing","pointercancel","pointerdown","pointerenter","pointerleave","pointerlockchange","mozpointerlockchange","webkitpointerlockerchange","pointerlockerror","mozpointerlockerror","webkitpointerlockerror","pointermove","pointout","pointerover","pointerup","progress","ratechange","reset","resize","scroll","seeked","seeking","select","selectionchange","selectstart","show","sort","stalled","submit","suspend","timeupdate","volumechange","touchcancel","touchmove","touchstart","touchend","transitioncancel","transitionend","waiting","wheel"].concat(["webglcontextrestored","webglcontextlost","webglcontextcreationerror"],["autocomplete","autocompleteerror"],["toggle"],["afterscriptexecute","beforescriptexecute","DOMContentLoaded","freeze","fullscreenchange","mozfullscreenchange","webkitfullscreenchange","msfullscreenchange","fullscreenerror","mozfullscreenerror","webkitfullscreenerror","msfullscreenerror","readystatechange","visibilitychange","resume"],X,["beforecopy","beforecut","beforepaste","copy","cut","paste","dragstart","loadend","animationstart","search","transitionrun","transitionstart","webkitanimationend","webkitanimationiteration","webkitanimationstart","webkittransitionend"],["activate","afterupdate","ariarequest","beforeactivate","beforedeactivate","beforeeditfocus","beforeupdate","cellchange","controlselect","dataavailable","datasetchanged","datasetcomplete","errorupdate","filterchange","layoutcomplete","losecapture","move","moveend","movestart","propertychange","resizeend","resizestart","rowenter","rowexit","rowsdelete","rowsinserted","command","compassneedscalibration","deactivate","help","mscontentzoom","msmanipulationstatechanged","msgesturechange","msgesturedoubletap","msgestureend","msgesturehold","msgesturestart","msgesturetap","msgotpointercapture","msinertiastart","mslostpointercapture","mspointercancel","mspointerdown","mspointerenter","mspointerhover","mspointerleave","mspointermove","mspointerout","mspointerover","mspointerup","pointerout","mssitemodejumplistitemremoved","msthumbnailclick","stop","storagecommit"]);function se(e,t,n){if(!n||0===n.length)return t;const o=n.filter(t=&gt;t.target===e);if(!o||0===o.length)return t;const r=o[0].ignoreProperties;return t.filter(e=&gt;-1===r.indexOf(e))}function ie(e,t,n,o){e&amp;&amp;P(e,se(e,t,n),o)}function ae(e,t){if(T&amp;&amp;!w)return;if(Zone[e.symbol("patchEvents")])return;const o="undefined"!=typeof WebSocket,r=t.__Zone_ignore_on_properties;if(E){const e=window,t=x?[{target:e,ignoreProperties:["error"]}]:[];ie(e,re.concat(["messageerror"]),r?r.concat(t):r,n(e)),ie(Document.prototype,re,r),void 0!==e.SVGElement&amp;&amp;ie(e.SVGElement.prototype,re,r),ie(Element.prototype,re,r),ie(HTMLElement.prototype,re,r),ie(HTMLMediaElement.prototype,J,r),ie(HTMLFrameSetElement.prototype,X.concat(K),r),ie(HTMLBodyElement.prototype,X.concat(K),r),ie(HTMLFrameElement.prototype,Y,r),ie(HTMLIFrameElement.prototype,Y,r);const o=e.HTMLMarqueeElement;o&amp;&amp;ie(o.prototype,Q,r);const s=e.Worker;s&amp;&amp;ie(s.prototype,oe,r)}const s=t.XMLHttpRequest;s&amp;&amp;ie(s.prototype,ee,r);const i=t.XMLHttpRequestEventTarget;i&amp;&amp;ie(i&amp;&amp;i.prototype,ee,r),"undefined"!=typeof IDBIndex&amp;&amp;(ie(IDBIndex.prototype,te,r),ie(IDBRequest.prototype,te,r),ie(IDBOpenDBRequest.prototype,te,r),ie(IDBDatabase.prototype,te,r),ie(IDBTransaction.prototype,te,r),ie(IDBCursor.prototype,te,r)),o&amp;&amp;ie(WebSocket.prototype,ne,r)}Zone.__load_patch("util",(n,a,c)=&gt;{c.patchOnProperties=P,c.patchMethod=z,c.bindArguments=y,c.patchMacroTask=j;const f=a.__symbol__("BLACK_LISTED_EVENTS"),d=a.__symbol__("UNPATCHED_EVENTS");n[d]&amp;&amp;(n[f]=n[d]),n[f]&amp;&amp;(a[f]=a[d]=n[f]),c.patchEventPrototype=V,c.patchEventTarget=W,c.isIEOrEdge=M,c.ObjectDefineProperty=t,c.ObjectGetOwnPropertyDescriptor=e,c.ObjectCreate=o,c.ArraySlice=r,c.patchClass=O,c.wrapWithCurrentZone=p,c.filterProperties=se,c.attachOriginToPatched=I,c._redefineProperty=Object.defineProperty,c.patchCallbacks=$,c.getGlobalObjects=()=&gt;({globalSources:F,zoneSymbolEventNames:H,eventNames:re,isBrowser:E,isMix:w,isNode:T,TRUE_STR:l,FALSE_STR:u,ZONE_SYMBOL_PREFIX:h,ADD_EVENT_LISTENER_STR:s,REMOVE_EVENT_LISTENER_STR:i})});const ce=d("zoneTask");function le(e,t,n,o){let r=null,s=null;n+=o;const i={};function a(t){const n=t.data;return n.args[0]=function(){try{t.invoke.apply(this,arguments)}finally{t.data&amp;&amp;t.data.isPeriodic||("number"==typeof n.handleId?delete i[n.handleId]:n.handleId&amp;&amp;(n.handleId[ce]=null))}},n.handleId=r.apply(e,n.args),t}function c(e){return s(e.data.handleId)}r=z(e,t+=o,n=&gt;function(r,s){if("function"==typeof s[0]){const e=f(t,s[0],{isPeriodic:"Interval"===o,delay:"Timeout"===o||"Interval"===o?s[1]||0:void 0,args:s},a,c);if(!e)return e;const n=e.data.handleId;return"number"==typeof n?i[n]=e:n&amp;&amp;(n[ce]=e),n&amp;&amp;n.ref&amp;&amp;n.unref&amp;&amp;"function"==typeof n.ref&amp;&amp;"function"==typeof n.unref&amp;&amp;(e.ref=n.ref.bind(n),e.unref=n.unref.bind(n)),"number"==typeof n||n?n:e}return n.apply(e,s)}),s=z(e,n,t=&gt;function(n,o){const r=o[0];let s;"number"==typeof r?s=i[r]:(s=r&amp;&amp;r[ce],s||(s=r)),s&amp;&amp;"string"==typeof s.type?"notScheduled"!==s.state&amp;&amp;(s.cancelFn&amp;&amp;s.data.isPeriodic||0===s.runCount)&amp;&amp;("number"==typeof r?delete i[r]:r&amp;&amp;(r[ce]=null),s.zone.cancelTask(s)):t.apply(e,o)})}function ue(e,t){if(Zone[t.symbol("patchEventTarget")])return;const{eventNames:n,zoneSymbolEventNames:o,TRUE_STR:r,FALSE_STR:s,ZONE_SYMBOL_PREFIX:i}=t.getGlobalObjects();for(let c=0;c&lt;n.length;c++){const e=n[c],t=i+(e+s),a=i+(e+r);o[e]={},o[e][s]=t,o[e][r]=a}const a=e.EventTarget;return a&amp;&amp;a.prototype?(t.patchEventTarget(e,[a&amp;&amp;a.prototype]),!0):void 0}Zone.__load_patch("legacy",e=&gt;{const t=e[Zone.__symbol__("legacyPatch")];t&amp;&amp;t()}),Zone.__load_patch("timers",e=&gt;{const t="set",n="clear";le(e,t,n,"Timeout"),le(e,t,n,"Interval"),le(e,t,n,"Immediate")}),Zone.__load_patch("requestAnimationFrame",e=&gt;{le(e,"request","cancel","AnimationFrame"),le(e,"mozRequest","mozCancel","AnimationFrame"),le(e,"webkitRequest","webkitCancel","AnimationFrame")}),Zone.__load_patch("blocking",(e,t)=&gt;{const n=["alert","prompt","confirm"];for(let o=0;o&lt;n.length;o++)z(e,n[o],(n,o,r)=&gt;function(o,s){return t.current.run(n,e,s,r)})}),Zone.__load_patch("EventTarget",(e,t,n)=&gt;{(function(e,t){t.patchEventPrototype(e,t)})(e,n),ue(e,n);const o=e.XMLHttpRequestEventTarget;o&amp;&amp;o.prototype&amp;&amp;n.patchEventTarget(e,[o.prototype]),O("MutationObserver"),O("WebKitMutationObserver"),O("IntersectionObserver"),O("FileReader")}),Zone.__load_patch("on_property",(e,t,n)=&gt;{ae(n,e)}),Zone.__load_patch("customElements",(e,t,n)=&gt;{!function(e,t){const{isBrowser:n,isMix:o}=t.getGlobalObjects();(n||o)&amp;&amp;e.customElements&amp;&amp;"customElements"in e&amp;&amp;t.patchCallbacks(t,e.customElements,"customElements","define",["connectedCallback","disconnectedCallback","adoptedCallback","attributeChangedCallback"])}(e,n)}),Zone.__load_patch("XHR",(e,t)=&gt;{!function(e){const u=e.XMLHttpRequest;if(!u)return;const h=u.prototype;let p=h[a],g=h[c];if(!p){const t=e.XMLHttpRequestEventTarget;if(t){const e=t.prototype;p=e[a],g=e[c]}}const _="readystatechange",k="scheduled";function m(e){const o=e.data,i=o.target;i[s]=!1,i[l]=!1;const u=i[r];p||(p=i[a],g=i[c]),u&amp;&amp;g.call(i,_,u);const h=i[r]=()=&gt;{if(i.readyState===i.DONE)if(!o.aborted&amp;&amp;i[s]&amp;&amp;e.state===k){const n=i[t.__symbol__("loadfalse")];if(n&amp;&amp;n.length&gt;0){const r=e.invoke;e.invoke=function(){const n=i[t.__symbol__("loadfalse")];for(let t=0;t&lt;n.length;t++)n[t]===e&amp;&amp;n.splice(t,1);o.aborted||e.state!==k||r.call(e)},n.push(e)}else e.invoke()}else o.aborted||!1!==i[s]||(i[l]=!0)};return p.call(i,_,h),i[n]||(i[n]=e),w.apply(i,o.args),i[s]=!0,e}function y(){}function v(e){const t=e.data;return t.aborted=!0,Z.apply(t.target,t.args)}const b=z(h,"open",()=&gt;function(e,t){return e[o]=0==t[2],e[i]=t[1],b.apply(e,t)}),T=d("fetchTaskAborting"),E=d("fetchTaskScheduling"),w=z(h,"send",()=&gt;function(e,n){if(!0===t.current[E])return w.apply(e,n);if(e[o])return w.apply(e,n);{const t={target:e,url:e[i],isPeriodic:!1,args:n,aborted:!1},o=f("XMLHttpRequest.send",y,t,m,v);e&amp;&amp;!0===e[l]&amp;&amp;!t.aborted&amp;&amp;o.state===k&amp;&amp;o.invoke()}}),Z=z(h,"abort",()=&gt;function(e,o){const r=e[n];if(r&amp;&amp;"string"==typeof r.type){if(null==r.cancelFn||r.data&amp;&amp;r.data.aborted)return;r.zone.cancelTask(r)}else if(!0===t.current[T])return Z.apply(e,o)})}(e);const n=d("xhrTask"),o=d("xhrSync"),r=d("xhrListener"),s=d("xhrScheduled"),i=d("xhrURL"),l=d("xhrErrorBeforeScheduled")}),Zone.__load_patch("geolocation",t=&gt;{t.navigator&amp;&amp;t.navigator.geolocation&amp;&amp;function(t,n){const o=t.constructor.name;for(let r=0;r&lt;n.length;r++){const s=n[r],i=t[s];if(i){if(!v(e(t,s)))continue;t[s]=(e=&gt;{const t=function(){return e.apply(this,y(arguments,o+"."+s))};return I(t,e),t})(i)}}}(t.navigator.geolocation,["getCurrentPosition","watchPosition"])}),Zone.__load_patch("PromiseRejectionEvent",(e,t)=&gt;{function n(t){return function(n){U(e,t).forEach(o=&gt;{const r=e.PromiseRejectionEvent;if(r){const e=new r(t,{promise:n.promise,reason:n.rejection});o.invoke(e)}})}}e.PromiseRejectionEvent&amp;&amp;(t[d("unhandledPromiseRejectionHandler")]=n("unhandledrejection"),t[d("rejectionHandledHandler")]=n("rejectionhandled"))})})?o.call(t,n,t,e):o)||(e.exports=r)}}</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>http://blogs.wsj.com/cio/2013/10/08/adobe-source-code-leak-is-bad-news-for-u-s-government/</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">540</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-medium">
+                <th width="20%"><a name="medium"></a>Medium (Medium)</th><th width="80%">X-Frame-Options Header Not Set</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>X-Frame-Options header is not included in the HTTP response to protect against 'ClickJacking' attacks.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/je-suis-employeur</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Frame-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Frame-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/salarie-secteur-prive</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Frame-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">3</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Most modern Web browsers support the X-Frame-Options HTTP header. Ensure it's set on all web pages returned by your site (if you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's "frame-ancestors" directive. </p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">1021</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">15</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-low">
+                <a name="low"></a><th width="20%">Low (Medium)</th><th width="80%">Incomplete or No Cache-control Header Set</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/sitemap.xml</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/robots.txt</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">Cache-Control</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">2</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Whenever possible ensure the cache-control HTTP header is set with no-cache, no-store, must-revalidate.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">525</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-low">
+                <a name="low"></a><th width="20%">Low (Medium)</th><th width="80%">Permissions Policy Header Not Set</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/je-suis-employeur</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/salarie-secteur-prive</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/runtime.acf0dec4155e77772545.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/polyfills.35a5ca1855eb057f016a.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">5</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy</p><p>https://developers.google.com/web/updates/2018/06/feature-policy</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">693</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">15</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-low">
+                <a name="low"></a><th width="20%">Low (High)</th><th width="80%">Strict-Transport-Security Header Not Set</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/site.webmanifest</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/runtime.acf0dec4155e77772545.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/styles.3e4e2291223a6050bbf0.css</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/safari-pinned-tab.svg</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/sitemap.xml</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/favicon-16x16.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/robots.txt</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/favicon.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/favicon-32x32.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/apple-touch-icon.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">11</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>http://caniuse.com/stricttransportsecurity</p><p>http://tools.ietf.org/html/rfc6797</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">319</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">15</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-low">
+                <a name="low"></a><th width="20%">Low (Medium)</th><th width="80%">X-Content-Type-Options Header Missing</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/favicon-32x32.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Content-Type-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/sitemap.xml</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Content-Type-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/styles.3e4e2291223a6050bbf0.css</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Content-Type-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/robots.txt</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Content-Type-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/site.webmanifest</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Content-Type-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Content-Type-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/favicon-16x16.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Content-Type-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/safari-pinned-tab.svg</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Content-Type-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/runtime.acf0dec4155e77772545.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Content-Type-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/favicon.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Content-Type-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/apple-touch-icon.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Parameter</td><td width="80%">X-Content-Type-Options</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">11</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At "High" threshold this scan rule will not alert on client or server error responses.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx</p><p>https://owasp.org/www-community/Security_Headers</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">693</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">15</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Medium)</th><th width="80%">Base64 Disclosure</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>Base64 encoded data was disclosed by the application/web server. Note: in the interests of performance not all base64 strings in the response were analyzed individually, the entire response should be looked at by the analyst/security team/developer(s).</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/safari-pinned-tab.svg</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">org/TR/2001/REC-SVG-20010904/DTD/svg10</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/styles.3e4e2291223a6050bbf0.css</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">d09GRgABAAAAABCcAAsAAAAAJfAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABHU1VCAAABCAAAADsAAABUIIslek9TLzIAAAFEAAAAPQAAAFY7SEfbY21hcAAAAYQAAAFkAAAFGhya/KBnbHlmAAAC6AAACagAABbYJ+XvP2hlYWQAAAyQAAAALQAAADYWJh79aGhlYQAADMAAAAAWAAAAJADJAKpobXR4AAAM2AAAAA8AAAEUGpAAAGxvY2EAAAzoAAAAjAAAAIytpLPUbWF4cAAADXQAAAAfAAAAIAFUAEpuYW1lAAANlAAAAR0AAAHyFNvC+HBvc3QAAA60AAAB5wAABIHhBIGpeJxjYGRgYOBiMGCwY2BycfMJYeDLSSzJY5BiYGGAAJA8MpsxJzM9kYEDxgPKsYBpDiBmg4gCACY7BUgAeJxjYGRIZpzAwMrAwMDP4AYk+aC0AQMLgyQDAxMDKzMDVhCQ5prC4PCR8aMLQwqQywkmGRgYQQQA+BgGogAAAHic7dNnTuRAAAXhGsYMacg555xzhgF82D3Q/uIWPgG4/PYYa+nrkltOUreBfqBdO6kV0PqmhcfferbVzLcZbuYL/jTXFM5X5c9PPbYc6/OiGfvqa4v6iR0GGGSovm+ELqOMMc4Ek0wxzQyzzDHPAossscwKq6yxzgabbLHNDrvssc8BhxxxXL//lDPOueCSK6654ZY77nngkSeeeeGVN97p8cEnX5T1h3T4f3Qd2r1/Z6VrFc3q9QW2He6CqgjXs+oPd0jVCexAYAcDOxTY4XDnVCOB7YZfV40Gdiyw44GdCOxkYKcCOx3YmcDOBnYusPOBXQjsYmCXArsc2JXArgZ2LbDrgd0I7GZgtwK7HdidwO4Gdi+w+4E9COxhYI8CexzYk/Bvr04DexbY88BeBPYysFeBvQ7sTWBvA3sX2PvAPgT2MbBPgX0O7EtgXwP7Ftj3wPYC+xHYz8B+BbYMyl+QuK8oeJyVWG1zm0gSZgaYGV4FMiOCZcuWsEVZTpQEWeAoFftWqmyuStnaq40r5bry1uXD/v/fcN0DksCWnV1ZvAiGfp7p7nm6saZr+HmAP1fraSeaVuYDEvlkNCVXN4QPSF6UUzJiZX5DxiMW9XLnwHUPerjzTa/jG6bn+5HJibA5f6jvwO6aC8FN0/S4w+GLKGYDK9LOtDfaNeBVSBVq1qvQMrjQi2/IlPq0F5ej8VWR9yKWAYkrvN+icWrHtum4js28wDdNytwwcE1q9rlt+7bNqUGpAUzEjlwgiDAMGMOZyYPA0Q0nCHhgezZ8BYw24Jaiu/OPo73SzoHvfCZnMpXpPJ3HLe41OZ9EAzIVYShCuSPpWB3L6nRxV+CtUEx3dDZ3YLfD/J/2X8DsaAeAGffYJRmNb0mRczmbZ7AVGaH0P5SSjBpMCHH/mRoG/Uw/CDGQUjMaNnytC7FtW5llHGYBc0mbhka/DA3RMPb5+rUYS7RElL1v2p0mNO2WxDwr4/msiM3TU9YTwx7DY74Z95u2xGhX43JpHh6abyTr91l9/w4sgZ0S4JWlYZ4rC4XAAzqeqnFr+NM1cEqJXGMOg4fikknJDtfzOZMRO9yO/R1QTZgtzBNNphmPy2yhUBPcyVydq9MNz6V6pn6iYohsn/DM1Ih0vqrnuZn3Hp6zeQo043L1c56VVbWfKOxpxQBG99UzWx6rmmf1RM2T9Q/N+j7iI09FEpy6OmNnp1PxCQ5i2o4dehJny2tfr2rXa7vYrRSWGlR5o0Ks+T9oP2CmfRU9WJIpG8/LWd47Jun8qvhIcHnMZ+JOJ2uq34ZEv9NpYCWiOKc6ITr9otMoojok2XZt/dBiLdUytIh2IpWln8jOGlfLDV0L+QLHL2BW2a9Mi8Ryl66Ilst7nS4pfJYKIBQiCEQ43OXvd+3rLi8nY/a6z85xb2pNHUyUDj67tjEKZZzvXdtml7kxE3uXdgD3XrGWpiDW+UtYyBS4qjTZj2i5zN189+NmjRHbGP+GGdiyLs1IQsbi/npzAvsW31CTwFitW7kJEyQcRAjDBNsXaVG6oNSSk6EQ1jdxA0Eit8I6HsEHrBiPbB3vFHVnMAZLKE+IczzZmAzzcwioZX2zrI1ZsVi4ld0qN+/Brg5eVQy3KuWt1xcJS1OWCClOE/PszEzetp6xQSM1WDplkZ+QXtQh8PggfEsM4hLyy3qddN9S6kACX1tbf+BzRqXPtyTjMm4/3p+widUwMbxkl0y07Gzw70Gf+2plKi/u8n9WL9Z0PpFTQWmBuf3FOmWnB2sxlQn+hGve6AAuWbVvf4A9Hzw70i6rah77FPIru6FxXcuhqjdKanG1qesemILcUQfHk7ouD3HnCccJHEcYjAnG7u3QcULLwr29CjwvwM3GEYFj4QjBtrX+B1QgVzvUTrV3WgFsfIJESKVjwIMWZcamtIwzNqBxBvR0nhVwCrwGVK7tWPqUcOaxP9itpVM36HLBPIvosFCIyc4Y1HbLCzi3o65L6WuDMz3ixOo63DPVU8KxPEFMoRPLY5GvM5MARy5c8CcziB3a9rHOuNHKBw/6E6gKzVDESnzKlUSJAeE5F14YPsgFnq+JPgnh08oNpmYOmcgziGqp5CtDTduYnRdgwRPWZBHklObKMM3BTLDMJdEr01qLVxfWDFjsFZ+IkkqfoKFsfkuklxD9AjILxY8SEt2C1ia1SOZCypYdH+d3S1pyW6Wfl7zBJ2CKA7lYbQwUQTRdNubmAY8T5aENA/QQptIlkaDiSsguyUrWdHQ6hGaMh5ZQzRgVD/IjSvhXon+EHm2UQLthKHrGFoODQsTaWK3LmUpVOaukMa2dOW44M5uD5wCjUyN46FXArd1KhiPASQKFk+z8S74+0uNARb6lx3XD1ZDfDvZIO62dJgmUmqa2uUrZhi9WEZQ82J6pI6IN0ZDzQlhJM8+SZu3s1cG8IVA7K2DJ5xXoMUFd/d1Q8ViqVDGEF3hCMMu1WChAZC8w2hcUul9fCF9A22zDlxkBJrfRwMTZXb6IutHwLfoe5MUCqkSi4J+Cu8MhFO8Ng23+PgCDTrUO2t1CrDo+b73pDbJD7G8aLcF5zI6O2C7eaCeCHNtawmZGWeIQ8Cwud7b+PRwu/3Vycl/Rr2bRHQzeL46OdrG4gzOuOrs6trhB8cnz9foblB4pfj4WP+2xL+XlrJ2XMZTcRtKUCXy0f5iXWV139+elrirw/sScIhptYL16jDOBLIh6t+Td1fuG+ZDARzZsfiBHcMVXpv5Br1TG76L3fEIwgs+wlxIM72f/zod3zT4hLX/pkB19haoyGSrApjGtEiZV4rDtfo8nk3wh6oqgk5VrTEDR6bG0pKR0gtfgwoUQI514HtG15jtxqr3X5toH7RMq3rb/3WBtc31Tkyik6azAO0ALXzvUiyHQTFwkAMUQoDyE9NSp2ollAO3S1HUrOqqNDhUpxTowquQ2RqPCdeF7LB7HIID39id5iCtfNRbxVQHX2Igh4aZemowIB1+6TR0EuKlsA8ti1LIFNwmAw30oy3ty9v3PtBRbJYh7AReZzNQw9oK2QiHQTUMoVs/0zdLqUEYpDAOXEJNzx3qcj+NHrEr0A4+hg4FeATub+SzzyYA0iEAJdKVlmLZlekZ1cPFSg4PkvZCZHDBt87A6qEu7XuBP+PO1AaDfkAFl0GHgtHkM/RW0VHEKPoFDLA6igOvMc51uxPPWL+MPZpr+QWS9skNh8OvWL97sTUOltc3cVzUXprbOhepAQ8ic0cgbDpXKhtCRJludu4d3zp7qg5RYZanMZs2+CkvS8US4UwPNoFLHiUySqbtYhUWt21DZ6/eWP1UPpN7XfZJuPQ/21l3WNV1md227G4W2cQK/DcMOI7xgM7fpO7SR7rXCb8h8m1UzaJcfm3WNumR6gj0FoYbNBN6EEYZR491BF8yVetcwWTNjQpVqQ/VPMh93wgKBDaxx/RN2tS/RTkc7UmpUW0orrvLRyqg7+sq0UDaSHQCv/i1W43CXMZc30ATe9O1m3/kdcuC4qUplUZXLEtbZ1Tgrcc2fBxitoIeSEjEdljkzmTnUySHRu4SSJWwBoxyWHtMd1270yt9BBWMVEXjRn8XZiziF3+n44V6wX93A1V8ArObz1wvz2bwMw/t9UoljD3oVMu6wTsf0fbPTYe0ZpXin/tbz+etvzKeBM1HzeQbs6YxagFsf/qjndPGzKL0lu/PmDEf4SgSbJXpMBxEGOXgUO8LMThCYjMM6EO04GlsO1bzf/r1INrk88cI+Qk+98Syp/wObBszmeJxjYGRgYADigld5IvH8Nl8ZuBlSgCIMtwM/zEOmgaIJQJKDgQnEAQAzTAovAAAAeJxjYGRgYEhhYEAiGRlQgSsAHekBdAAAeJxjYACClFGMjAE49hqRAAAAAAAANgCQAMoA7AEUASgBOAFMAWIBfAGMAaABtgHQAeAB8gIGAhYCPgJ0AoQCugL4AxIDOANkA34DmgO+A+YELASGBKgE0gT2BRYFSAWCBaYF3AYWBlYGegaiBrgGzgbyBygHUAeKB8AIEghMCJgI2AkMCSwJVAl2Ca4J0goOCj4KdgqmCuALIgtseJxjYGRgYHBlsGNgZQABJiDmAkIGhv9gPgMAFhIBnwB4nF2OvU7DMBSFT/qHaBACITGbpQtS+jP2AdqZDtnTxElbJXHkuJUqMTPzFMw8Bc/FiXslKmzp+jvnHl8bwAN+EKBbAYa+dquHG6oL90l3wgPyo/AQIZ6FR1QvwmO8YiIc4glvnBAMbumMkQn3cI9auE//XXhA/hAecvqn8Ij+l/AYMb6FQ0yC0T41dbvRxbFMrGdfYm3bvanVPJp5vda1tonTmdqeVXsqFs7lKremUitTO12WRjXWHHTqop1zzXI6zcWPUlNhjxSGf26xgUaBI0oksFf+H8VMWO90WmGOCLOr/pr92mcSOJ4ZM1ucWVucOHtB1yGnzpkxqEgrf7dLl9yGTuN7Bzop/Qg7f6vBElPu/F8+8q9XvzD1U2IAAAB4nG1S53qcMBBknOZy5/Odk9hO750Up1enOe8hw5Lji0BEHC5vH2kXOLDDr5nZ3VlpULAQyIfg/98uFnAKp3EGZ3EOi1jCMlYwwBCrGGENY0ywjvO4gIvYwCa2cAmXcQVXcQ3XcQM3cQu3cQd3cQ/38QAP8QiP8QQhnuIZnuMFtvESr/Aab/AW7/AeH/ARn/AZX7CDr/iG7/iBn9jFr2CgoshU+SxMUq1botOcRiqOwyi1kSbmy0qTlb4aSpe15iCMzUHOfNzhZbdDUyITGx1eOjtbir7Z073iXKo93Vh2Cmui2PT3tOcpgutRtefWMX1uOjlZWe9KVcHaULSajVomE8PIBZHHynIqc8ZxRVOK/tRtHu6ZQ0ko0qakXrKieLgSk6YZsV+D2cIHqo2KmS1RnMqfEOS1CR3OyOZKeyZ7F+lIpgcemCSRRjdHYevnXY5JvIIlXsGID8GoiBO5bsv4l6R5YmymZqnJudwT2FEblwc7MmItU6kWjRFHkFFehdu16rFH40JV89ROKuxWaHUkc4z46oVNcxeMvO+G8G3+VlS2x50znrKUWCqnMtUQ3lGq/ToXRnzikpSNpLnB3OvOJ4sFcU77RleZhC05dYVuR1bV76An+I7VWnDv0Nc71FeD4B84C3AKAA==</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">2</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Manually confirm that the Base64 data does not leak sensitive information, and that the data cannot be aggregated/used to exploit other vulnerabilities.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>��?M\x001f��M&#127;D@�IQ��M5��8�4�����</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">200</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Medium)</th><th width="80%">Content-Type Header Missing</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The Content-Type header was either missing or empty.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/site.webmanifest</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">1</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Ensure each page is setting the specific and appropriate content-type value for the content being delivered.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">345</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">12</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Low)</th><th width="80%">Information Disclosure - Suspicious Comments</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The response appears to contain suspicious comments which may help an attacker. Note: Matches made within script blocks or files are against the entire content not only comments.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/polyfills.35a5ca1855eb057f016a.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">select</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/main.c485554224cdc792403d.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">query</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">2</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>The following pattern was used: \bSELECT\b and was detected in the element starting with: "(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{1:function(e,t,n){e.exports=n("hN/g")},"hN/g":function(e,t,n){"use stri", see evidence field for the suspicious comment/snippet.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p></p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">200</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Medium)</th><th width="80%">Modern Web Application</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script src="runtime.acf0dec4155e77772545.js" defer&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/salarie-secteur-prive</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script src="runtime.acf0dec4155e77772545.js" defer&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/je-suis-employeur</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">&lt;script src="runtime.acf0dec4155e77772545.js" defer&gt;&lt;/script&gt;</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">3</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>This is an informational alert and so no changes are required.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>No links have been found while there are scripts, which is an indication that this is a modern web application.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p></p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Medium)</th><th width="80%">Non-Storable Content</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">no-store</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">1</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable ("GET", "HEAD", and "POST" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The "no-store" cache directive must not appear in the request or response header fields</p><p>For caching by "shared" caches such as "proxy" caches, the "private" response directive must not appear in the response</p><p>For caching by "shared" caches such as "proxy" caches, the "Authorization" header field must not appear in the request, unless the response explicitly allows it (using one of the "must-revalidate", "public", or "s-maxage" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an "Expires" header field</p><p>It must contain a "max-age" response directive</p><p>For "shared" caches such as "proxy" caches, it must contain a "s-maxage" response directive</p><p>It must contain a "Cache Control Extension" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).   </p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">524</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Medium)</th><th width="80%">Storable and Cacheable Content</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users.  If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where "shared" caching servers such as "proxy" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/site.webmanifest</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/styles.3e4e2291223a6050bbf0.css</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/favicon-32x32.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/runtime.acf0dec4155e77772545.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/apple-touch-icon.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/favicon.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/safari-pinned-tab.svg</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/sitemap.xml</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/favicon-16x16.png</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/robots.txt</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">10</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. </p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234.</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">524</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+        <div class="spacer"></div>
+        <table width="100%" class="results">
+              
+  
+  
+  
+            <tr height="24" class="risk-info">
+                <th width="20%"><a name="info"></a>Informational (Low)</th><th width="80%">Timestamp Disclosure - Unix</th>
+            </tr>
+              
+  
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Description</td><td width="80%"><p>A timestamp was disclosed by the application/web server - Unix</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/main.c485554224cdc792403d.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">16711935</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/styles.3e4e2291223a6050bbf0.css</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">23000091</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/main.c485554224cdc792403d.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">16777216</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/main.c485554224cdc792403d.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">858993459</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/main.c485554224cdc792403d.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">252645135</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/assets/favicons/safari-pinned-tab.svg</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">20010904</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/main.c485554224cdc792403d.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">1431655765</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent1">URL</td><td width="80%">https://attestation.covoiturage.beta.gouv.fr/main.c485554224cdc792403d.js</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Method</td><td width="80%">GET</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%" class="indent2">Evidence</td><td width="80%">20971520</td>
+            </tr>
+              
+  
+  
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Instances</td><td width="80%">8</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Solution</td><td width="80%"><p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Other information</td><td width="80%"><p>16711935, which evaluates to: 1970-07-13 10:12:15</p></td>
+            </tr>
+            <TR vAlign="top">
+                <TD colspan="2"></TD>
+            </TR>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Reference</td><td width="80%"><p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p></td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">CWE Id</td><td width="80%">200</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">WASC Id</td><td width="80%">13</td>
+            </tr>
+              
+            <tr bgcolor="#e8e8e8">
+                <td width="20%">Source ID</td><td width="80%">3</td>
+            </tr>
+            
+        </table>
+    </body>
+</html>
