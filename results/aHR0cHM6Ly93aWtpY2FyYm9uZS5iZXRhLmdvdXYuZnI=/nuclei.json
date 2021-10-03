@@ -1,83 +1,389 @@
 [
   {
-    "templateID": "cors-misconfig",
+    "templateID": "dns-waf-detect",
     "info": {
-      "name": "Basic CORS misconfiguration",
+      "name": "DNS WAF Detection",
       "author": [
-        "nadino",
-        "g4l1t0",
-        "convisoappsec",
-        "pdteam"
+        "lu4nx"
       ],
       "tags": [
-        "cors",
-        "generic"
+        "tech",
+        "waf",
+        "dns"
       ],
-      "reference": [
-        "https://portswigger.net/web-security/cors"
-      ],
+      "reference": null,
       "severity": "info"
     },
-    "matcher_name": "wildcard-no-acac",
-    "type": "http",
+    "matcher_name": "cloudflare",
+    "type": "dns",
     "host": "https://wikicarbone.beta.gouv.fr",
-    "matched": "https://wikicarbone.beta.gouv.fr/",
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 402\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sat, 02 Oct 2021 03:15:46 GMT\r\nEtag: W/\"61571b39-2dd\"\r\nExpires: Sat, 02 Oct 2021 03:17:53 GMT\r\nLast-Modified: Fri, 01 Oct 2021 14:29:13 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: ac88c852dce9be07c2e829690820946a5ef53714\r\nX-Github-Request-Id: CC0E:EEF2:1551623:15EB607:6157CD09\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: ce0ab9a0-943e-4d9b-8ef5-355e5c530ffe\r\nX-Served-By: cache-cdg20737-CDG\r\nX-Timer: S1633144546.174045,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <div id=\"app\"></div> <script type=\"module\" src=\"index.509b7c77.js\"></script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "timestamp": "2021-10-02T03:15:46.218189843Z"
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": ";; opcode: QUERY, status: NOERROR, id: 2627\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 0\n\n;; QUESTION SECTION:\n;wikicarbone.beta.gouv.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 2627\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 0\n\n;; QUESTION SECTION:\n;wikicarbone.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nwikicarbone.beta.gouv.fr.\t10776\tIN\tCNAME\tbetagouv-redirections.osc-fr1.scalingo.io.\nbetagouv-redirections.osc-fr1.scalingo.io.\t276\tIN\tCNAME\tsc-lb-pool-01.osc-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t1800\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2038053126 10000 2400 604800 3600\n",
+    "timestamp": "2021-10-03T03:00:49.788564424Z"
   },
   {
-    "templateID": "cors-misconfig",
+    "templateID": "http-missing-security-headers",
     "info": {
-      "name": "Basic CORS misconfiguration",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "nadino",
+        "socketz",
+        "geeknik",
         "g4l1t0",
         "convisoappsec",
-        "pdteam"
+        "kurohost",
+        "dawid-czarnecki"
       ],
       "tags": [
-        "cors",
+        "misconfig",
         "generic"
       ],
-      "reference": [
-        "https://portswigger.net/web-security/cors"
-      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
       "severity": "info"
     },
-    "matcher_name": "wildcard-no-acac",
+    "matcher_name": "content-security-policy",
     "type": "http",
     "host": "https://wikicarbone.beta.gouv.fr",
-    "matched": "https://wikicarbone.beta.gouv.fr/",
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nOrigin: 1yvuZpIGL4rqCrHRgEH3pu3zFl5.tld\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 403\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sat, 02 Oct 2021 03:15:46 GMT\r\nEtag: W/\"61571b39-2dd\"\r\nExpires: Sat, 02 Oct 2021 03:17:53 GMT\r\nLast-Modified: Fri, 01 Oct 2021 14:29:13 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 2\r\nX-Fastly-Request-Id: 51a0b1a14b040a48540a646ab9847cdf2da274e2\r\nX-Github-Request-Id: CC0E:EEF2:1551623:15EB607:6157CD09\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: 6e2789f3-47d6-4731-9f29-e0b23d59580b\r\nX-Served-By: cache-cdg20777-CDG\r\nX-Timer: S1633144546.444954,VS0,VE0\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <div id=\"app\"></div> <script type=\"module\" src=\"index.509b7c77.js\"></script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "timestamp": "2021-10-02T03:15:46.487658399Z"
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.731262694Z"
   },
   {
-    "templateID": "cors-misconfig",
+    "templateID": "http-missing-security-headers",
     "info": {
-      "name": "Basic CORS misconfiguration",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "nadino",
+        "socketz",
+        "geeknik",
         "g4l1t0",
         "convisoappsec",
-        "pdteam"
+        "kurohost",
+        "dawid-czarnecki"
       ],
       "tags": [
-        "cors",
+        "misconfig",
         "generic"
       ],
-      "reference": [
-        "https://portswigger.net/web-security/cors"
-      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
       "severity": "info"
     },
-    "matcher_name": "wildcard-no-acac",
+    "matcher_name": "x-content-type-options",
     "type": "http",
     "host": "https://wikicarbone.beta.gouv.fr",
-    "matched": "https://wikicarbone.beta.gouv.fr/",
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nOrigin: null\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 403\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sat, 02 Oct 2021 03:15:46 GMT\r\nEtag: W/\"61571b39-2dd\"\r\nExpires: Sat, 02 Oct 2021 03:17:53 GMT\r\nLast-Modified: Fri, 01 Oct 2021 14:29:13 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 53982fe4fc965e1fe6a4b3b1c51cd197af59c4b2\r\nX-Github-Request-Id: CC0E:EEF2:1551623:15EB607:6157CD09\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: 2003c808-b416-4f90-b649-fe4cd9364ae2\r\nX-Served-By: cache-cdg20781-CDG\r\nX-Timer: S1633144547.710437,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <div id=\"app\"></div> <script type=\"module\" src=\"index.509b7c77.js\"></script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "timestamp": "2021-10-02T03:15:46.754505462Z"
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.731397599Z"
+  },
+  {
+    "templateID": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher_name": "referrer-policy",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.7314251Z"
+  },
+  {
+    "templateID": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher_name": "clear-site-data",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.731451601Z"
+  },
+  {
+    "templateID": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher_name": "cross-origin-embedder-policy",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.731475202Z"
+  },
+  {
+    "templateID": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher_name": "access-control-allow-methods",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.731494903Z"
+  },
+  {
+    "templateID": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher_name": "x-frame-options",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.731517104Z"
+  },
+  {
+    "templateID": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher_name": "x-permitted-cross-domain-policies",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.731541805Z"
+  },
+  {
+    "templateID": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher_name": "cross-origin-opener-policy",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.731564406Z"
+  },
+  {
+    "templateID": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher_name": "cross-origin-resource-policy",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.731585106Z"
+  },
+  {
+    "templateID": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher_name": "access-control-allow-credentials",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.731607307Z"
+  },
+  {
+    "templateID": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher_name": "access-control-expose-headers",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.731636208Z"
+  },
+  {
+    "templateID": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher_name": "access-control-max-age",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nAccess-Control-Allow-Origin: *\r\nAge: 375\r\nCache-Control: max-age=600\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 03 Oct 2021 03:01:26 GMT\r\nEtag: W/\"6158a02d-44c\"\r\nExpires: Sun, 03 Oct 2021 03:03:56 GMT\r\nLast-Modified: Sat, 02 Oct 2021 18:08:45 GMT\r\nPermissions-Policy: interest-cohort=()\r\nServer: openresty\r\nStrict-Transport-Security: max-age=31556952\r\nVary: Accept-Encoding\r\nVia: 1.1 varnish\r\nX-Cache: HIT\r\nX-Cache-Hits: 1\r\nX-Fastly-Request-Id: 5b830149c704b83ee17b800390abc5b5dc0ba3b7\r\nX-Github-Request-Id: 1404:139E3:558D19:5A1A26:61591B44\r\nX-Origin-Cache: HIT\r\nX-Proxy-Cache: MISS\r\nX-Request-Id: a94d3cfd-9639-44ee-831d-a1269ab8e7cb\r\nX-Served-By: cache-cdg20734-CDG\r\nX-Timer: S1633230086.835166,VS0,VE1\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.b822c314.svg\"><link href=\"index.db266b56.css\" rel=\"stylesheet\"><link href=\"index.9aaeb38b.css\" rel=\"stylesheet\"></head><body> <script type=\"module\" src=\"index.fad21448.js\"></script>  <script>var _paq=window._paq=window._paq||[];_paq.push([\"trackPageView\"]),_paq.push([\"enableLinkTracking\"]),function(){var a=\"https://stats.data.gouv.fr/\";_paq.push([\"setTrackerUrl\",a+\"matomo.php\"]),_paq.push([\"setSiteId\",\"196\"]);var e=document,t=e.createElement(\"script\"),p=e.getElementsByTagName(\"script\")[0];t.async=!0,t.src=a+\"matomo.js\",p.parentNode.insertBefore(t,p)}();</script> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript>  </body></html>",
+    "timestamp": "2021-10-03T03:01:26.731658709Z"
   }
 ]
