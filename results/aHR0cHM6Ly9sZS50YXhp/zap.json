@@ -1,1 +1,918 @@
-{"@version":"2.10.0","@generated":"Thu, 7 Oct 2021 02:09:24","site":[{"@name":"https://le.taxi","@host":"le.taxi","@port":"443","@ssl":"true","alerts":[{"pluginid":"10021","alertRef":"10021","alert":"X-Content-Type-Options Header Missing","name":"X-Content-Type-Options Header Missing","riskcode":"1","confidence":"2","riskdesc":"Low (Medium)","desc":"<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.<\/p>","instances":[{"uri":"https://le.taxi/","method":"GET","param":"X-Content-Type-Options"},{"uri":"https://le.taxi/legal.html","method":"GET","param":"X-Content-Type-Options"},{"uri":"https://le.taxi/partners.html","method":"GET","param":"X-Content-Type-Options"},{"uri":"https://le.taxi","method":"GET","param":"X-Content-Type-Options"},{"uri":"https://le.taxi/apropos.html","method":"GET","param":"X-Content-Type-Options"},{"uri":"https://le.taxi/faq.html","method":"GET","param":"X-Content-Type-Options"},{"uri":"https://le.taxi/tests.html","method":"GET","param":"X-Content-Type-Options"},{"uri":"https://le.taxi/applicatifschauffeurs.html","method":"GET","param":"X-Content-Type-Options"},{"uri":"https://le.taxi/applicatifsclients.html","method":"GET","param":"X-Content-Type-Options"},{"uri":"https://le.taxi/fonctionnement.html","method":"GET","param":"X-Content-Type-Options"},{"uri":"https://le.taxi/tech.html","method":"GET","param":"X-Content-Type-Options"}],"count":"11","solution":"<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.<\/p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.<\/p>","otherinfo":"<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.<\/p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.<\/p>","reference":"<p>http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx<\/p><p>https://owasp.org/www-community/Security_Headers<\/p>","cweid":"693","wascid":"15","sourceid":"3"},{"pluginid":"10015","alertRef":"10015","alert":"Incomplete or No Cache-control Header Set","name":"Incomplete or No Cache-control Header Set","riskcode":"1","confidence":"2","riskdesc":"Low (Medium)","desc":"<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content.<\/p>","instances":[{"uri":"https://le.taxi/apropos.html","method":"GET","param":"Cache-Control"},{"uri":"https://le.taxi","method":"GET","param":"Cache-Control"},{"uri":"https://le.taxi/tests.html","method":"GET","param":"Cache-Control"},{"uri":"https://le.taxi/faq.html","method":"GET","param":"Cache-Control"},{"uri":"https://le.taxi/partners.html","method":"GET","param":"Cache-Control"},{"uri":"https://le.taxi/applicatifschauffeurs.html","method":"GET","param":"Cache-Control"},{"uri":"https://le.taxi/applicatifsclients.html","method":"GET","param":"Cache-Control"},{"uri":"https://le.taxi/","method":"GET","param":"Cache-Control"},{"uri":"https://le.taxi/legal.html","method":"GET","param":"Cache-Control"},{"uri":"https://le.taxi/tech.html","method":"GET","param":"Cache-Control"},{"uri":"https://le.taxi/fonctionnement.html","method":"GET","param":"Cache-Control"}],"count":"11","solution":"<p>Whenever possible ensure the cache-control HTTP header is set with no-cache, no-store, must-revalidate.<\/p>","reference":"<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching<\/p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control<\/p>","cweid":"525","wascid":"13","sourceid":"3"},{"pluginid":"10094","alertRef":"10094","alert":"Base64 Disclosure","name":"Base64 Disclosure","riskcode":"0","confidence":"2","riskdesc":"Informational (Medium)","desc":"<p>Base64 encoded data was disclosed by the application/web server. Note: in the interests of performance not all base64 strings in the response were analyzed individually, the entire response should be looked at by the analyst/security team/developer(s).<\/p>","instances":[{"uri":"https://le.taxi/assets/documents/CGU.pdf?20210830","method":"GET","evidence":"/Type/Font/Subtype/TrueType/Name/F1/BaseFont/ArialMT/Encoding/WinAnsiEncoding/FontDescriptor"},{"uri":"https://le.taxi/applicatifschauffeurs.html","method":"GET","evidence":"fr/codes/article_lc/LEGIARTI000039784232/2020-12-27"},{"uri":"https://le.taxi/apropos.html","method":"GET","evidence":"fr/codes/article_lc/LEGIARTI000039784232/2020-12-27"}],"count":"3","solution":"<p>Manually confirm that the Base64 data does not leak sensitive information, and that the data cannot be aggregated/used to exploit other vulnerabilities.<\/p>","otherinfo":"<p>�<�{�h��ҹ�r��Ӯ�ʗ�5���]\\x0005�\\x001e\\x0016���<\/p><p>�jS\\x0013�Iܡا����\t�Iܡا��h��ޱ���+<\/p>","reference":"<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage<\/p>","cweid":"200","wascid":"13","sourceid":"3"},{"pluginid":"10049","alertRef":"10049","alert":"Storable and Cacheable Content","name":"Storable and Cacheable Content","riskcode":"0","confidence":"2","riskdesc":"Informational (Medium)","desc":"<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users.  If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.<\/p>","instances":[{"uri":"https://le.taxi/tech.html","method":"GET"},{"uri":"https://le.taxi/sitemap.xml","method":"GET"},{"uri":"https://le.taxi/applicatifsclients.html","method":"GET"},{"uri":"https://le.taxi/robots.txt","method":"GET"},{"uri":"https://le.taxi/partners.html","method":"GET"},{"uri":"https://le.taxi","method":"GET"},{"uri":"https://le.taxi/faq.html","method":"GET"},{"uri":"https://le.taxi/tests.html","method":"GET"},{"uri":"https://le.taxi/applicatifschauffeurs.html","method":"GET"},{"uri":"https://le.taxi/fonctionnement.html","method":"GET"},{"uri":"https://le.taxi/","method":"GET"}],"count":"11","solution":"<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:<\/p><p>Cache-Control: no-cache, no-store, must-revalidate, private<\/p><p>Pragma: no-cache<\/p><p>Expires: 0<\/p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. <\/p>","otherinfo":"<p>In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234.<\/p>","reference":"<p>https://tools.ietf.org/html/rfc7234<\/p><p>https://tools.ietf.org/html/rfc7231<\/p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)<\/p>","cweid":"524","wascid":"13","sourceid":"3"},{"pluginid":"10063","alertRef":"10063","alert":"Permissions Policy Header Not Set","name":"Permissions Policy Header Not Set","riskcode":"1","confidence":"2","riskdesc":"Low (Medium)","desc":"<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.<\/p>","instances":[{"uri":"https://le.taxi/sitemap.xml","method":"GET"},{"uri":"https://le.taxi/applicatifsclients.html","method":"GET"},{"uri":"https://le.taxi/applicatifschauffeurs.html","method":"GET"},{"uri":"https://le.taxi/tests.html","method":"GET"},{"uri":"https://le.taxi/","method":"GET"},{"uri":"https://le.taxi/faq.html","method":"GET"},{"uri":"https://le.taxi/partners.html","method":"GET"},{"uri":"https://le.taxi/robots.txt","method":"GET"},{"uri":"https://le.taxi/fonctionnement.html","method":"GET"},{"uri":"https://le.taxi/tech.html","method":"GET"},{"uri":"https://le.taxi","method":"GET"}],"count":"11","solution":"<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.<\/p>","reference":"<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy<\/p><p>https://developers.google.com/web/updates/2018/06/feature-policy<\/p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/<\/p><p>https://w3c.github.io/webappsec-feature-policy/<\/p><p>https://www.smashingmagazine.com/2018/12/feature-policy/<\/p>","cweid":"693","wascid":"15","sourceid":"3"},{"pluginid":"10096","alertRef":"10096","alert":"Timestamp Disclosure - Unix","name":"Timestamp Disclosure - Unix","riskcode":"0","confidence":"1","riskdesc":"Informational (Low)","desc":"<p>A timestamp was disclosed by the application/web server - Unix<\/p>","instances":[{"uri":"https://le.taxi/assets/images/logo_le.taxi.svg","method":"GET","evidence":"98869958"},{"uri":"https://le.taxi/applicatifschauffeurs.html","method":"GET","evidence":"20210830"},{"uri":"https://le.taxi/assets/images/logo_le.taxi.svg","method":"GET","evidence":"43209256"},{"uri":"https://le.taxi/assets/images/logo_le.taxi.svg","method":"GET","evidence":"32813442"},{"uri":"https://le.taxi/assets/images/logo_le.taxi.svg","method":"GET","evidence":"99000344"},{"uri":"https://le.taxi/assets/images/logo_le.taxi.svg","method":"GET","evidence":"51369958"},{"uri":"https://le.taxi/assets/images/logo_le.taxi.svg","method":"GET","evidence":"51249944"},{"uri":"https://le.taxi/assets/images/logo_le.taxi.svg","method":"GET","evidence":"98500344"},{"uri":"https://le.taxi/applicatifsclients.html","method":"GET","evidence":"20210830"},{"uri":"https://le.taxi/assets/images/logo_le.taxi.svg","method":"GET","evidence":"51499958"},{"uri":"https://le.taxi/assets/images/logo_le.taxi.svg","method":"GET","evidence":"98749958"}],"count":"11","solution":"<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.<\/p>","otherinfo":"<p>98869958, which evaluates to: 1973-02-18 07:52:38<\/p>","reference":"<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage<\/p>","cweid":"200","wascid":"13","sourceid":"3"},{"pluginid":"10109","alertRef":"10109","alert":"Modern Web Application","name":"Modern Web Application","riskcode":"0","confidence":"2","riskdesc":"Informational (Medium)","desc":"<p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.<\/p>","instances":[{"uri":"https://le.taxi/tests.html","method":"GET","evidence":"<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    <\/noscript>"},{"uri":"https://le.taxi/","method":"GET","evidence":"<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    <\/noscript>"},{"uri":"https://le.taxi/legal.html","method":"GET","evidence":"<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    <\/noscript>"},{"uri":"https://le.taxi/partners.html","method":"GET","evidence":"<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    <\/noscript>"},{"uri":"https://le.taxi/apropos.html","method":"GET","evidence":"<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    <\/noscript>"},{"uri":"https://le.taxi/applicatifschauffeurs.html","method":"GET","evidence":"<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    <\/noscript>"},{"uri":"https://le.taxi","method":"GET","evidence":"<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    <\/noscript>"},{"uri":"https://le.taxi/fonctionnement.html","method":"GET","evidence":"<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    <\/noscript>"},{"uri":"https://le.taxi/applicatifsclients.html","method":"GET","evidence":"<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    <\/noscript>"},{"uri":"https://le.taxi/tech.html","method":"GET","evidence":"<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    <\/noscript>"},{"uri":"https://le.taxi/faq.html","method":"GET","evidence":"<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    <\/noscript>"}],"count":"11","solution":"<p>This is an informational alert and so no changes are required.<\/p>","otherinfo":"<p>A noScript tag has been found, which is an indication that the application works differently with JavaScript enabled compared to when it is not.<\/p>","reference":"<p><\/p>","sourceid":"3"},{"pluginid":"10035","alertRef":"10035","alert":"Strict-Transport-Security Header Not Set","name":"Strict-Transport-Security Header Not Set","riskcode":"1","confidence":"3","riskdesc":"Low (High)","desc":"<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.<\/p>","instances":[{"uri":"https://le.taxi/sitemap.xml","method":"GET"},{"uri":"https://le.taxi","method":"GET"},{"uri":"https://le.taxi/tech.html","method":"GET"},{"uri":"https://le.taxi/applicatifschauffeurs.html","method":"GET"},{"uri":"https://le.taxi/fonctionnement.html","method":"GET"},{"uri":"https://le.taxi/partners.html","method":"GET"},{"uri":"https://le.taxi/tests.html","method":"GET"},{"uri":"https://le.taxi/robots.txt","method":"GET"},{"uri":"https://le.taxi/faq.html","method":"GET"},{"uri":"https://le.taxi/","method":"GET"},{"uri":"https://le.taxi/applicatifsclients.html","method":"GET"}],"count":"11","solution":"<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.<\/p>","reference":"<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html<\/p><p>https://owasp.org/www-community/Security_Headers<\/p><p>http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security<\/p><p>http://caniuse.com/stricttransportsecurity<\/p><p>http://tools.ietf.org/html/rfc6797<\/p>","cweid":"319","wascid":"15","sourceid":"3"},{"pluginid":"10038","alertRef":"10038","alert":"Content Security Policy (CSP) Header Not Set","name":"Content Security Policy (CSP) Header Not Set","riskcode":"2","confidence":"3","riskdesc":"Medium (High)","desc":"<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.<\/p>","instances":[{"uri":"https://le.taxi/fonctionnement.html","method":"GET"},{"uri":"https://le.taxi","method":"GET"},{"uri":"https://le.taxi/tech.html","method":"GET"},{"uri":"https://le.taxi/robots.txt","method":"GET"},{"uri":"https://le.taxi/","method":"GET"},{"uri":"https://le.taxi/sitemap.xml","method":"GET"},{"uri":"https://le.taxi/applicatifsclients.html","method":"GET"},{"uri":"https://le.taxi/tests.html","method":"GET"},{"uri":"https://le.taxi/partners.html","method":"GET"},{"uri":"https://le.taxi/faq.html","method":"GET"},{"uri":"https://le.taxi/applicatifschauffeurs.html","method":"GET"}],"count":"11","solution":"<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header, to achieve optimal browser support: \"Content-Security-Policy\" for Chrome 25+, Firefox 23+ and Safari 7+, \"X-Content-Security-Policy\" for Firefox 4.0+ and Internet Explorer 10+, and \"X-WebKit-CSP\" for Chrome 14+ and Safari 6+.<\/p>","reference":"<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy<\/p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html<\/p><p>http://www.w3.org/TR/CSP/<\/p><p>http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html<\/p><p>http://www.html5rocks.com/en/tutorials/security/content-security-policy/<\/p><p>http://caniuse.com/#feat=contentsecuritypolicy<\/p><p>http://content-security-policy.com/<\/p>","cweid":"693","wascid":"15","sourceid":"3"},{"pluginid":"10020","alertRef":"10020","alert":"X-Frame-Options Header Not Set","name":"X-Frame-Options Header Not Set","riskcode":"2","confidence":"2","riskdesc":"Medium (Medium)","desc":"<p>X-Frame-Options header is not included in the HTTP response to protect against 'ClickJacking' attacks.<\/p>","instances":[{"uri":"https://le.taxi/tech.html","method":"GET","param":"X-Frame-Options"},{"uri":"https://le.taxi/fonctionnement.html","method":"GET","param":"X-Frame-Options"},{"uri":"https://le.taxi","method":"GET","param":"X-Frame-Options"},{"uri":"https://le.taxi/apropos.html","method":"GET","param":"X-Frame-Options"},{"uri":"https://le.taxi/legal.html","method":"GET","param":"X-Frame-Options"},{"uri":"https://le.taxi/","method":"GET","param":"X-Frame-Options"},{"uri":"https://le.taxi/tests.html","method":"GET","param":"X-Frame-Options"},{"uri":"https://le.taxi/faq.html","method":"GET","param":"X-Frame-Options"},{"uri":"https://le.taxi/partners.html","method":"GET","param":"X-Frame-Options"},{"uri":"https://le.taxi/applicatifschauffeurs.html","method":"GET","param":"X-Frame-Options"},{"uri":"https://le.taxi/applicatifsclients.html","method":"GET","param":"X-Frame-Options"}],"count":"11","solution":"<p>Most modern Web browsers support the X-Frame-Options HTTP header. Ensure it's set on all web pages returned by your site (if you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive. <\/p>","reference":"<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options<\/p>","cweid":"1021","wascid":"15","sourceid":"3"}]}]}
+{
+	"@version": "2.11.0",
+	"@generated": "Sat, 9 Oct 2021 02:06:50",
+	"site":[ 
+		{
+			"@name": "https://le.taxi",
+			"@host": "le.taxi",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "10038",
+					"alertRef": "10038",
+					"alert": "Content Security Policy (CSP) Header Not Set",
+					"name": "Content Security Policy (CSP) Header Not Set",
+					"riskcode": "2",
+					"confidence": "3",
+					"riskdesc": "Medium (High)",
+					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+					"instances":[ 
+						{
+							"uri": "https://le.taxi",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifschauffeurs.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifsclients.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/faq.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/fonctionnement.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/partners.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/robots.txt",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tech.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tests.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						}
+					],
+					"count": "11",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header, to achieve optimal browser support: \"Content-Security-Policy\" for Chrome 25+, Firefox 23+ and Safari 7+, \"X-Content-Security-Policy\" for Firefox 4.0+ and Internet Explorer 10+, and \"X-WebKit-CSP\" for Chrome 14+ and Safari 6+.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>http://www.w3.org/TR/CSP/</p><p>http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html</p><p>http://www.html5rocks.com/en/tutorials/security/content-security-policy/</p><p>http://caniuse.com/#feat=contentsecuritypolicy</p><p>http://content-security-policy.com/</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10020",
+					"alertRef": "10020",
+					"alert": "X-Frame-Options Header Not Set",
+					"name": "X-Frame-Options Header Not Set",
+					"riskcode": "2",
+					"confidence": "2",
+					"riskdesc": "Medium (Medium)",
+					"desc": "<p>X-Frame-Options header is not included in the HTTP response to protect against 'ClickJacking' attacks.</p>",
+					"instances":[ 
+						{
+							"uri": "https://le.taxi",
+							"method": "GET",
+							"param": "X-Frame-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/",
+							"method": "GET",
+							"param": "X-Frame-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifschauffeurs.html",
+							"method": "GET",
+							"param": "X-Frame-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifsclients.html",
+							"method": "GET",
+							"param": "X-Frame-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/apropos.html",
+							"method": "GET",
+							"param": "X-Frame-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/faq.html",
+							"method": "GET",
+							"param": "X-Frame-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/fonctionnement.html",
+							"method": "GET",
+							"param": "X-Frame-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/legal.html",
+							"method": "GET",
+							"param": "X-Frame-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/partners.html",
+							"method": "GET",
+							"param": "X-Frame-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tech.html",
+							"method": "GET",
+							"param": "X-Frame-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tests.html",
+							"method": "GET",
+							"param": "X-Frame-Options",
+							"attack": "",
+							"evidence": ""
+						}
+					],
+					"count": "11",
+					"solution": "<p>Most modern Web browsers support the X-Frame-Options HTTP header. Ensure it's set on all web pages returned by your site (if you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive. </p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options</p>",
+					"cweid": "1021",
+					"wascid": "15",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10015",
+					"alertRef": "10015",
+					"alert": "Incomplete or No Cache-control Header Set",
+					"name": "Incomplete or No Cache-control Header Set",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content.</p>",
+					"instances":[ 
+						{
+							"uri": "https://le.taxi",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifschauffeurs.html",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifsclients.html",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/apropos.html",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/faq.html",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/fonctionnement.html",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/legal.html",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/partners.html",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tech.html",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tests.html",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						}
+					],
+					"count": "11",
+					"solution": "<p>Whenever possible ensure the cache-control HTTP header is set with no-cache, no-store, must-revalidate.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p>",
+					"cweid": "525",
+					"wascid": "13",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10063",
+					"alertRef": "10063",
+					"alert": "Permissions Policy Header Not Set",
+					"name": "Permissions Policy Header Not Set",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>Permissions Policy Header is an added layer of security that helps to restrict from unauthorized access or usage of browser/client features by web resources. This policy ensures the user privacy by limiting or specifying the features of the browsers can be used by the web resources. Permissions Policy provides a set of standard HTTP headers that allow website owners to limit which features of browsers can be used by the page such as camera, microphone, location, full screen etc.</p>",
+					"instances":[ 
+						{
+							"uri": "https://le.taxi",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifschauffeurs.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifsclients.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/faq.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/fonctionnement.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/partners.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/robots.txt",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tech.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tests.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						}
+					],
+					"count": "11",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy</p><p>https://developers.google.com/web/updates/2018/06/feature-policy</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10035",
+					"alertRef": "10035",
+					"alert": "Strict-Transport-Security Header Not Set",
+					"name": "Strict-Transport-Security Header Not Set",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "Low (High)",
+					"desc": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+					"instances":[ 
+						{
+							"uri": "https://le.taxi",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifschauffeurs.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifsclients.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/faq.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/fonctionnement.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/partners.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/robots.txt",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tech.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tests.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						}
+					],
+					"count": "11",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>http://caniuse.com/stricttransportsecurity</p><p>http://tools.ietf.org/html/rfc6797</p>",
+					"cweid": "319",
+					"wascid": "15",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10096",
+					"alertRef": "10096",
+					"alert": "Timestamp Disclosure - Unix",
+					"name": "Timestamp Disclosure - Unix",
+					"riskcode": "1",
+					"confidence": "1",
+					"riskdesc": "Low (Low)",
+					"desc": "<p>A timestamp was disclosed by the application/web server - Unix</p>",
+					"instances":[ 
+						{
+							"uri": "https://le.taxi/applicatifschauffeurs.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "20210830"
+						},
+						{
+							"uri": "https://le.taxi/applicatifsclients.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "20210830"
+						},
+						{
+							"uri": "https://le.taxi/assets/images/logo_le.taxi.svg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "32813442"
+						},
+						{
+							"uri": "https://le.taxi/assets/images/logo_le.taxi.svg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "43209256"
+						},
+						{
+							"uri": "https://le.taxi/assets/images/logo_le.taxi.svg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "51249944"
+						},
+						{
+							"uri": "https://le.taxi/assets/images/logo_le.taxi.svg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "51369958"
+						},
+						{
+							"uri": "https://le.taxi/assets/images/logo_le.taxi.svg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "51499958"
+						},
+						{
+							"uri": "https://le.taxi/assets/images/logo_le.taxi.svg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "98500344"
+						},
+						{
+							"uri": "https://le.taxi/assets/images/logo_le.taxi.svg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "98749958"
+						},
+						{
+							"uri": "https://le.taxi/assets/images/logo_le.taxi.svg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "98869958"
+						},
+						{
+							"uri": "https://le.taxi/assets/images/logo_le.taxi.svg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "99000344"
+						}
+					],
+					"count": "11",
+					"solution": "<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>",
+					"otherinfo": "<p>20210830, which evaluates to: 1970-08-22 22:07:10</p>",
+					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "23"
+				},
+				{
+					"pluginid": "10021",
+					"alertRef": "10021",
+					"alert": "X-Content-Type-Options Header Missing",
+					"name": "X-Content-Type-Options Header Missing",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+					"instances":[ 
+						{
+							"uri": "https://le.taxi",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifschauffeurs.html",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifsclients.html",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/apropos.html",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/faq.html",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/fonctionnement.html",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/legal.html",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/partners.html",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tech.html",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tests.html",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						}
+					],
+					"count": "11",
+					"solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+					"otherinfo": "<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.</p>",
+					"reference": "<p>http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx</p><p>https://owasp.org/www-community/Security_Headers</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10094",
+					"alertRef": "10094",
+					"alert": "Base64 Disclosure",
+					"name": "Base64 Disclosure",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>Base64 encoded data was disclosed by the application/web server. Note: in the interests of performance not all base64 strings in the response were analyzed individually, the entire response should be looked at by the analyst/security team/developer(s).</p>",
+					"instances":[ 
+						{
+							"uri": "https://le.taxi/applicatifschauffeurs.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "fr/codes/article_lc/LEGIARTI000039784232/2020-12-27"
+						},
+						{
+							"uri": "https://le.taxi/apropos.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "fr/codes/article_lc/LEGIARTI000039784232/2020-12-27"
+						},
+						{
+							"uri": "https://le.taxi/assets/documents/CGU.pdf?20210830",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "/Type/Font/Subtype/TrueType/Name/F1/BaseFont/ArialMT/Encoding/WinAnsiEncoding/FontDescriptor"
+						}
+					],
+					"count": "3",
+					"solution": "<p>Manually confirm that the Base64 data does not leak sensitive information, and that the data cannot be aggregated/used to exploit other vulnerabilities.</p>",
+					"otherinfo": "<p>~\uFFFD\u0721\u05EC\uFFFD\uFFFD\uFFFD\uFFFD^\uFFFDW?,A\uFFFD\\x0001\\x0014\uFFFD\uFFFDM4\uFFFD\uFFFD\uFFFD\uFFFDm\uFFFD\uFFFDm6\uFFFD\uFFFDv\uFFFDn</p>",
+					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "23"
+				},
+				{
+					"pluginid": "10109",
+					"alertRef": "10109",
+					"alert": "Modern Web Application",
+					"name": "Modern Web Application",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p>",
+					"instances":[ 
+						{
+							"uri": "https://le.taxi",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    </noscript>"
+						},
+						{
+							"uri": "https://le.taxi/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    </noscript>"
+						},
+						{
+							"uri": "https://le.taxi/applicatifschauffeurs.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    </noscript>"
+						},
+						{
+							"uri": "https://le.taxi/applicatifsclients.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    </noscript>"
+						},
+						{
+							"uri": "https://le.taxi/apropos.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    </noscript>"
+						},
+						{
+							"uri": "https://le.taxi/faq.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    </noscript>"
+						},
+						{
+							"uri": "https://le.taxi/fonctionnement.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    </noscript>"
+						},
+						{
+							"uri": "https://le.taxi/legal.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    </noscript>"
+						},
+						{
+							"uri": "https://le.taxi/partners.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    </noscript>"
+						},
+						{
+							"uri": "https://le.taxi/tech.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    </noscript>"
+						},
+						{
+							"uri": "https://le.taxi/tests.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<noscript>\n        <!-- Matomo Image Tracker-->\n        <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=18&amp;rec=1\" style=\"border:0\" alt=\"\" />\n        <!-- End Matomo -->\n    </noscript>"
+						}
+					],
+					"count": "11",
+					"solution": "<p>This is an informational alert and so no changes are required.</p>",
+					"otherinfo": "<p>A noScript tag has been found, which is an indication that the application works differently with JavaScript enabled compared to when it is not.</p>",
+					"reference": "",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10049",
+					"alertRef": "10049",
+					"alert": "Storable and Cacheable Content",
+					"name": "Storable and Cacheable Content",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users.  If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+					"instances":[ 
+						{
+							"uri": "https://le.taxi",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifschauffeurs.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/applicatifsclients.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/faq.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/fonctionnement.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/partners.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/robots.txt",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tech.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://le.taxi/tests.html",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						}
+					],
+					"count": "11",
+					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. </p>",
+					"otherinfo": "<p>In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234.</p>",
+					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p>",
+					"cweid": "524",
+					"wascid": "13",
+					"sourceid": "1"
+				}
+			]
+		}
+	]
+}
