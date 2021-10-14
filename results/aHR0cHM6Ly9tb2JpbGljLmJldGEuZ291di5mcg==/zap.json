@@ -1,6 +1,6 @@
 {
 	"@version": "2.11.0",
-	"@generated": "Wed, 13 Oct 2021 02:15:40",
+	"@generated": "Thu, 14 Oct 2021 02:09:25",
 	"site":[ 
 		{
 			"@name": "https://mobilic.beta.gouv.fr",
@@ -140,7 +140,7 @@
 					"reference": "<p>https://vulncat.fortify.com/en/detail?id=desc.config.dotnet.html5_overly_permissive_cors_policy</p>",
 					"cweid": "264",
 					"wascid": "14",
-					"sourceid": "54"
+					"sourceid": "46"
 				},
 				{
 					"pluginid": "10110",
@@ -166,7 +166,7 @@
 					"reference": "<p>https://angular.io/guide/security</p>",
 					"cweid": "749",
 					"wascid": "-1",
-					"sourceid": "71"
+					"sourceid": "84"
 				},
 				{
 					"pluginid": "10015",
@@ -310,7 +310,7 @@
 							"evidence": ""
 						},
 						{
-							"uri": "https://mobilic.beta.gouv.fr/oauth/splashscreens/iphoneplus_splash.png",
+							"uri": "https://mobilic.beta.gouv.fr/oauth/splashscreens/iphonex_splash.png",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -384,7 +384,7 @@
 					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>http://caniuse.com/stricttransportsecurity</p><p>http://tools.ietf.org/html/rfc6797</p>",
 					"cweid": "319",
 					"wascid": "15",
-					"sourceid": "54"
+					"sourceid": "46"
 				},
 				{
 					"pluginid": "10096",
@@ -452,7 +452,7 @@
 					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "32"
+					"sourceid": "50"
 				},
 				{
 					"pluginid": "10094",
@@ -485,7 +485,7 @@
 					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "72"
+					"sourceid": "71"
 				},
 				{
 					"pluginid": "10027",
@@ -525,7 +525,7 @@
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "72"
+					"sourceid": "71"
 				},
 				{
 					"pluginid": "10109",
@@ -626,6 +626,32 @@
 				{
 					"pluginid": "10049",
 					"alertRef": "10049",
+					"alert": "Storable and Cacheable Content",
+					"name": "Storable and Cacheable Content",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users.  If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
+					"instances":[ 
+						{
+							"uri": "https://mobilic.beta.gouv.fr/api/fc/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. </p>",
+					"otherinfo": "<p>In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234.</p>",
+					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p>",
+					"cweid": "524",
+					"wascid": "13",
+					"sourceid": "46"
+				},
+				{
+					"pluginid": "10049",
+					"alertRef": "10049",
 					"alert": "Storable but Non-Cacheable Content",
 					"name": "Storable but Non-Cacheable Content",
 					"riskcode": "0",
@@ -634,84 +660,14 @@
 					"desc": "<p>The response contents are storable by caching components such as proxy servers, but will not be retrieved directly from the cache, without validating the request upstream, in response to similar requests from other users. </p>",
 					"instances":[ 
 						{
-							"uri": "https://mobilic.beta.gouv.fr",
+							"uri": "https://mobilic.beta.gouv.fr/api/fc/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "no-cache"
-						},
-						{
-							"uri": "https://mobilic.beta.gouv.fr/developers/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "no-cache"
-						},
-						{
-							"uri": "https://mobilic.beta.gouv.fr/favicon.svg",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "no-cache"
-						},
-						{
-							"uri": "https://mobilic.beta.gouv.fr/logo180.png",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "no-cache"
-						},
-						{
-							"uri": "https://mobilic.beta.gouv.fr/manifest.json",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "no-cache"
-						},
-						{
-							"uri": "https://mobilic.beta.gouv.fr/robots.txt",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "no-cache"
-						},
-						{
-							"uri": "https://mobilic.beta.gouv.fr/safari-mask-icon.svg",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "no-cache"
-						},
-						{
-							"uri": "https://mobilic.beta.gouv.fr/sitemap.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "no-cache"
-						},
-						{
-							"uri": "https://mobilic.beta.gouv.fr/splashscreens/iphone5_splash.png",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "no-cache"
-						},
-						{
-							"uri": "https://mobilic.beta.gouv.fr/splashscreens/iphone6_splash.png",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "no-cache"
-						},
-						{
-							"uri": "https://mobilic.beta.gouv.fr/splashscreens/iphoneplus_splash.png",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "no-cache"
+							"evidence": ""
 						}
 					],
-					"count": "11",
+					"count": "1",
 					"solution": "",
 					"otherinfo": "",
 					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p>",
