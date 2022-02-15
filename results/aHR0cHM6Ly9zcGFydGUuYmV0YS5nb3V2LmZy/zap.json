@@ -1,6 +1,6 @@
 {
 	"@version": "2.11.1",
-	"@generated": "Mon, 14 Feb 2022 02:20:14",
+	"@generated": "Tue, 15 Feb 2022 02:52:40",
 	"site":[ 
 		{
 			"@name": "https://sparte.beta.gouv.fr",
@@ -105,6 +105,53 @@
 					"sourceid": "1"
 				},
 				{
+					"pluginid": "90022",
+					"alertRef": "90022",
+					"alert": "Application Error Disclosure",
+					"name": "Application Error Disclosure",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>This page contains an error/warning message that may disclose sensitive information like the location of the file that produced the unhandled exception. This information can be used to launch further attacks against the web application. The alert could be a false positive if the error message is found inside a documentation page.</p>",
+					"instances":[ 
+						{
+							"uri": "https://sparte.beta.gouv.fr/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "HTTP/1.1 500 Internal Server Error"
+						},
+						{
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1/city?select=true&selected_cities",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "HTTP/1.1 500 Internal Server Error"
+						},
+						{
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?departement=1",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "HTTP/1.1 500 Internal Server Error"
+						},
+						{
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/2",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "HTTP/1.1 500 Internal Server Error"
+						}
+					],
+					"count": "4",
+					"solution": "<p>Review the source code of this page. Implement custom error pages. Consider implementing a mechanism to provide a unique error reference/identifier to the client (browser) while logging the details on the server side and not exposing them to the user.</p>",
+					"otherinfo": "",
+					"reference": "",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "36"
+				},
+				{
 					"pluginid": "10010",
 					"alertRef": "10010",
 					"alert": "Cookie No HttpOnly Flag",
@@ -136,21 +183,14 @@
 							"evidence": "Set-Cookie: csrftoken"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=6Bk39OpFBCTGTfF4ZB6oe9pjjOd9THa70A3RuhSlWqWvaUMC5GDQyGumYfvndRey&departement=1",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=0srC5OqgBR3jKdEPuku8OjwIsCHyCl9yTqmi6G38CjPTVgvdBJNPIuBNlaphiCAL&departement=1",
 							"method": "GET",
 							"param": "csrftoken",
 							"attack": "",
 							"evidence": "Set-Cookie: csrftoken"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=WofMG8IRRdZiKmxyaHatvHEYos2rJlMpQnYA1Bbxc12711E6gMHVPeJ13TkF3vQQ&region=1",
-							"method": "GET",
-							"param": "csrftoken",
-							"attack": "",
-							"evidence": "Set-Cookie: csrftoken"
-						},
-						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/2",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=thuLQqfAeszO9s6Kk9OcBe18Oej0A0z7mfprRiSsfUlokvX8ry7Tvp6dHM1Jgh0k&region=1",
 							"method": "GET",
 							"param": "csrftoken",
 							"attack": "",
@@ -185,13 +225,13 @@
 							"evidence": "Set-Cookie: csrftoken"
 						}
 					],
-					"count": "10",
+					"count": "9",
 					"solution": "<p>Ensure that the HttpOnly flag is set for all cookies.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://owasp.org/www-community/HttpOnly</p>",
 					"cweid": "1004",
 					"wascid": "13",
-					"sourceid": "99"
+					"sourceid": "101"
 				},
 				{
 					"pluginid": "10011",
@@ -225,14 +265,14 @@
 							"evidence": "Set-Cookie: csrftoken"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1/city?select=true&selected_cities",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=0srC5OqgBR3jKdEPuku8OjwIsCHyCl9yTqmi6G38CjPTVgvdBJNPIuBNlaphiCAL&departement=1",
 							"method": "GET",
-							"param": "sessionid",
+							"param": "csrftoken",
 							"attack": "",
-							"evidence": "Set-Cookie: sessionid"
+							"evidence": "Set-Cookie: csrftoken"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=WofMG8IRRdZiKmxyaHatvHEYos2rJlMpQnYA1Bbxc12711E6gMHVPeJ13TkF3vQQ&region=1",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=thuLQqfAeszO9s6Kk9OcBe18Oej0A0z7mfprRiSsfUlokvX8ry7Tvp6dHM1Jgh0k&region=1",
 							"method": "GET",
 							"param": "csrftoken",
 							"attack": "",
@@ -251,13 +291,6 @@
 							"param": "sessionid",
 							"attack": "",
 							"evidence": "Set-Cookie: sessionid"
-						},
-						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/2",
-							"method": "GET",
-							"param": "csrftoken",
-							"attack": "",
-							"evidence": "Set-Cookie: csrftoken"
 						},
 						{
 							"uri": "https://sparte.beta.gouv.fr/users/signin/",
@@ -288,13 +321,13 @@
 							"evidence": "Set-Cookie: csrftoken"
 						}
 					],
-					"count": "12",
+					"count": "11",
 					"solution": "<p>Whenever a cookie contains sensitive information or is a session token, then it should always be passed using an encrypted channel. Ensure that the secure flag is set for cookies containing such sensitive information.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</p>",
 					"cweid": "614",
 					"wascid": "13",
-					"sourceid": "99"
+					"sourceid": "101"
 				},
 				{
 					"pluginid": "10110",
@@ -320,7 +353,7 @@
 					"reference": "<p>https://angular.io/guide/security</p>",
 					"cweid": "749",
 					"wascid": "-1",
-					"sourceid": "71"
+					"sourceid": "73"
 				},
 				{
 					"pluginid": "10015",
@@ -334,13 +367,6 @@
 					"instances":[ 
 						{
 							"uri": "https://sparte.beta.gouv.fr",
-							"method": "GET",
-							"param": "Cache-Control",
-							"attack": "",
-							"evidence": ""
-						},
-						{
-							"uri": "https://sparte.beta.gouv.fr/",
 							"method": "GET",
 							"param": "Cache-Control",
 							"attack": "",
@@ -389,7 +415,7 @@
 							"evidence": ""
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=WofMG8IRRdZiKmxyaHatvHEYos2rJlMpQnYA1Bbxc12711E6gMHVPeJ13TkF3vQQ&region=1",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=thuLQqfAeszO9s6Kk9OcBe18Oej0A0z7mfprRiSsfUlokvX8ry7Tvp6dHM1Jgh0k&region=1",
 							"method": "GET",
 							"param": "Cache-Control",
 							"attack": "",
@@ -408,6 +434,13 @@
 							"param": "Cache-Control",
 							"attack": "",
 							"evidence": ""
+						},
+						{
+							"uri": "https://sparte.beta.gouv.fr/users/signup/",
+							"method": "POST",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
 						}
 					],
 					"count": "11",
@@ -417,6 +450,46 @@
 					"cweid": "525",
 					"wascid": "13",
 					"sourceid": "1"
+				},
+				{
+					"pluginid": "10023",
+					"alertRef": "10023",
+					"alert": "Information Disclosure - Debug Error Messages",
+					"name": "Information Disclosure - Debug Error Messages",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>The response appeared to contain common error messages returned by platforms such as ASP.NET, and Web-servers such as IIS and Apache. You can configure the list of common debug messages.</p>",
+					"instances":[ 
+						{
+							"uri": "https://sparte.beta.gouv.fr/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Internal Server Error"
+						},
+						{
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1/city?select=true&selected_cities",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Internal Server Error"
+						},
+						{
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?departement=1",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Internal Server Error"
+						}
+					],
+					"count": "3",
+					"solution": "<p>Disable debugging messages before pushing to production.</p>",
+					"otherinfo": "",
+					"reference": "",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "36"
 				},
 				{
 					"pluginid": "10063",
@@ -717,14 +790,14 @@
 							"evidence": ""
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/static/home/img/couverture_france.png",
+							"uri": "https://sparte.beta.gouv.fr/static/home/img/header.png",
 							"method": "GET",
 							"param": "X-Content-Type-Options",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/static/home/img/header.png",
+							"uri": "https://sparte.beta.gouv.fr/static/home/img/loi_climat_vertical.png",
 							"method": "GET",
 							"param": "X-Content-Type-Options",
 							"attack": "",
@@ -796,7 +869,7 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "615PgOpFTd3uAbRk0RvJqFa2gh9htPw100ODBhSle16jRQYS6W2bKcf5VIrvNZAs"
+							"evidence": "xQXoVdUN7NTaFcy2iM4ttAgY3n7Rx53VqOS4W5xF8fFKQfpqpbnanLl3WVPAdmu8"
 						},
 						{
 							"uri": "https://sparte.beta.gouv.fr/faq/foire-aux-questions-pedagogique/",
@@ -817,72 +890,65 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "615PgOpFTd3uAbRk0RvJqFa2gh9htPw100ODBhSle16jRQYS6W2bKcf5VIrvNZAs"
+							"evidence": "xQXoVdUN7NTaFcy2iM4ttAgY3n7Rx53VqOS4W5xF8fFKQfpqpbnanLl3WVPAdmu8"
 						},
 						{
 							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1/city",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "615PgOpFTd3uAbRk0RvJqFa2gh9htPw100ODBhSle16jRQYS6W2bKcf5VIrvNZAs"
+							"evidence": "xQXoVdUN7NTaFcy2iM4ttAgY3n7Rx53VqOS4W5xF8fFKQfpqpbnanLl3WVPAdmu8"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=6Bk39OpFBCTGTfF4ZB6oe9pjjOd9THa70A3RuhSlWqWvaUMC5GDQyGumYfvndRey&departement=1",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=0srC5OqgBR3jKdEPuku8OjwIsCHyCl9yTqmi6G38CjPTVgvdBJNPIuBNlaphiCAL&departement=1",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "615PgOpFTd3uAbRk0RvJqFa2gh9htPw100ODBhSle16jRQYS6W2bKcf5VIrvNZAs"
+							"evidence": "xQXoVdUN7NTaFcy2iM4ttAgY3n7Rx53VqOS4W5xF8fFKQfpqpbnanLl3WVPAdmu8"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=WofMG8IRRdZiKmxyaHatvHEYos2rJlMpQnYA1Bbxc12711E6gMHVPeJ13TkF3vQQ&region=1",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=thuLQqfAeszO9s6Kk9OcBe18Oej0A0z7mfprRiSsfUlokvX8ry7Tvp6dHM1Jgh0k&region=1",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "615PgOpFTd3uAbRk0RvJqFa2gh9htPw100ODBhSle16jRQYS6W2bKcf5VIrvNZAs"
-						},
-						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/2",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "615PgOpFTd3uAbRk0RvJqFa2gh9htPw100ODBhSle16jRQYS6W2bKcf5VIrvNZAs"
+							"evidence": "xQXoVdUN7NTaFcy2iM4ttAgY3n7Rx53VqOS4W5xF8fFKQfpqpbnanLl3WVPAdmu8"
 						},
 						{
 							"uri": "https://sparte.beta.gouv.fr/users/signin/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "615PgOpFTd3uAbRk0RvJqFa2gh9htPw100ODBhSle16jRQYS6W2bKcf5VIrvNZAs"
+							"evidence": "xQXoVdUN7NTaFcy2iM4ttAgY3n7Rx53VqOS4W5xF8fFKQfpqpbnanLl3WVPAdmu8"
 						},
 						{
 							"uri": "https://sparte.beta.gouv.fr/users/signup/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "615PgOpFTd3uAbRk0RvJqFa2gh9htPw100ODBhSle16jRQYS6W2bKcf5VIrvNZAs"
+							"evidence": "xQXoVdUN7NTaFcy2iM4ttAgY3n7Rx53VqOS4W5xF8fFKQfpqpbnanLl3WVPAdmu8"
 						},
 						{
 							"uri": "https://sparte.beta.gouv.fr/users/signin/",
 							"method": "POST",
 							"param": "",
 							"attack": "",
-							"evidence": "615PgOpFTd3uAbRk0RvJqFa2gh9htPw100ODBhSle16jRQYS6W2bKcf5VIrvNZAs"
+							"evidence": "xQXoVdUN7NTaFcy2iM4ttAgY3n7Rx53VqOS4W5xF8fFKQfpqpbnanLl3WVPAdmu8"
 						},
 						{
 							"uri": "https://sparte.beta.gouv.fr/users/signup/",
 							"method": "POST",
 							"param": "",
 							"attack": "",
-							"evidence": "615PgOpFTd3uAbRk0RvJqFa2gh9htPw100ODBhSle16jRQYS6W2bKcf5VIrvNZAs"
+							"evidence": "xQXoVdUN7NTaFcy2iM4ttAgY3n7Rx53VqOS4W5xF8fFKQfpqpbnanLl3WVPAdmu8"
 						}
 					],
-					"count": "12",
+					"count": "11",
 					"solution": "<p>Manually confirm that the Base64 data does not leak sensitive information, and that the data cannot be aggregated/used to exploit other vulnerabilities.</p>",
-					"otherinfo": "<p>\uFFFD^O\uFFFD\uFFFDEM\uFFFD\uFFFD\\x0001\uFFFDd\uFFFD\\x001b\u0268V\uFFFD\uFFFD\\x001fa\uFFFD\uFFFD5\uFFFDC\uFFFD\\x0006\\x0014\uFFFD{^\uFFFDE\\x0006\\x0012\uFFFDm\uFFFD)\uFFFD\uFFFDT\uFFFD\uFFFD5\uFFFD,</p>",
+					"otherinfo": "<p>\uFFFD\\x0005\uFFFDU\uFFFD\r\uFFFD\uFFFD\uFFFD\\x0015\u0336\uFFFD\uFFFD-\uFFFD\\x0008\\x0018\uFFFD~\uFFFD\u01DD\u0568\uFFFD[\uFFFDE\uFFFD\uFFFDJA\uFFFDj\uFFFD\uFFFD\u069C\uFFFDwYS\uFFFDvk\uFFFD</p>",
 					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "99"
+					"sourceid": "101"
 				},
 				{
 					"pluginid": "10024",
@@ -895,63 +961,63 @@
 					"desc": "<p>The request appeared to contain sensitive information leaked in the URL. This can violate PCI and most organizational compliance policies. You can configure the list of strings for this check to add or remove values specific to your environment.</p>",
 					"instances":[ 
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1/city?csrfmiddlewaretoken=0V44IMWhpFBQBMkqkFUj6IBdsQnMMgvSUUNS3fpXKtEFSrrYqKrLqfGg7hF06qzj&needle=ZAP&selected_cities",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1/city?csrfmiddlewaretoken=6CWCkj6t7vcdgJEiuNPlcAAupGY15i2bZARilbJl8XYNrMvGBc826LFzieGKLzto&needle=ZAP&selected_cities",
 							"method": "GET",
 							"param": "csrfmiddlewaretoken",
 							"attack": "",
 							"evidence": "csrfmiddlewaretoken"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1/city?csrfmiddlewaretoken=ByhM4cuSMe3jqxNBrIizinOReUNQK4Ktvx0ApFXy7268HcU9xNP1CUTUTl544eOU&needle=ZAP&selected_cities",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1/city?csrfmiddlewaretoken=HosROSaZ0dgukBpxE46IsE6y8wfulDpGAmnxPKNR1F24vEgVLtppmPbD14Xd1UQT&needle=ZAP&selected_cities",
 							"method": "GET",
 							"param": "csrfmiddlewaretoken",
 							"attack": "",
 							"evidence": "csrfmiddlewaretoken"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1/city?csrfmiddlewaretoken=D7qVQzWE2MRsocoYaKURLk8YsnfwpW2sx69Jb2pknAUhFRvwgPrj5Rd17OxKJ66T&needle=ZAP&selected_cities",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1/city?csrfmiddlewaretoken=NuvzV4oRqdKw92zloSNFid5ZbMeapF0OGsqfWW1JrFw6k5qJvh6mcoa44kWT5Wr1&needle=ZAP&selected_cities",
 							"method": "GET",
 							"param": "csrfmiddlewaretoken",
 							"attack": "",
 							"evidence": "csrfmiddlewaretoken"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1/city?csrfmiddlewaretoken=lr1mrkslCH07ajWS8ejQafCJRoVtaUNefqKaMNV1Xv3WrY3qejQiuMHMwPdHu4RF&needle=ZAP&selected_cities=COMMUNE_1154",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1/city?csrfmiddlewaretoken=payeuwtyaRwzufwijX6gZ0d6uufpxwRIi8tUvo6qbji9FinGqmpXTbibn2X8dNiV&needle=ZAP&selected_cities=COMMUNE_1154",
 							"method": "GET",
 							"param": "csrfmiddlewaretoken",
 							"attack": "",
 							"evidence": "csrfmiddlewaretoken"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=6Bk39OpFBCTGTfF4ZB6oe9pjjOd9THa70A3RuhSlWqWvaUMC5GDQyGumYfvndRey&departement=1",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=0srC5OqgBR3jKdEPuku8OjwIsCHyCl9yTqmi6G38CjPTVgvdBJNPIuBNlaphiCAL&departement=1",
 							"method": "GET",
 							"param": "csrfmiddlewaretoken",
 							"attack": "",
 							"evidence": "csrfmiddlewaretoken"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=DGydxynD1MMDi3wLq2naUuP90RKBD78YxFh1S1QjmAPszIDjw7UCe1UcFi2PXhcp&departement=1",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=2ii52jf2jipugsCrRWWN66nlukbf61PmVgdL3bSUkKb4rvtPYlfu0hsqnSTYMigz&departement=1&epci=634",
 							"method": "GET",
 							"param": "csrfmiddlewaretoken",
 							"attack": "",
 							"evidence": "csrfmiddlewaretoken"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=NlfMXxG8o3goNnve82YD5GeZy1A1OEYZHkYAi09OJRjd42CMe7v5pdj2dsSf8O2q",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=6Zfs4GW86EqPThYSlpHzIVFXAMIawX5iZXa85yz076cp4kPgsO0gC6K2tkqTcewv",
 							"method": "GET",
 							"param": "csrfmiddlewaretoken",
 							"attack": "",
 							"evidence": "csrfmiddlewaretoken"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=SWHSkuOWhKLbYLvaWrfCjNoFwxT24zgdMVqGFXhCCyO0fqCI2wM4DktIbYbgoJkE&departement=1&epci=634",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=FmQHPIIXRdfVztATIdWM6vDeYUcJVnPlykLnQAlPSF1vKwrhPCft0GIjRsUsBEgy&departement=1",
 							"method": "GET",
 							"param": "csrfmiddlewaretoken",
 							"attack": "",
 							"evidence": "csrfmiddlewaretoken"
 						},
 						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=WofMG8IRRdZiKmxyaHatvHEYos2rJlMpQnYA1Bbxc12711E6gMHVPeJ13TkF3vQQ&region=1",
+							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=thuLQqfAeszO9s6Kk9OcBe18Oej0A0z7mfprRiSsfUlokvX8ry7Tvp6dHM1Jgh0k&region=1",
 							"method": "GET",
 							"param": "csrfmiddlewaretoken",
 							"attack": "",
@@ -964,7 +1030,7 @@
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "179"
+					"sourceid": "134"
 				},
 				{
 					"pluginid": "10027",
@@ -1018,7 +1084,7 @@
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "145"
+					"sourceid": "146"
 				},
 				{
 					"pluginid": "10109",
@@ -1032,13 +1098,6 @@
 					"instances":[ 
 						{
 							"uri": "https://sparte.beta.gouv.fr",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<a class=\"nav-link dropdown-toggle\" id=\"DropdownPlan\" href=\"#\" role=\"button\" data-bs-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Plans d'am\u00E9nagement</a>"
-						},
-						{
-							"uri": "https://sparte.beta.gouv.fr/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -1106,6 +1165,13 @@
 							"param": "",
 							"attack": "",
 							"evidence": "<a class=\"nav-link dropdown-toggle\" id=\"DropdownPlan\" href=\"#\" role=\"button\" data-bs-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Plans d'am\u00E9nagement</a>"
+						},
+						{
+							"uri": "https://sparte.beta.gouv.fr/users/signup/",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "<a class=\"nav-link dropdown-toggle\" id=\"DropdownPlan\" href=\"#\" role=\"button\" data-bs-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Plans d'am\u00E9nagement</a>"
 						}
 					],
 					"count": "11",
@@ -1127,6 +1193,13 @@
 					"desc": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>",
 					"instances":[ 
 						{
+							"uri": "https://sparte.beta.gouv.fr/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "500"
+						},
+						{
 							"uri": "https://sparte.beta.gouv.fr/users/signin/",
 							"method": "GET",
 							"param": "",
@@ -1134,13 +1207,13 @@
 							"evidence": "no-store"
 						}
 					],
-					"count": "1",
+					"count": "2",
 					"solution": "<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).   </p>",
 					"otherinfo": "",
 					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "58"
+					"sourceid": "36"
 				},
 				{
 					"pluginid": "10049",
@@ -1154,13 +1227,6 @@
 					"instances":[ 
 						{
 							"uri": "https://sparte.beta.gouv.fr",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": ""
-						},
-						{
-							"uri": "https://sparte.beta.gouv.fr/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -1223,7 +1289,7 @@
 							"evidence": ""
 						}
 					],
-					"count": "10",
+					"count": "9",
 					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. </p>",
 					"otherinfo": "<p>In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234.</p>",
 					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p>",
@@ -1241,13 +1307,6 @@
 					"riskdesc": "Informational (Low)",
 					"desc": "<p>This check looks at user-supplied input in query string parameters and POST data to identify where certain HTML attribute values might be controlled. This provides hot-spot detection for XSS (cross-site scripting) that will require further review by a security analyst to determine exploitability.</p>",
 					"instances":[ 
-						{
-							"uri": "https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=WofMG8IRRdZiKmxyaHatvHEYos2rJlMpQnYA1Bbxc12711E6gMHVPeJ13TkF3vQQ&region=1",
-							"method": "GET",
-							"param": "region",
-							"attack": "",
-							"evidence": ""
-						},
 						{
 							"uri": "https://sparte.beta.gouv.fr/users/signup/",
 							"method": "POST",
@@ -1298,13 +1357,13 @@
 							"evidence": ""
 						}
 					],
-					"count": "8",
+					"count": "7",
 					"solution": "<p>Validate all input and sanitize output it before writing to any HTML attributes.</p>",
-					"otherinfo": "<p>User-controlled HTML attribute values were found. Try injecting special characters to see if XSS might be possible. The page at the following URL:</p><p></p><p>https://sparte.beta.gouv.fr/project/diagnostic/etape/1?csrfmiddlewaretoken=WofMG8IRRdZiKmxyaHatvHEYos2rJlMpQnYA1Bbxc12711E6gMHVPeJ13TkF3vQQ&region=1</p><p></p><p>appears to include user input in: </p><p></p><p>a(n) [meta] tag [content] attribute </p><p></p><p>The user input found was:</p><p>region=1</p><p></p><p>The user-controlled value was:</p><p>width=device-width, initial-scale=1, shrink-to-fit=no</p>",
+					"otherinfo": "<p>User-controlled HTML attribute values were found. Try injecting special characters to see if XSS might be possible. The page at the following URL:</p><p></p><p>https://sparte.beta.gouv.fr/users/signup/</p><p></p><p>appears to include user input in: </p><p></p><p>a(n) [input] tag [value] attribute </p><p></p><p>The user input found was:</p><p>email=foo-bar@example.com</p><p></p><p>The user-controlled value was:</p><p>foo-bar@example.com</p>",
 					"reference": "<p>http://websecuritytool.codeplex.com/wikipage?title=Checks#user-controlled-html-attribute</p>",
 					"cweid": "20",
 					"wascid": "20",
-					"sourceid": "95"
+					"sourceid": "96"
 				}
 			]
 		}
