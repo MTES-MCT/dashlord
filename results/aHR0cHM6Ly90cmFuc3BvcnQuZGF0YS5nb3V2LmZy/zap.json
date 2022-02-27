@@ -1,7 +1,48 @@
 {
 	"@version": "2.11.1",
-	"@generated": "Sat, 26 Feb 2022 02:32:49",
+	"@generated": "Sun, 27 Feb 2022 02:39:26",
 	"site":[ 
+		{
+			"@name": "https://transport-data-gouv-fr-resource-history-prod.cellar-c2.services.clever-cloud.com",
+			"@host": "transport-data-gouv-fr-resource-history-prod.cellar-c2.services.clever-cloud.com",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "10035",
+					"alertRef": "10035",
+					"alert": "Strict-Transport-Security Header Not Set",
+					"name": "Strict-Transport-Security Header Not Set",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "Low (High)",
+					"desc": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+					"instances":[ 
+						{
+							"uri": "https://transport-data-gouv-fr-resource-history-prod.cellar-c2.services.clever-cloud.com/46362a9d-053e-4ba0-be58-bca4417a2de8/46362a9d-053e-4ba0-be58-bca4417a2de8.20220225.060218.002937.csv",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://transport-data-gouv-fr-resource-history-prod.cellar-c2.services.clever-cloud.com/cf4168c9-7cea-404b-a945-43ed201d1e61/cf4168c9-7cea-404b-a945-43ed201d1e61.20220217.155753.618968.csv",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						}
+					],
+					"count": "2",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>http://caniuse.com/stricttransportsecurity</p><p>http://tools.ietf.org/html/rfc6797</p>",
+					"cweid": "319",
+					"wascid": "15",
+					"sourceid": "8706"
+				}
+			]
+		},
 		{
 			"@name": "https://transport.data.gouv.fr",
 			"@host": "transport.data.gouv.fr",
@@ -32,7 +73,7 @@
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "6711"
+					"sourceid": "7299"
 				},
 				{
 					"pluginid": "10038",
@@ -131,6 +172,32 @@
 					"sourceid": "1"
 				},
 				{
+					"pluginid": "10098",
+					"alertRef": "10098",
+					"alert": "Cross-Domain Misconfiguration",
+					"name": "Cross-Domain Misconfiguration",
+					"riskcode": "2",
+					"confidence": "2",
+					"riskdesc": "Medium (Medium)",
+					"desc": "<p>Web browser data loading may be possible, due to a Cross Origin Resource Sharing (CORS) misconfiguration on the web server</p>",
+					"instances":[ 
+						{
+							"uri": "https://transport.data.gouv.fr/api/datasets/5b576b1c88ee381a3d7f1d5b",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "access-control-allow-origin: *"
+						}
+					],
+					"count": "1",
+					"solution": "<p>Ensure that sensitive data is not available in an unauthenticated manner (using IP address white-listing, for instance).</p><p>Configure the \"Access-Control-Allow-Origin\" HTTP header to a more restrictive set of domains, or remove all CORS headers entirely, to allow the web browser to enforce the Same Origin Policy (SOP) in a more restrictive manner.</p>",
+					"otherinfo": "<p>The CORS misconfiguration on the web server permits cross-domain read requests from arbitrary third party domains, using unauthenticated APIs on this domain. Web browser implementations do not permit arbitrary third parties to read the response from authenticated APIs, however. This reduces the risk somewhat. This misconfiguration could be used by an attacker to access data that is available in an unauthenticated manner, but which uses some other form of security, such as IP address white-listing.</p>",
+					"reference": "<p>https://vulncat.fortify.com/en/detail?id=desc.config.dotnet.html5_overly_permissive_cors_policy</p>",
+					"cweid": "264",
+					"wascid": "14",
+					"sourceid": "8683"
+				},
+				{
 					"pluginid": "10020",
 					"alertRef": "10020",
 					"alert": "Missing Anti-clickjacking Header",
@@ -154,7 +221,7 @@
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options</p>",
 					"cweid": "1021",
 					"wascid": "15",
-					"sourceid": "2446"
+					"sourceid": "2490"
 				},
 				{
 					"pluginid": "90003",
@@ -332,6 +399,13 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
+							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/228db06c-5744-450e-9f93-2b4e797898cf\" />"
+						},
+						{
+							"uri": "https://transport.data.gouv.fr/atom.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/229ca0f0-c3a0-4fab-9872-2bf45b839765\" />"
 						},
 						{
@@ -354,13 +428,6 @@
 							"param": "",
 							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/25ec28e8-4683-4107-be58-a85cd32ddee3\" />"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/27cb3438-3382-4079-b644-23dcdd699ca0\" />"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/atom.xml",
@@ -451,13 +518,6 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/3a5c5d2f-c09d-4370-b948-2a97e2b48e7b\" />"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/3af621da-a600-4da9-92c4-dfd994b22c31\" />"
 						},
 						{
@@ -542,6 +602,13 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
+							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/4def9528-cbdb-4a14-9518-e007128cc612\" />"
+						},
+						{
+							"uri": "https://transport.data.gouv.fr/atom.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/4ea5fb1f-3b42-4bc4-a255-303250fca10d\" />"
 						},
 						{
@@ -592,6 +659,13 @@
 							"param": "",
 							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/5b6a77c5-693c-4551-adb3-807a91416702\" />"
+						},
+						{
+							"uri": "https://transport.data.gouv.fr/atom.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/5bfddca7-f3a5-4f49-a75d-1c1c459b74b7\" />"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/atom.xml",
@@ -696,13 +770,6 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/76829380-02ba-46a8-952d-fb19d7a73962\" />"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/777d82f0-ba2f-4ae1-a7f6-4cf130f1732e\" />"
 						},
 						{
@@ -745,13 +812,6 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/7c596cfc-0af0-4d3b-b18f-f55374d570c9\" />"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/7c63749c-cf01-4485-bd96-8e348b9a97ff\" />"
 						},
 						{
@@ -781,6 +841,13 @@
 							"param": "",
 							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/805b2c7c-a270-43b5-ba0f-6959f2d753f4\" />"
+						},
+						{
+							"uri": "https://transport.data.gouv.fr/atom.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/806b84d8-f6fe-479c-8f4c-59b148737496\" />"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/atom.xml",
@@ -843,6 +910,13 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
+							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/8b53d98d-1136-4393-8e88-608f55cc5da6\" />"
+						},
+						{
+							"uri": "https://transport.data.gouv.fr/atom.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/8cd22254-2932-4beb-ba66-61d8380db5c1\" />"
 						},
 						{
@@ -878,7 +952,7 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/93c13187-03ec-4aa4-b968-ac6304ca9518\" />"
+							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/95a08eb0-b0de-43c2-83eb-7da5950336db\" />"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/atom.xml",
@@ -900,13 +974,6 @@
 							"param": "",
 							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/9dc7e6b7-01c3-4404-8862-de323b80dffd\" />"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/9e7c563d-9476-4715-9819-c3a6f8f18b4f\" />"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/atom.xml",
@@ -948,6 +1015,13 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
+							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/a5be1910-e456-4cd7-83ba-a77c98b347c2\" />"
+						},
+						{
+							"uri": "https://transport.data.gouv.fr/atom.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/a70fab11-9ac9-481e-91c8-925e805741ba\" />"
 						},
 						{
@@ -963,6 +1037,13 @@
 							"param": "",
 							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/a87e1796-7f98-467e-91a4-eb0eae3a7478\" />"
+						},
+						{
+							"uri": "https://transport.data.gouv.fr/atom.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/a9923e12-ef29-4f41-9115-08e56380840a\" />"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/atom.xml",
@@ -1039,7 +1120,21 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
+							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/b15bc42f-3ad4-4b6a-9d2b-c55453d63ef8\" />"
+						},
+						{
+							"uri": "https://transport.data.gouv.fr/atom.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/b3f2f823-fe55-4265-9efe-605d8156dea2\" />"
+						},
+						{
+							"uri": "https://transport.data.gouv.fr/atom.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/b40b5d49-4a76-4c75-a990-45a8c315070c\" />"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/atom.xml",
@@ -1116,28 +1211,7 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/c1946066-4993-4455-80cc-2b44eaa64832\" />"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/c1fe683b-0405-48a4-a989-5503123e2b31\" />"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/c3f86058-0be8-41f2-aa98-82d3a5625f22\" />"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/c42697be-fd49-434d-b735-1835ee71afb3\" />"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/atom.xml",
@@ -1152,6 +1226,13 @@
 							"param": "",
 							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/c618ed94-190c-4ea2-acc1-922113a01c96\" />"
+						},
+						{
+							"uri": "https://transport.data.gouv.fr/atom.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/c6f5cffd-9883-4312-9612-b5b1ec4a2797\" />"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/atom.xml",
@@ -1186,13 +1267,6 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/d1a9bbc9-33bd-477e-9f29-15ae049e1cdf\" />"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/d1ab1f6f-3482-411d-9540-3162df6f89d2\" />"
 						},
 						{
@@ -1215,13 +1289,6 @@
 							"param": "",
 							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/d405428e-ae5e-4253-abbb-62fc12089822\" />"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/d4404147-3ed7-4bd1-8b2d-be7b1248ee74\" />"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/atom.xml",
@@ -1299,13 +1366,6 @@
 							"param": "",
 							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/e1630e8e-51f4-446f-bc44-badfe8f15210\" />"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/e168e3a4-fc11-4b5d-89ce-4c5e1dddd15a\" />"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/atom.xml",
@@ -1411,22 +1471,15 @@
 							"param": "",
 							"attack": "",
 							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/fa490d02-5b50-4254-93f1-33b3ca2f8791\" />"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<link href=\"https://www.data.gouv.fr/fr/datasets/r/fe71363a-4cb3-4f5e-8b04-325f76e0dc8b\" />"
 						}
 					],
-					"count": "179",
+					"count": "177",
 					"solution": "<p>Provide a valid integrity attribute to the tag.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://developer.mozilla.org/en/docs/Web/Security/Subresource_Integrity</p>",
 					"cweid": "345",
 					"wascid": "15",
-					"sourceid": "560"
+					"sourceid": "565"
 				},
 				{
 					"pluginid": "10202",
@@ -1809,28 +1862,7 @@
 					"desc": "<p>The response appeared to contain common error messages returned by platforms such as ASP.NET, and Web-servers such as IIS and Apache. You can configure the list of common debug messages.</p>",
 					"instances":[ 
 						{
-							"uri": "https://transport.data.gouv.fr/datasets/region/14?order_by=most_recent&type=charging-stations",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "under construction"
-						},
-						{
 							"uri": "https://transport.data.gouv.fr/datasets/region/14?type=charging-stations",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "under construction"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/datasets?filter=has_realtime&order_by=most_recent&type=charging-stations",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "under construction"
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/datasets?locale=en&order_by=most_recent&type=charging-stations",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -1844,20 +1876,20 @@
 							"evidence": "under construction"
 						},
 						{
-							"uri": "https://transport.data.gouv.fr/datasets?order_by=most_recent&type=charging-stations",
+							"uri": "https://transport.data.gouv.fr/datasets?type=charging-stations",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "under construction"
 						}
 					],
-					"count": "6",
+					"count": "3",
 					"solution": "<p>Disable debugging messages before pushing to production.</p>",
 					"otherinfo": "",
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "9239"
+					"sourceid": "6297"
 				},
 				{
 					"pluginid": "10063",
@@ -1979,7 +2011,7 @@
 					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html</p>",
 					"cweid": "311",
 					"wascid": "4",
-					"sourceid": "6441"
+					"sourceid": "6500"
 				},
 				{
 					"pluginid": "10096",
@@ -2041,13 +2073,6 @@
 							"evidence": "72609821"
 						},
 						{
-							"uri": "https://transport.data.gouv.fr/atom.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "76829380"
-						},
-						{
 							"uri": "https://transport.data.gouv.fr/css/app-ba517e1e784aefc21e3ce0a40ccdeb5d.css?vsn=d",
 							"method": "GET",
 							"param": "",
@@ -2055,13 +2080,13 @@
 							"evidence": "70710678"
 						}
 					],
-					"count": "9",
+					"count": "8",
 					"solution": "<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>",
 					"otherinfo": "<p>20220201, which evaluates to: 1970-08-23 00:43:21</p>",
 					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "560"
+					"sourceid": "565"
 				},
 				{
 					"pluginid": "10021",
@@ -2082,6 +2107,13 @@
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/images/icons/api-4b2d7475e45d67eb8317b916719cad74.png?vsn=d",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://transport.data.gouv.fr/images/icons/bus-stop.svg",
 							"method": "GET",
 							"param": "X-Content-Type-Options",
 							"attack": "",
@@ -2110,13 +2142,6 @@
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/images/icons/recently-added-datasets-cbc8b7a7d744618cfe4d97a32e5570ac.png?vsn=d",
-							"method": "GET",
-							"param": "X-Content-Type-Options",
-							"attack": "",
-							"evidence": ""
-						},
-						{
-							"uri": "https://transport.data.gouv.fr/images/icons/train.svg",
 							"method": "GET",
 							"param": "X-Content-Type-Options",
 							"attack": "",
@@ -2164,7 +2189,7 @@
 					"reference": "<p>http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx</p><p>https://owasp.org/www-community/Security_Headers</p>",
 					"cweid": "693",
 					"wascid": "15",
-					"sourceid": "538"
+					"sourceid": "543"
 				},
 				{
 					"pluginid": "10094",
@@ -2181,89 +2206,89 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYUlBZeGFTejdxZEJxU21FeExiaTlEYWNqbQAAAAZsb2NhbGVtAAAAAmZy"
+							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYRC01RGs5bFc1YUUwQ1A4U3FjOEpOUWV5bQAAAAZsb2NhbGVtAAAAAmZy"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYVWQ4MHlCV0Q4WWhyY19KZW9wTUsxcFNybQAAAAZsb2NhbGVtAAAAAmZy"
+							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYSEJWX1J1aHFGX2h3NWR5LVJmWm04U0JZbQAAAAZsb2NhbGVtAAAAAmZy"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYUlBZeGFTejdxZEJxU21FeExiaTlEYWNqbQAAAAZsb2NhbGVtAAAAAmZy"
+							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYRC01RGs5bFc1YUUwQ1A4U3FjOEpOUWV5bQAAAAZsb2NhbGVtAAAAAmZy"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/?locale=en",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYUlBZeGFTejdxZEJxU21FeExiaTlEYWNqbQAAAAZsb2NhbGVtAAAAAmVubQAAAA1yZWRpcmVjdF9wYXRobQAAAAEv"
+							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYRC01RGs5bFc1YUUwQ1A4U3FjOEpOUWV5bQAAAAZsb2NhbGVtAAAAAmVu"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/?locale=fr",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYUlBZeGFTejdxZEJxU21FeExiaTlEYWNqbQAAAAZsb2NhbGVtAAAAAmZy"
+							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYRC01RGs5bFc1YUUwQ1A4U3FjOEpOUWV5bQAAAAZsb2NhbGVtAAAAAmZy"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/backoffice/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYUlBZeGFTejdxZEJxU21FeExiaTlEYWNqbQAAAAZsb2NhbGVtAAAAAmZybQAAAA1waG9lbml4X2ZsYXNodAAAAAFtAAAABGluZm9tAAAALVZvdXMgZGV2ZXogw6p0cmUgcHLDqWFsYWJsZW1lbnQgY29ubmVjdMOpwrdlLg"
+							"evidence": "g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYRC01RGs5bFc1YUUwQ1A4U3FjOEpOUWV5bQAAAAZsb2NhbGVtAAAAAmZybQAAAA1waG9lbml4X2ZsYXNodAAAAAFtAAAABGluZm9tAAAALVZvdXMgZGV2ZXogw6p0cmUgcHLDqWFsYWJsZW1lbnQgY29ubmVjdMOpwrdlLg"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/infos_producteurs",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYUlBZeGFTejdxZEJxU21FeExiaTlEYWNqbQAAAAZsb2NhbGVtAAAAAmZy"
+							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYRC01RGs5bFc1YUUwQ1A4U3FjOEpOUWV5bQAAAAZsb2NhbGVtAAAAAmZy"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/login/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYUlBZeGFTejdxZEJxU21FeExiaTlEYWNqbQAAAAZsb2NhbGVtAAAAAmZybQAAAA1waG9lbml4X2ZsYXNodAAAAAFtAAAABGluZm9tAAAALVZvdXMgZGV2ZXogw6p0cmUgcHLDqWFsYWJsZW1lbnQgY29ubmVjdMOpwrdlLg"
+							"evidence": "g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYRC01RGs5bFc1YUUwQ1A4U3FjOEpOUWV5bQAAAAZsb2NhbGVtAAAAAmZybQAAAA1waG9lbml4X2ZsYXNodAAAAAFtAAAABGluZm9tAAAALVZvdXMgZGV2ZXogw6p0cmUgcHLDqWFsYWJsZW1lbnQgY29ubmVjdMOpwrdlLg"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/login/explanation?redirect_path=%2F",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYUlBZeGFTejdxZEJxU21FeExiaTlEYWNqbQAAAAZsb2NhbGVtAAAAAmZybQAAAA1yZWRpcmVjdF9wYXRobQAAAAEv"
+							"evidence": "g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYRC01RGs5bFc1YUUwQ1A4U3FjOEpOUWV5bQAAAAZsb2NhbGVtAAAAAmZybQAAAA1yZWRpcmVjdF9wYXRobQAAAAEv"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/sitemap.xml",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYUlBZeGFTejdxZEJxU21FeExiaTlEYWNqbQAAAAZsb2NhbGVtAAAAAmZy"
+							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYRC01RGs5bFc1YUUwQ1A4U3FjOEpOUWV5bQAAAAZsb2NhbGVtAAAAAmZy"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/tools/gbfs/analyze",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYUlBZeGFTejdxZEJxU21FeExiaTlEYWNqbQAAAAZsb2NhbGVtAAAAAmZy"
+							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYRC01RGs5bFc1YUUwQ1A4U3FjOEpOUWV5bQAAAAZsb2NhbGVtAAAAAmZy"
 						},
 						{
 							"uri": "https://transport.data.gouv.fr/validation",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYUlBZeGFTejdxZEJxU21FeExiaTlEYWNqbQAAAAZsb2NhbGVtAAAAAmZy"
+							"evidence": "g3QAAAACbQAAAAtfY3NyZl90b2tlbm0AAAAYRC01RGs5bFc1YUUwQ1A4U3FjOEpOUWV5bQAAAAZsb2NhbGVtAAAAAmZy"
 						}
 					],
 					"count": "12",
 					"solution": "<p>Manually confirm that the Base64 data does not leak sensitive information, and that the data cannot be aggregated/used to exploit other vulnerabilities.</p>",
-					"otherinfo": "<p>\uFFFDt\\x0000\\x0000\\x0000\\x0002m\\x0000\\x0000\\x0000\\x000b_csrf_tokenm\\x0000\\x0000\\x0000\\x0018RPYxaSz7qdBqSmExLbi9Dacjm\\x0000\\x0000\\x0000\\x0006localem\\x0000\\x0000\\x0000\\x0002fr</p>",
+					"otherinfo": "<p>\uFFFDt\\x0000\\x0000\\x0000\\x0002m\\x0000\\x0000\\x0000\\x000b_csrf_tokenm\\x0000\\x0000\\x0000\\x0018D-5Dk9lW5aE0CP8Sqc8JNQeym\\x0000\\x0000\\x0000\\x0006localem\\x0000\\x0000\\x0000\\x0002fr</p>",
 					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
@@ -2287,6 +2312,13 @@
 							"evidence": "query"
 						},
 						{
+							"uri": "https://transport.data.gouv.fr/js/datasetmap-2d9c9e098fd774eedc184edffddc429e.js?vsn=d",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "from"
+						},
+						{
 							"uri": "https://transport.data.gouv.fr/js/map-6398f4618aed38ec269c0ca18a5040b9.js?vsn=d",
 							"method": "GET",
 							"param": "",
@@ -2308,13 +2340,13 @@
 							"evidence": "Db"
 						}
 					],
-					"count": "4",
+					"count": "5",
 					"solution": "<p>Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.</p>",
 					"otherinfo": "<p>The following pattern was used: \\bQUERY\\b and was detected in the element starting with: \"(()=>{var t={4138:function(t,e,r){var n=r(7633);t.exports=function(){\"use strict\";function t(t,e){for(var r=0;r<e.length;r++){va\", see evidence field for the suspicious comment/snippet.</p>",
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "557"
+					"sourceid": "552"
 				},
 				{
 					"pluginid": "10109",
