@@ -118,7 +118,16 @@ jobs:
         if: ${{ matrix.sites.tools.thirdparties }}
         with:
           url: "${{ matrix.sites.url }}"
-          output: "scans/thirdparties.json"
+          output: "scans/thirdparties.json"          
+          
+      - name: Déclaration RGPD
+        continue-on-error: true
+        uses: SocialGouv/dashlord-actions/declaration-rgpd@v1
+        if: ${{ matrix.sites.tools['declaration-rgpd'] }}
+        with:
+          thirdparties: ${{ steps.thirdparties.outputs.json }}
+          url: ${{ matrix.sites.url }}
+          output: scans/declaration-rgpd.json
 
       # testssl.sh action needs an hostname to save its output so we build it here
       - name: Extract hostname
