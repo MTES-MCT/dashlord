@@ -1,6 +1,6 @@
 {
 	"@version": "2.11.1",
-	"@generated": "Thu, 17 Mar 2022 00:24:52",
+	"@generated": "Fri, 18 Mar 2022 00:26:45",
 	"site":[ 
 		{
 			"@name": "https://aides-territoires.beta.gouv.fr",
@@ -19,20 +19,6 @@
 					"desc": "<p>No Anti-CSRF tokens were found in a HTML submission form.</p><p>A cross-site request forgery is an attack that involves forcing a victim to send an HTTP request to a target destination without their knowledge or intent in order to perform an action as the victim. The underlying cause is application functionality using predictable URL/form actions in a repeatable way. The nature of the attack is that CSRF exploits the trust that a web site has for a user. By contrast, cross-site scripting (XSS) exploits the trust that a user has for a web site. Like XSS, CSRF attacks are not necessarily cross-site, but they can be. Cross-site request forgery is also known as CSRF, XSRF, one-click attack, session riding, confused deputy, and sea surf.</p><p></p><p>CSRF attacks are effective in a number of situations, including:</p><p>    * The victim has an active session on the target site.</p><p>    * The victim is authenticated via HTTP auth on the target site.</p><p>    * The victim is on the same local network as the target site.</p><p></p><p>CSRF has primarily been used to perform an action against a target site using the victim's privileges, but recent techniques have been discovered to disclose information by gaining access to the response. The risk of information disclosure is dramatically increased when the target site is vulnerable to XSS, because XSS can be used as a platform for CSRF, allowing the attack to operate within the bounds of the same-origin policy.</p>",
 					"instances":[ 
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/07f5-acheter-a-long-terme/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<form id=\"copy-to-clipboard-form\" class=\"fr-grid-row fr-grid-row--center\">"
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/07f5-acheter-a-long-terme/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<form id=\"eligibility-test-form\" action=\"\">"
-						},
-						{
 							"uri": "https://aides-territoires.beta.gouv.fr/aides/1fe5-valorisez-vos-jardins-remarquable-label-jardi/",
 							"method": "GET",
 							"param": "",
@@ -101,6 +87,13 @@
 							"param": "",
 							"attack": "",
 							"evidence": "<form id=\"eligibility-test-form\" action=\"\">"
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/cartographie/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<form id=\"department-search-form\" method=\"post\">"
 						},
 						{
 							"uri": "https://aides-territoires.beta.gouv.fr/recherche/trouver-des-aides/",
@@ -110,13 +103,13 @@
 							"evidence": "<form id=\"general_search_form\" method=\"GET\" action=\"/aides/\" class=\"fr-px-0\">"
 						}
 					],
-					"count": "13",
+					"count": "12",
 					"solution": "<p>Phase: Architecture and Design</p><p>Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.</p><p>For example, use anti-CSRF packages such as the OWASP CSRFGuard.</p><p></p><p>Phase: Implementation</p><p>Ensure that your application is free of cross-site scripting issues, because most CSRF defenses can be bypassed using attacker-controlled script.</p><p></p><p>Phase: Architecture and Design</p><p>Generate a unique nonce for each form, place the nonce into the form, and verify the nonce upon receipt of the form. Be sure that the nonce is not predictable (CWE-330).</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Use the ESAPI Session Management control.</p><p>This control includes a component for CSRF.</p><p></p><p>Do not use the GET method for any request that triggers a state change.</p><p></p><p>Phase: Implementation</p><p>Check the HTTP Referer header to see if the request originated from an expected page. This could break legitimate functionality, because users or proxies may have disabled sending the Referer for privacy reasons.</p>",
 					"otherinfo": "<p>No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"currentUrl\" ].</p>",
 					"reference": "<p>http://projects.webappsec.org/Cross-Site-Request-Forgery</p><p>http://cwe.mitre.org/data/definitions/352.html</p>",
 					"cweid": "352",
 					"wascid": "9",
-					"sourceid": "3369"
+					"sourceid": "3334"
 				},
 				{
 					"pluginid": "10038",
@@ -459,6 +452,13 @@
 							"evidence": "Set-Cookie: csrftoken"
 						},
 						{
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/c361-appel-a-projets-en-faveur-de-la-connaissance-/",
+							"method": "GET",
+							"param": "csrftoken",
+							"attack": "",
+							"evidence": "Set-Cookie: csrftoken"
+						},
+						{
 							"uri": "https://aides-territoires.beta.gouv.fr/aides/db27-investir-dans-les-ports-de-peche-les-halles-a/",
 							"method": "GET",
 							"param": "csrftoken",
@@ -485,13 +485,6 @@
 							"param": "csrftoken",
 							"attack": "",
 							"evidence": "Set-Cookie: csrftoken"
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
-							"method": "POST",
-							"param": "csrftoken",
-							"attack": "",
-							"evidence": "Set-Cookie: csrftoken"
 						}
 					],
 					"count": "12",
@@ -500,7 +493,7 @@
 					"reference": "<p>https://owasp.org/www-community/HttpOnly</p>",
 					"cweid": "1004",
 					"wascid": "13",
-					"sourceid": "3379"
+					"sourceid": "3371"
 				},
 				{
 					"pluginid": "10017",
@@ -622,7 +615,7 @@
 					"reference": "<p>https://angular.io/guide/security</p>",
 					"cweid": "749",
 					"wascid": "-1",
-					"sourceid": "3304"
+					"sourceid": "3297"
 				},
 				{
 					"pluginid": "10063",
@@ -766,14 +759,7 @@
 							"evidence": "808665483"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/portails/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "58803207"
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/css/output.6480be228cb9.css",
+							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/css/output.6336decf0321.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -784,7 +770,7 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "43328510"
+							"evidence": "18289035"
 						},
 						{
 							"uri": "https://aides-territoires.beta.gouv.fr/static/img/logo-francemobilites.svg",
@@ -1102,13 +1088,13 @@
 							"evidence": "99986179"
 						}
 					],
-					"count": "53",
+					"count": "52",
 					"solution": "<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>",
 					"otherinfo": "<p>31449600, which evaluates to: 1970-12-31 00:00:00</p>",
 					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "1320"
+					"sourceid": "3190"
 				},
 				{
 					"pluginid": "10021",
@@ -1129,13 +1115,6 @@
 						},
 						{
 							"uri": "https://aides-territoires.beta.gouv.fr/static/@gouvfr/dsfr/dist/js/dsfr.nomodule.min.js",
-							"method": "GET",
-							"param": "X-Content-Type-Options",
-							"attack": "",
-							"evidence": ""
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/css/output.6480be228cb9.css",
 							"method": "GET",
 							"param": "X-Content-Type-Options",
 							"attack": "",
@@ -1177,6 +1156,13 @@
 							"evidence": ""
 						},
 						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/img/home_aides.svg",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
 							"uri": "https://aides-territoires.beta.gouv.fr/static/img/logo_AT_courbes.svg",
 							"method": "GET",
 							"param": "X-Content-Type-Options",
@@ -1211,7 +1197,7 @@
 					"reference": "<p>http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx</p><p>https://owasp.org/www-community/Security_Headers</p>",
 					"cweid": "693",
 					"wascid": "15",
-					"sourceid": "3296"
+					"sourceid": "3300"
 				},
 				{
 					"pluginid": "10094",
@@ -1256,14 +1242,14 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "nJrke7mhBEPmQUQTWhvM94sOuPwmL6B6jZ8885F69Nboer0CO9FRGmOGleF5BHEd"
+							"evidence": "xhg4HoCrkMolAyljtIcungZbwVoMsiK8pyIzg0XIKO1t3j4Ny9zQ2CRkWDX2Zycy"
 						},
 						{
 							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "nJrke7mhBEPmQUQTWhvM94sOuPwmL6B6jZ8885F69Nboer0CO9FRGmOGleF5BHEd"
+							"evidence": "xhg4HoCrkMolAyljtIcungZbwVoMsiK8pyIzg0XIKO1t3j4Ny9zQ2CRkWDX2Zycy"
 						},
 						{
 							"uri": "https://aides-territoires.beta.gouv.fr/europe/",
@@ -1320,6 +1306,13 @@
 					"desc": "<p>The response appears to contain suspicious comments which may help an attacker. Note: Matches made within script blocks or files are against the entire content not only comments.</p>",
 					"instances":[ 
 						{
+							"uri": "https://aides-territoires.beta.gouv.fr/cartographie/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "from"
+						},
+						{
 							"uri": "https://aides-territoires.beta.gouv.fr/static/@gouvfr/dsfr/dist/js/dsfr.module.min.js",
 							"method": "GET",
 							"param": "",
@@ -1362,13 +1355,13 @@
 							"evidence": "select"
 						}
 					],
-					"count": "6",
+					"count": "7",
 					"solution": "<p>Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.</p>",
-					"otherinfo": "<p>The following pattern was used: \\bSELECT\\b and was detected in the element starting with: \"const t=window.dsfr||{core:{}};window.dsfr=t;const e=t=>`fr-${t}`;e.selector=(t,s)=>(void 0===s&&(s=\".\"),`${s}${e(t)}`),(e.attr=\", see evidence field for the suspicious comment/snippet.</p>",
+					"otherinfo": "<p>The following pattern was used: \\bFROM\\b and was detected in the element starting with: \"<script></p><p>    $(document).ready(function () {</p><p>        department_filter('/');</p><p>        let departments_data = JSON.parse(\"[{\\u0022\", see evidence field for the suspicious comment/snippet.</p>",
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "3296"
+					"sourceid": "3346"
 				},
 				{
 					"pluginid": "10109",
@@ -1490,7 +1483,7 @@
 					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "1320"
+					"sourceid": "3190"
 				},
 				{
 					"pluginid": "10015",
@@ -1524,13 +1517,6 @@
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/blog/categorie/webinaires",
-							"method": "GET",
-							"param": "Cache-Control",
-							"attack": "",
-							"evidence": ""
-						},
-						{
 							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
 							"method": "GET",
 							"param": "Cache-Control",
@@ -1553,6 +1539,13 @@
 						},
 						{
 							"uri": "https://aides-territoires.beta.gouv.fr/portails/",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/porteurs-aides/",
 							"method": "GET",
 							"param": "Cache-Control",
 							"attack": "",
@@ -1620,13 +1613,6 @@
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/blog/categorie/webinaires",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": ""
-						},
-						{
 							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
 							"method": "GET",
 							"param": "",
@@ -1635,6 +1621,13 @@
 						},
 						{
 							"uri": "https://aides-territoires.beta.gouv.fr/europe/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/plateforme-aides-territoires/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -1750,7 +1743,7 @@
 					"reference": "<p>http://websecuritytool.codeplex.com/wikipage?title=Checks#user-controlled-html-attribute</p>",
 					"cweid": "20",
 					"wascid": "20",
-					"sourceid": "3323"
+					"sourceid": "5295"
 				}
 			]
 		}
