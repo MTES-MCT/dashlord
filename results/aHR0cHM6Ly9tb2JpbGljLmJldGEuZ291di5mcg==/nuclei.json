@@ -1,0 +1,226 @@
+[
+  {
+    "template": "technologies/graphql-detect.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/graphql-detect.yaml",
+    "template-id": "graphql-detect",
+    "info": {
+      "name": "GraphQL API Detection",
+      "author": [
+        "nkxxkn",
+        "elsfa7110",
+        "ofjaaah",
+        "exceed"
+      ],
+      "tags": [
+        "tech",
+        "graphql"
+      ],
+      "reference": null,
+      "severity": "info"
+    },
+    "type": "http",
+    "host": "https://mobilic.beta.gouv.fr",
+    "matched-at": "https://mobilic.beta.gouv.fr/api/graphql",
+    "request": "POST /api/graphql HTTP/1.1\r\nHost: mobilic.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 67\r\nAccept: */*\r\nAccept-Language: en\r\nContent-Type: application/json\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 54\r\nAccess-Control-Allow-Origin: *\r\nCache-Control: no-cache; max-age=0\r\nContent-Security-Policy: object-src 'self'; connect-src 'self' https://client.crisp.chat https://api-adresse.data.gouv.fr https://*.ingest.sentry.io wss://client.relay.crisp.chat https://stats.data.gouv.fr; base-uri 'self'; default-src 'self'; script-src 'self' https://client.crisp.chat https://stats.data.gouv.fr; img-src 'self' data: https://client.crisp.chat https://stats.data.gouv.fr; style-src 'self' 'unsafe-inline' https://client.crisp.chat; font-src 'self' https://client.crisp.chat; frame-src https://metabase.mobilic.beta.gouv.fr https://www.youtube.com https://www.slideshare.net\r\nContent-Type: application/json\r\nDate: Thu, 14 Apr 2022 02:35:45 GMT\r\nStrict-Transport-Security: max-age=31536000; includeSubDomains\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: 2f565f49-e89c-4312-9e61-65c11203d787\r\nX-Request-Id: 2f565f49-e89c-4312-9e61-65c11203d787\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"data\":{\"__schema\":{\"queryType\":{\"name\":\"Queries\"}}}}",
+    "ip": "5.104.101.30",
+    "timestamp": "2022-04-14T02:35:45.650637723Z",
+    "curl-command": "curl -X 'POST' -d '{\"query\":\"query IntrospectionQuery{__schema {queryType { name }}}\"}' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Content-Type: application/json' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://mobilic.beta.gouv.fr/api/graphql'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "dns/txt-fingerprint.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/txt-fingerprint.yaml",
+    "template-id": "txt-fingerprint",
+    "info": {
+      "name": "DNS TXT Record Detected",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "dns",
+        "txt"
+      ],
+      "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+      "reference": [
+        "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+      ],
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ],
+        "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+      }
+    },
+    "type": "dns",
+    "host": "https://mobilic.beta.gouv.fr",
+    "matched-at": "https://mobilic.beta.gouv.fr",
+    "extracted-results": [
+      "\"v=spf1 include:_spf.alwaysdata.com ?all\""
+    ],
+    "request": ";; opcode: QUERY, status: NOERROR, id: 30762\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;mobilic.beta.gouv.fr.\tIN\t TXT\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 30762\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;mobilic.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nmobilic.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com ?all\"\n",
+    "timestamp": "2022-04-14T02:35:46.017321162Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "dns/nameserver-fingerprint.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/nameserver-fingerprint.yaml",
+    "template-id": "nameserver-fingerprint",
+    "info": {
+      "name": "NS Record Detection",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "dns",
+        "ns"
+      ],
+      "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
+      "reference": null,
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ],
+        "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+      }
+    },
+    "type": "dns",
+    "host": "https://mobilic.beta.gouv.fr",
+    "matched-at": "https://mobilic.beta.gouv.fr",
+    "extracted-results": [
+      "dns2.alwaysdata.com.",
+      "dns1.alwaysdata.com."
+    ],
+    "request": ";; opcode: QUERY, status: NOERROR, id: 18637\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;mobilic.beta.gouv.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 18637\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;mobilic.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nmobilic.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\nmobilic.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\n",
+    "timestamp": "2022-04-14T02:35:46.261739487Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "ssl/tls-version.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/tls-version.yaml",
+    "template-id": "tls-version",
+    "info": {
+      "name": "TLS Version",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "ssl"
+      ],
+      "reference": null,
+      "severity": "info"
+    },
+    "type": "ssl",
+    "host": "https://mobilic.beta.gouv.fr",
+    "matched-at": "https://mobilic.beta.gouv.fr",
+    "extracted-results": [
+      "TLS13"
+    ],
+    "ip": "5.104.101.30",
+    "timestamp": "2022-04-14T02:35:54.179201341Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "dns/mx-fingerprint.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/mx-fingerprint.yaml",
+    "template-id": "mx-fingerprint",
+    "info": {
+      "name": "MX Record Detection",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "dns",
+        "mx"
+      ],
+      "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
+      "reference": [
+        "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
+        "https://mxtoolbox.com/"
+      ],
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ],
+        "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+      }
+    },
+    "type": "dns",
+    "host": "https://mobilic.beta.gouv.fr",
+    "matched-at": "https://mobilic.beta.gouv.fr",
+    "extracted-results": [
+      "10 mx1.alwaysdata.com.",
+      "20 mx2.alwaysdata.com."
+    ],
+    "request": ";; opcode: QUERY, status: NOERROR, id: 16462\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;mobilic.beta.gouv.fr.\tIN\t MX\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 16462\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;mobilic.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\nmobilic.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\nmobilic.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\n",
+    "timestamp": "2022-04-14T02:36:01.767261951Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "miscellaneous/robots-txt.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/miscellaneous/robots-txt.yaml",
+    "template-id": "robots-txt",
+    "info": {
+      "name": "robots.txt file",
+      "author": [
+        "caspergn"
+      ],
+      "tags": [
+        "misc",
+        "generic"
+      ],
+      "reference": null,
+      "severity": "info"
+    },
+    "type": "http",
+    "host": "https://mobilic.beta.gouv.fr",
+    "matched-at": "https://mobilic.beta.gouv.fr/robots.txt",
+    "request": "GET /robots.txt HTTP/1.1\r\nHost: mobilic.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 141\r\nAccept-Ranges: bytes\r\nCache-Control: no-cache; max-age=0\r\nContent-Security-Policy: object-src 'self'; connect-src 'self' https://client.crisp.chat https://api-adresse.data.gouv.fr https://*.ingest.sentry.io wss://client.relay.crisp.chat https://stats.data.gouv.fr; base-uri 'self'; default-src 'self'; script-src 'self' https://client.crisp.chat https://stats.data.gouv.fr; img-src 'self' data: https://client.crisp.chat https://stats.data.gouv.fr; style-src 'self' 'unsafe-inline' https://client.crisp.chat; font-src 'self' https://client.crisp.chat; frame-src https://metabase.mobilic.beta.gouv.fr https://www.youtube.com https://www.slideshare.net\r\nContent-Type: text/plain; charset=utf-8\r\nDate: Thu, 14 Apr 2022 02:36:04 GMT\r\nEtag: \"624cad00-8d\"\r\nLast-Modified: Tue, 05 Apr 2022 20:56:32 GMT\r\nStrict-Transport-Security: max-age=31536000; includeSubDomains\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: 158d5d37-ddd8-4c07-975b-fcc56a444c61\r\nX-Xss-Protection: 1; mode=block\r\n\r\n# https://www.robotstxt.org/robotstxt.html\nUser-agent: *\nDisallow: /developers/\nDisallow: /oauth/\nDisallow: /api/fc/\nDisallow: /fc-callback\n\n",
+    "ip": "5.104.101.30",
+    "timestamp": "2022-04-14T02:36:04.082810919Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://mobilic.beta.gouv.fr/robots.txt'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "ssl/ssl-dns-names.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/ssl-dns-names.yaml",
+    "template-id": "ssl-dns-names",
+    "info": {
+      "name": "SSL DNS Names",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "ssl"
+      ],
+      "reference": null,
+      "severity": "info"
+    },
+    "type": "ssl",
+    "host": "https://mobilic.beta.gouv.fr",
+    "matched-at": "https://mobilic.beta.gouv.fr",
+    "extracted-results": [
+      "mobilic.beta.gouv.fr"
+    ],
+    "ip": "5.104.101.30",
+    "timestamp": "2022-04-14T02:36:48.671323557Z",
+    "matcher-status": true,
+    "matched-line": null
+  }
+]
