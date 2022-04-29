@@ -1,28 +1,31 @@
 [
   {
-    "template": "technologies/tech-detect.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/tech-detect.yaml",
-    "template-id": "tech-detect",
+    "template": "technologies/graphql-detect.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/graphql-detect.yaml",
+    "template-id": "graphql-detect",
     "info": {
-      "name": "Wappalyzer Technology Detection",
+      "name": "GraphQL API Detection",
       "author": [
-        "hakluke"
+        "nkxxkn",
+        "elsfa7110",
+        "ofjaaah",
+        "exceed"
       ],
       "tags": [
-        "tech"
+        "tech",
+        "graphql"
       ],
       "reference": null,
       "severity": "info"
     },
-    "matcher-name": "nginx",
     "type": "http",
     "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 528\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:46 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\",\n        \"    at runNextTicks (node:internal/process/task_queues:61:5)\",\n        \"    at processImmediate (node:internal/timers:437:9)\",\n        \"    at process.topLevelDomainCallback (node:domain:152:15)\",\n        \"    at process.callbackTrampoline (node:internal/async_hooks:128:24)\"\n      ]\n    }\n  ]\n}",
+    "matched-at": "https://api.camino.beta.gouv.fr/HyperGraphQL",
+    "request": "POST /HyperGraphQL HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 67\r\nAccept: */*\r\nAccept-Language: en\r\nContent-Type: application/json\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 96\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:47 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"data\": {\n    \"__schema\": {\n      \"queryType\": {\n        \"name\": \"Query\"\n      }\n    }\n  }\n}",
     "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:47.068407837Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+    "timestamp": "2022-04-29T00:58:47.550565385Z",
+    "curl-command": "curl -X 'POST' -d '{\"query\":\"query IntrospectionQuery{__schema {queryType { name }}}\"}' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Content-Type: application/json' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr/HyperGraphQL'",
     "matcher-status": true,
     "matched-line": null
   },
@@ -46,78 +49,75 @@
     "host": "https://api.camino.beta.gouv.fr",
     "matched-at": "https://api.camino.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 528\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:46 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\",\n        \"    at runNextTicks (node:internal/process/task_queues:61:5)\",\n        \"    at processImmediate (node:internal/timers:437:9)\",\n        \"    at process.topLevelDomainCallback (node:domain:152:15)\",\n        \"    at process.callbackTrampoline (node:internal/async_hooks:128:24)\"\n      ]\n    }\n  ]\n}",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:50 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
     "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:47.070151845Z",
+    "timestamp": "2022-04-29T00:58:50.500514129Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
+    "template": "technologies/tech-detect.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/tech-detect.yaml",
+    "template-id": "tech-detect",
     "info": {
-      "name": "HTTP Missing Security Headers",
+      "name": "Wappalyzer Technology Detection",
       "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki"
+        "hakluke"
       ],
       "tags": [
-        "misconfig",
-        "generic"
+        "tech"
       ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
       "reference": null,
       "severity": "info"
     },
-    "matcher-name": "content-security-policy",
+    "matcher-name": "nginx",
     "type": "http",
     "host": "https://api.camino.beta.gouv.fr",
     "matched-at": "https://api.camino.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:49 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:50 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
     "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:49.379167853Z",
+    "timestamp": "2022-04-29T00:58:50.500594632Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
+    "template": "dns/cname-fingerprint.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/cname-fingerprint.yaml",
+    "template-id": "cname-fingerprint",
     "info": {
-      "name": "HTTP Missing Security Headers",
+      "name": "CNAME Fingerprint",
       "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki"
+        "pdteam"
       ],
       "tags": [
-        "misconfig",
-        "generic"
+        "dns",
+        "cname"
       ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
+      "description": "A CNAME DNS record was discovered.",
+      "reference": [
+        "https://www.theregister.com/2021/02/24/dns_cname_tracking/",
+        "https://www.ionos.com/digitalguide/hosting/technical-matters/cname-record/"
+      ],
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
     },
-    "matcher-name": "x-frame-options",
-    "type": "http",
+    "type": "dns",
     "host": "https://api.camino.beta.gouv.fr",
     "matched-at": "https://api.camino.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:49 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
-    "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:49.379314254Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+    "extracted-results": [
+      "camino.beta.gouv.fr."
+    ],
+    "request": ";; opcode: QUERY, status: NOERROR, id: 61586\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 61586\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\n",
+    "timestamp": "2022-04-29T00:58:53.064348002Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -148,43 +148,9 @@
     "host": "https://api.camino.beta.gouv.fr",
     "matched-at": "https://api.camino.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:49 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
     "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:49.379352454Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-opener-policy",
-    "type": "http",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:49 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
-    "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:49.379398254Z",
+    "timestamp": "2022-04-29T00:58:53.550042855Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -216,213 +182,9 @@
     "host": "https://api.camino.beta.gouv.fr",
     "matched-at": "https://api.camino.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:49 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
     "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:49.379439255Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-methods",
-    "type": "http",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:49 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
-    "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:49.379459255Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "permission-policy",
-    "type": "http",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:49 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
-    "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:49.379493755Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "x-content-type-options",
-    "type": "http",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:49 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
-    "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:49.379515155Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "x-permitted-cross-domain-policies",
-    "type": "http",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:49 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
-    "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:49.379531355Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "referrer-policy",
-    "type": "http",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:49 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
-    "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:49.379548255Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-embedder-policy",
-    "type": "http",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:49 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
-    "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:49.379563855Z",
+    "timestamp": "2022-04-29T00:58:53.55018366Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -454,319 +216,316 @@
     "host": "https://api.camino.beta.gouv.fr",
     "matched-at": "https://api.camino.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:17:49 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
     "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:49.379584155Z",
+    "timestamp": "2022-04-29T00:58:53.550209061Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "ssl/ssl-dns-names.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/ssl-dns-names.yaml",
-    "template-id": "ssl-dns-names",
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
     "info": {
-      "name": "SSL DNS Names",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "pdteam"
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
       ],
       "tags": [
-        "ssl"
+        "misconfig",
+        "generic"
       ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
       "reference": null,
       "severity": "info"
     },
-    "type": "ssl",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "extracted-results": [
-      "api.camino.beta.gouv.fr"
-    ],
-    "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:17:51.258607562Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/graphql/graphql-field-suggestion.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/graphql/graphql-field-suggestion.yaml",
-    "template-id": "graphql-field-suggestion",
-    "info": {
-      "name": "GraphQL Field Suggestion Information Disclosure",
-      "author": [
-        "dolev farhi"
-      ],
-      "tags": [
-        "graphql"
-      ],
-      "description": "If introspection is disabled on your target, Field Suggestion can allow users to still earn information on the GraphQL schema.\nBy default, GraphQL backends have a feature for fields and operations suggestions.\nIf you try to query a field but you have made a typo, GraphQL will attempt to suggest fields that are similar to the initial attempt.\n",
-      "reference": [
-        "https://github.com/webonyx/graphql-php/issues/454",
-        "https://github.com/dolevf/damn-vulnerable-graphql-application",
-        "https://cheatsheetseries.owasp.org/cheatsheets/graphql_cheat_sheet.html",
-        "https://graphql.security"
-      ],
-      "severity": "info"
-    },
+    "matcher-name": "content-security-policy",
     "type": "http",
     "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr/graphql",
-    "request": "POST /graphql HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 69\r\nContent-Type: application/json\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 1003\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:18:03 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"locations\": [\n        {\n          \"line\": 3,\n          \"column\": 2\n        }\n      ],\n      \"message\": \"Cannot query field \\\"directive\\\" on type \\\"__Schema\\\". Did you mean \\\"directives\\\"?\",\n      \"stack\": [\n        \"GraphQLError: Cannot query field \\\"directive\\\" on type \\\"__Schema\\\". Did you mean \\\"directives\\\"?\",\n        \"    at Object.Field (/node_modules/graphql/validation/rules/FieldsOnCorrectTypeRule.js:51:13)\",\n        \"    at Object.enter (/node_modules/graphql/language/visitor.js:301:32)\",\n        \"    at Object.enter (/node_modules/graphql/utilities/TypeInfo.js:391:27)\",\n        \"    at visit (/node_modules/graphql/language/visitor.js:197:21)\",\n        \"    at validate (/node_modules/graphql/validation/validate.js:91:24)\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:98:38)\",\n        \"    at runMicrotasks (<anonymous>)\",\n        \"    at processTicksAndRejections (node:internal/process/task_queues:96:5)\"\n      ]\n    }\n  ]\n}",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
     "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:18:03.49412793Z",
-    "curl-command": "curl -X 'POST' -d '{\"query\":\"query {\\n  __schema {\\n directive\\n }\\n}\",\"variables\":null}' -H 'Content-Type: application/json' -H 'Host: api.camino.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr/graphql'",
+    "timestamp": "2022-04-29T00:58:53.550233562Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "ssl/tls-version.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/tls-version.yaml",
-    "template-id": "tls-version",
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
     "info": {
-      "name": "TLS Version",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "pdteam"
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
       ],
       "tags": [
-        "ssl"
+        "misconfig",
+        "generic"
       ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
       "reference": null,
       "severity": "info"
     },
-    "type": "ssl",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "extracted-results": [
-      "TLS13"
-    ],
-    "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:18:18.508582697Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "technologies/waf-detect.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/waf-detect.yaml",
-    "template-id": "waf-detect",
-    "info": {
-      "name": "WAF Detection",
-      "author": [
-        "dwisiswant0",
-        "lu4nx"
-      ],
-      "tags": [
-        "waf",
-        "tech",
-        "misc"
-      ],
-      "description": "A web application firewall was detected.",
-      "reference": [
-        "https://github.com/ekultek/whatwaf"
-      ],
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ],
-        "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
-      }
-    },
-    "matcher-name": "nginxgeneric",
+    "matcher-name": "referrer-policy",
     "type": "http",
     "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr/",
-    "request": "POST / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 373\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:18:21 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\",\n        \"    at runMicrotasks (<anonymous>)\",\n        \"    at processTicksAndRejections (node:internal/process/task_queues:96:5)\"\n      ]\n    }\n  ]\n}",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
     "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:18:21.563310958Z",
-    "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: api.camino.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr/'",
+    "timestamp": "2022-04-29T00:58:53.550256263Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "dns/cname-fingerprint.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/cname-fingerprint.yaml",
-    "template-id": "cname-fingerprint",
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
     "info": {
-      "name": "CNAME Fingerprint",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "pdteam"
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
       ],
       "tags": [
-        "dns",
-        "cname"
+        "misconfig",
+        "generic"
       ],
-      "description": "A CNAME DNS record was discovered.",
-      "reference": [
-        "https://www.theregister.com/2021/02/24/dns_cname_tracking/",
-        "https://www.ionos.com/digitalguide/hosting/technical-matters/cname-record/"
-      ],
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ],
-        "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
-      }
-    },
-    "type": "dns",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "extracted-results": [
-      "camino.beta.gouv.fr."
-    ],
-    "request": ";; opcode: QUERY, status: NOERROR, id: 52482\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t NS\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 52482\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t268\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\n",
-    "timestamp": "2022-04-28T01:18:33.342392721Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "dns/mx-fingerprint.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/mx-fingerprint.yaml",
-    "template-id": "mx-fingerprint",
-    "info": {
-      "name": "MX Record Detection",
-      "author": [
-        "pdteam"
-      ],
-      "tags": [
-        "dns",
-        "mx"
-      ],
-      "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
-      "reference": [
-        "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
-        "https://mxtoolbox.com/"
-      ],
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ],
-        "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
-      }
-    },
-    "type": "dns",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "extracted-results": [
-      "10 mx1.alwaysdata.com.",
-      "20 mx2.alwaysdata.com."
-    ],
-    "request": ";; opcode: QUERY, status: NOERROR, id: 46402\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t MX\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 46402\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\n",
-    "timestamp": "2022-04-28T01:18:34.229156902Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "dns/txt-fingerprint.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/txt-fingerprint.yaml",
-    "template-id": "txt-fingerprint",
-    "info": {
-      "name": "DNS TXT Record Detected",
-      "author": [
-        "pdteam"
-      ],
-      "tags": [
-        "dns",
-        "txt"
-      ],
-      "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
-      "reference": [
-        "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
-      ],
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ],
-        "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
-      }
-    },
-    "type": "dns",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "extracted-results": [
-      "\"v=spf1 include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"",
-      "\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\""
-    ],
-    "request": ";; opcode: QUERY, status: NOERROR, id: 61833\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t TXT\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 61833\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t27\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"\n",
-    "timestamp": "2022-04-28T01:18:42.016667646Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "dns/nameserver-fingerprint.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/nameserver-fingerprint.yaml",
-    "template-id": "nameserver-fingerprint",
-    "info": {
-      "name": "NS Record Detection",
-      "author": [
-        "pdteam"
-      ],
-      "tags": [
-        "dns",
-        "ns"
-      ],
-      "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
-      "reference": null,
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ],
-        "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
-      }
-    },
-    "type": "dns",
-    "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr",
-    "extracted-results": [
-      "dns2.alwaysdata.com.",
-      "dns1.alwaysdata.com."
-    ],
-    "request": ";; opcode: QUERY, status: NOERROR, id: 32382\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t NS\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 32382\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\n",
-    "timestamp": "2022-04-28T01:18:43.149576917Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "technologies/graphql-detect.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/graphql-detect.yaml",
-    "template-id": "graphql-detect",
-    "info": {
-      "name": "GraphQL API Detection",
-      "author": [
-        "nkxxkn",
-        "elsfa7110",
-        "ofjaaah",
-        "exceed"
-      ],
-      "tags": [
-        "tech",
-        "graphql"
-      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
       "reference": null,
       "severity": "info"
     },
+    "matcher-name": "x-content-type-options",
     "type": "http",
     "host": "https://api.camino.beta.gouv.fr",
-    "matched-at": "https://api.camino.beta.gouv.fr/HyperGraphQL",
-    "request": "POST /HyperGraphQL HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 67\r\nAccept: */*\r\nAccept-Language: en\r\nContent-Type: application/json\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 96\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:18:44 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"data\": {\n    \"__schema\": {\n      \"queryType\": {\n        \"name\": \"Query\"\n      }\n    }\n  }\n}",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
     "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:18:44.183333407Z",
-    "curl-command": "curl -X 'POST' -d '{\"query\":\"query IntrospectionQuery{__schema {queryType { name }}}\"}' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Content-Type: application/json' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr/HyperGraphQL'",
+    "timestamp": "2022-04-29T00:58:53.550272363Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "x-permitted-cross-domain-policies",
+    "type": "http",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
+    "ip": "51.91.255.149",
+    "timestamp": "2022-04-29T00:58:53.550293764Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "cross-origin-embedder-policy",
+    "type": "http",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
+    "ip": "51.91.255.149",
+    "timestamp": "2022-04-29T00:58:53.550309765Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "cross-origin-opener-policy",
+    "type": "http",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
+    "ip": "51.91.255.149",
+    "timestamp": "2022-04-29T00:58:53.550341766Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-methods",
+    "type": "http",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
+    "ip": "51.91.255.149",
+    "timestamp": "2022-04-29T00:58:53.550358466Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "permission-policy",
+    "type": "http",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
+    "ip": "51.91.255.149",
+    "timestamp": "2022-04-29T00:58:53.550380067Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "x-frame-options",
+    "type": "http",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 242\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\"\n      ]\n    }\n  ]\n}",
+    "ip": "51.91.255.149",
+    "timestamp": "2022-04-29T00:58:53.550396168Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
   },
@@ -795,10 +554,107 @@
     "host": "https://api.camino.beta.gouv.fr",
     "matched-at": "https://api.camino.beta.gouv.fr/graphql?query={__typename}",
     "request": "GET /graphql?query={__typename} HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 45\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:18:46 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"data\": {\n    \"__typename\": \"Query\"\n  }\n}",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 45\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:53 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"data\": {\n    \"__typename\": \"Query\"\n  }\n}",
     "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:18:46.652189389Z",
+    "timestamp": "2022-04-29T00:58:53.562885116Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr/graphql?query={__typename}'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/graphql/graphql-field-suggestion.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/graphql/graphql-field-suggestion.yaml",
+    "template-id": "graphql-field-suggestion",
+    "info": {
+      "name": "GraphQL Field Suggestion Information Disclosure",
+      "author": [
+        "dolev farhi"
+      ],
+      "tags": [
+        "graphql"
+      ],
+      "description": "If introspection is disabled on your target, Field Suggestion can allow users to still earn information on the GraphQL schema.\nBy default, GraphQL backends have a feature for fields and operations suggestions.\nIf you try to query a field but you have made a typo, GraphQL will attempt to suggest fields that are similar to the initial attempt.\n",
+      "reference": [
+        "https://github.com/webonyx/graphql-php/issues/454",
+        "https://github.com/dolevf/damn-vulnerable-graphql-application",
+        "https://cheatsheetseries.owasp.org/cheatsheets/graphql_cheat_sheet.html",
+        "https://graphql.security"
+      ],
+      "severity": "info"
+    },
+    "type": "http",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr/graphql",
+    "request": "POST /graphql HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 69\r\nContent-Type: application/json\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 1003\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:58:57 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"locations\": [\n        {\n          \"line\": 3,\n          \"column\": 2\n        }\n      ],\n      \"message\": \"Cannot query field \\\"directive\\\" on type \\\"__Schema\\\". Did you mean \\\"directives\\\"?\",\n      \"stack\": [\n        \"GraphQLError: Cannot query field \\\"directive\\\" on type \\\"__Schema\\\". Did you mean \\\"directives\\\"?\",\n        \"    at Object.Field (/node_modules/graphql/validation/rules/FieldsOnCorrectTypeRule.js:51:13)\",\n        \"    at Object.enter (/node_modules/graphql/language/visitor.js:301:32)\",\n        \"    at Object.enter (/node_modules/graphql/utilities/TypeInfo.js:391:27)\",\n        \"    at visit (/node_modules/graphql/language/visitor.js:197:21)\",\n        \"    at validate (/node_modules/graphql/validation/validate.js:91:24)\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:98:38)\",\n        \"    at runMicrotasks (<anonymous>)\",\n        \"    at processTicksAndRejections (node:internal/process/task_queues:96:5)\"\n      ]\n    }\n  ]\n}",
+    "ip": "51.91.255.149",
+    "timestamp": "2022-04-29T00:58:57.808285042Z",
+    "curl-command": "curl -X 'POST' -d '{\"query\":\"query {\\n  __schema {\\n directive\\n }\\n}\",\"variables\":null}' -H 'Content-Type: application/json' -H 'Host: api.camino.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr/graphql'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "technologies/waf-detect.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/waf-detect.yaml",
+    "template-id": "waf-detect",
+    "info": {
+      "name": "WAF Detection",
+      "author": [
+        "dwisiswant0",
+        "lu4nx"
+      ],
+      "tags": [
+        "waf",
+        "tech",
+        "misc"
+      ],
+      "description": "A web application firewall was detected.",
+      "reference": [
+        "https://github.com/ekultek/whatwaf"
+      ],
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
+    },
+    "matcher-name": "nginxgeneric",
+    "type": "http",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr/",
+    "request": "POST / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Length: 373\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:59:13 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"errors\": [\n    {\n      \"message\": \"Must provide query string.\",\n      \"stack\": [\n        \"BadRequestError: Must provide query string.\",\n        \"    at graphqlMiddleware (/node_modules/express-graphql/index.js:76:44)\",\n        \"    at runMicrotasks (<anonymous>)\",\n        \"    at processTicksAndRejections (node:internal/process/task_queues:96:5)\"\n      ]\n    }\n  ]\n}",
+    "ip": "51.91.255.149",
+    "timestamp": "2022-04-29T00:59:13.426611019Z",
+    "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: api.camino.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "ssl/tls-version.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/tls-version.yaml",
+    "template-id": "tls-version",
+    "info": {
+      "name": "TLS Version",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "ssl"
+      ],
+      "reference": null,
+      "severity": "info"
+    },
+    "type": "ssl",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "extracted-results": [
+      "TLS13"
+    ],
+    "ip": "51.91.255.149",
+    "timestamp": "2022-04-29T00:59:20.631564299Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -828,10 +684,149 @@
     "host": "https://api.camino.beta.gouv.fr",
     "matched-at": "https://api.camino.beta.gouv.fr/graphql",
     "request": "POST /graphql HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 155\r\nContent-Type: application/json\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 162\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Thu, 28 Apr 2022 01:19:02 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"data\": {\n    \"nuclei1\": \"Query\",\n    \"nuclei2\": \"Query\",\n    \"nuclei3\": \"Query\",\n    \"nuclei4\": \"Query\",\n    \"nuclei5\": \"Query\",\n    \"nuclei6\": \"Query\"\n  }\n}",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 162\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Expose-Headers: Content-disposition\r\nContent-Type: application/json; charset=utf-8\r\nDate: Fri, 29 Apr 2022 00:59:21 GMT\r\nServer: nginx/1.19.2\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Powered-By: Express\r\n\r\n{\n  \"data\": {\n    \"nuclei1\": \"Query\",\n    \"nuclei2\": \"Query\",\n    \"nuclei3\": \"Query\",\n    \"nuclei4\": \"Query\",\n    \"nuclei5\": \"Query\",\n    \"nuclei6\": \"Query\"\n  }\n}",
     "ip": "51.91.255.149",
-    "timestamp": "2022-04-28T01:19:02.69652911Z",
+    "timestamp": "2022-04-29T00:59:21.266262647Z",
     "curl-command": "curl -X 'POST' -d '{\"query\":\"query {\\n nuclei1:__typename \\n nuclei2:__typename \\n nuclei3:__typename \\n nuclei4:__typename \\n nuclei5:__typename \\n nuclei6:__typename \\n }\"}' -H 'Content-Type: application/json' -H 'Host: api.camino.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr/graphql'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "ssl/ssl-dns-names.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/ssl-dns-names.yaml",
+    "template-id": "ssl-dns-names",
+    "info": {
+      "name": "SSL DNS Names",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "ssl"
+      ],
+      "reference": null,
+      "severity": "info"
+    },
+    "type": "ssl",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "extracted-results": [
+      "api.camino.beta.gouv.fr"
+    ],
+    "ip": "51.91.255.149",
+    "timestamp": "2022-04-29T00:59:52.516860202Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "dns/nameserver-fingerprint.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/nameserver-fingerprint.yaml",
+    "template-id": "nameserver-fingerprint",
+    "info": {
+      "name": "NS Record Detection",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "dns",
+        "ns"
+      ],
+      "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
+      "reference": null,
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
+    },
+    "type": "dns",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "extracted-results": [
+      "dns2.alwaysdata.com.",
+      "dns1.alwaysdata.com."
+    ],
+    "request": ";; opcode: QUERY, status: NOERROR, id: 38337\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 38337\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\n",
+    "timestamp": "2022-04-29T00:59:52.555337769Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "dns/mx-fingerprint.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/mx-fingerprint.yaml",
+    "template-id": "mx-fingerprint",
+    "info": {
+      "name": "MX Record Detection",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "dns",
+        "mx"
+      ],
+      "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
+      "reference": [
+        "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
+        "https://mxtoolbox.com/"
+      ],
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
+    },
+    "type": "dns",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "extracted-results": [
+      "10 mx1.alwaysdata.com.",
+      "20 mx2.alwaysdata.com."
+    ],
+    "request": ";; opcode: QUERY, status: NOERROR, id: 48032\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t MX\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 48032\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t238\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\n",
+    "timestamp": "2022-04-29T00:59:54.714101877Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "dns/txt-fingerprint.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/txt-fingerprint.yaml",
+    "template-id": "txt-fingerprint",
+    "info": {
+      "name": "DNS TXT Record Detected",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "dns",
+        "txt"
+      ],
+      "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+      "reference": [
+        "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+      ],
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
+    },
+    "type": "dns",
+    "host": "https://api.camino.beta.gouv.fr",
+    "matched-at": "https://api.camino.beta.gouv.fr",
+    "extracted-results": [
+      "\"v=spf1 include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"",
+      "\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\""
+    ],
+    "request": ";; opcode: QUERY, status: NOERROR, id: 49447\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t TXT\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 49447\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t225\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"\n",
+    "timestamp": "2022-04-29T01:00:02.563694577Z",
     "matcher-status": true,
     "matched-line": null
   }
