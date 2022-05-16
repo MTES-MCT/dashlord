@@ -1,1 +1,166 @@
-[]
+[
+  {
+    "template": "dns/cname-fingerprint.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/cname-fingerprint.yaml",
+    "template-id": "cname-fingerprint",
+    "info": {
+      "name": "CNAME Fingerprint",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "dns",
+        "cname"
+      ],
+      "description": "A CNAME DNS record was discovered.",
+      "reference": [
+        "https://www.theregister.com/2021/02/24/dns_cname_tracking/",
+        "https://www.ionos.com/digitalguide/hosting/technical-matters/cname-record/"
+      ],
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
+    },
+    "type": "dns",
+    "host": "https://sparte.beta.gouv.fr",
+    "matched-at": "https://sparte.beta.gouv.fr",
+    "extracted-results": [
+      "sparte.osc-secnum-fr1.scalingo.io.",
+      "sc-lb-pool-01.osc-secnum-fr1.scalingo-network.com."
+    ],
+    "request": ";; opcode: QUERY, status: NOERROR, id: 62230\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;sparte.beta.gouv.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 62230\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;sparte.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nsparte.beta.gouv.fr.\t10800\tIN\tCNAME\tsparte.osc-secnum-fr1.scalingo.io.\nsparte.osc-secnum-fr1.scalingo.io.\t300\tIN\tCNAME\tsc-lb-pool-01.osc-secnum-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t1800\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
+    "timestamp": "2022-05-16T03:07:21.990416585Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "ssl/ssl-dns-names.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/ssl-dns-names.yaml",
+    "template-id": "ssl-dns-names",
+    "info": {
+      "name": "SSL DNS Names",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "ssl"
+      ],
+      "reference": null,
+      "severity": "info"
+    },
+    "type": "ssl",
+    "host": "https://sparte.beta.gouv.fr",
+    "matched-at": "https://sparte.beta.gouv.fr",
+    "extracted-results": [
+      "sparte.beta.gouv.fr"
+    ],
+    "ip": "185.21.194.105",
+    "timestamp": "2022-05-16T03:07:27.251414427Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "ssl/tls-version.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/tls-version.yaml",
+    "template-id": "tls-version",
+    "info": {
+      "name": "TLS Version",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "ssl"
+      ],
+      "reference": null,
+      "severity": "info"
+    },
+    "type": "ssl",
+    "host": "https://sparte.beta.gouv.fr",
+    "matched-at": "https://sparte.beta.gouv.fr",
+    "extracted-results": [
+      "TLS13"
+    ],
+    "ip": "185.21.194.105",
+    "timestamp": "2022-05-16T03:07:28.663193106Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "technologies/waf-detect.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/waf-detect.yaml",
+    "template-id": "waf-detect",
+    "info": {
+      "name": "WAF Detection",
+      "author": [
+        "dwisiswant0",
+        "lu4nx"
+      ],
+      "tags": [
+        "waf",
+        "tech",
+        "misc"
+      ],
+      "description": "A web application firewall was detected.",
+      "reference": [
+        "https://github.com/ekultek/whatwaf"
+      ],
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
+    },
+    "matcher-name": "apachegeneric",
+    "type": "http",
+    "host": "https://sparte.beta.gouv.fr",
+    "matched-at": "https://sparte.beta.gouv.fr/",
+    "request": "POST / HTTP/1.1\r\nHost: sparte.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
+    "response": "HTTP/1.1 403 Forbidden\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Type: text/html\r\nDate: Mon, 16 May 2022 03:08:10 GMT\r\nReferrer-Policy: same-origin\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 3cd19495-a0db-4675-b27e-c472a9ed795a\r\n\r\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n  <meta name=\"robots\" content=\"NONE,NOARCHIVE\">\n  <title>403 Forbidden</title>\n  <style type=\"text/css\">\n    html * { padding:0; margin:0; }\n    body * { padding:10px 20px; }\n    body * * { padding:0; }\n    body { font:small sans-serif; background:#eee; color:#000; }\n    body>div { border-bottom:1px solid #ddd; }\n    h1 { font-weight:normal; margin-bottom:.4em; }\n    h1 span { font-size:60%; color:#666; font-weight:normal; }\n    #info { background:#f6f6f6; }\n    #info ul { margin: 0.5em 4em; }\n    #info p, #summary p { padding-top:10px; }\n    #summary { background: #ffc; }\n    #explanation { background:#eee; border-bottom: 0px none; }\n  </style>\n</head>\n<body>\n<div id=\"summary\">\n  <h1>Interdit <span>(403)</span></h1>\n  <p>La vérification CSRF a échoué. La requête a été interrompue.</p>\n\n  <p>Vous voyez ce message parce que ce site HTTPS exige que le navigateur Web envoie un en-tête « Referer », ce qu’il n&#x27;a pas fait. Cet en-tête est exigé pour des raisons de sécurité, afin de s’assurer que le navigateur n’ait pas été piraté par un intervenant externe.</p>\n  <p>Si vous avez désactivé l’envoi des en-têtes « Referer » par votre navigateur, veuillez les réactiver, au moins pour ce site ou pour les connexions HTTPS, ou encore pour les requêtes de même origine (« same-origin »).</p>\n  <p>Si vous utilisez la balise &lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt; ou que vous incluez l’en-tête « Referrer-Policy: no-referrer », il est préférable de les enlever. La protection CSRF exige que l’en-tête ``Referer`` effectue un contrôle de référant strict. Si vous vous souciez de la confidentialité, utilisez des alternatives comme &lt;a rel=&quot;noreferrer&quot; …&gt; pour les liens vers des sites tiers.</p>\n\n\n</div>\n\n<div id=\"explanation\">\n  <p><small>Des informations plus détaillées sont affichées lorsque la variable DEBUG vaut True.</small></p>\n</div>\n\n</body>\n</html>\n",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-05-16T03:08:10.581949638Z",
+    "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: sparte.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://sparte.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "dns/dns-waf-detect.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/dns-waf-detect.yaml",
+    "template-id": "dns-waf-detect",
+    "info": {
+      "name": "DNS WAF Detection",
+      "author": [
+        "lu4nx"
+      ],
+      "tags": [
+        "tech",
+        "waf",
+        "dns"
+      ],
+      "description": "A DNS WAF was detected.",
+      "reference": null,
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
+    },
+    "matcher-name": "cloudflare",
+    "type": "dns",
+    "host": "https://sparte.beta.gouv.fr",
+    "matched-at": "https://sparte.beta.gouv.fr",
+    "request": ";; opcode: QUERY, status: NOERROR, id: 1141\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;sparte.beta.gouv.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 1141\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;sparte.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nsparte.beta.gouv.fr.\t10800\tIN\tCNAME\tsparte.osc-secnum-fr1.scalingo.io.\nsparte.osc-secnum-fr1.scalingo.io.\t300\tIN\tCNAME\tsc-lb-pool-01.osc-secnum-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t3600\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
+    "timestamp": "2022-05-16T03:08:58.310921353Z",
+    "matcher-status": true,
+    "matched-line": null
+  }
+]
