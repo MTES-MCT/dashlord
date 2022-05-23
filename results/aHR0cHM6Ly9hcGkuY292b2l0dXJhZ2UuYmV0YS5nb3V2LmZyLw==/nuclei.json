@@ -1,5 +1,39 @@
 [
   {
+    "template": "dns/dns-waf-detect.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/dns-waf-detect.yaml",
+    "template-id": "dns-waf-detect",
+    "info": {
+      "name": "DNS WAF Detection",
+      "author": [
+        "lu4nx"
+      ],
+      "tags": [
+        "tech",
+        "waf",
+        "dns"
+      ],
+      "description": "A DNS WAF was detected.",
+      "reference": null,
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
+    },
+    "matcher-name": "cloudflare",
+    "type": "dns",
+    "host": "https://api.covoiturage.beta.gouv.fr/",
+    "matched-at": "https://api.covoiturage.beta.gouv.fr/",
+    "request": ";; opcode: QUERY, status: NOERROR, id: 39637\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.covoiturage.beta.gouv.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 39637\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;api.covoiturage.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napi.covoiturage.beta.gouv.fr.\t300\tIN\tCNAME\tpdc-prod.osc-fr1.scalingo.io.\npdc-prod.osc-fr1.scalingo.io.\t300\tIN\tCNAME\tsc-lb-pool-01.osc-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t3600\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
+    "timestamp": "2022-05-23T01:24:49.37801294Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
     "template": "dns/cname-fingerprint.yaml",
     "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/cname-fingerprint.yaml",
     "template-id": "cname-fingerprint",
@@ -32,140 +66,9 @@
       "pdc-prod.osc-fr1.scalingo.io.",
       "sc-lb-pool-01.osc-fr1.scalingo-network.com."
     ],
-    "request": ";; opcode: QUERY, status: NOERROR, id: 22515\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.covoiturage.beta.gouv.fr.\tIN\t NS\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 22515\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;api.covoiturage.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napi.covoiturage.beta.gouv.fr.\t287\tIN\tCNAME\tpdc-prod.osc-fr1.scalingo.io.\npdc-prod.osc-fr1.scalingo.io.\t288\tIN\tCNAME\tsc-lb-pool-01.osc-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t1800\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
-    "timestamp": "2022-05-22T01:21:42.447299366Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "ssl/ssl-dns-names.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/ssl-dns-names.yaml",
-    "template-id": "ssl-dns-names",
-    "info": {
-      "name": "SSL DNS Names",
-      "author": [
-        "pdteam"
-      ],
-      "tags": [
-        "ssl"
-      ],
-      "reference": null,
-      "severity": "info"
-    },
-    "type": "ssl",
-    "host": "https://api.covoiturage.beta.gouv.fr/",
-    "matched-at": "https://api.covoiturage.beta.gouv.fr/",
-    "extracted-results": [
-      "api.covoiturage.beta.gouv.fr"
-    ],
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-22T01:21:45.019803331Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "permission-policy",
-    "type": "http",
-    "host": "https://api.covoiturage.beta.gouv.fr/",
-    "matched-at": "https://api.covoiturage.beta.gouv.fr/",
-    "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 May 2022 01:22:12 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: f7b8dc16-8e00-46fd-8b60-fa8915d90f62\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-22T01:22:12.626013884Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-embedder-policy",
-    "type": "http",
-    "host": "https://api.covoiturage.beta.gouv.fr/",
-    "matched-at": "https://api.covoiturage.beta.gouv.fr/",
-    "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 May 2022 01:22:12 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: f7b8dc16-8e00-46fd-8b60-fa8915d90f62\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-22T01:22:12.626090583Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-resource-policy",
-    "type": "http",
-    "host": "https://api.covoiturage.beta.gouv.fr/",
-    "matched-at": "https://api.covoiturage.beta.gouv.fr/",
-    "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 May 2022 01:22:12 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: f7b8dc16-8e00-46fd-8b60-fa8915d90f62\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-22T01:22:12.626110283Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
+    "request": ";; opcode: QUERY, status: NOERROR, id: 30687\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.covoiturage.beta.gouv.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 30687\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;api.covoiturage.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napi.covoiturage.beta.gouv.fr.\t300\tIN\tCNAME\tpdc-prod.osc-fr1.scalingo.io.\npdc-prod.osc-fr1.scalingo.io.\t300\tIN\tCNAME\tsc-lb-pool-01.osc-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t3600\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
+    "timestamp": "2022-05-23T01:24:55.839465923Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -197,9 +100,9 @@
     "host": "https://api.covoiturage.beta.gouv.fr/",
     "matched-at": "https://api.covoiturage.beta.gouv.fr/",
     "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 May 2022 01:22:12 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: f7b8dc16-8e00-46fd-8b60-fa8915d90f62\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
+    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 23 May 2022 01:25:03 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 4acf6753-e5be-4510-ad6c-7b691f67f015\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
     "ip": "109.232.236.90",
-    "timestamp": "2022-05-22T01:22:12.626131183Z",
+    "timestamp": "2022-05-23T01:25:03.402558817Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
     "matcher-status": true,
     "matched-line": null
@@ -232,9 +135,9 @@
     "host": "https://api.covoiturage.beta.gouv.fr/",
     "matched-at": "https://api.covoiturage.beta.gouv.fr/",
     "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 May 2022 01:22:12 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: f7b8dc16-8e00-46fd-8b60-fa8915d90f62\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
+    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 23 May 2022 01:25:03 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 4acf6753-e5be-4510-ad6c-7b691f67f015\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
     "ip": "109.232.236.90",
-    "timestamp": "2022-05-22T01:22:12.626148083Z",
+    "timestamp": "2022-05-23T01:25:03.402659216Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
     "matcher-status": true,
     "matched-line": null
@@ -267,44 +170,9 @@
     "host": "https://api.covoiturage.beta.gouv.fr/",
     "matched-at": "https://api.covoiturage.beta.gouv.fr/",
     "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 May 2022 01:22:12 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: f7b8dc16-8e00-46fd-8b60-fa8915d90f62\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
+    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 23 May 2022 01:25:03 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 4acf6753-e5be-4510-ad6c-7b691f67f015\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
     "ip": "109.232.236.90",
-    "timestamp": "2022-05-22T01:22:12.626167382Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-opener-policy",
-    "type": "http",
-    "host": "https://api.covoiturage.beta.gouv.fr/",
-    "matched-at": "https://api.covoiturage.beta.gouv.fr/",
-    "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 May 2022 01:22:12 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: f7b8dc16-8e00-46fd-8b60-fa8915d90f62\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-22T01:22:12.626183282Z",
+    "timestamp": "2022-05-23T01:25:03.402681416Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
     "matcher-status": true,
     "matched-line": null
@@ -337,9 +205,79 @@
     "host": "https://api.covoiturage.beta.gouv.fr/",
     "matched-at": "https://api.covoiturage.beta.gouv.fr/",
     "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 May 2022 01:22:12 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: f7b8dc16-8e00-46fd-8b60-fa8915d90f62\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
+    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 23 May 2022 01:25:03 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 4acf6753-e5be-4510-ad6c-7b691f67f015\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
     "ip": "109.232.236.90",
-    "timestamp": "2022-05-22T01:22:12.626203382Z",
+    "timestamp": "2022-05-23T01:25:03.403344109Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "cross-origin-opener-policy",
+    "type": "http",
+    "host": "https://api.covoiturage.beta.gouv.fr/",
+    "matched-at": "https://api.covoiturage.beta.gouv.fr/",
+    "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 23 May 2022 01:25:03 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 4acf6753-e5be-4510-ad6c-7b691f67f015\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-23T01:25:03.403428709Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "cross-origin-resource-policy",
+    "type": "http",
+    "host": "https://api.covoiturage.beta.gouv.fr/",
+    "matched-at": "https://api.covoiturage.beta.gouv.fr/",
+    "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 23 May 2022 01:25:03 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 4acf6753-e5be-4510-ad6c-7b691f67f015\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-23T01:25:03.403716206Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
     "matcher-status": true,
     "matched-line": null
@@ -372,83 +310,80 @@
     "host": "https://api.covoiturage.beta.gouv.fr/",
     "matched-at": "https://api.covoiturage.beta.gouv.fr/",
     "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 May 2022 01:22:12 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: f7b8dc16-8e00-46fd-8b60-fa8915d90f62\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
+    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 23 May 2022 01:25:03 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 4acf6753-e5be-4510-ad6c-7b691f67f015\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
     "ip": "109.232.236.90",
-    "timestamp": "2022-05-22T01:22:12.626221782Z",
+    "timestamp": "2022-05-23T01:25:03.403765305Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "technologies/waf-detect.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/waf-detect.yaml",
-    "template-id": "waf-detect",
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
     "info": {
-      "name": "WAF Detection",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "dwisiswant0",
-        "lu4nx"
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
       ],
       "tags": [
-        "waf",
-        "tech",
-        "misc"
+        "misconfig",
+        "generic"
       ],
-      "description": "A web application firewall was detected.",
-      "reference": [
-        "https://github.com/ekultek/whatwaf"
-      ],
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ]
-      }
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
     },
-    "matcher-name": "securesphere",
+    "matcher-name": "permission-policy",
     "type": "http",
     "host": "https://api.covoiturage.beta.gouv.fr/",
     "matched-at": "https://api.covoiturage.beta.gouv.fr/",
-    "request": "POST / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 140\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 May 2022 01:22:23 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 31615dc4-edc3-41b6-bc17-e215ef4c8b51\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n",
+    "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 23 May 2022 01:25:03 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 4acf6753-e5be-4510-ad6c-7b691f67f015\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
     "ip": "109.232.236.90",
-    "timestamp": "2022-05-22T01:22:23.66392216Z",
-    "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: api.covoiturage.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
+    "timestamp": "2022-05-23T01:25:03.404050203Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "dns/dns-waf-detect.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/dns-waf-detect.yaml",
-    "template-id": "dns-waf-detect",
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
     "info": {
-      "name": "DNS WAF Detection",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "lu4nx"
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
       ],
       "tags": [
-        "tech",
-        "waf",
-        "dns"
+        "misconfig",
+        "generic"
       ],
-      "description": "A DNS WAF was detected.",
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
       "reference": null,
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ]
-      }
+      "severity": "info"
     },
-    "matcher-name": "cloudflare",
-    "type": "dns",
+    "matcher-name": "cross-origin-embedder-policy",
+    "type": "http",
     "host": "https://api.covoiturage.beta.gouv.fr/",
     "matched-at": "https://api.covoiturage.beta.gouv.fr/",
-    "request": ";; opcode: QUERY, status: NOERROR, id: 21008\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.covoiturage.beta.gouv.fr.\tIN\t NS\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 21008\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;api.covoiturage.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napi.covoiturage.beta.gouv.fr.\t300\tIN\tCNAME\tpdc-prod.osc-fr1.scalingo.io.\npdc-prod.osc-fr1.scalingo.io.\t300\tIN\tCNAME\tsc-lb-pool-01.osc-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t3600\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
-    "timestamp": "2022-05-22T01:22:51.08963325Z",
+    "request": "GET / HTTP/1.1\r\nHost: api.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 139\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Origin: https://app.covoiturage.beta.gouv.fr\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 23 May 2022 01:25:03 GMT\r\nExpect-Ct: max-age=0\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nStrict-Transport-Security: max-age=15552000; includeSubDomains\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 4acf6753-e5be-4510-ad6c-7b691f67f015\r\nX-Xss-Protection: 0\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot GET /</pre>\n</body>\n</html>\n",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-23T01:25:03.404135602Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.covoiturage.beta.gouv.fr/'",
     "matcher-status": true,
     "matched-line": null
   }
