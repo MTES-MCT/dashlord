@@ -1,433 +1,5 @@
 [
   {
-    "template": "dns/cname-fingerprint.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/cname-fingerprint.yaml",
-    "template-id": "cname-fingerprint",
-    "info": {
-      "name": "CNAME Fingerprint",
-      "author": [
-        "pdteam"
-      ],
-      "tags": [
-        "dns",
-        "cname"
-      ],
-      "description": "A CNAME DNS record was discovered.",
-      "reference": [
-        "https://www.theregister.com/2021/02/24/dns_cname_tracking/",
-        "https://www.ionos.com/digitalguide/hosting/technical-matters/cname-record/"
-      ],
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ]
-      }
-    },
-    "type": "dns",
-    "host": "https://wikicarbone.beta.gouv.fr",
-    "matched-at": "https://wikicarbone.beta.gouv.fr",
-    "extracted-results": [
-      "wikicarbone.osc-fr1.scalingo.io.",
-      "sc-lb-pool-01.osc-fr1.scalingo-network.com."
-    ],
-    "request": ";; opcode: QUERY, status: NOERROR, id: 56507\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;wikicarbone.beta.gouv.fr.\tIN\t NS\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 56507\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;wikicarbone.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nwikicarbone.beta.gouv.fr.\t10800\tIN\tCNAME\twikicarbone.osc-fr1.scalingo.io.\nwikicarbone.osc-fr1.scalingo.io.\t300\tIN\tCNAME\tsc-lb-pool-01.osc-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t3600\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
-    "timestamp": "2022-05-23T03:41:45.437278159Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/xss-deprecated-header.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/xss-deprecated-header.yaml",
-    "template-id": "xss-deprecated-header-detect",
-    "info": {
-      "name": "Detect Deprecated XSS Protection Header",
-      "author": [
-        "joshlarsen"
-      ],
-      "tags": [
-        "xss",
-        "misconfig",
-        "generic"
-      ],
-      "description": "Setting the XSS-Protection header is deprecated by most browsers. Setting the header to anything other than `0` can actually introduce an XSS vulnerability.",
-      "reference": [
-        "https://developer.mozilla.org/en-us/docs/web/http/headers/x-xss-protection",
-        "https://owasp.org/www-project-secure-headers/#x-xss-protection"
-      ],
-      "severity": "info"
-    },
-    "type": "http",
-    "host": "https://wikicarbone.beta.gouv.fr",
-    "matched-at": "https://wikicarbone.beta.gouv.fr",
-    "extracted-results": [
-      "1; mode=block"
-    ],
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 711\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Mon, 23 May 2022 03:41:45 GMT\r\nEtag: W/\"2c7-180e1cce800\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Fri, 20 May 2022 14:09:04 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 01422656-bd7b-4e6b-a7a8-f4824f551699\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.40836d03.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-23T03:41:45.617705834Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://wikicarbone.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-credentials",
-    "type": "http",
-    "host": "https://wikicarbone.beta.gouv.fr",
-    "matched-at": "https://wikicarbone.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 711\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Mon, 23 May 2022 03:41:52 GMT\r\nEtag: W/\"2c7-180e1cce800\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Fri, 20 May 2022 14:09:04 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: a313d28b-8c81-4eda-8c01-62d1f33d87c2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.40836d03.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-23T03:41:52.329477506Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://wikicarbone.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-methods",
-    "type": "http",
-    "host": "https://wikicarbone.beta.gouv.fr",
-    "matched-at": "https://wikicarbone.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 711\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Mon, 23 May 2022 03:41:52 GMT\r\nEtag: W/\"2c7-180e1cce800\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Fri, 20 May 2022 14:09:04 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: a313d28b-8c81-4eda-8c01-62d1f33d87c2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.40836d03.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-23T03:41:52.329573708Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://wikicarbone.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-origin",
-    "type": "http",
-    "host": "https://wikicarbone.beta.gouv.fr",
-    "matched-at": "https://wikicarbone.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 711\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Mon, 23 May 2022 03:41:52 GMT\r\nEtag: W/\"2c7-180e1cce800\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Fri, 20 May 2022 14:09:04 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: a313d28b-8c81-4eda-8c01-62d1f33d87c2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.40836d03.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-23T03:41:52.334071919Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://wikicarbone.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "clear-site-data",
-    "type": "http",
-    "host": "https://wikicarbone.beta.gouv.fr",
-    "matched-at": "https://wikicarbone.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 711\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Mon, 23 May 2022 03:41:52 GMT\r\nEtag: W/\"2c7-180e1cce800\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Fri, 20 May 2022 14:09:04 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: a313d28b-8c81-4eda-8c01-62d1f33d87c2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.40836d03.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-23T03:41:52.33412732Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://wikicarbone.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-embedder-policy",
-    "type": "http",
-    "host": "https://wikicarbone.beta.gouv.fr",
-    "matched-at": "https://wikicarbone.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 711\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Mon, 23 May 2022 03:41:52 GMT\r\nEtag: W/\"2c7-180e1cce800\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Fri, 20 May 2022 14:09:04 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: a313d28b-8c81-4eda-8c01-62d1f33d87c2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.40836d03.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-23T03:41:52.334154521Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://wikicarbone.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-expose-headers",
-    "type": "http",
-    "host": "https://wikicarbone.beta.gouv.fr",
-    "matched-at": "https://wikicarbone.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 711\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Mon, 23 May 2022 03:41:52 GMT\r\nEtag: W/\"2c7-180e1cce800\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Fri, 20 May 2022 14:09:04 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: a313d28b-8c81-4eda-8c01-62d1f33d87c2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.40836d03.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-23T03:41:52.334178822Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://wikicarbone.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-max-age",
-    "type": "http",
-    "host": "https://wikicarbone.beta.gouv.fr",
-    "matched-at": "https://wikicarbone.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 711\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Mon, 23 May 2022 03:41:52 GMT\r\nEtag: W/\"2c7-180e1cce800\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Fri, 20 May 2022 14:09:04 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: a313d28b-8c81-4eda-8c01-62d1f33d87c2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.40836d03.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-23T03:41:52.334200922Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://wikicarbone.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-headers",
-    "type": "http",
-    "host": "https://wikicarbone.beta.gouv.fr",
-    "matched-at": "https://wikicarbone.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 711\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Mon, 23 May 2022 03:41:52 GMT\r\nEtag: W/\"2c7-180e1cce800\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Fri, 20 May 2022 14:09:04 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: a313d28b-8c81-4eda-8c01-62d1f33d87c2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.40836d03.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-23T03:41:52.334224023Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://wikicarbone.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "permission-policy",
-    "type": "http",
-    "host": "https://wikicarbone.beta.gouv.fr",
-    "matched-at": "https://wikicarbone.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 711\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Mon, 23 May 2022 03:41:52 GMT\r\nEtag: W/\"2c7-180e1cce800\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Fri, 20 May 2022 14:09:04 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: a313d28b-8c81-4eda-8c01-62d1f33d87c2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>wikicarbone</title><link rel=\"canonical\" href=\"https://wikicarbone.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.40836d03.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-23T03:41:52.334257324Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://wikicarbone.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "technologies/waf-detect.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/waf-detect.yaml",
-    "template-id": "waf-detect",
-    "info": {
-      "name": "WAF Detection",
-      "author": [
-        "dwisiswant0",
-        "lu4nx"
-      ],
-      "tags": [
-        "waf",
-        "tech",
-        "misc"
-      ],
-      "description": "A web application firewall was detected.",
-      "reference": [
-        "https://github.com/ekultek/whatwaf"
-      ],
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ]
-      }
-    },
-    "matcher-name": "securesphere",
-    "type": "http",
-    "host": "https://wikicarbone.beta.gouv.fr",
-    "matched-at": "https://wikicarbone.beta.gouv.fr/",
-    "request": "POST / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 140\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Mon, 23 May 2022 03:41:53 GMT\r\nExpect-Ct: max-age=0\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 98b2d688-ea15-41ce-b3f5-00f58b9656e3\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n",
-    "ip": "109.232.236.90",
-    "timestamp": "2022-05-23T03:41:53.896531778Z",
-    "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: wikicarbone.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://wikicarbone.beta.gouv.fr/'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
     "template": "ssl/ssl-dns-names.yaml",
     "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/ssl-dns-names.yaml",
     "template-id": "ssl-dns-names",
@@ -449,7 +21,7 @@
       "wikicarbone.beta.gouv.fr"
     ],
     "ip": "109.232.236.90",
-    "timestamp": "2022-05-23T03:42:02.616284001Z",
+    "timestamp": "2022-05-24T03:39:24.266802937Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -481,9 +53,389 @@
     "type": "dns",
     "host": "https://wikicarbone.beta.gouv.fr",
     "matched-at": "https://wikicarbone.beta.gouv.fr",
-    "request": ";; opcode: QUERY, status: NOERROR, id: 3700\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;wikicarbone.beta.gouv.fr.\tIN\t NS\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 3700\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;wikicarbone.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nwikicarbone.beta.gouv.fr.\t10770\tIN\tCNAME\twikicarbone.osc-fr1.scalingo.io.\nwikicarbone.osc-fr1.scalingo.io.\t271\tIN\tCNAME\tsc-lb-pool-01.osc-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t1800\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
-    "timestamp": "2022-05-23T03:42:14.339681468Z",
+    "request": ";; opcode: QUERY, status: NOERROR, id: 46779\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;wikicarbone.beta.gouv.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 46779\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;wikicarbone.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nwikicarbone.beta.gouv.fr.\t10793\tIN\tCNAME\tbetagouv-redirections.osc-fr1.scalingo.io.\nbetagouv-redirections.osc-fr1.scalingo.io.\t293\tIN\tCNAME\tsc-lb-pool-01.osc-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t1800\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
+    "timestamp": "2022-05-24T03:39:28.095812647Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "clear-site-data",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched-at": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Tue, 24 May 2022 03:39:29 GMT\r\nEtag: W/\"2c3-180f13931b8\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Mon, 23 May 2022 14:01:39 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 9f2e5a14-5996-4cfe-9c91-b6973c9cf101\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.6d2d65d3.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-24T03:39:29.910370142Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: http://ecobalyse.beta.gouv.fr/' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-origin",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched-at": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Tue, 24 May 2022 03:39:29 GMT\r\nEtag: W/\"2c3-180f13931b8\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Mon, 23 May 2022 14:01:39 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 9f2e5a14-5996-4cfe-9c91-b6973c9cf101\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.6d2d65d3.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-24T03:39:29.910466243Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: http://ecobalyse.beta.gouv.fr/' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-max-age",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched-at": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Tue, 24 May 2022 03:39:29 GMT\r\nEtag: W/\"2c3-180f13931b8\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Mon, 23 May 2022 14:01:39 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 9f2e5a14-5996-4cfe-9c91-b6973c9cf101\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.6d2d65d3.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-24T03:39:29.910493443Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: http://ecobalyse.beta.gouv.fr/' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "permission-policy",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched-at": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Tue, 24 May 2022 03:39:29 GMT\r\nEtag: W/\"2c3-180f13931b8\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Mon, 23 May 2022 14:01:39 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 9f2e5a14-5996-4cfe-9c91-b6973c9cf101\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.6d2d65d3.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-24T03:39:29.910522843Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: http://ecobalyse.beta.gouv.fr/' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "cross-origin-embedder-policy",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched-at": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Tue, 24 May 2022 03:39:29 GMT\r\nEtag: W/\"2c3-180f13931b8\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Mon, 23 May 2022 14:01:39 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 9f2e5a14-5996-4cfe-9c91-b6973c9cf101\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.6d2d65d3.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-24T03:39:29.910604144Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: http://ecobalyse.beta.gouv.fr/' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-credentials",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched-at": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Tue, 24 May 2022 03:39:29 GMT\r\nEtag: W/\"2c3-180f13931b8\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Mon, 23 May 2022 14:01:39 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 9f2e5a14-5996-4cfe-9c91-b6973c9cf101\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.6d2d65d3.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-24T03:39:29.910627645Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: http://ecobalyse.beta.gouv.fr/' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-expose-headers",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched-at": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Tue, 24 May 2022 03:39:29 GMT\r\nEtag: W/\"2c3-180f13931b8\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Mon, 23 May 2022 14:01:39 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 9f2e5a14-5996-4cfe-9c91-b6973c9cf101\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.6d2d65d3.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-24T03:39:29.910650245Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: http://ecobalyse.beta.gouv.fr/' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-methods",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched-at": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Tue, 24 May 2022 03:39:29 GMT\r\nEtag: W/\"2c3-180f13931b8\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Mon, 23 May 2022 14:01:39 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 9f2e5a14-5996-4cfe-9c91-b6973c9cf101\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.6d2d65d3.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-24T03:39:29.910672745Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: http://ecobalyse.beta.gouv.fr/' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "It searches for missing security headers, but obviously, could be so less generic and could be useless for Bug Bounty.",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-headers",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched-at": "https://wikicarbone.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Tue, 24 May 2022 03:39:29 GMT\r\nEtag: W/\"2c3-180f13931b8\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Mon, 23 May 2022 14:01:39 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 9f2e5a14-5996-4cfe-9c91-b6973c9cf101\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.0a5d1807.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.6d2d65d3.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-24T03:39:29.910695746Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: http://ecobalyse.beta.gouv.fr/' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "technologies/waf-detect.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/waf-detect.yaml",
+    "template-id": "waf-detect",
+    "info": {
+      "name": "WAF Detection",
+      "author": [
+        "dwisiswant0",
+        "lu4nx"
+      ],
+      "tags": [
+        "waf",
+        "tech",
+        "misc"
+      ],
+      "description": "A web application firewall was detected.",
+      "reference": [
+        "https://github.com/ekultek/whatwaf"
+      ],
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
+    },
+    "matcher-name": "nginxgeneric",
+    "type": "http",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched-at": "https://wikicarbone.beta.gouv.fr/",
+    "request": "POST / HTTP/1.1\r\nHost: wikicarbone.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
+    "response": "HTTP/1.1 301 Moved Permanently\r\nConnection: close\r\nContent-Length: 162\r\nContent-Type: text/html\r\nDate: Tue, 24 May 2022 03:39:40 GMT\r\nLocation: http://ecobalyse.beta.gouv.fr/\r\nX-Request-Id: 8212c872-9270-49d5-b323-912c04e6eccc\r\n\r\n<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body>\r\n<center><h1>301 Moved Permanently</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-24T03:39:40.303278307Z",
+    "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: wikicarbone.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://wikicarbone.beta.gouv.fr/'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "ssl/tls-version.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/tls-version.yaml",
+    "template-id": "tls-version",
+    "info": {
+      "name": "TLS Version",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "ssl"
+      ],
+      "reference": null,
+      "severity": "info"
+    },
+    "type": "ssl",
+    "host": "https://wikicarbone.beta.gouv.fr",
+    "matched-at": "https://wikicarbone.beta.gouv.fr",
+    "extracted-results": [
+      "TLS13"
+    ],
+    "ip": "109.232.236.90",
+    "timestamp": "2022-05-24T03:41:14.530823238Z",
     "matcher-status": true,
     "matched-line": null
   }
