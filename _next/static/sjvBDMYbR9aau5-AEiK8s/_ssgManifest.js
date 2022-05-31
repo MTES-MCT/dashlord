@@ -1,1 +1,0 @@
-self.__SSG_MANIFEST=new Set(["\u002Furl\u002F[...url]","\u002Fcategory\u002F[category]","\u002Ftag\u002F[tag]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
