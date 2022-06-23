@@ -201,15 +201,36 @@ jobs:
           state: open
           output: scans/codescanalerts.json
 
+      - name: Betagouv API scan
+        if: ${{ matrix.sites.tools.betagouv }}
+        continue-on-error: true
+        timeout-minutes: 10
+        id: betagouv
+        uses: betagouv/dashlord-startup-action@main
+        with:
+          id: "${{ matrix.sites.betaId }}"
+          output: "scans/betagouv.json"
+
       - name: Stats page
         continue-on-error: true
         timeout-minutes: 10
-        uses: "MTES-MCT/stats-action@main"
+        uses: "betagouv/check-url-action@main"
         if: ${{ matrix.sites.tools.stats }}
         with:
-          url: ${{ matrix.sites.url }}
-          uri: 'stats'
+          url: ${{ steps.betagouv.outputs.stats_url }}
           output: scans/stats.json
+          minExpectedRegex: ^stat
+          exactExpectedRegex: ^stats$
+          
+      - name: Budget page
+        continue-on-error: true
+        timeout-minutes: 10
+        uses: "betagouv/check-url-action@main"
+        if: ${{ matrix.sites.tools.budget_page }}
+        with:
+          url: ${{ steps.betagouv.outputs.budget_url }}
+          output: scans/budget_page.json
+          exactExpectedRegex: ^budget$
           
       - name: Screenshot Website
         uses: swinton/screenshot-website@v1.x
