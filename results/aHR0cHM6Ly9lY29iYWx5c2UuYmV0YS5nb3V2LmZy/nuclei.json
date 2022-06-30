@@ -1,140 +1,35 @@
 [
   {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
+    "template": "misconfiguration/xss-deprecated-header.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/xss-deprecated-header.yaml",
+    "template-id": "xss-deprecated-header-detect",
     "info": {
-      "name": "HTTP Missing Security Headers",
+      "name": "Detect Deprecated XSS Protection Header",
       "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
+        "joshlarsen"
       ],
       "tags": [
+        "xss",
         "misconfig",
         "generic"
       ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
+      "description": "Setting the XSS-Protection header is deprecated by most browsers. Setting the header to anything other than `0` can actually introduce an XSS vulnerability.",
+      "reference": [
+        "https://developer.mozilla.org/en-us/docs/web/http/headers/x-xss-protection",
+        "https://owasp.org/www-project-secure-headers/#x-xss-protection"
+      ],
       "severity": "info"
     },
-    "matcher-name": "access-control-allow-origin",
     "type": "http",
     "host": "https://ecobalyse.beta.gouv.fr",
     "matched-at": "https://ecobalyse.beta.gouv.fr",
+    "extracted-results": [
+      "1; mode=block"
+    ],
     "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Wed, 29 Jun 2022 19:26:28 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 8ebe9a33-1d3c-4960-88a4-4fb2ec81c646\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Thu, 30 Jun 2022 04:02:56 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: ccca08cf-57f7-43f6-9fa7-4c2a28cf8d75\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
     "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:26:28.13509364Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-max-age",
-    "type": "http",
-    "host": "https://ecobalyse.beta.gouv.fr",
-    "matched-at": "https://ecobalyse.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Wed, 29 Jun 2022 19:26:28 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 8ebe9a33-1d3c-4960-88a4-4fb2ec81c646\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:26:28.137599307Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-methods",
-    "type": "http",
-    "host": "https://ecobalyse.beta.gouv.fr",
-    "matched-at": "https://ecobalyse.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Wed, 29 Jun 2022 19:26:28 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 8ebe9a33-1d3c-4960-88a4-4fb2ec81c646\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:26:28.139161187Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "permission-policy",
-    "type": "http",
-    "host": "https://ecobalyse.beta.gouv.fr",
-    "matched-at": "https://ecobalyse.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Wed, 29 Jun 2022 19:26:28 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 8ebe9a33-1d3c-4960-88a4-4fb2ec81c646\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
-    "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:26:28.139424183Z",
+    "timestamp": "2022-06-30T04:02:56.144725123Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -167,9 +62,9 @@
     "host": "https://ecobalyse.beta.gouv.fr",
     "matched-at": "https://ecobalyse.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Wed, 29 Jun 2022 19:26:28 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 8ebe9a33-1d3c-4960-88a4-4fb2ec81c646\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Thu, 30 Jun 2022 04:02:57 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: bbbf8642-de29-4102-b252-a5712c18e989\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
     "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:26:28.139473783Z",
+    "timestamp": "2022-06-30T04:02:57.348767778Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -197,14 +92,14 @@
       "reference": null,
       "severity": "info"
     },
-    "matcher-name": "access-control-allow-credentials",
+    "matcher-name": "access-control-allow-origin",
     "type": "http",
     "host": "https://ecobalyse.beta.gouv.fr",
     "matched-at": "https://ecobalyse.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Wed, 29 Jun 2022 19:26:28 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 8ebe9a33-1d3c-4960-88a4-4fb2ec81c646\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Thu, 30 Jun 2022 04:02:57 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: bbbf8642-de29-4102-b252-a5712c18e989\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
     "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:26:28.139719279Z",
+    "timestamp": "2022-06-30T04:02:57.348858579Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -237,9 +132,9 @@
     "host": "https://ecobalyse.beta.gouv.fr",
     "matched-at": "https://ecobalyse.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Wed, 29 Jun 2022 19:26:28 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 8ebe9a33-1d3c-4960-88a4-4fb2ec81c646\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Thu, 30 Jun 2022 04:02:57 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: bbbf8642-de29-4102-b252-a5712c18e989\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
     "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:26:28.139976976Z",
+    "timestamp": "2022-06-30T04:02:57.34888588Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -267,14 +162,84 @@
       "reference": null,
       "severity": "info"
     },
-    "matcher-name": "access-control-allow-headers",
+    "matcher-name": "access-control-max-age",
     "type": "http",
     "host": "https://ecobalyse.beta.gouv.fr",
     "matched-at": "https://ecobalyse.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Wed, 29 Jun 2022 19:26:28 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 8ebe9a33-1d3c-4960-88a4-4fb2ec81c646\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Thu, 30 Jun 2022 04:02:57 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: bbbf8642-de29-4102-b252-a5712c18e989\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
     "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:26:28.140220373Z",
+    "timestamp": "2022-06-30T04:02:57.34891058Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-methods",
+    "type": "http",
+    "host": "https://ecobalyse.beta.gouv.fr",
+    "matched-at": "https://ecobalyse.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Thu, 30 Jun 2022 04:02:57 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: bbbf8642-de29-4102-b252-a5712c18e989\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "ip": "5.104.101.30",
+    "timestamp": "2022-06-30T04:02:57.34893518Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "permission-policy",
+    "type": "http",
+    "host": "https://ecobalyse.beta.gouv.fr",
+    "matched-at": "https://ecobalyse.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Thu, 30 Jun 2022 04:02:57 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: bbbf8642-de29-4102-b252-a5712c18e989\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "ip": "5.104.101.30",
+    "timestamp": "2022-06-30T04:02:57.34895778Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -307,84 +272,80 @@
     "host": "https://ecobalyse.beta.gouv.fr",
     "matched-at": "https://ecobalyse.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Wed, 29 Jun 2022 19:26:28 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 8ebe9a33-1d3c-4960-88a4-4fb2ec81c646\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Thu, 30 Jun 2022 04:02:57 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: bbbf8642-de29-4102-b252-a5712c18e989\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
     "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:26:28.141014662Z",
+    "timestamp": "2022-06-30T04:02:57.348981681Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "misconfiguration/xss-deprecated-header.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/xss-deprecated-header.yaml",
-    "template-id": "xss-deprecated-header-detect",
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
     "info": {
-      "name": "Detect Deprecated XSS Protection Header",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "joshlarsen"
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
       ],
       "tags": [
-        "xss",
         "misconfig",
         "generic"
       ],
-      "description": "Setting the XSS-Protection header is deprecated by most browsers. Setting the header to anything other than `0` can actually introduce an XSS vulnerability.",
-      "reference": [
-        "https://developer.mozilla.org/en-us/docs/web/http/headers/x-xss-protection",
-        "https://owasp.org/www-project-secure-headers/#x-xss-protection"
-      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
       "severity": "info"
     },
+    "matcher-name": "access-control-allow-credentials",
     "type": "http",
     "host": "https://ecobalyse.beta.gouv.fr",
     "matched-at": "https://ecobalyse.beta.gouv.fr",
-    "extracted-results": [
-      "1; mode=block"
-    ],
     "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Wed, 29 Jun 2022 19:26:28 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 0bb8b87c-2b28-42fe-8a2c-ad4185760e43\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Thu, 30 Jun 2022 04:02:57 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: bbbf8642-de29-4102-b252-a5712c18e989\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
     "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:26:28.147123982Z",
+    "timestamp": "2022-06-30T04:02:57.349005981Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "technologies/waf-detect.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/waf-detect.yaml",
-    "template-id": "waf-detect",
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
     "info": {
-      "name": "WAF Detection",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "dwisiswant0",
-        "lu4nx"
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
       ],
       "tags": [
-        "waf",
-        "tech",
-        "misc"
+        "misconfig",
+        "generic"
       ],
-      "description": "A web application firewall was detected.",
-      "reference": [
-        "https://github.com/ekultek/whatwaf"
-      ],
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ]
-      }
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
     },
-    "matcher-name": "securesphere",
+    "matcher-name": "access-control-allow-headers",
     "type": "http",
     "host": "https://ecobalyse.beta.gouv.fr",
-    "matched-at": "https://ecobalyse.beta.gouv.fr/",
-    "request": "POST / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 140\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Wed, 29 Jun 2022 19:26:40 GMT\r\nExpect-Ct: max-age=0\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: 2b7db135-02b7-4305-b4db-f2639fe4161c\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n",
+    "matched-at": "https://ecobalyse.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 707\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/html; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Thu, 30 Jun 2022 04:02:57 GMT\r\nEtag: W/\"2c3-181b0084d18\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:43 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: bbbf8642-de29-4102-b252-a5712c18e989\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>Ecobalyse</title><link rel=\"canonical\" href=\"https://ecobalyse.beta.gouv.fr/\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta name=\"description\" content=\"Accélerer la mise en place de l'affichage environnemental\"><meta name=\"theme-color\" content=\"#333333\"><link rel=\"icon\" type=\"image/svg\" href=\"logo.42bf0895.svg\"><link href=\"index.f5c2dde3.css\" rel=\"stylesheet\"><link href=\"index.36c00c4d.css\" rel=\"stylesheet\"><script type=\"module\" src=\"index.800b13d7.js\"></script></head><body> <noscript> <img src=\"https://stats.data.gouv.fr/matomo.php?idsite=196&amp;rec=1\" style=\"border:0\" alt=\"\"> </noscript> </body></html>",
     "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:26:40.522169369Z",
-    "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: ecobalyse.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr/'",
+    "timestamp": "2022-06-30T04:02:57.349025981Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
   },
@@ -406,10 +367,62 @@
     "host": "https://ecobalyse.beta.gouv.fr",
     "matched-at": "https://ecobalyse.beta.gouv.fr/robots.txt",
     "request": "GET /robots.txt HTTP/1.1\r\nHost: ecobalyse.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 35\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/plain; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Wed, 29 Jun 2022 19:26:41 GMT\r\nEtag: W/\"23-181b007cc30\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:10 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: d562ef7c-97e1-4e8a-bcc5-6ad92c619956\r\nX-Xss-Protection: 1; mode=block\r\n\r\nUser-agent: *\nDisallow: /branches/\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 35\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'self' https://api.github.com https://raw.githubusercontent.com https://sentry.incubateur.net *.gouv.fr;frame-src 'self' https://stats.data.gouv.fr;img-src 'self' data: https://avatars.githubusercontent.com/ https://raw.githubusercontent.com;script-src 'self' 'unsafe-inline' https://stats.data.gouv.fr;base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';object-src 'none';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests\r\nContent-Type: text/plain; charset=UTF-8\r\nCross-Origin-Opener-Policy: same-origin\r\nCross-Origin-Resource-Policy: same-origin\r\nDate: Thu, 30 Jun 2022 04:03:09 GMT\r\nEtag: W/\"23-181b007cc30\"\r\nExpect-Ct: max-age=0\r\nLast-Modified: Wed, 29 Jun 2022 15:15:10 GMT\r\nOrigin-Agent-Cluster: ?1\r\nReferrer-Policy: no-referrer\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Dns-Prefetch-Control: off\r\nX-Download-Options: noopen\r\nX-Frame-Options: SAMEORIGIN\r\nX-Permitted-Cross-Domain-Policies: none\r\nX-Request-Id: a22384e5-ca71-4650-9b54-9cf466b68a52\r\nX-Xss-Protection: 1; mode=block\r\n\r\nUser-agent: *\nDisallow: /branches/\n",
     "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:26:41.588906973Z",
+    "timestamp": "2022-06-30T04:03:09.7644155Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://ecobalyse.beta.gouv.fr/robots.txt'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "ssl/tls-version.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/tls-version.yaml",
+    "template-id": "tls-version",
+    "info": {
+      "name": "TLS Version",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "ssl"
+      ],
+      "reference": null,
+      "severity": "info"
+    },
+    "type": "ssl",
+    "host": "https://ecobalyse.beta.gouv.fr",
+    "matched-at": "https://ecobalyse.beta.gouv.fr",
+    "extracted-results": [
+      "TLS13"
+    ],
+    "ip": "5.104.101.30",
+    "timestamp": "2022-06-30T04:03:14.981386618Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "ssl/ssl-dns-names.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/ssl-dns-names.yaml",
+    "template-id": "ssl-dns-names",
+    "info": {
+      "name": "SSL DNS Names",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "ssl"
+      ],
+      "reference": null,
+      "severity": "info"
+    },
+    "type": "ssl",
+    "host": "https://ecobalyse.beta.gouv.fr",
+    "matched-at": "https://ecobalyse.beta.gouv.fr",
+    "extracted-results": [
+      "ecobalyse.beta.gouv.fr"
+    ],
+    "ip": "5.104.101.30",
+    "timestamp": "2022-06-30T04:04:02.196813346Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -441,35 +454,9 @@
     "type": "dns",
     "host": "https://ecobalyse.beta.gouv.fr",
     "matched-at": "https://ecobalyse.beta.gouv.fr",
-    "request": ";; opcode: QUERY, status: NOERROR, id: 60386\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;ecobalyse.beta.gouv.fr.\tIN\t NS\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 60386\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;ecobalyse.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\necobalyse.beta.gouv.fr.\t10751\tIN\tCNAME\twikicarbone.osc-fr1.scalingo.io.\nwikicarbone.osc-fr1.scalingo.io.\t251\tIN\tCNAME\tsc-lb-pool-01.osc-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t1800\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
-    "timestamp": "2022-06-29T19:27:16.516001548Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "ssl/ssl-dns-names.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/ssl-dns-names.yaml",
-    "template-id": "ssl-dns-names",
-    "info": {
-      "name": "SSL DNS Names",
-      "author": [
-        "pdteam"
-      ],
-      "tags": [
-        "ssl"
-      ],
-      "reference": null,
-      "severity": "info"
-    },
-    "type": "ssl",
-    "host": "https://ecobalyse.beta.gouv.fr",
-    "matched-at": "https://ecobalyse.beta.gouv.fr",
-    "extracted-results": [
-      "ecobalyse.beta.gouv.fr"
-    ],
-    "ip": "5.104.101.30",
-    "timestamp": "2022-06-29T19:27:18.311406139Z",
+    "request": ";; opcode: QUERY, status: NOERROR, id: 54461\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;ecobalyse.beta.gouv.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 54461\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;ecobalyse.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\necobalyse.beta.gouv.fr.\t10800\tIN\tCNAME\twikicarbone.osc-fr1.scalingo.io.\nwikicarbone.osc-fr1.scalingo.io.\t300\tIN\tCNAME\tsc-lb-pool-01.osc-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t3600\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
+    "timestamp": "2022-06-30T04:04:33.198968604Z",
     "matcher-status": true,
     "matched-line": null
   }
