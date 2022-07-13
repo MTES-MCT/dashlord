@@ -1,5 +1,43 @@
 [
   {
+    "template": "dns/cname-fingerprint.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/cname-fingerprint.yaml",
+    "template-id": "cname-fingerprint",
+    "info": {
+      "name": "CNAME Fingerprint",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "dns",
+        "cname"
+      ],
+      "description": "A CNAME DNS record was discovered.",
+      "reference": [
+        "https://www.theregister.com/2021/02/24/dns_cname_tracking/",
+        "https://www.ionos.com/digitalguide/hosting/technical-matters/cname-record/"
+      ],
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
+    },
+    "type": "dns",
+    "host": "https://bo.dossierfacile.fr",
+    "matched-at": "https://bo.dossierfacile.fr",
+    "extracted-results": [
+      "dossierfacile-bo-prod.osc-secnum-fr1.scalingo.io."
+    ],
+    "request": ";; opcode: QUERY, status: NOERROR, id: 39233\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;bo.dossierfacile.fr.\tIN\t CNAME\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 39233\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;bo.dossierfacile.fr.\tIN\t CNAME\n\n;; ANSWER SECTION:\nbo.dossierfacile.fr.\t300\tIN\tCNAME\tdossierfacile-bo-prod.osc-secnum-fr1.scalingo.io.\n",
+    "timestamp": "2022-07-13T02:06:51.837344032Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
     "template": "misconfiguration/xss-deprecated-header.yaml",
     "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/xss-deprecated-header.yaml",
     "template-id": "xss-deprecated-header-detect",
@@ -27,44 +65,10 @@
       "1; mode=block"
     ],
     "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 302 \r\nConnection: close\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Language: en\r\nDate: Tue, 12 Jul 2022 02:19:27 GMT\r\nExpires: 0\r\nLocation: https://bo.dossierfacile.fr/login\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=921EEB613CBF1C33B8E1997C779E04DF; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 05c94503-7989-4b8a-aafd-d68106283ad8\r\nX-Xss-Protection: 1; mode=block\r\nContent-Length: 0\r\n\r\n",
+    "response": "HTTP/1.1 302 \r\nConnection: close\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Language: en\r\nDate: Wed, 13 Jul 2022 02:06:51 GMT\r\nExpires: 0\r\nLocation: https://bo.dossierfacile.fr/login\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=199AE4E627251679E6A069C7D40F63C6; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 97ba371f-3549-428b-8f1d-9e5732186a91\r\nX-Xss-Protection: 1; mode=block\r\nContent-Length: 0\r\n\r\n",
     "ip": "148.253.96.193",
-    "timestamp": "2022-07-12T02:19:27.116579803Z",
+    "timestamp": "2022-07-13T02:06:51.935904886Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "dns/dns-waf-detect.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/dns-waf-detect.yaml",
-    "template-id": "dns-waf-detect",
-    "info": {
-      "name": "DNS WAF Detection",
-      "author": [
-        "lu4nx"
-      ],
-      "tags": [
-        "tech",
-        "waf",
-        "dns"
-      ],
-      "description": "A DNS WAF was detected.",
-      "reference": null,
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ]
-      }
-    },
-    "matcher-name": "cloudflare",
-    "type": "dns",
-    "host": "https://bo.dossierfacile.fr",
-    "matched-at": "https://bo.dossierfacile.fr",
-    "request": ";; opcode: QUERY, status: NOERROR, id: 51063\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;bo.dossierfacile.fr.\tIN\t NS\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 51063\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;bo.dossierfacile.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nbo.dossierfacile.fr.\t299\tIN\tCNAME\tdossierfacile-bo-prod.osc-secnum-fr1.scalingo.io.\ndossierfacile-bo-prod.osc-secnum-fr1.scalingo.io.\t299\tIN\tCNAME\tsc-lb-pool-01.osc-secnum-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t1800\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
-    "timestamp": "2022-07-12T02:19:27.935074796Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -88,36 +92,10 @@
     "host": "https://bo.dossierfacile.fr",
     "matched-at": "https://bo.dossierfacile.fr/login",
     "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:28 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=519B724AF2761FF6B8C67BDC47FCF2AC; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 97ab6602-2fec-4f24-ab9f-ff96bec86427\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:28.8635446Z",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:06:54 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=7170489E59F771737AF8C934AECF139A; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 8feb5bee-e311-4381-9c36-26a9ac096c39\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:06:54.598645351Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "ssl/tls-version.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/tls-version.yaml",
-    "template-id": "tls-version",
-    "info": {
-      "name": "TLS Version",
-      "author": [
-        "pdteam"
-      ],
-      "tags": [
-        "ssl"
-      ],
-      "reference": null,
-      "severity": "info"
-    },
-    "type": "ssl",
-    "host": "https://bo.dossierfacile.fr",
-    "matched-at": "https://bo.dossierfacile.fr",
-    "extracted-results": [
-      "TLS13"
-    ],
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:34.993457393Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -142,38 +120,43 @@
     "extracted-results": [
       "bo.dossierfacile.fr"
     ],
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:35.508473599Z",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:06:55.90450387Z",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "miscellaneous/options-method.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/miscellaneous/options-method.yaml",
-    "template-id": "options-method",
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
     "info": {
-      "name": "Allowed Options Method",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "pdteam"
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
       ],
       "tags": [
-        "misc",
+        "misconfig",
         "generic"
       ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
       "reference": null,
       "severity": "info"
     },
+    "matcher-name": "access-control-max-age",
     "type": "http",
     "host": "https://bo.dossierfacile.fr",
-    "matched-at": "https://bo.dossierfacile.fr",
-    "extracted-results": [
-      "GET,HEAD,OPTIONS"
-    ],
-    "request": "OPTIONS / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nAllow: GET,HEAD,OPTIONS\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nDate: Tue, 12 Jul 2022 02:19:37 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2CF756E0B5FC6DD996A84F8632BE9AAD; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: a20fe65d-c29f-4cc7-b8d5-478777eb77ac\r\nX-Xss-Protection: 1; mode=block\r\nContent-Length: 0\r\n\r\n",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:37.397297354Z",
-    "curl-command": "curl -X 'OPTIONS' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr'",
+    "matched-at": "https://bo.dossierfacile.fr/login",
+    "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.455098161Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
     "matcher-status": true,
     "matched-line": null
   },
@@ -205,9 +188,9 @@
     "host": "https://bo.dossierfacile.fr",
     "matched-at": "https://bo.dossierfacile.fr/login",
     "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.272275057Z",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.455215162Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
     "matcher-status": true,
     "matched-line": null
@@ -240,79 +223,9 @@
     "host": "https://bo.dossierfacile.fr",
     "matched-at": "https://bo.dossierfacile.fr/login",
     "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.272380458Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-credentials",
-    "type": "http",
-    "host": "https://bo.dossierfacile.fr",
-    "matched-at": "https://bo.dossierfacile.fr/login",
-    "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.272417658Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-max-age",
-    "type": "http",
-    "host": "https://bo.dossierfacile.fr",
-    "matched-at": "https://bo.dossierfacile.fr/login",
-    "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.272507759Z",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.456836865Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
     "matcher-status": true,
     "matched-line": null
@@ -345,9 +258,9 @@
     "host": "https://bo.dossierfacile.fr",
     "matched-at": "https://bo.dossierfacile.fr/login",
     "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.272537059Z",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.456873265Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
     "matcher-status": true,
     "matched-line": null
@@ -380,9 +293,9 @@
     "host": "https://bo.dossierfacile.fr",
     "matched-at": "https://bo.dossierfacile.fr/login",
     "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.272563059Z",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.456908465Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
     "matcher-status": true,
     "matched-line": null
@@ -415,9 +328,9 @@
     "host": "https://bo.dossierfacile.fr",
     "matched-at": "https://bo.dossierfacile.fr/login",
     "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.272585659Z",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.456934565Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
     "matcher-status": true,
     "matched-line": null
@@ -445,154 +358,14 @@
       "reference": null,
       "severity": "info"
     },
-    "matcher-name": "access-control-allow-origin",
+    "matcher-name": "access-control-allow-credentials",
     "type": "http",
     "host": "https://bo.dossierfacile.fr",
     "matched-at": "https://bo.dossierfacile.fr/login",
     "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.272608559Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-expose-headers",
-    "type": "http",
-    "host": "https://bo.dossierfacile.fr",
-    "matched-at": "https://bo.dossierfacile.fr/login",
-    "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.272673759Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "x-permitted-cross-domain-policies",
-    "type": "http",
-    "host": "https://bo.dossierfacile.fr",
-    "matched-at": "https://bo.dossierfacile.fr/login",
-    "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.27269196Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "referrer-policy",
-    "type": "http",
-    "host": "https://bo.dossierfacile.fr",
-    "matched-at": "https://bo.dossierfacile.fr/login",
-    "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.27271786Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "clear-site-data",
-    "type": "http",
-    "host": "https://bo.dossierfacile.fr",
-    "matched-at": "https://bo.dossierfacile.fr/login",
-    "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.27274076Z",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.456958565Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
     "matcher-status": true,
     "matched-line": null
@@ -625,10 +398,219 @@
     "host": "https://bo.dossierfacile.fr",
     "matched-at": "https://bo.dossierfacile.fr/login",
     "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 12 Jul 2022 02:19:41 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=B1D5AB00BE9758EF9734D9C60E206DF9; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: e9e8577a-0656-4185-92d7-c26666a068e5\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-07-12T02:19:41.27277006Z",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.456978465Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "x-permitted-cross-domain-policies",
+    "type": "http",
+    "host": "https://bo.dossierfacile.fr",
+    "matched-at": "https://bo.dossierfacile.fr/login",
+    "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.457021265Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "referrer-policy",
+    "type": "http",
+    "host": "https://bo.dossierfacile.fr",
+    "matched-at": "https://bo.dossierfacile.fr/login",
+    "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.457060766Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "clear-site-data",
+    "type": "http",
+    "host": "https://bo.dossierfacile.fr",
+    "matched-at": "https://bo.dossierfacile.fr/login",
+    "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.457085366Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-origin",
+    "type": "http",
+    "host": "https://bo.dossierfacile.fr",
+    "matched-at": "https://bo.dossierfacile.fr/login",
+    "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.457125166Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-expose-headers",
+    "type": "http",
+    "host": "https://bo.dossierfacile.fr",
+    "matched-at": "https://bo.dossierfacile.fr/login",
+    "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nContent-Length: 850\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Wed, 13 Jul 2022 02:07:17 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=2C1FFA00433BFD02EF2947EBE14C5B0C; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000 ; includeSubDomains\r\nX-Content-Security-Policy: script-src 'self'\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 9a44b1d2-f5cd-4084-af06-4b16975b7eb8\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <title>Please sign in</title>\n    <link href=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M\" crossorigin=\"anonymous\">\n    <link href=\"https://getbootstrap.com/docs/4.0/examples/signin/signin.css\" rel=\"stylesheet\" crossorigin=\"anonymous\"/>\n  </head>\n  <body>\n     <div class=\"container\">\n<h2 class=\"form-signin-heading\">Login with OAuth 2.0</h2><table class=\"table table-striped\">\n <tr><td><a href=\"/oauth2/authorization/google\">Google</a></td></tr>\n</table>\n</div>\n</body></html>",
+    "ip": "148.253.96.193",
+    "timestamp": "2022-07-13T02:07:17.457150966Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Referer: https://bo.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr/login'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "dns/dns-waf-detect.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/dns-waf-detect.yaml",
+    "template-id": "dns-waf-detect",
+    "info": {
+      "name": "DNS WAF Detection",
+      "author": [
+        "lu4nx"
+      ],
+      "tags": [
+        "tech",
+        "waf",
+        "dns"
+      ],
+      "description": "A DNS WAF was detected.",
+      "reference": null,
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
+    },
+    "matcher-name": "cloudflare",
+    "type": "dns",
+    "host": "https://bo.dossierfacile.fr",
+    "matched-at": "https://bo.dossierfacile.fr",
+    "request": ";; opcode: QUERY, status: NOERROR, id: 60374\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;bo.dossierfacile.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 60374\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;bo.dossierfacile.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nbo.dossierfacile.fr.\t300\tIN\tCNAME\tdossierfacile-bo-prod.osc-secnum-fr1.scalingo.io.\ndossierfacile-bo-prod.osc-secnum-fr1.scalingo.io.\t300\tIN\tCNAME\tsc-lb-pool-01.osc-secnum-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t3600\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
+    "timestamp": "2022-07-13T02:07:30.882894927Z",
     "matcher-status": true,
     "matched-line": null
   }
