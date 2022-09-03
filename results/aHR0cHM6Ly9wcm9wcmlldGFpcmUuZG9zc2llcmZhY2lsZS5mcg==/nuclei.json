@@ -1,28 +1,39 @@
 [
   {
-    "template": "technologies/tech-detect.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/tech-detect.yaml",
-    "template-id": "tech-detect",
+    "template": "dns/cname-fingerprint.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/cname-fingerprint.yaml",
+    "template-id": "cname-fingerprint",
     "info": {
-      "name": "Wappalyzer Technology Detection",
+      "name": "CNAME Fingerprint",
       "author": [
-        "hakluke"
+        "pdteam"
       ],
       "tags": [
-        "tech"
+        "dns",
+        "cname"
       ],
-      "reference": null,
-      "severity": "info"
+      "description": "A CNAME DNS record was discovered.",
+      "reference": [
+        "https://www.theregister.com/2021/02/24/dns_cname_tracking/",
+        "https://www.ionos.com/digitalguide/hosting/technical-matters/cname-record/"
+      ],
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
     },
-    "matcher-name": "express",
-    "type": "http",
+    "type": "dns",
     "host": "https://proprietaire.dossierfacile.fr",
     "matched-at": "https://proprietaire.dossierfacile.fr",
-    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 81486afd-b97a-497e-831a-58f37b236087\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.176810082Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
+    "extracted-results": [
+      "dossierfacile-owner-prod.osc-secnum-fr1.scalingo.io."
+    ],
+    "request": ";; opcode: QUERY, status: NOERROR, id: 38671\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;proprietaire.dossierfacile.fr.\tIN\t CNAME\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 38671\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;proprietaire.dossierfacile.fr.\tIN\t CNAME\n\n;; ANSWER SECTION:\nproprietaire.dossierfacile.fr.\t3600\tIN\tCNAME\tdossierfacile-owner-prod.osc-secnum-fr1.scalingo.io.\n",
+    "timestamp": "2022-09-03T02:23:22.124836836Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -46,324 +57,36 @@
     "host": "https://proprietaire.dossierfacile.fr",
     "matched-at": "https://proprietaire.dossierfacile.fr",
     "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 81486afd-b97a-497e-831a-58f37b236087\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:23 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 72f93655-4708-49c9-91fb-5429b6235dc2\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
     "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.177184481Z",
+    "timestamp": "2022-09-03T02:23:23.06609776Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
+    "template": "technologies/tech-detect.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/technologies/tech-detect.yaml",
+    "template-id": "tech-detect",
     "info": {
-      "name": "HTTP Missing Security Headers",
+      "name": "Wappalyzer Technology Detection",
       "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
+        "hakluke"
       ],
       "tags": [
-        "misconfig",
-        "generic"
+        "tech"
       ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
       "reference": null,
       "severity": "info"
     },
-    "matcher-name": "access-control-allow-headers",
+    "matcher-name": "express",
     "type": "http",
     "host": "https://proprietaire.dossierfacile.fr",
     "matched-at": "https://proprietaire.dossierfacile.fr",
     "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:23 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 72f93655-4708-49c9-91fb-5429b6235dc2\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
     "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.284662864Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "permission-policy",
-    "type": "http",
-    "host": "https://proprietaire.dossierfacile.fr",
-    "matched-at": "https://proprietaire.dossierfacile.fr",
-    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.284723964Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-resource-policy",
-    "type": "http",
-    "host": "https://proprietaire.dossierfacile.fr",
-    "matched-at": "https://proprietaire.dossierfacile.fr",
-    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.287576261Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-credentials",
-    "type": "http",
-    "host": "https://proprietaire.dossierfacile.fr",
-    "matched-at": "https://proprietaire.dossierfacile.fr",
-    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.287685661Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-embedder-policy",
-    "type": "http",
-    "host": "https://proprietaire.dossierfacile.fr",
-    "matched-at": "https://proprietaire.dossierfacile.fr",
-    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.287711461Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-opener-policy",
-    "type": "http",
-    "host": "https://proprietaire.dossierfacile.fr",
-    "matched-at": "https://proprietaire.dossierfacile.fr",
-    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.287735061Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-origin",
-    "type": "http",
-    "host": "https://proprietaire.dossierfacile.fr",
-    "matched-at": "https://proprietaire.dossierfacile.fr",
-    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.287756061Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-expose-headers",
-    "type": "http",
-    "host": "https://proprietaire.dossierfacile.fr",
-    "matched-at": "https://proprietaire.dossierfacile.fr",
-    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.287777461Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-max-age",
-    "type": "http",
-    "host": "https://proprietaire.dossierfacile.fr",
-    "matched-at": "https://proprietaire.dossierfacile.fr",
-    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
-    "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.287797561Z",
+    "timestamp": "2022-09-03T02:23:23.06620176Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -396,9 +119,9 @@
     "host": "https://proprietaire.dossierfacile.fr",
     "matched-at": "https://proprietaire.dossierfacile.fr",
     "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
     "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.287818661Z",
+    "timestamp": "2022-09-03T02:23:28.344263243Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -431,9 +154,9 @@
     "host": "https://proprietaire.dossierfacile.fr",
     "matched-at": "https://proprietaire.dossierfacile.fr",
     "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
     "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.28784136Z",
+    "timestamp": "2022-09-03T02:23:28.344374542Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -461,14 +184,84 @@
       "reference": null,
       "severity": "info"
     },
-    "matcher-name": "clear-site-data",
+    "matcher-name": "access-control-allow-origin",
     "type": "http",
     "host": "https://proprietaire.dossierfacile.fr",
     "matched-at": "https://proprietaire.dossierfacile.fr",
     "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
     "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.28787386Z",
+    "timestamp": "2022-09-03T02:23:28.344409741Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-credentials",
+    "type": "http",
+    "host": "https://proprietaire.dossierfacile.fr",
+    "matched-at": "https://proprietaire.dossierfacile.fr",
+    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-03T02:23:28.344442641Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-max-age",
+    "type": "http",
+    "host": "https://proprietaire.dossierfacile.fr",
+    "matched-at": "https://proprietaire.dossierfacile.fr",
+    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-03T02:23:28.344470741Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -501,35 +294,255 @@
     "host": "https://proprietaire.dossierfacile.fr",
     "matched-at": "https://proprietaire.dossierfacile.fr",
     "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 8efb2297-4701-4aa6-ae32-28e5b6448ef1\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
     "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.28789536Z",
+    "timestamp": "2022-09-03T02:23:28.344619739Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "miscellaneous/robots-txt-endpoint.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/miscellaneous/robots-txt-endpoint.yaml",
-    "template-id": "robots-txt-endpoint",
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
     "info": {
-      "name": "robots.txt endpoint prober",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "caspergn",
-        "pdteam"
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
       ],
-      "tags": null,
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
       "reference": null,
       "severity": "info"
     },
+    "matcher-name": "access-control-allow-headers",
     "type": "http",
     "host": "https://proprietaire.dossierfacile.fr",
-    "matched-at": "https://proprietaire.dossierfacile.fr/robots.txt%3C/pre%3E",
-    "request": "GET /robots.txt%3C/pre%3E HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Fri, 02 Sep 2022 02:16:55 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 68004eab-2393-4a14-96c5-f7b6e96d481b\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "matched-at": "https://proprietaire.dossierfacile.fr",
+    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
     "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:16:55.29716285Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr/robots.txt%3C/pre%3E'",
+    "timestamp": "2022-09-03T02:23:28.344647739Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "permission-policy",
+    "type": "http",
+    "host": "https://proprietaire.dossierfacile.fr",
+    "matched-at": "https://proprietaire.dossierfacile.fr",
+    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-03T02:23:28.344677038Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "clear-site-data",
+    "type": "http",
+    "host": "https://proprietaire.dossierfacile.fr",
+    "matched-at": "https://proprietaire.dossierfacile.fr",
+    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-03T02:23:28.344704238Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "cross-origin-embedder-policy",
+    "type": "http",
+    "host": "https://proprietaire.dossierfacile.fr",
+    "matched-at": "https://proprietaire.dossierfacile.fr",
+    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-03T02:23:28.344734337Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "cross-origin-opener-policy",
+    "type": "http",
+    "host": "https://proprietaire.dossierfacile.fr",
+    "matched-at": "https://proprietaire.dossierfacile.fr",
+    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-03T02:23:28.344760737Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "cross-origin-resource-policy",
+    "type": "http",
+    "host": "https://proprietaire.dossierfacile.fr",
+    "matched-at": "https://proprietaire.dossierfacile.fr",
+    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-03T02:23:28.344789537Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-expose-headers",
+    "type": "http",
+    "host": "https://proprietaire.dossierfacile.fr",
+    "matched-at": "https://proprietaire.dossierfacile.fr",
+    "request": "GET / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:23:28 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: aeb96228-5409-4ef7-9443-3ee6ee74da35\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-03T02:23:28.344816136Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr'",
     "matcher-status": true,
     "matched-line": null
   },
@@ -555,7 +568,7 @@
       "TLS13"
     ],
     "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:17:03.615034549Z",
+    "timestamp": "2022-09-03T02:24:25.245425833Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -587,9 +600,9 @@
     "type": "dns",
     "host": "https://proprietaire.dossierfacile.fr",
     "matched-at": "https://proprietaire.dossierfacile.fr",
-    "request": ";; opcode: QUERY, status: NOERROR, id: 13474\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;proprietaire.dossierfacile.fr.\tIN\t NS\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 13474\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;proprietaire.dossierfacile.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nproprietaire.dossierfacile.fr.\t3600\tIN\tCNAME\tdossierfacile-owner-prod.osc-secnum-fr1.scalingo.io.\ndossierfacile-owner-prod.osc-secnum-fr1.scalingo.io.\t300\tIN\tCNAME\tsc-lb-pool-01.osc-secnum-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t3600\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
-    "timestamp": "2022-09-02T02:17:13.553014947Z",
+    "request": ";; opcode: QUERY, status: NOERROR, id: 62458\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;proprietaire.dossierfacile.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 62458\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;proprietaire.dossierfacile.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nproprietaire.dossierfacile.fr.\t3600\tIN\tCNAME\tdossierfacile-owner-prod.osc-secnum-fr1.scalingo.io.\ndossierfacile-owner-prod.osc-secnum-fr1.scalingo.io.\t300\tIN\tCNAME\tsc-lb-pool-01.osc-secnum-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t3600\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
+    "timestamp": "2022-09-03T02:24:31.834509627Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -625,48 +638,35 @@
     "host": "https://proprietaire.dossierfacile.fr",
     "matched-at": "https://proprietaire.dossierfacile.fr/",
     "request": "POST / HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
-    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 140\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Fri, 02 Sep 2022 02:17:59 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 15362744-1d59-4e73-86a4-62573e76a406\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n",
+    "response": "HTTP/1.1 404 Not Found\r\nConnection: close\r\nContent-Length: 140\r\nContent-Security-Policy: default-src 'none'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sat, 03 Sep 2022 02:27:46 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 1513a80b-f2ee-438d-ac08-59072f071277\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /</pre>\n</body>\n</html>\n",
     "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:17:59.326541478Z",
+    "timestamp": "2022-09-03T02:27:46.784797388Z",
     "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: proprietaire.dossierfacile.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr/'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "dns/cname-fingerprint.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/cname-fingerprint.yaml",
-    "template-id": "cname-fingerprint",
+    "template": "miscellaneous/robots-txt-endpoint.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/miscellaneous/robots-txt-endpoint.yaml",
+    "template-id": "robots-txt-endpoint",
     "info": {
-      "name": "CNAME Fingerprint",
+      "name": "robots.txt endpoint prober",
       "author": [
+        "caspergn",
         "pdteam"
       ],
-      "tags": [
-        "dns",
-        "cname"
-      ],
-      "description": "A CNAME DNS record was discovered.",
-      "reference": [
-        "https://www.theregister.com/2021/02/24/dns_cname_tracking/",
-        "https://www.ionos.com/digitalguide/hosting/technical-matters/cname-record/"
-      ],
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ]
-      }
+      "tags": null,
+      "reference": null,
+      "severity": "info"
     },
-    "type": "dns",
+    "type": "http",
     "host": "https://proprietaire.dossierfacile.fr",
-    "matched-at": "https://proprietaire.dossierfacile.fr",
-    "extracted-results": [
-      "dossierfacile-owner-prod.osc-secnum-fr1.scalingo.io."
-    ],
-    "request": ";; opcode: QUERY, status: NOERROR, id: 61647\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;proprietaire.dossierfacile.fr.\tIN\t CNAME\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 61647\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;proprietaire.dossierfacile.fr.\tIN\t CNAME\n\n;; ANSWER SECTION:\nproprietaire.dossierfacile.fr.\t3600\tIN\tCNAME\tdossierfacile-owner-prod.osc-secnum-fr1.scalingo.io.\n",
-    "timestamp": "2022-09-02T02:18:09.548019262Z",
+    "matched-at": "https://proprietaire.dossierfacile.fr/robots.txt%3C/pre%3E",
+    "request": "GET /robots.txt%3C/pre%3E HTTP/1.1\r\nHost: proprietaire.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 783\r\nAccept-Ranges: bytes\r\nCache-Control: public, max-age=0\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.dossierfacile.fr https://www.google-analytics.com https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com https://stats.data.gouv.fr 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com https://dossierfacile-api-owner-preprod.osc-fr1.scalingo.io https://dossierfacile-api-owner-prod.osc-secnum-fr1.scalingo.io https://stats.data.gouv.fr blob:; frame-src https://www.google.com *.dossierfacile.fr ; child-src *.dossierfacile.fr\r\nContent-Type: text/html; charset=UTF-8\r\nDate: Sat, 03 Sep 2022 02:28:03 GMT\r\nEtag: W/\"30f-182f9893ca8\"\r\nLast-Modified: Thu, 01 Sep 2022 14:51:37 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Powered-By: Express\r\nX-Request-Id: 024b6bf4-b601-4eaf-a8bf-f932bd66e70b\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title></title>\n  \n  <script nomodule type=\"text/javascript\">\n    import(\"/assets/dsfr.nomodule.min.a20e7d5b.js\");\n  </script>\n  <link\n    href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp\"\n    rel=\"stylesheet\">\n    <script type=\"module\" crossorigin src=\"/assets/index.861fc5a4.js\"></script>\n    <link rel=\"modulepreload\" href=\"/assets/vendor.93f35ef1.js\">\n    <link rel=\"stylesheet\" href=\"/assets/index.646efdd7.css\">\n  </head>\n  <body>\n    <div id=\"app\"></div>\n    \n  </body>\n</html>\n",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-03T02:28:03.695139513Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://proprietaire.dossierfacile.fr/robots.txt%3C/pre%3E'",
     "matcher-status": true,
     "matched-line": null
   },
@@ -692,7 +692,7 @@
       "proprietaire.dossierfacile.fr"
     ],
     "ip": "185.21.194.105",
-    "timestamp": "2022-09-02T02:18:32.343728721Z",
+    "timestamp": "2022-09-03T02:28:04.127541619Z",
     "matcher-status": true,
     "matched-line": null
   }
