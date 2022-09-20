@@ -1,5 +1,39 @@
 [
   {
+    "template": "dns/dns-waf-detect.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/dns-waf-detect.yaml",
+    "template-id": "dns-waf-detect",
+    "info": {
+      "name": "DNS WAF Detection",
+      "author": [
+        "lu4nx"
+      ],
+      "tags": [
+        "tech",
+        "waf",
+        "dns"
+      ],
+      "description": "A DNS WAF was detected.",
+      "reference": null,
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
+    },
+    "matcher-name": "cloudflare",
+    "type": "dns",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": ";; opcode: QUERY, status: NOERROR, id: 3781\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.dossierfacile.fr.\tIN\t NS\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 3781\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;api.dossierfacile.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napi.dossierfacile.fr.\t3600\tIN\tCNAME\tdossierfacile-api-tenant-prod.osc-secnum-fr1.scalingo.io.\ndossierfacile-api-tenant-prod.osc-secnum-fr1.scalingo.io.\t300\tIN\tCNAME\tsc-lb-pool-01.osc-secnum-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t1800\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
+    "timestamp": "2022-09-20T02:26:52.921853464Z",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
     "template": "misconfiguration/xss-deprecated-header.yaml",
     "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/xss-deprecated-header.yaml",
     "template-id": "xss-deprecated-header-detect",
@@ -27,9 +61,494 @@
       "1; mode=block"
     ],
     "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:16 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:16 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 15dda8b4-3176-4246-b1b7-e4153ee47d01\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:16.657690792Z",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:53 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:53 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7f101345-019a-4ddf-b8c9-b9486d59a777\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:53.772714614Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "miscellaneous/options-method.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/miscellaneous/options-method.yaml",
+    "template-id": "options-method",
+    "info": {
+      "name": "Allowed Options Method",
+      "author": [
+        "pdteam"
+      ],
+      "tags": [
+        "misc",
+        "generic"
+      ],
+      "reference": null,
+      "severity": "info"
+    },
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "extracted-results": [
+      "GET,HEAD,OPTIONS"
+    ],
+    "request": "OPTIONS /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nAllow: GET,HEAD,OPTIONS\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nDate: Tue, 20 Sep 2022 02:26:58 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:58 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 4700227e-db53-4857-8980-4abfa1e9d17b\r\nX-Xss-Protection: 1; mode=block\r\nContent-Length: 0\r\n\r\n",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:58.753844498Z",
+    "curl-command": "curl -X 'OPTIONS' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "cross-origin-embedder-policy",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313563151Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "cross-origin-opener-policy",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313641452Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "cross-origin-resource-policy",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313664352Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-origin",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313681952Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-credentials",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313701652Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-max-age",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313722553Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "permission-policy",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313741453Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "clear-site-data",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313761853Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-expose-headers",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313803854Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-methods",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313826354Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-headers",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313842454Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "x-permitted-cross-domain-policies",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313861054Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "referrer-policy",
+    "type": "http",
+    "host": "https://api.dossierfacile.fr/actuator/health",
+    "matched-at": "https://api.dossierfacile.fr/actuator/health",
+    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Tue, 20 Sep 2022 02:26:59 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Wed, 21-Sep-22 02:26:59 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 7966f5c0-bbe0-4287-b784-76355cc3e9f2\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:26:59.313884655Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
     "matcher-status": true,
     "matched-line": null
@@ -66,520 +585,9 @@
     "extracted-results": [
       "dossierfacile-api-tenant-prod.osc-secnum-fr1.scalingo.io."
     ],
-    "request": ";; opcode: QUERY, status: NOERROR, id: 1274\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.dossierfacile.fr.\tIN\t CNAME\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 1274\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;api.dossierfacile.fr.\tIN\t CNAME\n\n;; ANSWER SECTION:\napi.dossierfacile.fr.\t3589\tIN\tCNAME\tdossierfacile-api-tenant-prod.osc-secnum-fr1.scalingo.io.\n",
-    "timestamp": "2022-09-19T02:38:27.071229538Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "ssl/ssl-dns-names.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/ssl-dns-names.yaml",
-    "template-id": "ssl-dns-names",
-    "info": {
-      "name": "SSL DNS Names",
-      "author": [
-        "pdteam"
-      ],
-      "tags": [
-        "ssl"
-      ],
-      "reference": null,
-      "severity": "info"
-    },
-    "type": "ssl",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "extracted-results": [
-      "api.dossierfacile.fr"
-    ],
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:41.642710784Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-opener-policy",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.083981031Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-origin",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.084095731Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-credentials",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.08413613Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "x-permitted-cross-domain-policies",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.08415903Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "referrer-policy",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.08418003Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-embedder-policy",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.08419663Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-expose-headers",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.08421603Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-max-age",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.08423543Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-methods",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.084254529Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-headers",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.084273629Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "permission-policy",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.084297829Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "clear-site-data",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.084317929Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-resource-policy",
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": "GET /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nContent-Type: application/vnd.spring-boot.actuator.v3+json\r\nDate: Mon, 19 Sep 2022 02:38:42 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:38:42 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 6fea2f2b-1b28-4503-bc57-8eeef7082940\r\nX-Xss-Protection: 1; mode=block\r\n\r\n{\"status\":\"UP\",\"components\":{\"custom\":{\"status\":\"UP\",\"details\":{\"Service\":\"Running\",\"Error\":\"No Error- Healthy status\",\"error\":\"java.lang.RuntimeException: null\"}},\"db\":{\"status\":\"UP\",\"details\":{\"database\":\"PostgreSQL\",\"validationQuery\":\"isValid()\"}},\"ping\":{\"status\":\"UP\"},\"rabbit\":{\"status\":\"UP\",\"details\":{\"version\":\"3.8.14\"}}}}",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:38:42.084334729Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "miscellaneous/options-method.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/miscellaneous/options-method.yaml",
-    "template-id": "options-method",
-    "info": {
-      "name": "Allowed Options Method",
-      "author": [
-        "pdteam"
-      ],
-      "tags": [
-        "misc",
-        "generic"
-      ],
-      "reference": null,
-      "severity": "info"
-    },
-    "type": "http",
-    "host": "https://api.dossierfacile.fr/actuator/health",
-    "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "extracted-results": [
-      "GET,HEAD,OPTIONS"
-    ],
-    "request": "OPTIONS /actuator/health HTTP/1.1\r\nHost: api.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 200 \r\nConnection: close\r\nAllow: GET,HEAD,OPTIONS\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors 'none'; frame-src 'none'; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'none'; img-src 'self' data:; font-src 'self'; connect-src *.dossierfacile.fr; base-uri 'self'; form-action 'none'; media-src 'none'; worker-src 'none'; manifest-src 'none'; prefetch-src 'none';\r\nDate: Mon, 19 Sep 2022 02:39:22 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: sc-sticky-session=aJhrAwFVRGvpKHsomrVF65BpOedrsTp7gvbrpjqIrRh2na6J/An2VPgzAukcAjHuQvAS/js0NBpH9jDbvPRG+A==; Expires=Tue, 20-Sep-22 02:39:22 GMT; Max-Age=86400; Path=/; Secure; HttpOnly; SameSite=None\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Origin\r\nVary: Access-Control-Request-Method\r\nVary: Access-Control-Request-Headers\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: a9a9a35b-8892-407e-87a3-7007222ef4e2\r\nX-Xss-Protection: 1; mode=block\r\nContent-Length: 0\r\n\r\n",
-    "ip": "148.253.96.193",
-    "timestamp": "2022-09-19T02:39:22.86026556Z",
-    "curl-command": "curl -X 'OPTIONS' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.dossierfacile.fr/actuator/health'",
+    "request": ";; opcode: QUERY, status: NOERROR, id: 10781\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.dossierfacile.fr.\tIN\t CNAME\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 10781\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;api.dossierfacile.fr.\tIN\t CNAME\n\n;; ANSWER SECTION:\napi.dossierfacile.fr.\t3600\tIN\tCNAME\tdossierfacile-api-tenant-prod.osc-secnum-fr1.scalingo.io.\n",
+    "timestamp": "2022-09-20T02:27:45.656473825Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -605,41 +613,33 @@
       "TLS13"
     ],
     "ip": "185.21.194.105",
-    "timestamp": "2022-09-19T02:40:13.303166311Z",
+    "timestamp": "2022-09-20T02:28:21.176777857Z",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "dns/dns-waf-detect.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/dns-waf-detect.yaml",
-    "template-id": "dns-waf-detect",
+    "template": "ssl/ssl-dns-names.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/ssl-dns-names.yaml",
+    "template-id": "ssl-dns-names",
     "info": {
-      "name": "DNS WAF Detection",
+      "name": "SSL DNS Names",
       "author": [
-        "lu4nx"
+        "pdteam"
       ],
       "tags": [
-        "tech",
-        "waf",
-        "dns"
+        "ssl"
       ],
-      "description": "A DNS WAF was detected.",
       "reference": null,
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ]
-      }
+      "severity": "info"
     },
-    "matcher-name": "cloudflare",
-    "type": "dns",
+    "type": "ssl",
     "host": "https://api.dossierfacile.fr/actuator/health",
     "matched-at": "https://api.dossierfacile.fr/actuator/health",
-    "request": ";; opcode: QUERY, status: NOERROR, id: 35795\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.dossierfacile.fr.\tIN\t NS\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 35795\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;api.dossierfacile.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napi.dossierfacile.fr.\t3324\tIN\tCNAME\tdossierfacile-api-tenant-prod.osc-secnum-fr1.scalingo.io.\ndossierfacile-api-tenant-prod.osc-secnum-fr1.scalingo.io.\t300\tIN\tCNAME\tsc-lb-pool-01.osc-secnum-fr1.scalingo-network.com.\n\n;; AUTHORITY SECTION:\nscalingo-network.com.\t1800\tIN\tSOA\tburt.ns.cloudflare.com. dns.cloudflare.com. 2277339532 10000 2400 604800 3600\n",
-    "timestamp": "2022-09-19T02:42:52.591316311Z",
+    "extracted-results": [
+      "api.dossierfacile.fr"
+    ],
+    "ip": "185.21.194.105",
+    "timestamp": "2022-09-20T02:28:21.177790177Z",
     "matcher-status": true,
     "matched-line": null
   }
