@@ -1,106 +1,90 @@
 [
   {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
+    "template": "dns/txt-fingerprint.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/txt-fingerprint.yaml",
+    "template-id": "txt-fingerprint",
     "info": {
-      "name": "HTTP Missing Security Headers",
+      "name": "DNS TXT Record Detected",
       "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
+        "pdteam"
       ],
       "tags": [
-        "misconfig",
-        "generic"
+        "dns",
+        "txt"
       ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
+      "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+      "reference": [
+        "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+      ],
+      "severity": "info",
+      "classification": {
+        "cve-id": null,
+        "cwe-id": [
+          "cwe-200"
+        ]
+      }
     },
-    "matcher-name": "clear-site-data",
-    "type": "http",
+    "type": "dns",
     "host": "https://api.trackdechets.beta.gouv.fr",
     "matched-at": "https://api.trackdechets.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.158404152Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
+    "extracted-results": [
+      "\"_placeholder\""
+    ],
+    "request": ";; opcode: QUERY, status: NOERROR, id: 41807\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.trackdechets.beta.gouv.fr.\tIN\t TXT\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 41807\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;api.trackdechets.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\napi.trackdechets.beta.gouv.fr.\t300\tIN\tCNAME\ttrackdechets-api.baleen.cshield.net.\ntrackdechets-api.baleen.cshield.net.\t300\tIN\tTXT\t\"_placeholder\"\n",
+    "timestamp": "2022-09-26T04:26:58.725779947Z",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
+    "template": "ssl/tls-version.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/tls-version.yaml",
+    "template-id": "tls-version",
     "info": {
-      "name": "HTTP Missing Security Headers",
+      "name": "TLS Version",
       "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
+        "pdteam"
       ],
       "tags": [
-        "misconfig",
-        "generic"
+        "ssl"
       ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
       "reference": null,
       "severity": "info"
     },
-    "matcher-name": "cross-origin-opener-policy",
-    "type": "http",
+    "type": "ssl",
     "host": "https://api.trackdechets.beta.gouv.fr",
     "matched-at": "https://api.trackdechets.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.15888716Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
+    "extracted-results": [
+      "TLS13"
+    ],
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:00.043588334Z",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
+    "template": "ssl/ssl-dns-names.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/ssl-dns-names.yaml",
+    "template-id": "ssl-dns-names",
     "info": {
-      "name": "HTTP Missing Security Headers",
+      "name": "SSL DNS Names",
       "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
+        "pdteam"
       ],
       "tags": [
-        "misconfig",
-        "generic"
+        "ssl"
       ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
       "reference": null,
       "severity": "info"
     },
-    "matcher-name": "access-control-max-age",
-    "type": "http",
+    "type": "ssl",
     "host": "https://api.trackdechets.beta.gouv.fr",
     "matched-at": "https://api.trackdechets.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.15890586Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
+    "extracted-results": [
+      "api.trackdechets.beta.gouv.fr"
+    ],
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:06.618077671Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -132,9 +116,9 @@
     "host": "https://api.trackdechets.beta.gouv.fr",
     "matched-at": "https://api.trackdechets.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.158928261Z",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.49622722Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -167,184 +151,9 @@
     "host": "https://api.trackdechets.beta.gouv.fr",
     "matched-at": "https://api.trackdechets.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.158943261Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-origin",
-    "type": "http",
-    "host": "https://api.trackdechets.beta.gouv.fr",
-    "matched-at": "https://api.trackdechets.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.158959761Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-headers",
-    "type": "http",
-    "host": "https://api.trackdechets.beta.gouv.fr",
-    "matched-at": "https://api.trackdechets.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.159081863Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "access-control-allow-methods",
-    "type": "http",
-    "host": "https://api.trackdechets.beta.gouv.fr",
-    "matched-at": "https://api.trackdechets.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.159104263Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-embedder-policy",
-    "type": "http",
-    "host": "https://api.trackdechets.beta.gouv.fr",
-    "matched-at": "https://api.trackdechets.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.159119064Z",
-    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "misconfiguration/http-missing-security-headers.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
-    "template-id": "http-missing-security-headers",
-    "info": {
-      "name": "HTTP Missing Security Headers",
-      "author": [
-        "socketz",
-        "geeknik",
-        "g4l1t0",
-        "convisoappsec",
-        "kurohost",
-        "dawid-czarnecki",
-        "forgedhallpass"
-      ],
-      "tags": [
-        "misconfig",
-        "generic"
-      ],
-      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-      "reference": null,
-      "severity": "info"
-    },
-    "matcher-name": "cross-origin-resource-policy",
-    "type": "http",
-    "host": "https://api.trackdechets.beta.gouv.fr",
-    "matched-at": "https://api.trackdechets.beta.gouv.fr",
-    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.159135364Z",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.49630382Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -377,9 +186,9 @@
     "host": "https://api.trackdechets.beta.gouv.fr",
     "matched-at": "https://api.trackdechets.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.159149464Z",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.49632252Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -407,14 +216,14 @@
       "reference": null,
       "severity": "info"
     },
-    "matcher-name": "access-control-allow-credentials",
+    "matcher-name": "cross-origin-embedder-policy",
     "type": "http",
     "host": "https://api.trackdechets.beta.gouv.fr",
     "matched-at": "https://api.trackdechets.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.159168664Z",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.496340719Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -442,14 +251,49 @@
       "reference": null,
       "severity": "info"
     },
-    "matcher-name": "access-control-expose-headers",
+    "matcher-name": "cross-origin-resource-policy",
     "type": "http",
     "host": "https://api.trackdechets.beta.gouv.fr",
     "matched-at": "https://api.trackdechets.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.159183265Z",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.496457519Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-max-age",
+    "type": "http",
+    "host": "https://api.trackdechets.beta.gouv.fr",
+    "matched-at": "https://api.trackdechets.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.496472119Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -482,9 +326,9 @@
     "host": "https://api.trackdechets.beta.gouv.fr",
     "matched-at": "https://api.trackdechets.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.159199665Z",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.496490718Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
@@ -517,62 +361,255 @@
     "host": "https://api.trackdechets.beta.gouv.fr",
     "matched-at": "https://api.trackdechets.beta.gouv.fr",
     "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 25 Sep 2022 04:24:33 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664079918\r\nX-Request-Id: e0766834-8f82-48da-bef2-bcd62c60800c\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:33.159213865Z",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.496504718Z",
     "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "ssl/ssl-dns-names.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/ssl-dns-names.yaml",
-    "template-id": "ssl-dns-names",
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
     "info": {
-      "name": "SSL DNS Names",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "pdteam"
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
       ],
       "tags": [
-        "ssl"
+        "misconfig",
+        "generic"
       ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
       "reference": null,
       "severity": "info"
     },
-    "type": "ssl",
+    "matcher-name": "access-control-allow-credentials",
+    "type": "http",
     "host": "https://api.trackdechets.beta.gouv.fr",
     "matched-at": "https://api.trackdechets.beta.gouv.fr",
-    "extracted-results": [
-      "api.trackdechets.beta.gouv.fr"
-    ],
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:39.846922894Z",
+    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.496521118Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
   },
   {
-    "template": "ssl/tls-version.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/ssl/tls-version.yaml",
-    "template-id": "tls-version",
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
     "info": {
-      "name": "TLS Version",
+      "name": "HTTP Missing Security Headers",
       "author": [
-        "pdteam"
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
       ],
       "tags": [
-        "ssl"
+        "misconfig",
+        "generic"
       ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
       "reference": null,
       "severity": "info"
     },
-    "type": "ssl",
+    "matcher-name": "clear-site-data",
+    "type": "http",
     "host": "https://api.trackdechets.beta.gouv.fr",
     "matched-at": "https://api.trackdechets.beta.gouv.fr",
-    "extracted-results": [
-      "TLS13"
-    ],
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:47.224579688Z",
+    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.496535018Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "cross-origin-opener-policy",
+    "type": "http",
+    "host": "https://api.trackdechets.beta.gouv.fr",
+    "matched-at": "https://api.trackdechets.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.496554618Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-origin",
+    "type": "http",
+    "host": "https://api.trackdechets.beta.gouv.fr",
+    "matched-at": "https://api.trackdechets.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.496573318Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-expose-headers",
+    "type": "http",
+    "host": "https://api.trackdechets.beta.gouv.fr",
+    "matched-at": "https://api.trackdechets.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.496590018Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-methods",
+    "type": "http",
+    "host": "https://api.trackdechets.beta.gouv.fr",
+    "matched-at": "https://api.trackdechets.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.496603618Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
+    "matcher-status": true,
+    "matched-line": null
+  },
+  {
+    "template": "misconfiguration/http-missing-security-headers.yaml",
+    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/misconfiguration/http-missing-security-headers.yaml",
+    "template-id": "http-missing-security-headers",
+    "info": {
+      "name": "HTTP Missing Security Headers",
+      "author": [
+        "socketz",
+        "geeknik",
+        "g4l1t0",
+        "convisoappsec",
+        "kurohost",
+        "dawid-czarnecki",
+        "forgedhallpass"
+      ],
+      "tags": [
+        "misconfig",
+        "generic"
+      ],
+      "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+      "reference": null,
+      "severity": "info"
+    },
+    "matcher-name": "access-control-allow-headers",
+    "type": "http",
+    "host": "https://api.trackdechets.beta.gouv.fr",
+    "matched-at": "https://api.trackdechets.beta.gouv.fr",
+    "request": "GET / HTTP/1.1\r\nHost: api.trackdechets.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+    "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 97\r\nContent-Type: text/html; charset=utf-8\r\nDate: Mon, 26 Sep 2022 04:27:14 GMT\r\nEtag: W/\"61-K4g85b5Yg6zba7IBvXsVbABO6y0\"\r\nReferrer-Policy: origin-when-cross-origin\r\nRetry-After: 60\r\nStrict-Transport-Security: max-age=31536000\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 1000\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1664166479\r\nX-Request-Id: 87f6a78a-8db9-47d5-a5b8-77096fff0e8b\r\nX-Xss-Protection: 1; mode=block\r\n\r\nQuota de 1000 requêtes par minute excédé pour cette adresse IP, merci de réessayer plus tard.",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:14.496622018Z",
+    "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.trackdechets.beta.gouv.fr'",
     "matcher-status": true,
     "matched-line": null
   },
@@ -597,8 +634,8 @@
     "extracted-results": [
       "Let's Encrypt"
     ],
-    "ip": "185.179.149.96",
-    "timestamp": "2022-09-25T04:24:49.148173862Z",
+    "ip": "185.231.167.96",
+    "timestamp": "2022-09-26T04:27:22.993692206Z",
     "matcher-status": true,
     "matched-line": null
   },
@@ -634,46 +671,9 @@
     "extracted-results": [
       "trackdechets-api.baleen.cshield.net."
     ],
-    "request": ";; opcode: QUERY, status: NOERROR, id: 9757\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.trackdechets.beta.gouv.fr.\tIN\t CNAME\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 9757\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;api.trackdechets.beta.gouv.fr.\tIN\t CNAME\n\n;; ANSWER SECTION:\napi.trackdechets.beta.gouv.fr.\t300\tIN\tCNAME\ttrackdechets-api.baleen.cshield.net.\n",
-    "timestamp": "2022-09-25T04:24:50.816154216Z",
-    "matcher-status": true,
-    "matched-line": null
-  },
-  {
-    "template": "dns/txt-fingerprint.yaml",
-    "template-url": "https://github.com/projectdiscovery/nuclei-templates/blob/master/dns/txt-fingerprint.yaml",
-    "template-id": "txt-fingerprint",
-    "info": {
-      "name": "DNS TXT Record Detected",
-      "author": [
-        "pdteam"
-      ],
-      "tags": [
-        "dns",
-        "txt"
-      ],
-      "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
-      "reference": [
-        "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
-      ],
-      "severity": "info",
-      "classification": {
-        "cve-id": null,
-        "cwe-id": [
-          "cwe-200"
-        ]
-      }
-    },
-    "type": "dns",
-    "host": "https://api.trackdechets.beta.gouv.fr",
-    "matched-at": "https://api.trackdechets.beta.gouv.fr",
-    "extracted-results": [
-      "\"_placeholder\""
-    ],
-    "request": ";; opcode: QUERY, status: NOERROR, id: 55656\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.trackdechets.beta.gouv.fr.\tIN\t TXT\n",
-    "response": ";; opcode: QUERY, status: NOERROR, id: 55656\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 1232\n\n;; QUESTION SECTION:\n;api.trackdechets.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\napi.trackdechets.beta.gouv.fr.\t300\tIN\tCNAME\ttrackdechets-api.baleen.cshield.net.\ntrackdechets-api.baleen.cshield.net.\t300\tIN\tTXT\t\"_placeholder\"\n",
-    "timestamp": "2022-09-25T04:25:04.722200512Z",
+    "request": ";; opcode: QUERY, status: NOERROR, id: 58067\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 4096\n\n;; QUESTION SECTION:\n;api.trackdechets.beta.gouv.fr.\tIN\t CNAME\n",
+    "response": ";; opcode: QUERY, status: NOERROR, id: 58067\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags: ; udp: 512\n\n;; QUESTION SECTION:\n;api.trackdechets.beta.gouv.fr.\tIN\t CNAME\n\n;; ANSWER SECTION:\napi.trackdechets.beta.gouv.fr.\t265\tIN\tCNAME\ttrackdechets-api.baleen.cshield.net.\n",
+    "timestamp": "2022-09-26T04:27:33.953531069Z",
     "matcher-status": true,
     "matched-line": null
   }
