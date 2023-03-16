@@ -1,7 +1,7 @@
 {
 	"@programName": "OWASP ZAP",
 	"@version": "2.12.0",
-	"@generated": "Wed, 15 Mar 2023 01:49:44",
+	"@generated": "Thu, 16 Mar 2023 01:47:27",
 	"site":[ 
 		{
 			"@name": "https://locataire.dossierfacile.fr",
@@ -9,39 +9,6 @@
 			"@port": "443",
 			"@ssl": "true",
 			"alerts": [ 
-				{
-					"pluginid": "10202",
-					"alertRef": "10202",
-					"alert": "Absence of Anti-CSRF Tokens",
-					"name": "Absence of Anti-CSRF Tokens",
-					"riskcode": "2",
-					"confidence": "1",
-					"riskdesc": "Medium (Low)",
-					"desc": "<p>No Anti-CSRF tokens were found in a HTML submission form.</p><p>A cross-site request forgery is an attack that involves forcing a victim to send an HTTP request to a target destination without their knowledge or intent in order to perform an action as the victim. The underlying cause is application functionality using predictable URL/form actions in a repeatable way. The nature of the attack is that CSRF exploits the trust that a web site has for a user. By contrast, cross-site scripting (XSS) exploits the trust that a user has for a web site. Like XSS, CSRF attacks are not necessarily cross-site, but they can be. Cross-site request forgery is also known as CSRF, XSRF, one-click attack, session riding, confused deputy, and sea surf.</p><p></p><p>CSRF attacks are effective in a number of situations, including:</p><p>    * The victim has an active session on the target site.</p><p>    * The victim is authenticated via HTTP auth on the target site.</p><p>    * The victim is on the same local network as the target site.</p><p></p><p>CSRF has primarily been used to perform an action against a target site using the victim's privileges, but recent techniques have been discovered to disclose information by gaining access to the response. The risk of information disclosure is dramatically increased when the target site is vulnerable to XSS, because XSS can be used as a platform for CSRF, allowing the attack to operate within the bounds of the same-origin policy.</p>",
-					"instances":[ 
-						{
-							"uri": "https://locataire.dossierfacile.fr/signup",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<form data-v-21b530b6=\"\" data-v-3e71e5f3=\"\" name=\"form\" style=\"display: none;\">"
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/signup/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<form data-v-21b530b6=\"\" data-v-3e71e5f3=\"\" name=\"form\" style=\"display: none;\">"
-						}
-					],
-					"count": "2",
-					"solution": "<p>Phase: Architecture and Design</p><p>Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.</p><p>For example, use anti-CSRF packages such as the OWASP CSRFGuard.</p><p></p><p>Phase: Implementation</p><p>Ensure that your application is free of cross-site scripting issues, because most CSRF defenses can be bypassed using attacker-controlled script.</p><p></p><p>Phase: Architecture and Design</p><p>Generate a unique nonce for each form, place the nonce into the form, and verify the nonce upon receipt of the form. Be sure that the nonce is not predictable (CWE-330).</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Use the ESAPI Session Management control.</p><p>This control includes a component for CSRF.</p><p></p><p>Do not use the GET method for any request that triggers a state change.</p><p></p><p>Phase: Implementation</p><p>Check the HTTP Referer header to see if the request originated from an expected page. This could break legitimate functionality, because users or proxies may have disabled sending the Referer for privacy reasons.</p>",
-					"otherinfo": "<p>No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"\" ].</p>",
-					"reference": "<p>http://projects.webappsec.org/Cross-Site-Request-Forgery</p><p>http://cwe.mitre.org/data/definitions/352.html</p>",
-					"cweid": "352",
-					"wascid": "9",
-					"sourceid": "1"
-				},
 				{
 					"pluginid": "10055",
 					"alertRef": "10055-4",
@@ -60,13 +27,6 @@
 							"evidence": "default-src 'self'; script-src 'self' *.dossierfacile.fr *.dossierfacile.fr:* https://www.google-analytics.com https://www.googletagmanager.com https://stats.data.gouv.fr https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com https://stats.data.gouv.fr *.dossierfacile.fr:* *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com blob:; frame-src https://www.google.com *.dossierfacile.fr *.dossierfacile.fr:* https://3689183.fls.doubleclick.net; child-src *.dossierfacile.fr *.dossierfacile.fr:*"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/profile",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "default-src 'none'"
-						},
-						{
 							"uri": "https://locataire.dossierfacile.fr/signup",
 							"method": "GET",
 							"param": "Content-Security-Policy",
@@ -81,13 +41,13 @@
 							"evidence": "default-src 'self'; script-src 'self' *.dossierfacile.fr *.dossierfacile.fr:* https://www.google-analytics.com https://www.googletagmanager.com https://stats.data.gouv.fr https://www.google.com https://www.gstatic.com https://beacon-v2.helpscout.net *.inspectlet.com 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; img-src 'self' https://www.google-analytics.com https://fonts.gstatic.com https://voxusagers.numerique.gouv.fr https://hn.inspectlet.com *.helpscout.net *.cloudfront.net *.gitbook.com data:; font-src 'self' fonts.google.com https://fonts.gstatic.com fonts.googleapis.com data:; object-src 'none'; prefetch-src 'self'; connect-src https://www.google-analytics.com https://stats.data.gouv.fr *.dossierfacile.fr:* *.inspectlet.com wss://ws.inspectlet.com https://stats.g.doubleclick.net https://sso-preprod.dossierfacile.fr *.cloudfront.net *.dossierfacile.fr 'unsafe-eval' *.helpscout.net wss://ws-helpscout.pusher.com https://sockjs-helpscout.pusher.com blob:; frame-src https://www.google.com *.dossierfacile.fr *.dossierfacile.fr:* https://3689183.fls.doubleclick.net; child-src *.dossierfacile.fr *.dossierfacile.fr:*"
 						}
 					],
-					"count": "4",
+					"count": "3",
 					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is properly configured to set the Content-Security-Policy header.</p>",
 					"otherinfo": "<p>The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: </p><p>frame-ancestors, form-action</p><p></p><p>The directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything.</p>",
 					"reference": "<p>http://www.w3.org/TR/CSP2/</p><p>http://www.w3.org/TR/CSP/</p><p>http://caniuse.com/#search=content+security+policy</p><p>http://content-security-policy.com/</p><p>https://github.com/shapesecurity/salvation</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p>",
 					"cweid": "693",
 					"wascid": "15",
-					"sourceid": "3"
+					"sourceid": "8"
 				},
 				{
 					"pluginid": "10055",
@@ -206,6 +166,13 @@
 							"evidence": "<link href=\"https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined\" rel=\"stylesheet\">"
 						},
 						{
+							"uri": "https://locataire.dossierfacile.fr/js/app.d8eae0f9.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<script src=\\'/iphubb2.js\\'>"
+						},
+						{
 							"uri": "https://locataire.dossierfacile.fr/signup",
 							"method": "GET",
 							"param": "",
@@ -227,20 +194,6 @@
 							"evidence": "<script type=\"text/javascript\" async=\"\" src=\"https://beacon-v2.helpscout.net\"></script>"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/signup",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<script type=\"text/javascript\" src=\"https://beacon-v2.helpscout.net/static/js/main.d42d4161.js\"></script>"
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/signup",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<script type=\"text/javascript\" src=\"https://beacon-v2.helpscout.net/static/js/vendor.cae487cb.js\"></script>"
-						},
-						{
 							"uri": "https://locataire.dossierfacile.fr/signup/",
 							"method": "GET",
 							"param": "",
@@ -260,23 +213,9 @@
 							"param": "",
 							"attack": "",
 							"evidence": "<script type=\"text/javascript\" async=\"\" src=\"https://beacon-v2.helpscout.net\"></script>"
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/signup/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<script type=\"text/javascript\" src=\"https://beacon-v2.helpscout.net/static/js/main.d42d4161.js\"></script>"
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/signup/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<script type=\"text/javascript\" src=\"https://beacon-v2.helpscout.net/static/js/vendor.cae487cb.js\"></script>"
 						}
 					],
-					"count": "11",
+					"count": "8",
 					"solution": "<p>Provide a valid integrity attribute to the tag.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://developer.mozilla.org/en/docs/Web/Security/Subresource_Integrity</p>",
@@ -304,20 +243,6 @@
 						{
 							"uri": "https://locataire.dossierfacile.fr/signup",
 							"method": "GET",
-							"param": "https://beacon-v2.helpscout.net/static/js/main.d42d4161.js",
-							"attack": "",
-							"evidence": "<script type=\"text/javascript\" src=\"https://beacon-v2.helpscout.net/static/js/main.d42d4161.js\"></script>"
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/signup",
-							"method": "GET",
-							"param": "https://beacon-v2.helpscout.net/static/js/vendor.cae487cb.js",
-							"attack": "",
-							"evidence": "<script type=\"text/javascript\" src=\"https://beacon-v2.helpscout.net/static/js/vendor.cae487cb.js\"></script>"
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/signup",
-							"method": "GET",
 							"param": "https://stats.data.gouv.fr/matomo.js",
 							"attack": "",
 							"evidence": "<script async=\"\" defer=\"\" src=\"https://stats.data.gouv.fr/matomo.js\"></script>"
@@ -332,26 +257,12 @@
 						{
 							"uri": "https://locataire.dossierfacile.fr/signup/",
 							"method": "GET",
-							"param": "https://beacon-v2.helpscout.net/static/js/main.d42d4161.js",
-							"attack": "",
-							"evidence": "<script type=\"text/javascript\" src=\"https://beacon-v2.helpscout.net/static/js/main.d42d4161.js\"></script>"
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/signup/",
-							"method": "GET",
-							"param": "https://beacon-v2.helpscout.net/static/js/vendor.cae487cb.js",
-							"attack": "",
-							"evidence": "<script type=\"text/javascript\" src=\"https://beacon-v2.helpscout.net/static/js/vendor.cae487cb.js\"></script>"
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/signup/",
-							"method": "GET",
 							"param": "https://stats.data.gouv.fr/matomo.js",
 							"attack": "",
 							"evidence": "<script async=\"\" defer=\"\" src=\"https://stats.data.gouv.fr/matomo.js\"></script>"
 						}
 					],
-					"count": "8",
+					"count": "4",
 					"solution": "<p>Ensure JavaScript source files are loaded from only trusted sources, and the sources can't be controlled by end users of the application.</p>",
 					"otherinfo": "",
 					"reference": "",
@@ -390,7 +301,7 @@
 					"reference": "<p>https://angular.io/guide/security</p>",
 					"cweid": "749",
 					"wascid": "-1",
-					"sourceid": "115"
+					"sourceid": "99"
 				},
 				{
 					"pluginid": "10063",
@@ -410,70 +321,70 @@
 							"evidence": ""
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/ajout-couple",
+							"uri": "https://locataire.dossierfacile.fr/js/404.ff95e0d7.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/ajout-groupe",
+							"uri": "https://locataire.dossierfacile.fr/js/account.849a0558.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/confirmAccount",
+							"uri": "https://locataire.dossierfacile.fr/js/changePassword.28522887.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/documents-locataire/",
+							"uri": "https://locataire.dossierfacile.fr/js/confirmAccount.62884ba3.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/file/",
+							"uri": "https://locataire.dossierfacile.fr/js/contact.7d35748c.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/info-garant/",
+							"uri": "https://locataire.dossierfacile.fr/js/file.4b30181f.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/info-locataire/",
+							"uri": "https://locataire.dossierfacile.fr/js/forgottenPassword.e4550376.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/profile",
+							"uri": "https://locataire.dossierfacile.fr/js/inscriptionLocataire.c3489fed.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/public-file/",
+							"uri": "https://locataire.dossierfacile.fr/js/messages.8f35de5e.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/reset-password",
+							"uri": "https://locataire.dossierfacile.fr/js/register.ebd3e9b6.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -513,42 +424,42 @@
 							"evidence": "X-Powered-By: Express"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/documents-locataire/",
+							"uri": "https://locataire.dossierfacile.fr/css/404.a75ebdc5.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "X-Powered-By: Express"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/info-garant/",
+							"uri": "https://locataire.dossierfacile.fr/css/account.05a7184f.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "X-Powered-By: Express"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/info-locataire/",
+							"uri": "https://locataire.dossierfacile.fr/css/contact.51060bd5.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "X-Powered-By: Express"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/profile",
+							"uri": "https://locataire.dossierfacile.fr/css/forgottenPassword.ccb253e7.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "X-Powered-By: Express"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/public-file/",
+							"uri": "https://locataire.dossierfacile.fr/css/inscriptionLocataire.d8d39985.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "X-Powered-By: Express"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/reset-password",
+							"uri": "https://locataire.dossierfacile.fr/favicon.png",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -595,7 +506,7 @@
 					"desc": "<p>A timestamp was disclosed by the application/web server - Unix</p>",
 					"instances":[ 
 						{
-							"uri": "https://locataire.dossierfacile.fr/js/app.abfff35c.js",
+							"uri": "https://locataire.dossierfacile.fr/js/app.d8eae0f9.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -749,7 +660,7 @@
 							"evidence": "1482184792"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/js/profile.49b97041.js",
+							"uri": "https://locataire.dossierfacile.fr/js/profile.411921d3.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -762,7 +673,7 @@
 					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "111"
+					"sourceid": "89"
 				},
 				{
 					"pluginid": "10094",
@@ -775,7 +686,7 @@
 					"desc": "<p>Base64 encoded data was disclosed by the application/web server. Note: in the interests of performance not all base64 strings in the response were analyzed individually, the entire response should be looked at by the analyst/security team/developer(s).</p>",
 					"instances":[ 
 						{
-							"uri": "https://locataire.dossierfacile.fr/css/account.0aeaa80d.css",
+							"uri": "https://locataire.dossierfacile.fr/css/account.05a7184f.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -810,14 +721,14 @@
 							"evidence": "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/js/account.bc30ecab.js",
+							"uri": "https://locataire.dossierfacile.fr/js/account.849a0558.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "fr/particuliers/vosdroits/N31138"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/js/app.abfff35c.js",
+							"uri": "https://locataire.dossierfacile.fr/js/app.d8eae0f9.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -865,7 +776,7 @@
 					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "82"
+					"sourceid": "63"
 				},
 				{
 					"pluginid": "10027",
@@ -878,14 +789,14 @@
 					"desc": "<p>The response appears to contain suspicious comments which may help an attacker. Note: Matches made within script blocks or files are against the entire content not only comments.</p>",
 					"instances":[ 
 						{
-							"uri": "https://locataire.dossierfacile.fr/js/account.bc30ecab.js",
+							"uri": "https://locataire.dossierfacile.fr/js/account.849a0558.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "user"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/js/app.abfff35c.js",
+							"uri": "https://locataire.dossierfacile.fr/js/app.d8eae0f9.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -934,14 +845,14 @@
 							"evidence": "user"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/js/profile.49b97041.js",
+							"uri": "https://locataire.dossierfacile.fr/js/profile.411921d3.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "query"
 						},
 						{
-							"uri": "https://locataire.dossierfacile.fr/js/profile.49b97041.js",
+							"uri": "https://locataire.dossierfacile.fr/js/profile.411921d3.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -975,7 +886,7 @@
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "97"
+					"sourceid": "76"
 				},
 				{
 					"pluginid": "10109",
@@ -999,14 +910,14 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<a data-v-3e71e5f3=\"\" href=\"/account\" target=\"_self\" class=\"fr-nav__link\">Mon dossier</a>"
+							"evidence": "<script type=\"text/javascript\" async=\"\" src=\"https://beacon-v2.helpscout.net\"></script>"
 						},
 						{
 							"uri": "https://locataire.dossierfacile.fr/signup/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<a data-v-3e71e5f3=\"\" href=\"/account\" target=\"_self\" class=\"fr-nav__link\">Mon dossier</a>"
+							"evidence": "<script type=\"text/javascript\" async=\"\" src=\"https://beacon-v2.helpscout.net\"></script>"
 						}
 					],
 					"count": "3",
@@ -1015,7 +926,7 @@
 					"reference": "",
 					"cweid": "-1",
 					"wascid": "-1",
-					"sourceid": "3"
+					"sourceid": "8"
 				},
 				{
 					"pluginid": "10015",
@@ -1029,6 +940,13 @@
 					"instances":[ 
 						{
 							"uri": "https://locataire.dossierfacile.fr/",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": "public, max-age=0"
+						},
+						{
+							"uri": "https://locataire.dossierfacile.fr/robots.txt",
 							"method": "GET",
 							"param": "Cache-Control",
 							"attack": "",
@@ -1056,7 +974,7 @@
 							"evidence": "public, max-age=0"
 						}
 					],
-					"count": "4",
+					"count": "5",
 					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
 					"otherinfo": "",
 					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
@@ -1075,55 +993,6 @@
 					"desc": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users.  If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
 					"instances":[ 
 						{
-							"uri": "https://locataire.dossierfacile.fr/ajout-groupe",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": ""
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/documents-locataire/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": ""
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/info-garant/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": ""
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/info-locataire/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": ""
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/profile",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": ""
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/public-file/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": ""
-						},
-						{
-							"uri": "https://locataire.dossierfacile.fr/reset-password",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": ""
-						},
-						{
 							"uri": "https://locataire.dossierfacile.fr/signup",
 							"method": "GET",
 							"param": "",
@@ -1131,13 +1000,13 @@
 							"evidence": ""
 						}
 					],
-					"count": "8",
+					"count": "1",
 					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. </p>",
 					"otherinfo": "<p>In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234.</p>",
 					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "71"
+					"sourceid": "45"
 				},
 				{
 					"pluginid": "10049",
@@ -1151,6 +1020,48 @@
 					"instances":[ 
 						{
 							"uri": "https://locataire.dossierfacile.fr/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0"
+						},
+						{
+							"uri": "https://locataire.dossierfacile.fr/css/404.a75ebdc5.css",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0"
+						},
+						{
+							"uri": "https://locataire.dossierfacile.fr/css/account.05a7184f.css",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0"
+						},
+						{
+							"uri": "https://locataire.dossierfacile.fr/css/contact.51060bd5.css",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0"
+						},
+						{
+							"uri": "https://locataire.dossierfacile.fr/css/forgottenPassword.ccb253e7.css",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0"
+						},
+						{
+							"uri": "https://locataire.dossierfacile.fr/css/inscriptionLocataire.d8d39985.css",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0"
+						},
+						{
+							"uri": "https://locataire.dossierfacile.fr/favicon.png",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -1178,7 +1089,7 @@
 							"evidence": "max-age=0"
 						}
 					],
-					"count": "4",
+					"count": "10",
 					"solution": "",
 					"otherinfo": "",
 					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p>",
