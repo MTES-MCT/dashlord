@@ -1,7 +1,7 @@
 {
 	"@programName": "OWASP ZAP",
 	"@version": "2.12.0",
-	"@generated": "Sun, 26 Mar 2023 00:32:40",
+	"@generated": "Mon, 27 Mar 2023 00:30:45",
 	"site":[ 
 		{
 			"@name": "https://aides-territoires.beta.gouv.fr",
@@ -62,34 +62,41 @@
 							"evidence": "<form id=\"department-search-form\" method=\"post\">"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0f93-module-de-formation-sur-lurbanisme-favorable-/",
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<form id=\"eligibility-test-form\">"
+							"evidence": "<form id=\"search-form\" method=\"get\" action=\"/aides/\" autocomplete='off'>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/37df-aap-securisation-eau-potable/",
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-publics/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<form id=\"eligibility-test-form\">"
+							"evidence": "<form id=\"project-search-form\" method=\"get\" action=\"/projets/projets-publics/\" autocomplete='off'>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/9fda-former-et-informer-les-elus/",
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-subventionnes/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<form id=\"eligibility-test-form\">"
+							"evidence": "<form id=\"validated-project-search-form\" method=\"get\" action=\"/projets/projets-subventionnes/resultats/\"\n    autocomplete='off'>"
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-subventionnes/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<form id=\"department-search-form\" method=\"post\">"
 						}
 					],
-					"count": "9",
+					"count": "10",
 					"solution": "<p>Phase: Architecture and Design</p><p>Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.</p><p>For example, use anti-CSRF packages such as the OWASP CSRFGuard.</p><p></p><p>Phase: Implementation</p><p>Ensure that your application is free of cross-site scripting issues, because most CSRF defenses can be bypassed using attacker-controlled script.</p><p></p><p>Phase: Architecture and Design</p><p>Generate a unique nonce for each form, place the nonce into the form, and verify the nonce upon receipt of the form. Be sure that the nonce is not predictable (CWE-330).</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Use the ESAPI Session Management control.</p><p>This control includes a component for CSRF.</p><p></p><p>Do not use the GET method for any request that triggers a state change.</p><p></p><p>Phase: Implementation</p><p>Check the HTTP Referer header to see if the request originated from an expected page. This could break legitimate functionality, because users or proxies may have disabled sending the Referer for privacy reasons.</p>",
 					"otherinfo": "<p>No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"id_apply_before\" \"id_call_for_projects_only\" \"id_integration\" ].</p>",
 					"reference": "<p>http://projects.webappsec.org/Cross-Site-Request-Forgery</p><p>http://cwe.mitre.org/data/definitions/352.html</p>",
 					"cweid": "352",
 					"wascid": "9",
-					"sourceid": "1"
+					"sourceid": "7"
 				},
 				{
 					"pluginid": "10055",
@@ -106,42 +113,42 @@
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-5vesHkH0UlkybSkGXQHKNg=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
+							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-+vV8fBVsJGFf9A2cnMIGkQ=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
 						},
 						{
 							"uri": "https://aides-territoires.beta.gouv.fr",
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-mciGpUJ0S/R4jV99FRW0zw=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
+							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-tQDcopwECEc/y+fQdhrnCA=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
 						},
 						{
 							"uri": "https://aides-territoires.beta.gouv.fr/",
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-0VzMgqlSISsoC4pGW8ylng=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
+							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-UqcdajVd+pX84B+FDT+fCw=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/accessibilit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/publications/",
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-ejTGergNgdDJKqip0Dbs9g=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
+							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/mentions-l%C3%A9gales/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/connexion/",
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-h3GfKI5ejjq+KWuaU5V/Og=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
+							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-B/EpPKiCzKK3nF49/08s3g=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/politique-de-confidentialit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-1+TpMnVYWLL/PUGpVNFcDA=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
+							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-T9buuvLLCJv2ZRwdLmp8Zg=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
 						}
 					],
 					"count": "6",
@@ -150,7 +157,7 @@
 					"reference": "<p>http://www.w3.org/TR/CSP2/</p><p>http://www.w3.org/TR/CSP/</p><p>http://caniuse.com/#search=content+security+policy</p><p>http://content-security-policy.com/</p><p>https://github.com/shapesecurity/salvation</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p>",
 					"cweid": "693",
 					"wascid": "15",
-					"sourceid": "719"
+					"sourceid": "1"
 				},
 				{
 					"pluginid": "10055",
@@ -167,42 +174,42 @@
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-5vesHkH0UlkybSkGXQHKNg=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
+							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-+vV8fBVsJGFf9A2cnMIGkQ=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
 						},
 						{
 							"uri": "https://aides-territoires.beta.gouv.fr",
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-mciGpUJ0S/R4jV99FRW0zw=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
+							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-tQDcopwECEc/y+fQdhrnCA=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
 						},
 						{
 							"uri": "https://aides-territoires.beta.gouv.fr/",
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-0VzMgqlSISsoC4pGW8ylng=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
+							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-UqcdajVd+pX84B+FDT+fCw=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/accessibilit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/publications/",
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-ejTGergNgdDJKqip0Dbs9g=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
+							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/mentions-l%C3%A9gales/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/connexion/",
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-h3GfKI5ejjq+KWuaU5V/Og=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
+							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-B/EpPKiCzKK3nF49/08s3g=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/politique-de-confidentialit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-1+TpMnVYWLL/PUGpVNFcDA=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
+							"evidence": "frame-ancestors *; worker-src blob:; connect-src 'self' https://stats.data.gouv.fr; base-uri 'self'; frame-src 'self' https://stats.data.gouv.fr https://www.youtube.com https://www.dailymotion.com https://aides-territoires-metabase.osc-fr1.scalingo.io; form-action 'self' https://my.sendinblue.com; script-src 'self' https://stats.data.gouv.fr https://aides-territoires-metabase.osc-fr1.scalingo.io 'nonce-T9buuvLLCJv2ZRwdLmp8Zg=='; style-src 'self' 'unsafe-inline' https://stats.beta.gouv.fr; default-src https://*.scw.cloud; img-src 'self' data: https://stats.data.gouv.fr https://*.scw.cloud https://*.forte.tiles.quaidorsay.fr; object-src 'none'; font-src 'self'"
 						}
 					],
 					"count": "6",
@@ -211,7 +218,7 @@
 					"reference": "<p>http://www.w3.org/TR/CSP2/</p><p>http://www.w3.org/TR/CSP/</p><p>http://caniuse.com/#search=content+security+policy</p><p>http://content-security-policy.com/</p><p>https://github.com/shapesecurity/salvation</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p>",
 					"cweid": "693",
 					"wascid": "15",
-					"sourceid": "719"
+					"sourceid": "1"
 				},
 				{
 					"pluginid": "90003",
@@ -238,76 +245,83 @@
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/accessibilit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0e39-demander-un-conseil-juridique/",
+							"uri": "https://aides-territoires.beta.gouv.fr/blog/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0f93-module-de-formation-sur-lurbanisme-favorable-/",
+							"uri": "https://aides-territoires.beta.gouv.fr/cartographie/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/37df-aap-securisation-eau-potable/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/connexion/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/4e54-renover-le-patrimoine-bati-communal/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/6f6a-beneficier-des-groupements-de-commandes/",
+							"uri": "https://aides-territoires.beta.gouv.fr/europe/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/9fda-former-et-informer-les-elus/",
+							"uri": "https://aides-territoires.beta.gouv.fr/plateforme-aides-territoires/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/mentions-l%C3%A9gales/",
+							"uri": "https://aides-territoires.beta.gouv.fr/portails/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/politique-de-confidentialit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/programmes/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-subventionnes/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						}
 					],
-					"count": "11",
+					"count": "12",
 					"solution": "<p>Provide a valid integrity attribute to the tag.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://developer.mozilla.org/en/docs/Web/Security/Subresource_Integrity</p>",
 					"cweid": "345",
 					"wascid": "15",
-					"sourceid": "1"
+					"sourceid": "7"
 				},
 				{
 					"pluginid": "10017",
@@ -334,63 +348,63 @@
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/accessibilit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/",
 							"method": "GET",
 							"param": "https://stats.data.gouv.fr/matomo.js",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0e39-demander-un-conseil-juridique/",
+							"uri": "https://aides-territoires.beta.gouv.fr/blog/",
 							"method": "GET",
 							"param": "https://stats.data.gouv.fr/matomo.js",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0f93-module-de-formation-sur-lurbanisme-favorable-/",
+							"uri": "https://aides-territoires.beta.gouv.fr/cartographie/",
 							"method": "GET",
 							"param": "https://stats.data.gouv.fr/matomo.js",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/37df-aap-securisation-eau-potable/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/connexion/",
 							"method": "GET",
 							"param": "https://stats.data.gouv.fr/matomo.js",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/6e6e-deplacement-au-congres-annuel-de-lamf/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
 							"method": "GET",
 							"param": "https://stats.data.gouv.fr/matomo.js",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/6f6a-beneficier-des-groupements-de-commandes/",
+							"uri": "https://aides-territoires.beta.gouv.fr/portails/",
 							"method": "GET",
 							"param": "https://stats.data.gouv.fr/matomo.js",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/9fda-former-et-informer-les-elus/",
+							"uri": "https://aides-territoires.beta.gouv.fr/programmes/",
 							"method": "GET",
 							"param": "https://stats.data.gouv.fr/matomo.js",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/mentions-l%C3%A9gales/",
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-publics/",
 							"method": "GET",
 							"param": "https://stats.data.gouv.fr/matomo.js",
 							"attack": "",
 							"evidence": "<script src=\"https://stats.data.gouv.fr/matomo.js\" async defer></script>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/politique-de-confidentialit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-subventionnes/",
 							"method": "GET",
 							"param": "https://stats.data.gouv.fr/matomo.js",
 							"attack": "",
@@ -403,7 +417,33 @@
 					"reference": "",
 					"cweid": "829",
 					"wascid": "15",
-					"sourceid": "1"
+					"sourceid": "7"
+				},
+				{
+					"pluginid": "10110",
+					"alertRef": "10110",
+					"alert": "Dangerous JS Functions",
+					"name": "Dangerous JS Functions",
+					"riskcode": "1",
+					"confidence": "1",
+					"riskdesc": "Low (Low)",
+					"desc": "<p>A dangerous JS function seems to be in use that would leave the site vulnerable.</p>",
+					"instances":[ 
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/js/output.dc823c8e1f7f.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Eval"
+						}
+					],
+					"count": "1",
+					"solution": "<p>See the references for security advice on the use of these functions.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://angular.io/guide/security</p>",
+					"cweid": "749",
+					"wascid": "-1",
+					"sourceid": "4051"
 				},
 				{
 					"pluginid": "10063",
@@ -430,63 +470,63 @@
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/accessibilit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0e39-demander-un-conseil-juridique/",
+							"uri": "https://aides-territoires.beta.gouv.fr/blog/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0f93-module-de-formation-sur-lurbanisme-favorable-/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/connexion/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/37df-aap-securisation-eau-potable/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/4e54-renover-le-patrimoine-bati-communal/",
+							"uri": "https://aides-territoires.beta.gouv.fr/europe/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/6f6a-beneficier-des-groupements-de-commandes/",
+							"uri": "https://aides-territoires.beta.gouv.fr/plateforme-aides-territoires/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/9fda-former-et-informer-les-elus/",
+							"uri": "https://aides-territoires.beta.gouv.fr/portails/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/mentions-l%C3%A9gales/",
+							"uri": "https://aides-territoires.beta.gouv.fr/programmes/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/politique-de-confidentialit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-subventionnes/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -499,7 +539,110 @@
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy</p><p>https://developers.google.com/web/updates/2018/06/feature-policy</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
 					"cweid": "693",
 					"wascid": "15",
-					"sourceid": "1"
+					"sourceid": "7"
+				},
+				{
+					"pluginid": "10021",
+					"alertRef": "10021",
+					"alert": "X-Content-Type-Options Header Missing",
+					"name": "X-Content-Type-Options Header Missing",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
+					"instances":[ 
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/js/output.dc823c8e1f7f.js",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/js/output.dda465b10255.js",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/dsfr/dist/dsfr/dsfr.module.min.145a6a03c14f.js",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/dsfr/dist/dsfr/dsfr.nomodule.min.c14d68212cab.js",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/favicons/favicon-32x32.05f90bae01cd.png",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/favicons/favicon.05f90bae01cd.png",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/favicons/favicon.12acb9fc12ee.ico",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/favicons/favicon.93b88edf055e.svg",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/img/logo-anct.f7cfe1786dbe.svg",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/img/logo_AT_courbes.b7b6f043b7cc.svg",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/img/logo_AT_courbes_dark_mode.aff31bb70252.svg",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/lib/remixicon-2.5.0/fonts/remixicon.5a27e286180e.css",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": ""
+						}
+					],
+					"count": "12",
+					"solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
+					"otherinfo": "<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.</p>",
+					"reference": "<p>http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx</p><p>https://owasp.org/www-community/Security_Headers</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "4051"
 				},
 				{
 					"pluginid": "10094",
@@ -526,63 +669,63 @@
 							"evidence": "com/serve/MUIEAID1B3iOXpx--vgRN85vekV5aKffWoAdi2BjrK6e6DJH9CX0bmlIWEn3uPmu1ViQG6kvU9KbTN7A3__6KMyWqxJd8odhAxOcuC2z1Ovr9bLKzhPm0ZyqGKNxaJELzjL1SQoengFw6ZZU_0O9bPenYRan7eA-lnpJy91bN4jYq6pVGEYCF1-hh1lLWuGtiaoQGbhVxxvN02Aq"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/accessibilit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "hrjJFjhySbDqu5iFyGLo6GqppNXFr3RY"
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/blog/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "com/serve/MUIEAID1B3iOXpx--vgRN85vekV5aKffWoAdi2BjrK6e6DJH9CX0bmlIWEn3uPmu1ViQG6kvU9KbTN7A3__6KMyWqxJd8odhAxOcuC2z1Ovr9bLKzhPm0ZyqGKNxaJELzjL1SQoengFw6ZZU_0O9bPenYRan7eA-lnpJy91bN4jYq6pVGEYCF1-hh1lLWuGtiaoQGbhVxxvN02Aq"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0e39-demander-un-conseil-juridique/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "eydAN5O7mFV4oStjJHmBBpUdODCtRwEb"
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0f93-module-de-formation-sur-lurbanisme-favorable-/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "vMCmmhzMFVp32irk6k5ycgXl9oF3uoVI"
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/37df-aap-securisation-eau-potable/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "eydAN5O7mFV4oStjJHmBBpUdODCtRwEb"
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/4e54-renover-le-patrimoine-bati-communal/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "wAZmgCpxGr66B3wnQq2zxLHc7UbgQICi"
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/6f6a-beneficier-des-groupements-de-commandes/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "wAZmgCpxGr66B3wnQq2zxLHc7UbgQICi"
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/9fda-former-et-informer-les-elus/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "wAZmgCpxGr66B3wnQq2zxLHc7UbgQICi"
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/mentions-l%C3%A9gales/",
+							"uri": "https://aides-territoires.beta.gouv.fr/cartographie/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "com/serve/MUIEAID1B3iOXpx--vgRN85vekV5aKffWoAdi2BjrK6e6DJH9CX0bmlIWEn3uPmu1ViQG6kvU9KbTN7A3__6KMyWqxJd8odhAxOcuC2z1Ovr9bLKzhPm0ZyqGKNxaJELzjL1SQoengFw6ZZU_0O9bPenYRan7eA-lnpJy91bN4jYq6pVGEYCF1-hh1lLWuGtiaoQGbhVxxvN02Aq"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/politique-de-confidentialit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/connexion/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "hrjJFjhySbDqu5iFyGLo6GqppNXFr3RY"
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "k0xHpe3nl3PYcNd0KNIVENQ4JqsxBY3p"
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/portails/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "com/serve/MUIEAID1B3iOXpx--vgRN85vekV5aKffWoAdi2BjrK6e6DJH9CX0bmlIWEn3uPmu1ViQG6kvU9KbTN7A3__6KMyWqxJd8odhAxOcuC2z1Ovr9bLKzhPm0ZyqGKNxaJELzjL1SQoengFw6ZZU_0O9bPenYRan7eA-lnpJy91bN4jYq6pVGEYCF1-hh1lLWuGtiaoQGbhVxxvN02Aq"
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/programmes/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "com/serve/MUIEAID1B3iOXpx--vgRN85vekV5aKffWoAdi2BjrK6e6DJH9CX0bmlIWEn3uPmu1ViQG6kvU9KbTN7A3__6KMyWqxJd8odhAxOcuC2z1Ovr9bLKzhPm0ZyqGKNxaJELzjL1SQoengFw6ZZU_0O9bPenYRan7eA-lnpJy91bN4jYq6pVGEYCF1-hh1lLWuGtiaoQGbhVxxvN02Aq"
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-publics/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "com/serve/MUIEAID1B3iOXpx--vgRN85vekV5aKffWoAdi2BjrK6e6DJH9CX0bmlIWEn3uPmu1ViQG6kvU9KbTN7A3__6KMyWqxJd8odhAxOcuC2z1Ovr9bLKzhPm0ZyqGKNxaJELzjL1SQoengFw6ZZU_0O9bPenYRan7eA-lnpJy91bN4jYq6pVGEYCF1-hh1lLWuGtiaoQGbhVxxvN02Aq"
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-subventionnes/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -595,7 +738,7 @@
 					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "1"
+					"sourceid": "7"
 				},
 				{
 					"pluginid": "10027",
@@ -608,21 +751,7 @@
 					"desc": "<p>The response appears to contain suspicious comments which may help an attacker. Note: Matches made within script blocks or files are against the entire content not only comments.</p>",
 					"instances":[ 
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0e39-demander-un-conseil-juridique/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "USER"
-						},
-						{
 							"uri": "https://aides-territoires.beta.gouv.fr/aides/0f93-module-de-formation-sur-lurbanisme-favorable-/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "USER"
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/2a09-valorisation-des-langues-de-france/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -643,69 +772,83 @@
 							"evidence": "USER"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/5e8f-soutenir-la-formation-des-bafa-et-bafd/",
+							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/js/output.60b9ad34d188.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "USER"
+							"evidence": "later"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/6e6e-deplacement-au-congres-annuel-de-lamf/",
+							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/js/output.60b9ad34d188.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "USER"
+							"evidence": "query"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/6f6a-beneficier-des-groupements-de-commandes/",
+							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/js/output.60b9ad34d188.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "USER"
+							"evidence": "select"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/7450-promouvoir-lacces-des-eleves-decoles-elementa/",
+							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/js/output.60b9ad34d188.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "USER"
+							"evidence": "username"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/8c69-soutenir-des-micro-projets-pour-la-preservati/",
+							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/js/output.dc823c8e1f7f.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "USER"
+							"evidence": "username"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/9fda-former-et-informer-les-elus/",
+							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/js/output.dda465b10255.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "USER"
+							"evidence": "later"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/be22-soutenir-les-clubs-evoluant-en-championnat-na/",
+							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/js/output.dda465b10255.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "USER"
+							"evidence": "query"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/ff2c-realiser-un-compagnonnage-entre-acteurs-de-la/",
+							"uri": "https://aides-territoires.beta.gouv.fr/static/CACHE/js/output.dda465b10255.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "USER"
+							"evidence": "select"
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/dsfr/dist/dsfr/dsfr.module.min.145a6a03c14f.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "select"
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/static/dsfr/dist/dsfr/dsfr.nomodule.min.c14d68212cab.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "select"
 						}
 					],
 					"count": "13",
 					"solution": "<p>Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.</p>",
-					"otherinfo": "<p>The following pattern was used: \\bUSER\\b and was detected in the element starting with: \"<script nonce=\"vh4PLxDfDxmJBi9Iq+0aqg==\"></p><p>        if ('False' !== \"False\") {</p><p>            var PREPOPULATE_APPLICATION_URL = true;\", see evidence field for the suspicious comment/snippet.</p>",
+					"otherinfo": "<p>The following pattern was used: \\bUSER\\b and was detected in the element starting with: \"<script nonce=\"2h4KQoTLBlJEO5PUmb1J8w==\"></p><p>        if ('False' !== \"False\") {</p><p>            var PREPOPULATE_APPLICATION_URL = true;\", see evidence field for the suspicious comment/snippet.</p>",
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "3301"
+					"sourceid": "4007"
 				},
 				{
 					"pluginid": "10109",
@@ -732,63 +875,63 @@
 							"evidence": "<a class=\"fr-nav__link\" href=\"/\" target=\"_self\">Accueil</a>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/accessibilit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<a class=\"fr-nav__link\" href=\"/\" target=\"_self\">Accueil</a>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0e39-demander-un-conseil-juridique/",
+							"uri": "https://aides-territoires.beta.gouv.fr/blog/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<a class=\"fr-nav__link\" href=\"/\" target=\"_self\">Accueil</a>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0f93-module-de-formation-sur-lurbanisme-favorable-/",
+							"uri": "https://aides-territoires.beta.gouv.fr/cartographie/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<a class=\"fr-nav__link\" href=\"/\" target=\"_self\">Accueil</a>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/37df-aap-securisation-eau-potable/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/connexion/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<a class=\"fr-nav__link\" href=\"/\" target=\"_self\">Accueil</a>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/4e54-renover-le-patrimoine-bati-communal/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<a class=\"fr-nav__link\" href=\"/\" target=\"_self\">Accueil</a>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/6f6a-beneficier-des-groupements-de-commandes/",
+							"uri": "https://aides-territoires.beta.gouv.fr/portails/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<a class=\"fr-nav__link\" href=\"/\" target=\"_self\">Accueil</a>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/9fda-former-et-informer-les-elus/",
+							"uri": "https://aides-territoires.beta.gouv.fr/programmes/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<a class=\"fr-nav__link\" href=\"/\" target=\"_self\">Accueil</a>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/mentions-l%C3%A9gales/",
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-publics/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "<a class=\"fr-nav__link\" href=\"/\" target=\"_self\">Accueil</a>"
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/politique-de-confidentialit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-subventionnes/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -802,6 +945,39 @@
 					"cweid": "-1",
 					"wascid": "-1",
 					"sourceid": "1"
+				},
+				{
+					"pluginid": "10049",
+					"alertRef": "10049",
+					"alert": "Non-Storable Content",
+					"name": "Non-Storable Content",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>",
+					"instances":[ 
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/publications/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "302"
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/connexion/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "no-store"
+						}
+					],
+					"count": "2",
+					"solution": "<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).   </p>",
+					"otherinfo": "",
+					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p>",
+					"cweid": "524",
+					"wascid": "13",
+					"sourceid": "166"
 				},
 				{
 					"pluginid": "10015",
@@ -828,49 +1004,56 @@
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/accessibilit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/",
 							"method": "GET",
 							"param": "Cache-Control",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0e39-demander-un-conseil-juridique/",
+							"uri": "https://aides-territoires.beta.gouv.fr/blog/",
 							"method": "GET",
 							"param": "Cache-Control",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0f93-module-de-formation-sur-lurbanisme-favorable-/",
+							"uri": "https://aides-territoires.beta.gouv.fr/cartographie/",
 							"method": "GET",
 							"param": "Cache-Control",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/37df-aap-securisation-eau-potable/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
 							"method": "GET",
 							"param": "Cache-Control",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/9fda-former-et-informer-les-elus/",
+							"uri": "https://aides-territoires.beta.gouv.fr/portails/",
 							"method": "GET",
 							"param": "Cache-Control",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/mentions-l%C3%A9gales/",
+							"uri": "https://aides-territoires.beta.gouv.fr/programmes/",
 							"method": "GET",
 							"param": "Cache-Control",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/politique-de-confidentialit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-publics/",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-subventionnes/",
 							"method": "GET",
 							"param": "Cache-Control",
 							"attack": "",
@@ -891,13 +1074,13 @@
 							"evidence": ""
 						}
 					],
-					"count": "11",
+					"count": "12",
 					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
 					"otherinfo": "",
 					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
 					"cweid": "525",
 					"wascid": "13",
-					"sourceid": "1"
+					"sourceid": "7"
 				},
 				{
 					"pluginid": "10049",
@@ -924,49 +1107,35 @@
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/accessibilit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0e39-demander-un-conseil-juridique/",
+							"uri": "https://aides-territoires.beta.gouv.fr/comptes/inscription/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/0f93-module-de-formation-sur-lurbanisme-favorable-/",
+							"uri": "https://aides-territoires.beta.gouv.fr/portails/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/37df-aap-securisation-eau-potable/",
+							"uri": "https://aides-territoires.beta.gouv.fr/programmes/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": ""
 						},
 						{
-							"uri": "https://aides-territoires.beta.gouv.fr/aides/9fda-former-et-informer-les-elus/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": ""
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/mentions-l%C3%A9gales/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": ""
-						},
-						{
-							"uri": "https://aides-territoires.beta.gouv.fr/politique-de-confidentialit%C3%A9/",
+							"uri": "https://aides-territoires.beta.gouv.fr/projets/projets-subventionnes/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -987,13 +1156,102 @@
 							"evidence": ""
 						}
 					],
-					"count": "11",
+					"count": "9",
 					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. </p>",
 					"otherinfo": "<p>In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234.</p>",
 					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "1"
+					"sourceid": "7"
+				},
+				{
+					"pluginid": "10031",
+					"alertRef": "10031",
+					"alert": "User Controllable HTML Element Attribute (Potential XSS)",
+					"name": "User Controllable HTML Element Attribute (Potential XSS)",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "Informational (Low)",
+					"desc": "<p>This check looks at user-supplied input in query string parameters and POST data to identify where certain HTML attribute values might be controlled. This provides hot-spot detection for XSS (cross-site scripting) that will require further review by a security analyst to determine exploitability.</p>",
+					"instances":[ 
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/?action=search-filter&aid_type=loan&apply_before=2023-03-27&call_for_projects_only=on&categories=livres&destinations=investment&integration&is_charged=True&mobilization_step=op&perimeter&programs=actee-action-des-collectivites-territoriales-pour&targeted_audiences=commune&text",
+							"method": "GET",
+							"param": "action",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/?action=search-filter&aid_type=loan&apply_before=2023-03-27&call_for_projects_only=on&categories=livres&destinations=investment&integration&is_charged=True&mobilization_step=op&perimeter&programs=actee-action-des-collectivites-territoriales-pour&targeted_audiences=commune&text",
+							"method": "GET",
+							"param": "aid_type",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/?action=search-filter&aid_type=loan&apply_before=2023-03-27&call_for_projects_only=on&categories=livres&destinations=investment&integration&is_charged=True&mobilization_step=op&perimeter&programs=actee-action-des-collectivites-territoriales-pour&targeted_audiences=commune&text",
+							"method": "GET",
+							"param": "apply_before",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/?action=search-filter&aid_type=loan&apply_before=2023-03-27&call_for_projects_only=on&categories=livres&destinations=investment&integration&is_charged=True&mobilization_step=op&perimeter&programs=actee-action-des-collectivites-territoriales-pour&targeted_audiences=commune&text",
+							"method": "GET",
+							"param": "categories",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/?action=search-filter&aid_type=loan&apply_before=2023-03-27&call_for_projects_only=on&categories=livres&destinations=investment&integration&is_charged=True&mobilization_step=op&perimeter&programs=actee-action-des-collectivites-territoriales-pour&targeted_audiences=commune&text",
+							"method": "GET",
+							"param": "destinations",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/?action=search-filter&aid_type=loan&apply_before=2023-03-27&call_for_projects_only=on&categories=livres&destinations=investment&integration&is_charged=True&mobilization_step=op&perimeter&programs=actee-action-des-collectivites-territoriales-pour&targeted_audiences=commune&text",
+							"method": "GET",
+							"param": "is_charged",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/?action=search-filter&aid_type=loan&apply_before=2023-03-27&call_for_projects_only=on&categories=livres&destinations=investment&integration&is_charged=True&mobilization_step=op&perimeter&programs=actee-action-des-collectivites-territoriales-pour&targeted_audiences=commune&text",
+							"method": "GET",
+							"param": "is_charged",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/?action=search-filter&aid_type=loan&apply_before=2023-03-27&call_for_projects_only=on&categories=livres&destinations=investment&integration&is_charged=True&mobilization_step=op&perimeter&programs=actee-action-des-collectivites-territoriales-pour&targeted_audiences=commune&text",
+							"method": "GET",
+							"param": "mobilization_step",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/?action=search-filter&aid_type=loan&apply_before=2023-03-27&call_for_projects_only=on&categories=livres&destinations=investment&integration&is_charged=True&mobilization_step=op&perimeter&programs=actee-action-des-collectivites-territoriales-pour&targeted_audiences=commune&text",
+							"method": "GET",
+							"param": "programs",
+							"attack": "",
+							"evidence": ""
+						},
+						{
+							"uri": "https://aides-territoires.beta.gouv.fr/aides/?action=search-filter&aid_type=loan&apply_before=2023-03-27&call_for_projects_only=on&categories=livres&destinations=investment&integration&is_charged=True&mobilization_step=op&perimeter&programs=actee-action-des-collectivites-territoriales-pour&targeted_audiences=commune&text",
+							"method": "GET",
+							"param": "targeted_audiences",
+							"attack": "",
+							"evidence": ""
+						}
+					],
+					"count": "10",
+					"solution": "<p>Validate all input and sanitize output it before writing to any HTML attributes.</p>",
+					"otherinfo": "<p>User-controlled HTML attribute values were found. Try injecting special characters to see if XSS might be possible. The page at the following URL:</p><p></p><p>https://aides-territoires.beta.gouv.fr/aides/?action=search-filter&aid_type=loan&apply_before=2023-03-27&call_for_projects_only=on&categories=livres&destinations=investment&integration&is_charged=True&mobilization_step=op&perimeter&programs=actee-action-des-collectivites-territoriales-pour&targeted_audiences=commune&text</p><p></p><p>appears to include user input in: </p><p></p><p>a(n) [button] tag [value] attribute </p><p></p><p>The user input found was:</p><p>action=search-filter</p><p></p><p>The user-controlled value was:</p><p>search-filter</p>",
+					"reference": "<p>http://websecuritytool.codeplex.com/wikipage?title=Checks#user-controlled-html-attribute</p>",
+					"cweid": "20",
+					"wascid": "20",
+					"sourceid": "4079"
 				}
 			]
 		}
