@@ -1,7 +1,7 @@
 {
 	"@programName": "OWASP ZAP",
 	"@version": "2.12.0",
-	"@generated": "Sun, 16 Apr 2023 02:16:48",
+	"@generated": "Mon, 17 Apr 2023 02:13:56",
 	"site":[ 
 		{
 			"@name": "https://histologe.beta.gouv.fr",
@@ -98,17 +98,9 @@
 							"attack": "",
 							"evidence": "<form name=\"postal_code_search\" method=\"post\" id=\"front_postalcodesearch\" class=\"needs-validation\" novalidate=\"true\">",
 							"otherinfo": "No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"postal_code_search__token\" \"postal_code_search_postalcode\" ]."
-						},
-						{
-							"uri": "https://histologe.beta.gouv.fr/contact",
-							"method": "POST",
-							"param": "",
-							"attack": "",
-							"evidence": "<form name=\"contact\" method=\"post\" id=\"front_contact\" class=\"needs-validation\" novalidate=\"true\">",
-							"otherinfo": "No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"contact__token\" \"contact_email\" \"contact_nom\" ]."
 						}
 					],
-					"count": "11",
+					"count": "10",
 					"solution": "<p>Phase: Architecture and Design</p><p>Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.</p><p>For example, use anti-CSRF packages such as the OWASP CSRFGuard.</p><p></p><p>Phase: Implementation</p><p>Ensure that your application is free of cross-site scripting issues, because most CSRF defenses can be bypassed using attacker-controlled script.</p><p></p><p>Phase: Architecture and Design</p><p>Generate a unique nonce for each form, place the nonce into the form, and verify the nonce upon receipt of the form. Be sure that the nonce is not predictable (CWE-330).</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Use the ESAPI Session Management control.</p><p>This control includes a component for CSRF.</p><p></p><p>Do not use the GET method for any request that triggers a state change.</p><p></p><p>Phase: Implementation</p><p>Check the HTTP Referer header to see if the request originated from an expected page. This could break legitimate functionality, because users or proxies may have disabled sending the Referer for privacy reasons.</p>",
 					"otherinfo": "<p>No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"postal_code_search__token\" \"postal_code_search_postalcode\" ].</p>",
 					"reference": "<p>http://projects.webappsec.org/Cross-Site-Request-Forgery</p><p>http://cwe.mitre.org/data/definitions/352.html</p>",
@@ -175,6 +167,14 @@
 							"otherinfo": ""
 						},
 						{
+							"uri": "https://histologe.beta.gouv.fr/robots.txt",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
 							"uri": "https://histologe.beta.gouv.fr/signalement",
 							"method": "GET",
 							"param": "",
@@ -207,7 +207,7 @@
 							"otherinfo": ""
 						}
 					],
-					"count": "10",
+					"count": "11",
 					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>http://www.w3.org/TR/CSP/</p><p>http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html</p><p>http://www.html5rocks.com/en/tutorials/security/content-security-policy/</p><p>http://caniuse.com/#feat=contentsecuritypolicy</p><p>http://content-security-policy.com/</p>",
@@ -274,6 +274,14 @@
 							"otherinfo": ""
 						},
 						{
+							"uri": "https://histologe.beta.gouv.fr/mot-de-pass-perdu",
+							"method": "GET",
+							"param": "X-Frame-Options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
 							"uri": "https://histologe.beta.gouv.fr/qui-sommes-nous",
 							"method": "GET",
 							"param": "X-Frame-Options",
@@ -299,14 +307,6 @@
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/",
-							"method": "POST",
-							"param": "X-Frame-Options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://histologe.beta.gouv.fr/contact",
 							"method": "POST",
 							"param": "X-Frame-Options",
 							"attack": "",
@@ -483,7 +483,7 @@
 					"reference": "<p>https://developer.mozilla.org/en/docs/Web/Security/Subresource_Integrity</p>",
 					"cweid": "345",
 					"wascid": "15",
-					"sourceid": "6"
+					"sourceid": "7"
 				},
 				{
 					"pluginid": "10011",
@@ -528,7 +528,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=0221b8043c83729a276b.E8OB8gPLLVtk07CUs9UafUxHX4t08wVOyY661yQsVS4.TIDMuUn8VDQPptWny74qImE_C8AzuUc6pMbT4F5PFGNajNu9U55IMQiK0w&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=28.Ac2qqHCPboQAl3HmpRH-bMaHHdwuY53l8E8pl_iEKcs.MoaeywHlXdVN0T-ukCXOM4y1KbtCWt7XqCtkpKzeGaVNiMLZEcUZ8E7dEg&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "PHPSESSID",
 							"attack": "",
@@ -536,7 +536,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=581a6790b930de214758.k4_LXqNuar1lyaxXvIsJmsl-ktGUB5k9G4B1UAegRtU.zMyGFelZE9IOvMlkxOA5xeQGxprTTdtJdsgcZ33DB5jawJER8zsP1wmQzw&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=8fb.opnHi2ybLMhZkb4KY1rQKcMHh7VXBfNJTxjez61j7A8.kdLz6B3xH5kU1_BCVm7gdok1s9I7PLB7F3yT_Pk53GHu3K_6DdFbvBfb3Q&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "PHPSESSID",
 							"attack": "",
@@ -544,7 +544,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=62b14d6919f0ab88.j4DIDMIlqf3kR0znu2OiJzIeK1bq62sjITqxSUV9ngQ.0MOFR4gS0JKPMinUwwiSeB9mfx2toSlXTHLYfj8e30nGz5JDknDMl4geLw&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=956.QlKIVMdtoNarTj-lxiq1mnp5cqiLTT2vQmixe7AllMU.cRm8N7YHk4fmCHHt8x6FxTBLRs_ndH6dGgz8SOR_pKsOF-AlpifXouUEXA&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "PHPSESSID",
 							"attack": "",
@@ -552,7 +552,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=8f3622.JZHd8zK08xs4HDrVxob4JILYNCPj2WR6jgPuYiwNXn4.etKQuHiDinRTaV_mvu3Ie6-gYGikkyYO40uHVVZuHzNs3oe8YuGWcVRFWQ&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=bd7904c00a3e1ec657.8ZpUIGbcW7bTRus6sII27j2w1Dzt7fLZvPlFfF5DsBI.wtFgQxe2aOeeAKVyhbYGsXeC4FuB1LHr5J0ITwoZgHy93zxRB5Yswp0MiA&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "PHPSESSID",
 							"attack": "",
@@ -560,7 +560,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=b10a071f15cecad1edd9ea6.1t77Bd4KmsR_IqeiYVPJ70ROYuG4xWV7Ap1MPNcvuGU.iZ22TpQ946sUV8KRGTj5sGk2Nqr_jycPb9UlC61M-SifkaFKjl__rhN7xA&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=ef54.o-olKh3BidXcFLmVieOHOt_W8n4JteHDrH8DG7isYQE.kKERSWyruoSRUvfdvNe3ZZXkxhlljKLx9BtOKOz2UW_vr01bfIv-oZJe2g&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "PHPSESSID",
 							"attack": "",
@@ -568,7 +568,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=e29d.Q79gcase3Rxht2ZIsv827oRZNUc_OSChqmsYLqmrnfE.HPwtOuEppHMKwgN7ypQGsakhYQx4c2LVxyNxGdPI3LwK8Do--0u4dg3uBQ&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=f962c77ac8898c4df4e886.NXJmIVYo6R6YoF_xj93jDOyDzgl8lcws2m9rf9vZTzM.RisiTiBahFrexTCpx7mgXpTKtmJE74UatFY9Ornre2pGKjVgBBi2J834NA&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "PHPSESSID",
 							"attack": "",
@@ -756,7 +756,7 @@
 					"reference": "<p>https://angular.io/guide/security</p>",
 					"cweid": "749",
 					"wascid": "-1",
-					"sourceid": "138"
+					"sourceid": "122"
 				},
 				{
 					"pluginid": "10063",
@@ -817,15 +817,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/dsfr/dsfr.nomodule.min.js",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://histologe.beta.gouv.fr/js/const.min.js?v=2023041602",
+							"uri": "https://histologe.beta.gouv.fr/js/const.min.js?v=2023041702",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -850,6 +842,14 @@
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://histologe.beta.gouv.fr/statistiques",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -932,14 +932,6 @@
 							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/dsfr/dsfr.nomodule.min.js",
-							"method": "GET",
-							"param": "X-Content-Type-Options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
 							"uri": "https://histologe.beta.gouv.fr/favicon.ico",
 							"method": "GET",
 							"param": "X-Content-Type-Options",
@@ -948,7 +940,7 @@
 							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/js/const.min.js?v=2023041602",
+							"uri": "https://histologe.beta.gouv.fr/js/const.min.js?v=2023041702",
 							"method": "GET",
 							"param": "X-Content-Type-Options",
 							"attack": "",
@@ -957,6 +949,14 @@
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/qui-sommes-nous",
+							"method": "GET",
+							"param": "X-Content-Type-Options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"uri": "https://histologe.beta.gouv.fr/statistiques",
 							"method": "GET",
 							"param": "X-Content-Type-Options",
 							"attack": "",
@@ -987,48 +987,48 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "Np1Iy5wF6JZpKCGleIurhfw308wowtztXZWpjjmuYPI",
-							"otherinfo": "6\uFFFDH\u02DC\\x0005\uFFFDi(!\uFFFDx\uFFFD\uFFFD\uFFFD\uFFFD7\uFFFD\uFFFD(\uFFFD\uFFFD\uFFFD]\uFFFD\uFFFD\uFFFD9\uFFFD`\uFFFD"
+							"evidence": "T-FPtK9An0GT9Mq4APS_ILImNh9aqSFbaRp5_xfne_s",
+							"otherinfo": "O\uFFFDO\uFFFD\uFFFD@\uFFFDA\uFFFD\uFFFD\u02B8\\x0000\uFFFD\uFFFD \uFFFD&6\\x001fZ\uFFFD![i\\x001ay\uFFFD\\x0017\uFFFD{\uFFFD"
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "gkO2C7V5n2rxcAJerbEZpP1RvdKTpep4MejrDxHAQMo",
-							"otherinfo": "\uFFFDC\uFFFD\\x000b\uFFFDy\uFFFDj\uFFFDp\\x0002^\uFFFD\uFFFD\\x0019\uFFFD\uFFFDQ\uFFFD\u0493\uFFFD\uFFFDx1\uFFFD\uFFFD\\x000f\\x0011\uFFFD@\uFFFD"
+							"evidence": "mrBOT6IG62Jw0o6rsaLWVlLDkbi77lWC1zpB84FutWs",
+							"otherinfo": "\uFFFD\uFFFDNO\uFFFD\\x0006\uFFFDbp\u048E\uFFFD\uFFFD\uFFFD\uFFFDVR\u00D1\uFFFD\uFFFD\uFFFDU\uFFFD\uFFFD:A\uFFFDn\uFFFDk"
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "RqG5I7ojbOZmfYpb2nO-vlGDBiPB6Z9flxqOgXzUKRg",
-							"otherinfo": "F\uFFFD\uFFFD#\uFFFD#l\uFFFDf}\uFFFD[\uFFFDs\uFFFD\uFFFDQ\uFFFD\\x0006#\uFFFD\uFFFD_\uFFFD\\x001a\uFFFD\uFFFD|\uFFFD)\\x0018"
+							"evidence": "5NarTxDbNLxPoA5OMfSJVH4jMrP1cFSwc48oWYC1hyE",
+							"otherinfo": "\uFFFD\u05ABO\\x0010\uFFFD4\uFFFDO\uFFFD\\x000eN1\uFFFDT~#2\uFFFD\uFFFDpT\uFFFDs\uFFFD(Y\uFFFD\uFFFD\uFFFD!"
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/activation",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "eO6oNb-e_CygJFSjPpqTZce019BTSBJcKesAV194jL8",
-							"otherinfo": "x\uFFFD5\uFFFD\uFFFD\uFFFD,\uFFFD$T\uFFFD>\uFFFD\uFFFDe\u01F4\uFFFD\uFFFDSH\\x0012\\)\uFFFD\\x0000W_x\uFFFD\uFFFD"
+							"evidence": "UdeQ3tZPjiVP59ZGG2iSOwSV97wk-6xFB0PNACUPppk",
+							"otherinfo": "Q\u05D0\uFFFD\uFFFDO\uFFFD%O\uFFFD\uFFFDF\\x001bh\uFFFD;\\x0004\uFFFD\uFFFD\uFFFD$\uFFFD\uFFFDE\\x0007C\uFFFD\\x0000%\\x000f\uFFFD\uFFFD"
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/connexion",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "VYJT8ash-3a_6nlyXcUfbcPelH81JAbqVPA8xBrWtco",
-							"otherinfo": "U\uFFFDS\uFFFD!\uFFFDv\uFFFD\uFFFDyr]\uFFFD\\x001fm\uFFFD\u07945$\\x0006\uFFFDT\uFFFD<\uFFFD\\x001a\u05B5\uFFFD"
+							"evidence": "mkSTXEDGtdl3hlqxjhd_ANLX1o5Xs-_g8oTyRYOKoJI",
+							"otherinfo": "\uFFFDD\uFFFD\\@\u01B5\uFFFDw\uFFFDZ\uFFFD\uFFFD\\x0017\\x0000\uFFFD\uFFFD\u058EW\uFFFD\uFFFD\uFFFD\uFFFD\uFFFDE\uFFFD\uFFFD\uFFFD\uFFFD"
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/contact",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "jK53iCnmaZo9O4XemUVH0QY-c_xcgIe80bpmjw_ehJM",
-							"otherinfo": "\uFFFD\uFFFDw\uFFFD)\uFFFDi\uFFFD=;\uFFFD\u0799EG\uFFFD\\x0006>s\uFFFD\\\uFFFD\uFFFD\uFFFD\u047Af\uFFFD\\x000f\u0784\uFFFD"
+							"evidence": "SAoOElgLPfIrDeocbhKNjDoR8N6w4mLiscPqKZnEsWY",
+							"otherinfo": "H\n\\x000e\\x0012X\\x000b=\uFFFD+\r\uFFFD\\x001cn\\x0012\uFFFD\uFFFD:\\x0011\uFFFD\u07B0\uFFFDb\uFFFD\uFFFD\uFFFD)\uFFFD\u0131f"
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/dsfr/dsfr.min.css",
@@ -1055,6 +1055,14 @@
 							"otherinfo": "\uFFFD\uFFFD\uFFFD)\"\uFFFD\uFFFDZq\uFFFD?\\x000c\\x001f\uFFFDj\\x0007\uFFFD\uFFFDm\uFFFD\uFFFD\uFFFD|\uFFFD\u011F\uFFFD~\uFFFD\uFFFD\uFFFDw\uFFFDu\uFFFD"
 						},
 						{
+							"uri": "https://histologe.beta.gouv.fr/js/tinymce/tinymce.min.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
+							"otherinfo": "GIF89a\\x0001\\x0000\\x0001\\x0000\uFFFD\\x0000\\x0000\\x0000\\x0000\\x0000\uFFFD\uFFFD\uFFFD!\uFFFD\\x0004\\x0001\\x0000\\x0000\\x0000\\x0000,\\x0000\\x0000\\x0000\\x0000\\x0001\\x0000\\x0001\\x0000\\x0000\\x0002\\x0001D\\x0000;"
+						},
+						{
 							"uri": "https://histologe.beta.gouv.fr/signalement",
 							"method": "GET",
 							"param": "",
@@ -1067,21 +1075,13 @@
 							"method": "POST",
 							"param": "",
 							"attack": "",
-							"evidence": "64PKKZQ51MfBovovVdVNUh6XHH6K0LDmFv7qal_KHVg",
-							"otherinfo": "\uFFFD\uFFFD)\uFFFD9\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD/U\uFFFDMR\\x001e\uFFFD\\x001c~\uFFFD\u0430\uFFFD\\x0016\uFFFD\uFFFDj_\uFFFD\\x001dX"
-						},
-						{
-							"uri": "https://histologe.beta.gouv.fr/contact",
-							"method": "POST",
-							"param": "",
-							"attack": "",
-							"evidence": "znnqUaYu3elF5wmkL2dubfZiNrVHoUxeP3utPlGLJzM",
-							"otherinfo": "\uFFFDy\uFFFDQ\uFFFD.\uFFFD\uFFFDE\uFFFD\t\uFFFD/gnm\uFFFDb6\uFFFDG\uFFFDL^?{\uFFFD>Q\uFFFD'3"
+							"evidence": "qaNDqf4VQZilV-BI5xT9f9Hwu6elGceNu6lNtuLE0Wg",
+							"otherinfo": "\uFFFD\uFFFDC\uFFFD\uFFFD\\x0015A\uFFFD\uFFFDW\uFFFDH\uFFFD\\x0014\uFFFD\uFFFD\uD8AE\uDDE5\\x0019\u01CD\uFFFD\uFFFDM\uFFFD\uFFFD\uFFFD\uFFFDh"
 						}
 					],
 					"count": "12",
 					"solution": "<p>Manually confirm that the Base64 data does not leak sensitive information, and that the data cannot be aggregated/used to exploit other vulnerabilities.</p>",
-					"otherinfo": "<p>6\uFFFDH\u02DC\\x0005\uFFFDi(!\uFFFDx\uFFFD\uFFFD\uFFFD\uFFFD7\uFFFD\uFFFD(\uFFFD\uFFFD\uFFFD]\uFFFD\uFFFD\uFFFD9\uFFFD`\uFFFD</p>",
+					"otherinfo": "<p>O\uFFFDO\uFFFD\uFFFD@\uFFFDA\uFFFD\uFFFD\u02B8\\x0000\uFFFD\uFFFD \uFFFD&6\\x001fZ\uFFFD![i\\x001ay\uFFFD\\x0017\uFFFD{\uFFFD</p>",
 					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
@@ -1098,7 +1098,7 @@
 					"desc": "<p>The request appeared to contain sensitive information leaked in the URL. This can violate PCI and most organizational compliance policies. You can configure the list of strings for this check to add or remove values specific to your environment.</p>",
 					"instances":[ 
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=0221b8043c83729a276b.E8OB8gPLLVtk07CUs9UafUxHX4t08wVOyY661yQsVS4.TIDMuUn8VDQPptWny74qImE_C8AzuUc6pMbT4F5PFGNajNu9U55IMQiK0w&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=28.Ac2qqHCPboQAl3HmpRH-bMaHHdwuY53l8E8pl_iEKcs.MoaeywHlXdVN0T-ukCXOM4y1KbtCWt7XqCtkpKzeGaVNiMLZEcUZ8E7dEg&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "_token",
 							"attack": "",
@@ -1106,7 +1106,7 @@
 							"otherinfo": "The URL contains potentially sensitive information. The following string was found via the pattern: token\n_token"
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=581a6790b930de214758.k4_LXqNuar1lyaxXvIsJmsl-ktGUB5k9G4B1UAegRtU.zMyGFelZE9IOvMlkxOA5xeQGxprTTdtJdsgcZ33DB5jawJER8zsP1wmQzw&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=8fb.opnHi2ybLMhZkb4KY1rQKcMHh7VXBfNJTxjez61j7A8.kdLz6B3xH5kU1_BCVm7gdok1s9I7PLB7F3yT_Pk53GHu3K_6DdFbvBfb3Q&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "_token",
 							"attack": "",
@@ -1114,7 +1114,7 @@
 							"otherinfo": "The URL contains potentially sensitive information. The following string was found via the pattern: token\n_token"
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=62b14d6919f0ab88.j4DIDMIlqf3kR0znu2OiJzIeK1bq62sjITqxSUV9ngQ.0MOFR4gS0JKPMinUwwiSeB9mfx2toSlXTHLYfj8e30nGz5JDknDMl4geLw&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=956.QlKIVMdtoNarTj-lxiq1mnp5cqiLTT2vQmixe7AllMU.cRm8N7YHk4fmCHHt8x6FxTBLRs_ndH6dGgz8SOR_pKsOF-AlpifXouUEXA&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "_token",
 							"attack": "",
@@ -1122,7 +1122,7 @@
 							"otherinfo": "The URL contains potentially sensitive information. The following string was found via the pattern: token\n_token"
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=8f3622.JZHd8zK08xs4HDrVxob4JILYNCPj2WR6jgPuYiwNXn4.etKQuHiDinRTaV_mvu3Ie6-gYGikkyYO40uHVVZuHzNs3oe8YuGWcVRFWQ&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=bd7904c00a3e1ec657.8ZpUIGbcW7bTRus6sII27j2w1Dzt7fLZvPlFfF5DsBI.wtFgQxe2aOeeAKVyhbYGsXeC4FuB1LHr5J0ITwoZgHy93zxRB5Yswp0MiA&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "_token",
 							"attack": "",
@@ -1130,7 +1130,7 @@
 							"otherinfo": "The URL contains potentially sensitive information. The following string was found via the pattern: token\n_token"
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=b10a071f15cecad1edd9ea6.1t77Bd4KmsR_IqeiYVPJ70ROYuG4xWV7Ap1MPNcvuGU.iZ22TpQ946sUV8KRGTj5sGk2Nqr_jycPb9UlC61M-SifkaFKjl__rhN7xA&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=ef54.o-olKh3BidXcFLmVieOHOt_W8n4JteHDrH8DG7isYQE.kKERSWyruoSRUvfdvNe3ZZXkxhlljKLx9BtOKOz2UW_vr01bfIv-oZJe2g&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "_token",
 							"attack": "",
@@ -1138,7 +1138,7 @@
 							"otherinfo": "The URL contains potentially sensitive information. The following string was found via the pattern: token\n_token"
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=e29d.Q79gcase3Rxht2ZIsv827oRZNUc_OSChqmsYLqmrnfE.HPwtOuEppHMKwgN7ypQGsakhYQx4c2LVxyNxGdPI3LwK8Do--0u4dg3uBQ&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=f962c77ac8898c4df4e886.NXJmIVYo6R6YoF_xj93jDOyDzgl8lcws2m9rf9vZTzM.RisiTiBahFrexTCpx7mgXpTKtmJE74UatFY9Ornre2pGKjVgBBi2J834NA&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "_token",
 							"attack": "",
@@ -1176,7 +1176,7 @@
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "147"
+					"sourceid": "150"
 				},
 				{
 					"pluginid": "10027",
@@ -1205,7 +1205,7 @@
 							"otherinfo": "The following pattern was used: \\bDB\\b and was detected in the element starting with: \"!function(){\"use strict\";var t=function(){this.modules={}},e={isActive:{configurable:!0},isLegacy:{configurable:!0}};t.prototype\", see evidence field for the suspicious comment/snippet."
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/js/app.js?v=2023041602",
+							"uri": "https://histologe.beta.gouv.fr/js/app.js?v=2023041702",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -1213,7 +1213,7 @@
 							"otherinfo": "The following pattern was used: \\bFROM\\b and was detected in the element starting with: \"        Array.from(files).forEach((file) => {\r\", see evidence field for the suspicious comment/snippet."
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/js/app.js?v=2023041602",
+							"uri": "https://histologe.beta.gouv.fr/js/app.js?v=2023041702",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -1221,7 +1221,7 @@
 							"otherinfo": "The following pattern was used: \\bSELECT\\b and was detected 9 times, the first in the element starting with: \"                    target.querySelectorAll('input:not([type=\"checkbox\"]),textarea,select').forEach(ipt => {\r\", see evidence field for the suspicious comment/snippet."
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/js/app.js?v=2023041602",
+							"uri": "https://histologe.beta.gouv.fr/js/app.js?v=2023041702",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -1229,7 +1229,7 @@
 							"otherinfo": "The following pattern was used: \\bUSER\\b and was detected 3 times, the first in the element starting with: \"        className = 'partner-row-user'\r\", see evidence field for the suspicious comment/snippet."
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/js/const.min.js?v=2023041602",
+							"uri": "https://histologe.beta.gouv.fr/js/const.min.js?v=2023041702",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -1283,15 +1283,23 @@
 							"attack": "",
 							"evidence": "where",
 							"otherinfo": "The following pattern was used: \\bWHERE\\b and was detected 2 times, the first in the element starting with: \"     * Variable length, for code points up to highStart, where the last single-value range starts.\r\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://histologe.beta.gouv.fr/js/tinymce/tinymce.min.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "query",
+							"otherinfo": "The following pattern was used: \\bQUERY\\b and was detected in the element starting with: \"!function(){\"use strict\";var e=function(e){if(null===e)return\"null\";if(void 0===e)return\"undefined\";var t=typeof e;return\"object\", see evidence field for the suspicious comment/snippet."
 						}
 					],
-					"count": "12",
+					"count": "13",
 					"solution": "<p>Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.</p>",
 					"otherinfo": "<p>The following pattern was used: \\bDB\\b and was detected in the element starting with: \"const e=new class{constructor(){this.modules={}}create(e){const t=new e;this.modules[t.type]=t}getModule(e){return this.modules[\", see evidence field for the suspicious comment/snippet.</p>",
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "71"
+					"sourceid": "64"
 				},
 				{
 					"pluginid": "10109",
@@ -1358,7 +1366,7 @@
 					"reference": "",
 					"cweid": "-1",
 					"wascid": "-1",
-					"sourceid": "49"
+					"sourceid": "51"
 				},
 				{
 					"pluginid": "10049",
@@ -1433,9 +1441,17 @@
 							"attack": "",
 							"evidence": "private",
 							"otherinfo": ""
+						},
+						{
+							"uri": "https://histologe.beta.gouv.fr/statistiques",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "private",
+							"otherinfo": ""
 						}
 					],
-					"count": "8",
+					"count": "9",
 					"solution": "<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).   </p>",
 					"otherinfo": "",
 					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p>",
@@ -1502,6 +1518,14 @@
 							"otherinfo": ""
 						},
 						{
+							"uri": "https://histologe.beta.gouv.fr/mot-de-pass-perdu",
+							"method": "GET",
+							"param": "Cache-Control",
+							"attack": "",
+							"evidence": "max-age=0, must-revalidate, private",
+							"otherinfo": ""
+						},
+						{
 							"uri": "https://histologe.beta.gouv.fr/qui-sommes-nous",
 							"method": "GET",
 							"param": "Cache-Control",
@@ -1532,14 +1556,6 @@
 							"attack": "",
 							"evidence": "max-age=0, must-revalidate, private",
 							"otherinfo": ""
-						},
-						{
-							"uri": "https://histologe.beta.gouv.fr/contact",
-							"method": "POST",
-							"param": "Cache-Control",
-							"attack": "",
-							"evidence": "max-age=0, must-revalidate, private",
-							"otherinfo": ""
 						}
 					],
 					"count": "11",
@@ -1561,14 +1577,6 @@
 					"desc": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users.  If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
 					"instances":[ 
 						{
-							"uri": "https://histologe.beta.gouv.fr/build/app.cda48b90.css",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
-						},
-						{
 							"uri": "https://histologe.beta.gouv.fr/dsfr/dsfr.module.min.js",
 							"method": "GET",
 							"param": "",
@@ -1585,13 +1593,13 @@
 							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
 						}
 					],
-					"count": "3",
+					"count": "2",
 					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. </p>",
 					"otherinfo": "<p>In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234.</p>",
 					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html (obsoleted by rfc7234)</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "60"
+					"sourceid": "64"
 				},
 				{
 					"pluginid": "10031",
@@ -2250,7 +2258,7 @@
 					"reference": "<p>http://websecuritytool.codeplex.com/wikipage?title=Checks#user-controlled-html-attribute</p>",
 					"cweid": "20",
 					"wascid": "20",
-					"sourceid": "120"
+					"sourceid": "124"
 				}
 			]
 		}
