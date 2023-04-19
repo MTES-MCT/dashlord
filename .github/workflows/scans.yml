@@ -1,21 +1,40 @@
 name: DashLord scans
 
 on:
-  schedule:
-    - cron: "0 0 * * *"
   workflow_dispatch:
     inputs:
       url:
-        description: "Single url with repositories to scan e.g. url\\;repo1,repo2 or empty to scan all urls"
+        description: "Single url to scan or scan all urls"
         required: false
         default: ""
+      tool:
+        description: "Single tool to run or use all tools"
+        type: choice
+        default: all
+        options:
+          - all
+          - codescan
+          - dependabot
+          - ecoindex
+          - lighthouse
+          - sonarcloud
+          - trivy
+          - zap
   push:
     branches:
+      - master
       - main
     paths:
-      - 'dashlord.yaml'
-      - 'dashlord.yml'
-      - 'urls.txt'
+      - "dashlord.yaml"
+      - "dashlord.yml"
+      - "urls.txt"
+  schedule:
+    - cron: "0 0 * * 0" # see https://crontab.guru
+
+# allow only one concurrent scan action
+concurrency:
+  cancel-in-progress: true
+  group: scans
 
 jobs:
   init:
@@ -25,7 +44,7 @@ jobs:
       urls: ${{ steps.init.outputs.urls }}
       sites: ${{ steps.init.outputs.sites }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: init
         uses: "SocialGouv/dashlord-actions/init@main"
 
@@ -40,7 +59,7 @@ jobs:
       matrix:
         sites: ${{ fromJson(needs.init.outputs.sites) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - run: |
           mkdir scans
@@ -54,7 +73,18 @@ jobs:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
+      - name: sonarcloud scan
+        if: ${{ matrix.sites.tools.sonarcloud }}
+        id: sonarcloud
+        continue-on-error: true
+        timeout-minutes: 10
+        uses: SocialGouv/dashlord-actions/sonarcloud@v1
+        with:
+          repos: ${{ join(matrix.sites.repositories) }}
+          output: "scans/sonarcloud.json"
+
       - name: Déclaration a11y
+        timeout-minutes: 10
         continue-on-error: true
         uses: "socialgouv/dashlord-actions/declaration-a11y@v1"
         if: ${{ matrix.sites.tools['declaration-a11y'] }}
@@ -64,6 +94,7 @@ jobs:
           
       - name: eco-index
         continue-on-error: true
+        timeout-minutes: 10
         uses: "socialgouv/dashlord-actions/ecoindex@v1"
         if: ${{ matrix.sites.tools.ecoindex }}
         with:
@@ -99,16 +130,14 @@ jobs:
           target: "${{ matrix.sites.url }}"
           cmd_options: "-a"
 
+        # https://github.com/treosh/lighthouse-ci-action#inputs
       - name: Lighthouse scan
-        continue-on-error: true
-        timeout-minutes: 10
-        uses: treosh/lighthouse-ci-action@v9
         if: ${{ matrix.sites.tools.lighthouse }}
+        timeout-minutes: 10
+        continue-on-error: true
+        uses: socialgouv/dashlord-actions/lhci@v1
         with:
-          urls: "${{ matrix.sites.url }}"
-          uploadArtifacts: false
-          temporaryPublicStorage: false
-          configPath: "./lighthouserc.json"
+          url: "${{ join(matrix.sites.subpages, ',') }}"
 
       - name: Mozilla HTTP Observatory
         continue-on-error: true
@@ -129,6 +158,7 @@ jobs:
           output: "scans/thirdparties.json"          
           
       - name: Déclaration RGPD
+        timeout-minutes: 10
         continue-on-error: true
         uses: SocialGouv/dashlord-actions/declaration-rgpd@v1
         if: ${{ matrix.sites.tools['declaration-rgpd'] }}
@@ -253,6 +283,8 @@ jobs:
       - uses: SocialGouv/dashlord-actions/save@main
         with:
           url: ${{ matrix.sites.url }}
+          # only clean up previous stats when all tools runned
+          cleanup: ${{ github.event.inputs.tool == 'all' && true || false }}
 
       - uses: EndBug/add-and-commit@v7
         with:
