@@ -1,7 +1,7 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.13.0",
-	"@generated": "Sun, 24 Sep 2023 03:32:01",
+	"@generated": "Sun, 1 Oct 2023 03:33:26",
 	"site":[ 
 		{
 			"@name": "https://histologe.beta.gouv.fr",
@@ -98,9 +98,17 @@
 							"attack": "",
 							"evidence": "<form name=\"postal_code_search\" method=\"post\" id=\"front_postalcodesearch\" class=\"needs-validation\" novalidate=\"true\">",
 							"otherinfo": "No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"postal_code_search__token\" \"postal_code_search_postalcode\" ]."
+						},
+						{
+							"uri": "https://histologe.beta.gouv.fr/contact",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "<form name=\"contact\" method=\"post\" id=\"front_contact\" class=\"needs-validation\" novalidate=\"true\">",
+							"otherinfo": "No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"contact__token\" \"contact_email\" \"contact_nom\" ]."
 						}
 					],
-					"count": "10",
+					"count": "11",
 					"solution": "<p>Phase: Architecture and Design</p><p>Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.</p><p>For example, use anti-CSRF packages such as the OWASP CSRFGuard.</p><p></p><p>Phase: Implementation</p><p>Ensure that your application is free of cross-site scripting issues, because most CSRF defenses can be bypassed using attacker-controlled script.</p><p></p><p>Phase: Architecture and Design</p><p>Generate a unique nonce for each form, place the nonce into the form, and verify the nonce upon receipt of the form. Be sure that the nonce is not predictable (CWE-330).</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Use the ESAPI Session Management control.</p><p>This control includes a component for CSRF.</p><p></p><p>Do not use the GET method for any request that triggers a state change.</p><p></p><p>Phase: Implementation</p><p>Check the HTTP Referer header to see if the request originated from an expected page. This could break legitimate functionality, because users or proxies may have disabled sending the Referer for privacy reasons.</p>",
 					"otherinfo": "<p>No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"postal_code_search__token\" \"postal_code_search_postalcode\" ].</p>",
 					"reference": "<p>http://projects.webappsec.org/Cross-Site-Request-Forgery</p><p>http://cwe.mitre.org/data/definitions/352.html</p>",
@@ -242,6 +250,14 @@
 							"otherinfo": ""
 						},
 						{
+							"uri": "https://histologe.beta.gouv.fr/activation",
+							"method": "GET",
+							"param": "x-frame-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
 							"uri": "https://histologe.beta.gouv.fr/cgu",
 							"method": "GET",
 							"param": "x-frame-options",
@@ -259,14 +275,6 @@
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/contact",
-							"method": "GET",
-							"param": "x-frame-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://histologe.beta.gouv.fr/mot-de-pass-perdu",
 							"method": "GET",
 							"param": "x-frame-options",
 							"attack": "",
@@ -304,9 +312,17 @@
 							"attack": "",
 							"evidence": "",
 							"otherinfo": ""
+						},
+						{
+							"uri": "https://histologe.beta.gouv.fr/contact",
+							"method": "POST",
+							"param": "x-frame-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
 						}
 					],
-					"count": "10",
+					"count": "11",
 					"solution": "<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p><p>If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options</p>",
@@ -339,7 +355,7 @@
 					"reference": "<p>https://www.cve.org/CVERecord?id=CVE-2022-23494</p><p>https://www.tiny.cloud/docs/changelog/#5107-2022-12-06</p><p></p>",
 					"cweid": "829",
 					"wascid": "-1",
-					"sourceid": "127"
+					"sourceid": "119"
 				},
 				{
 					"pluginid": "10011",
@@ -401,7 +417,7 @@
 					"reference": "<p>https://angular.io/guide/security</p>",
 					"cweid": "749",
 					"wascid": "-1",
-					"sourceid": "172"
+					"sourceid": "174"
 				},
 				{
 					"pluginid": "10063",
@@ -537,7 +553,7 @@
 							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/build/dsfr/dsfr.min.css",
+							"uri": "https://histologe.beta.gouv.fr/build/dsfr/utility/icons/icons-business/icons-business.min.css",
 							"method": "GET",
 							"param": "x-content-type-options",
 							"attack": "",
@@ -545,7 +561,15 @@
 							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/build/dsfr/utility/icons/icons-device/icons-device.min.css",
+							"uri": "https://histologe.beta.gouv.fr/build/dsfr/utility/icons/icons-design/icons-design.min.css",
+							"method": "GET",
+							"param": "x-content-type-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
+						},
+						{
+							"uri": "https://histologe.beta.gouv.fr/build/dsfr/utility/icons/icons-document/icons-document.min.css",
 							"method": "GET",
 							"param": "x-content-type-options",
 							"attack": "",
@@ -599,14 +623,6 @@
 							"attack": "",
 							"evidence": "",
 							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://histologe.beta.gouv.fr/signalement",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
 						}
 					],
 					"count": "11",
@@ -642,7 +658,7 @@
 					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/auth-req-id/</p>",
 					"cweid": "-1",
 					"wascid": "-1",
-					"sourceid": "151"
+					"sourceid": "153"
 				},
 				{
 					"pluginid": "10094",
@@ -659,24 +675,24 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "FDO6u9b1iJRWJI77uuONNWRPXwy4YnINKWE7IZZwoCE",
-							"otherinfo": "\\x00143\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFDV$\uFFFD\uFFFD\uFFFD\uFFFD5dO_\\x000c\uFFFDbr\r)a;!\uFFFDp\uFFFD!"
+							"evidence": "RBxHxLJrDBhxdOjwAqEjRBpx6rAqBEuYogC06UKH21k",
+							"otherinfo": "D\\x001cG\u0132k\\x000c\\x0018qt\uFFFD\uFFFD\\x0002\uFFFD#D\\x001aq\uFFFD*\\x0004K\uFFFD\uFFFD\\x0000\uFFFD\uFFFDB\uFFFD\uFFFDY"
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "QjAbOfWrkEsOb6VLqHbzDm4ntu0BtflgAYV3ozXJ0qs",
-							"otherinfo": "B0\\x001b9\uFFFD\uFFFD\uFFFDK\\x000eo\uFFFDK\uFFFDv\uFFFD\\x000en'\uFFFD\uFFFD\\x0001\uFFFD\uFFFD`\\x0001\uFFFDw\uFFFD5\uFFFD\u04AB"
+							"evidence": "nI_Hhei4ba4dNE4eMD16Q1ptlmaku5QFPOSKpqQyxf8",
+							"otherinfo": "\uFFFD\uFFFD\u01C5\uFFFDm\uFFFD\\x001d4N\\x001e0=zCZm\uFFFDf\uFFFD\uFFFD\uFFFD\\x0005<\u42A6\uFFFD2\uFFFD\uFFFD"
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "TLR1tQcv3qSCVhGSBn8g6H9WGikk2YwNY4Z30NoieAw",
-							"otherinfo": "L\uFFFDu\uFFFD\\x0007/\u07A4\uFFFDV\\x0011\uFFFD\\x0006 \uFFFDV\\x001a)$\u064C\rc\uFFFDw\uFFFD\uFFFD\"x\\x000c"
+							"evidence": "VASSmYqyerMXlTfZEDPeRn2lD1SRNDhwkzBU6B9ApZo",
+							"otherinfo": "T\\x0004\uFFFD\uFFFD\uFFFD\uFFFDz\uFFFD\\x0017\uFFFD7\uFFFD\\x00103\uFFFDF}\uFFFD\\x000fT\uFFFD48p\uFFFD0T\uFFFD\\x001f@\uFFFD\uFFFD"
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/build/app.54bc03df.css",
@@ -707,16 +723,16 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "JFlWjTyG7gH0IeNgkP5b0qgrD7xlDAsmvQb_NHD5OOw",
-							"otherinfo": "$YV\uFFFD<\uFFFD\uFFFD\\x0001\uFFFD!\uFFFD`\uFFFD\uFFFD[\u04A8+\\x000f\uFFFDe\\x000c\\x000b&\uFFFD\\x0006\uFFFD4p\uFFFD8\uFFFD"
+							"evidence": "ZGJRYgxR3zgVlP8eD7eil2FuRdPeoTUGqcjGnBXomus",
+							"otherinfo": "dbQb\\x000cQ\uFFFD8\\x0015\uFFFD\uFFFD\\x001e\\x000f\uFFFD\uFFFD\uFFFDanE\uFFFD\u07A15\\x0006\uFFFD\uFFFD\u019C\\x0015\uFFFD\uFFFD"
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/contact",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "n0DiJq6pAcsoA_rD4aD9Wnk2sFN1f644456YxVgCxGo",
-							"otherinfo": "\uFFFD@\uFFFD&\uFFFD\uFFFD\\x0001\uFFFD(\\x0003\uFFFD\uFFFD\uFFFD\uFFFDZy6\uFFFDSu\uFFFD8\u3798\uFFFDX\\x0002\uFFFDj"
+							"evidence": "i7e84gB84IXKXZRakmEFI1OhMGUG-Mw_yI5A0HrR3-w",
+							"otherinfo": "\uFFFD\uFFFD\uFFFD\uFFFD\\x0000|\uFFFD\uFFFD\uFFFD]\uFFFDZ\uFFFDa\\x0005#S\uFFFD0e\\x0006\uFFFD\uFFFD?\u020E@\uFFFDz\uFFFD\uFFFD\uFFFD"
 						},
 						{
 							"uri": "https://histologe.beta.gouv.fr/js/screencapture.js",
@@ -747,17 +763,17 @@
 							"method": "POST",
 							"param": "",
 							"attack": "",
-							"evidence": "mOu9oGNWU3ggFJALvh-8iqNCGuUtxPiqxKivMhfzYHQ",
-							"otherinfo": "\uFFFD\uBF60cVSx \\x0014\uFFFD\\x000b\uFFFD\\x001f\uFFFD\uFFFD\uFFFDB\\x001a\uFFFD-\uFFFD\uFFFD\uFFFD\u0128\uFFFD2\\x0017\uFFFD`t"
+							"evidence": "pEDmeKKAVe5zQjuhXqC0XEHMbr_UOd20Pa9-r-J1IK0",
+							"otherinfo": "\uFFFD@\uFFFDx\uFFFD\uFFFDU\uFFFDsB;\uFFFD^\uFFFD\uFFFD\\A\uFFFDn\uFFFD\uFFFD9\u0774=\uFFFD~\uFFFD\uFFFDu \uFFFD"
 						}
 					],
 					"count": "12",
 					"solution": "<p>Manually confirm that the Base64 data does not leak sensitive information, and that the data cannot be aggregated/used to exploit other vulnerabilities.</p>",
-					"otherinfo": "<p>\\x00143\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFDV$\uFFFD\uFFFD\uFFFD\uFFFD5dO_\\x000c\uFFFDbr\r)a;!\uFFFDp\uFFFD!</p>",
+					"otherinfo": "<p>D\\x001cG\u0132k\\x000c\\x0018qt\uFFFD\uFFFD\\x0002\uFFFD#D\\x001aq\uFFFD*\\x0004K\uFFFD\uFFFD\\x0000\uFFFD\uFFFDB\uFFFD\uFFFDY</p>",
 					"reference": "<p>https://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "1"
+					"sourceid": "42"
 				},
 				{
 					"pluginid": "10024",
@@ -770,7 +786,7 @@
 					"desc": "<p>The request appeared to contain sensitive information leaked in the URL. This can violate PCI and most organizational compliance policies. You can configure the list of strings for this check to add or remove values specific to your environment.</p>",
 					"instances":[ 
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=14ddb5252adb3.jNkLhZpJ_e-6SQP-Rs7Ab1iJd-MQjo2DrR8R2Tc7Y6Y.vohh6_gfp72MKjuaAaaYID7CHJtqwL_L5FpGrWdULpfHuDrQqjyrlYksaA&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=12.4dawOzXUjmuOkJEAGiS6cfqWKfHox6_PLFFw5ROSsec.0K_TSFuF41reoctZYH7iIavZTcKmsuq7dAcvo37m64mY5dJIYoa6PfTnwA&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "_token",
 							"attack": "",
@@ -778,7 +794,7 @@
 							"otherinfo": "The URL contains potentially sensitive information. The following string was found via the pattern: token\n_token"
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=4b80e96f177.itpbNuGHATRGEQm9vL7yPOztF0Vhr4RFUkgkzOu37iU.uIsxWIPRW2ZwcjHZ-9aqc4qmfD0b4bYNGw1zuLvYoxTBu2pj0fJXTnV0Yg&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=2add4ede5193b5486caca07a9.mLv4ENUpZna1H28_701l0Ucw-9DlbuBRPiMpqsPqJtg.4u-ZIYocIxyAfjVzuSEK5RhkmomsV61gTQ5r77qSUr78islXgkpXMvlTJg&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "_token",
 							"attack": "",
@@ -786,7 +802,7 @@
 							"otherinfo": "The URL contains potentially sensitive information. The following string was found via the pattern: token\n_token"
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=96d24386263c1cd59892f0.lSAqjz7K2S-eH3uhnLxm73SbtF-R6pQxSeJrwba1vvk.p3FA4Vycg32ofEPF29Q-oBLQ3yfrpKZ5AKc8teba88jeQRvaDr-PVa16EA&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=2dfaa925463dd2c.zsUFtp0CDMO_7xtmurwUEkMCkSKB7FDKuML0ZFBnFSw.tJFkh8I3SamKjkEq7NB7JhxW8HvI1R37y--2ISkfYUqq9DTxymE9h_OjUg&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "_token",
 							"attack": "",
@@ -794,7 +810,7 @@
 							"otherinfo": "The URL contains potentially sensitive information. The following string was found via the pattern: token\n_token"
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=d93e7d6c38.iRKb5nCvVo8cc2_m7jHKCGjlqD4he7RJSF0ZoGLNVEY.u0PxiBL5DN0qEFeCqVmSRw6uw0ZbNYYBARhO1DKiGXfCc6qzQNoA9S8WBA&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=9f.wSUZp-FIp-L_jUbb7n7x7iFcnxWSKeVsXWGl_HFLTxo.u3F4lr594ojK7ByXuBKe2n4I_kzbEKhdLkznuQgzO3ylFCjgtiuWprPBDw&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "_token",
 							"attack": "",
@@ -802,7 +818,7 @@
 							"otherinfo": "The URL contains potentially sensitive information. The following string was found via the pattern: token\n_token"
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=e8952e41727af.7FnFfufwa7ImdKpvSkaZDS-kv_Y2dAxy1NCUrlaFV_M.3givEIWmMeAQF5ILDS7BQknv1I5MOj46nZXD2gbqGsKnOPQr14U9yBURwQ&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=a544.o5v5aRi0gVISNhbS0ZvoYuW7T3TBWt278Ot3ReOhwqw.2c-YWEeBxDgnV0yeh_eHVrrvLi2IY5CKg8Y1AJrZtsrHqsguT9ewFl56Xw&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "_token",
 							"attack": "",
@@ -810,7 +826,7 @@
 							"otherinfo": "The URL contains potentially sensitive information. The following string was found via the pattern: token\n_token"
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=f49b48ea6.aJTA5PbydFH-xZMEJqcVP6Y1u3wT_C1nSb4Xw6UZ8hI.WsWqipSkLgPIpqtgYc9NcMB-0ARpsh8vAPtAt_V2vyMj9fGxxociK82g-A&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
+							"uri": "https://histologe.beta.gouv.fr/signalement/envoi?_token=c163bc7b549b68794381e1.tbasHVfdeUIXmwrLh4JVKXbxUBMujLFgTBxS9oR3gyo.z-LNLAjoPCgi-lCH0e46HSmlMUpntfxRPzEQs_0P90zRh51aAL5IBlvXQw&is-visite-accepted=on&signalement%5BisCguAccepted%5D=on&signalement%5BisConsentementTiers%5D=on",
 							"method": "GET",
 							"param": "_token",
 							"attack": "",
@@ -848,7 +864,7 @@
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "188"
+					"sourceid": "165"
 				},
 				{
 					"pluginid": "10027",
@@ -877,7 +893,7 @@
 							"otherinfo": "The following pattern was used: \\bQUERY\\b and was detected in the element starting with: \"!function(){\"use strict\";var t=function(){this.modules={}},e={isActive:{configurable:!0},isLegacy:{configurable:!0}};t.prototype\", see evidence field for the suspicious comment/snippet."
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/js/app.js?v=2023092405",
+							"uri": "https://histologe.beta.gouv.fr/js/app.js?v=2023100105",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -885,7 +901,7 @@
 							"otherinfo": "The following pattern was used: \\bFROM\\b and was detected in the element starting with: \"        Array.from(files).forEach((file) => {\r\", see evidence field for the suspicious comment/snippet."
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/js/app.js?v=2023092405",
+							"uri": "https://histologe.beta.gouv.fr/js/app.js?v=2023100105",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -893,7 +909,7 @@
 							"otherinfo": "The following pattern was used: \\bSELECT\\b and was detected 9 times, the first in the element starting with: \"                    target.querySelectorAll('input:not([type=\"checkbox\"]),textarea,select').forEach(ipt => {\r\", see evidence field for the suspicious comment/snippet."
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/js/app.js?v=2023092405",
+							"uri": "https://histologe.beta.gouv.fr/js/app.js?v=2023100105",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -901,7 +917,7 @@
 							"otherinfo": "The following pattern was used: \\bUSER\\b and was detected 3 times, the first in the element starting with: \"        className = 'partner-row-user'\r\", see evidence field for the suspicious comment/snippet."
 						},
 						{
-							"uri": "https://histologe.beta.gouv.fr/js/const.min.js?v=2023092405",
+							"uri": "https://histologe.beta.gouv.fr/js/const.min.js?v=2023100105",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -963,7 +979,7 @@
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "103"
+					"sourceid": "105"
 				},
 				{
 					"pluginid": "10109",
@@ -1212,9 +1228,17 @@
 							"attack": "",
 							"evidence": "max-age=0, must-revalidate, private",
 							"otherinfo": ""
+						},
+						{
+							"uri": "https://histologe.beta.gouv.fr/contact",
+							"method": "POST",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "max-age=0, must-revalidate, private",
+							"otherinfo": ""
 						}
 					],
-					"count": "10",
+					"count": "11",
 					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
 					"otherinfo": "",
 					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
@@ -1409,7 +1433,7 @@
 							"method": "GET",
 							"param": "PHPSESSID",
 							"attack": "",
-							"evidence": "1f737039ebfe299e9f6f4e682b0decaf",
+							"evidence": "644e826388221e99f1691c1af85c6891",
 							"otherinfo": "\ncookie:PHPSESSID"
 						},
 						{
@@ -1417,7 +1441,7 @@
 							"method": "GET",
 							"param": "PHPSESSID",
 							"attack": "",
-							"evidence": "f175420682ab06a7e5f0a132887237a5",
+							"evidence": "ae969f720335a498a8d1e908cd43f129",
 							"otherinfo": "\ncookie:PHPSESSID"
 						},
 						{
@@ -1425,7 +1449,7 @@
 							"method": "GET",
 							"param": "PHPSESSID",
 							"attack": "",
-							"evidence": "1f737039ebfe299e9f6f4e682b0decaf",
+							"evidence": "644e826388221e99f1691c1af85c6891",
 							"otherinfo": "\ncookie:PHPSESSID"
 						}
 					],
@@ -1435,7 +1459,7 @@
 					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id</p>",
 					"cweid": "-1",
 					"wascid": "-1",
-					"sourceid": "31"
+					"sourceid": "42"
 				},
 				{
 					"pluginid": "10049",
@@ -1470,7 +1494,7 @@
 					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "72"
+					"sourceid": "73"
 				},
 				{
 					"pluginid": "10031",
