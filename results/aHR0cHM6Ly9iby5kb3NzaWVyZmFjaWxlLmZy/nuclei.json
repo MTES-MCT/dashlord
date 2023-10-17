@@ -1,0 +1,545 @@
+[
+  [
+    {
+      "template": "dns/dns-saas-service-detection.yaml",
+      "template-url": "https://templates.nuclei.sh/public/dns-saas-service-detection",
+      "template-id": "dns-saas-service-detection",
+      "template-path": "/home/runner/nuclei-templates/dns/dns-saas-service-detection.yaml",
+      "info": {
+        "name": "DNS SaaS Service Detection",
+        "author": [
+          "noah @thesubtlety",
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "service"
+        ],
+        "description": "A CNAME DNS record was discovered",
+        "reference": [
+          "https://ns1.com/resources/cname",
+          "https://www.theregister.com/2021/02/24/dns_cname_tracking/",
+          "https://www.ionos.com/digitalguide/hosting/technical-matters/cname-record/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "dns",
+      "host": "bo.dossierfacile.fr.",
+      "matched-at": "bo.dossierfacile.fr",
+      "extracted-results": [
+        "dossierfacile-bo-prod.osc-secnum-fr1.scalingo.io."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 58014\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;bo.dossierfacile.fr.\tIN\t CNAME\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 58014\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;bo.dossierfacile.fr.\tIN\t CNAME\n\n;; ANSWER SECTION:\nbo.dossierfacile.fr.\t3600\tIN\tCNAME\tdossierfacile-bo-prod.osc-secnum-fr1.scalingo.io.\n",
+      "timestamp": "2023-10-17T16:14:32.554506987Z",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/httponly-cookie-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/httponly-cookie-detect",
+      "template-id": "httponly-cookie-detect",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/httponly-cookie-detect.yaml",
+      "info": {
+        "name": "HttpOnly Cookie - Detect",
+        "author": [
+          "mr. bobo hp"
+        ],
+        "tags": [
+          "misconfig",
+          "http",
+          "cookie",
+          "generic"
+        ],
+        "description": "Checks whether cookies in the HTTP response contain the HttpOnly attribute. If the HttpOnly flag is set, it means that the cookie is HTTP-only\n",
+        "reference": [
+          "https://stackoverflow.com/questions/4316539/how-do-i-test-httponly-cookie-flag"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1,
+          "verified": true
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": null,
+          "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+        }
+      },
+      "type": "http",
+      "host": "https://bo.dossierfacile.fr",
+      "matched-at": "https://bo.dossierfacile.fr",
+      "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 302 \r\nConnection: close\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors *.dossierfacile.fr; frame-src *.dossierfacile.fr; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; object-src *.dossierfacile.fr; img-src 'self' *.dossierfacile.fr data:; font-src 'self' fonts.gstatic.com; connect-src *.dossierfacile.fr; base-uri 'self'; media-src 'none'; worker-src *.dossierfacile.fr; manifest-src 'none';\r\nDate: Tue, 17 Oct 2023 16:14:49 GMT\r\nExpires: 0\r\nLocation: https://bo.dossierfacile.fr/login\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=FC488412296736B3E72D6C7F945B080D; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 749e8b3d-8599-4c34-9762-eebb809b2629\r\nX-Xss-Protection: 1; mode=block\r\nContent-Length: 0\r\n\r\n",
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:14:49.624374417Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/xss-deprecated-header.yaml",
+      "template-url": "https://templates.nuclei.sh/public/xss-deprecated-header",
+      "template-id": "xss-deprecated-header",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/xss-deprecated-header.yaml",
+      "info": {
+        "name": "XSS-Protection Header - Cross-Site Scripting",
+        "author": [
+          "joshlarsen"
+        ],
+        "tags": [
+          "xss",
+          "misconfig",
+          "generic"
+        ],
+        "description": "Setting the XSS-Protection header is deprecated. Setting the header to anything other than `0` can actually introduce an XSS vulnerability.",
+        "reference": [
+          "https://developer.mozilla.org/en-us/docs/web/http/headers/x-xss-protection",
+          "https://owasp.org/www-project-secure-headers/#x-xss-protection"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": null,
+          "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+        }
+      },
+      "type": "http",
+      "host": "https://bo.dossierfacile.fr",
+      "matched-at": "https://bo.dossierfacile.fr",
+      "extracted-results": [
+        "1; mode=block"
+      ],
+      "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 302 \r\nConnection: close\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Security-Policy: frame-ancestors *.dossierfacile.fr; frame-src *.dossierfacile.fr; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; object-src *.dossierfacile.fr; img-src 'self' *.dossierfacile.fr data:; font-src 'self' fonts.gstatic.com; connect-src *.dossierfacile.fr; base-uri 'self'; media-src 'none'; worker-src *.dossierfacile.fr; manifest-src 'none';\r\nDate: Tue, 17 Oct 2023 16:14:49 GMT\r\nExpires: 0\r\nLocation: https://bo.dossierfacile.fr/login\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=FC488412296736B3E72D6C7F945B080D; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 749e8b3d-8599-4c34-9762-eebb809b2629\r\nX-Xss-Protection: 1; mode=block\r\nContent-Length: 0\r\n\r\n",
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:14:49.625405222Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/technologies/tech-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/tech-detect",
+      "template-id": "tech-detect",
+      "template-path": "/home/runner/nuclei-templates/http/technologies/tech-detect.yaml",
+      "info": {
+        "name": "Wappalyzer Technology Detection",
+        "author": [
+          "hakluke"
+        ],
+        "tags": [
+          "tech"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "google-font-api",
+      "type": "http",
+      "host": "https://bo.dossierfacile.fr",
+      "matched-at": "https://bo.dossierfacile.fr/login",
+      "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Language: en\r\nContent-Security-Policy: frame-ancestors *.dossierfacile.fr; frame-src *.dossierfacile.fr; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; object-src *.dossierfacile.fr; img-src 'self' *.dossierfacile.fr data:; font-src 'self' fonts.gstatic.com; connect-src *.dossierfacile.fr; base-uri 'self'; media-src 'none'; worker-src *.dossierfacile.fr; manifest-src 'none';\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 17 Oct 2023 16:15:16 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=49CAFF8CF2DD3369B1865FB5CD44B644; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 117113aa-6cb3-440d-b2d5-65e93372ab46\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>DossierFacile</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"//fonts.googleapis.com/css?family=Open+Sans\" />\n    <style lang=\"css\">\n        @import url(https://fonts.googleapis.com/css?family=Roboto:500);\n        .google-btn {\n          display:inline-flex;\n          width: 184px;\n          height: 42px;\n          background-color: #4285f4;\n          border-radius: 2px;\n          box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);\n        }\n        .google-icon-wrapper {\n            margin-top: 1px;\n            margin-left: 1px;\n            width: 40px;\n            height: 40px;\n            border-radius: 2px;\n            background-color: #fff;\n          }\n          .google-icon {\n            position: absolute;\n            margin-top: 11px;\n            margin-left: 11px;\n            width: 18px;\n            height: 18px;\n          }\n          .btn-text {\n            float: right;\n            margin: 11px 11px 0 11px;\n            color: #fff;\n            font-size: 14px;\n            letter-spacing: 0.2px;\n            font-family: Roboto, Verdana, sans-serif;\n          }\n          .google-btn:hover {\n            box-shadow: 0 0 6px #4285f4;\n          }\n          .google-btn:active {\n            background: #1669F2;\n          }\n\n    </style>\n</head>\n<body>\n\n<h3>Connexion à DossierFacile:</h3>\n\n\n    <a href=\"oauth2/authorization/google\" >\n        <div class=\"google-btn\">\n          <div class=\"google-icon-wrapper\">\n            <img alt=\"\" class=\"google-icon\" src=\"/assets/public/logo-google.svg\"/>\n          </div>\n          <div class=\"btn-text\">\n            <strong>Google</strong>\n          </div>\n        </div>\n    </a>\n\n\n</body>\n</html>\n",
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:15:16.252404389Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "clear-site-data",
+      "type": "http",
+      "host": "https://bo.dossierfacile.fr",
+      "matched-at": "https://bo.dossierfacile.fr/login",
+      "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Language: en\r\nContent-Security-Policy: frame-ancestors *.dossierfacile.fr; frame-src *.dossierfacile.fr; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; object-src *.dossierfacile.fr; img-src 'self' *.dossierfacile.fr data:; font-src 'self' fonts.gstatic.com; connect-src *.dossierfacile.fr; base-uri 'self'; media-src 'none'; worker-src *.dossierfacile.fr; manifest-src 'none';\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 17 Oct 2023 16:15:43 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=5CB200FAD65F35122EF91CEC4D1F1180; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: f007d0ea-0f3e-4bd1-a875-3115eb2e390c\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>DossierFacile</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"//fonts.googleapis.com/css?family=Open+Sans\" />\n    <style lang=\"css\">\n        @import url(https://fonts.googleapis.com/css?family=Roboto:500);\n        .google-btn {\n          display:inline-flex;\n          width: 184px;\n          height: 42px;\n          background-color: #4285f4;\n          border-radius: 2px;\n          box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);\n        }\n        .google-icon-wrapper {\n            margin-top: 1px;\n            margin-left: 1px;\n            width: 40px;\n            height: 40px;\n            border-radius: 2px;\n            background-color: #fff;\n          }\n          .google-icon {\n            position: absolute;\n            margin-top: 11px;\n            margin-left: 11px;\n            width: 18px;\n            height: 18px;\n          }\n          .btn-text {\n            float: right;\n            margin: 11px 11px 0 11px;\n            color: #fff;\n            font-size: 14px;\n            letter-spacing: 0.2px;\n            font-family: Roboto, Verdana, sans-serif;\n          }\n          .google-btn:hover {\n            box-shadow: 0 0 6px #4285f4;\n          }\n          .google-btn:active {\n            background: #1669F2;\n          }\n\n    </style>\n</head>\n<body>\n\n<h3>Connexion à DossierFacile:</h3>\n\n\n    <a href=\"oauth2/authorization/google\" >\n        <div class=\"google-btn\">\n          <div class=\"google-icon-wrapper\">\n            <img alt=\"\" class=\"google-icon\" src=\"/assets/public/logo-google.svg\"/>\n          </div>\n          <div class=\"btn-text\">\n            <strong>Google</strong>\n          </div>\n        </div>\n    </a>\n\n\n</body>\n</html>\n",
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:15:43.112574983Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-embedder-policy",
+      "type": "http",
+      "host": "https://bo.dossierfacile.fr",
+      "matched-at": "https://bo.dossierfacile.fr/login",
+      "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Language: en\r\nContent-Security-Policy: frame-ancestors *.dossierfacile.fr; frame-src *.dossierfacile.fr; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; object-src *.dossierfacile.fr; img-src 'self' *.dossierfacile.fr data:; font-src 'self' fonts.gstatic.com; connect-src *.dossierfacile.fr; base-uri 'self'; media-src 'none'; worker-src *.dossierfacile.fr; manifest-src 'none';\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 17 Oct 2023 16:15:43 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=5CB200FAD65F35122EF91CEC4D1F1180; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: f007d0ea-0f3e-4bd1-a875-3115eb2e390c\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>DossierFacile</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"//fonts.googleapis.com/css?family=Open+Sans\" />\n    <style lang=\"css\">\n        @import url(https://fonts.googleapis.com/css?family=Roboto:500);\n        .google-btn {\n          display:inline-flex;\n          width: 184px;\n          height: 42px;\n          background-color: #4285f4;\n          border-radius: 2px;\n          box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);\n        }\n        .google-icon-wrapper {\n            margin-top: 1px;\n            margin-left: 1px;\n            width: 40px;\n            height: 40px;\n            border-radius: 2px;\n            background-color: #fff;\n          }\n          .google-icon {\n            position: absolute;\n            margin-top: 11px;\n            margin-left: 11px;\n            width: 18px;\n            height: 18px;\n          }\n          .btn-text {\n            float: right;\n            margin: 11px 11px 0 11px;\n            color: #fff;\n            font-size: 14px;\n            letter-spacing: 0.2px;\n            font-family: Roboto, Verdana, sans-serif;\n          }\n          .google-btn:hover {\n            box-shadow: 0 0 6px #4285f4;\n          }\n          .google-btn:active {\n            background: #1669F2;\n          }\n\n    </style>\n</head>\n<body>\n\n<h3>Connexion à DossierFacile:</h3>\n\n\n    <a href=\"oauth2/authorization/google\" >\n        <div class=\"google-btn\">\n          <div class=\"google-icon-wrapper\">\n            <img alt=\"\" class=\"google-icon\" src=\"/assets/public/logo-google.svg\"/>\n          </div>\n          <div class=\"btn-text\">\n            <strong>Google</strong>\n          </div>\n        </div>\n    </a>\n\n\n</body>\n</html>\n",
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:15:43.112622783Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-opener-policy",
+      "type": "http",
+      "host": "https://bo.dossierfacile.fr",
+      "matched-at": "https://bo.dossierfacile.fr/login",
+      "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Language: en\r\nContent-Security-Policy: frame-ancestors *.dossierfacile.fr; frame-src *.dossierfacile.fr; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; object-src *.dossierfacile.fr; img-src 'self' *.dossierfacile.fr data:; font-src 'self' fonts.gstatic.com; connect-src *.dossierfacile.fr; base-uri 'self'; media-src 'none'; worker-src *.dossierfacile.fr; manifest-src 'none';\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 17 Oct 2023 16:15:43 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=5CB200FAD65F35122EF91CEC4D1F1180; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: f007d0ea-0f3e-4bd1-a875-3115eb2e390c\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>DossierFacile</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"//fonts.googleapis.com/css?family=Open+Sans\" />\n    <style lang=\"css\">\n        @import url(https://fonts.googleapis.com/css?family=Roboto:500);\n        .google-btn {\n          display:inline-flex;\n          width: 184px;\n          height: 42px;\n          background-color: #4285f4;\n          border-radius: 2px;\n          box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);\n        }\n        .google-icon-wrapper {\n            margin-top: 1px;\n            margin-left: 1px;\n            width: 40px;\n            height: 40px;\n            border-radius: 2px;\n            background-color: #fff;\n          }\n          .google-icon {\n            position: absolute;\n            margin-top: 11px;\n            margin-left: 11px;\n            width: 18px;\n            height: 18px;\n          }\n          .btn-text {\n            float: right;\n            margin: 11px 11px 0 11px;\n            color: #fff;\n            font-size: 14px;\n            letter-spacing: 0.2px;\n            font-family: Roboto, Verdana, sans-serif;\n          }\n          .google-btn:hover {\n            box-shadow: 0 0 6px #4285f4;\n          }\n          .google-btn:active {\n            background: #1669F2;\n          }\n\n    </style>\n</head>\n<body>\n\n<h3>Connexion à DossierFacile:</h3>\n\n\n    <a href=\"oauth2/authorization/google\" >\n        <div class=\"google-btn\">\n          <div class=\"google-icon-wrapper\">\n            <img alt=\"\" class=\"google-icon\" src=\"/assets/public/logo-google.svg\"/>\n          </div>\n          <div class=\"btn-text\">\n            <strong>Google</strong>\n          </div>\n        </div>\n    </a>\n\n\n</body>\n</html>\n",
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:15:43.112633783Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-resource-policy",
+      "type": "http",
+      "host": "https://bo.dossierfacile.fr",
+      "matched-at": "https://bo.dossierfacile.fr/login",
+      "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Language: en\r\nContent-Security-Policy: frame-ancestors *.dossierfacile.fr; frame-src *.dossierfacile.fr; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; object-src *.dossierfacile.fr; img-src 'self' *.dossierfacile.fr data:; font-src 'self' fonts.gstatic.com; connect-src *.dossierfacile.fr; base-uri 'self'; media-src 'none'; worker-src *.dossierfacile.fr; manifest-src 'none';\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 17 Oct 2023 16:15:43 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=5CB200FAD65F35122EF91CEC4D1F1180; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: f007d0ea-0f3e-4bd1-a875-3115eb2e390c\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>DossierFacile</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"//fonts.googleapis.com/css?family=Open+Sans\" />\n    <style lang=\"css\">\n        @import url(https://fonts.googleapis.com/css?family=Roboto:500);\n        .google-btn {\n          display:inline-flex;\n          width: 184px;\n          height: 42px;\n          background-color: #4285f4;\n          border-radius: 2px;\n          box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);\n        }\n        .google-icon-wrapper {\n            margin-top: 1px;\n            margin-left: 1px;\n            width: 40px;\n            height: 40px;\n            border-radius: 2px;\n            background-color: #fff;\n          }\n          .google-icon {\n            position: absolute;\n            margin-top: 11px;\n            margin-left: 11px;\n            width: 18px;\n            height: 18px;\n          }\n          .btn-text {\n            float: right;\n            margin: 11px 11px 0 11px;\n            color: #fff;\n            font-size: 14px;\n            letter-spacing: 0.2px;\n            font-family: Roboto, Verdana, sans-serif;\n          }\n          .google-btn:hover {\n            box-shadow: 0 0 6px #4285f4;\n          }\n          .google-btn:active {\n            background: #1669F2;\n          }\n\n    </style>\n</head>\n<body>\n\n<h3>Connexion à DossierFacile:</h3>\n\n\n    <a href=\"oauth2/authorization/google\" >\n        <div class=\"google-btn\">\n          <div class=\"google-icon-wrapper\">\n            <img alt=\"\" class=\"google-icon\" src=\"/assets/public/logo-google.svg\"/>\n          </div>\n          <div class=\"btn-text\">\n            <strong>Google</strong>\n          </div>\n        </div>\n    </a>\n\n\n</body>\n</html>\n",
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:15:43.112643483Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "permissions-policy",
+      "type": "http",
+      "host": "https://bo.dossierfacile.fr",
+      "matched-at": "https://bo.dossierfacile.fr/login",
+      "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Language: en\r\nContent-Security-Policy: frame-ancestors *.dossierfacile.fr; frame-src *.dossierfacile.fr; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; object-src *.dossierfacile.fr; img-src 'self' *.dossierfacile.fr data:; font-src 'self' fonts.gstatic.com; connect-src *.dossierfacile.fr; base-uri 'self'; media-src 'none'; worker-src *.dossierfacile.fr; manifest-src 'none';\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 17 Oct 2023 16:15:43 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=5CB200FAD65F35122EF91CEC4D1F1180; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: f007d0ea-0f3e-4bd1-a875-3115eb2e390c\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>DossierFacile</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"//fonts.googleapis.com/css?family=Open+Sans\" />\n    <style lang=\"css\">\n        @import url(https://fonts.googleapis.com/css?family=Roboto:500);\n        .google-btn {\n          display:inline-flex;\n          width: 184px;\n          height: 42px;\n          background-color: #4285f4;\n          border-radius: 2px;\n          box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);\n        }\n        .google-icon-wrapper {\n            margin-top: 1px;\n            margin-left: 1px;\n            width: 40px;\n            height: 40px;\n            border-radius: 2px;\n            background-color: #fff;\n          }\n          .google-icon {\n            position: absolute;\n            margin-top: 11px;\n            margin-left: 11px;\n            width: 18px;\n            height: 18px;\n          }\n          .btn-text {\n            float: right;\n            margin: 11px 11px 0 11px;\n            color: #fff;\n            font-size: 14px;\n            letter-spacing: 0.2px;\n            font-family: Roboto, Verdana, sans-serif;\n          }\n          .google-btn:hover {\n            box-shadow: 0 0 6px #4285f4;\n          }\n          .google-btn:active {\n            background: #1669F2;\n          }\n\n    </style>\n</head>\n<body>\n\n<h3>Connexion à DossierFacile:</h3>\n\n\n    <a href=\"oauth2/authorization/google\" >\n        <div class=\"google-btn\">\n          <div class=\"google-icon-wrapper\">\n            <img alt=\"\" class=\"google-icon\" src=\"/assets/public/logo-google.svg\"/>\n          </div>\n          <div class=\"btn-text\">\n            <strong>Google</strong>\n          </div>\n        </div>\n    </a>\n\n\n</body>\n</html>\n",
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:15:43.112652983Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "x-permitted-cross-domain-policies",
+      "type": "http",
+      "host": "https://bo.dossierfacile.fr",
+      "matched-at": "https://bo.dossierfacile.fr/login",
+      "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Language: en\r\nContent-Security-Policy: frame-ancestors *.dossierfacile.fr; frame-src *.dossierfacile.fr; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; object-src *.dossierfacile.fr; img-src 'self' *.dossierfacile.fr data:; font-src 'self' fonts.gstatic.com; connect-src *.dossierfacile.fr; base-uri 'self'; media-src 'none'; worker-src *.dossierfacile.fr; manifest-src 'none';\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 17 Oct 2023 16:15:43 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=5CB200FAD65F35122EF91CEC4D1F1180; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: f007d0ea-0f3e-4bd1-a875-3115eb2e390c\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>DossierFacile</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"//fonts.googleapis.com/css?family=Open+Sans\" />\n    <style lang=\"css\">\n        @import url(https://fonts.googleapis.com/css?family=Roboto:500);\n        .google-btn {\n          display:inline-flex;\n          width: 184px;\n          height: 42px;\n          background-color: #4285f4;\n          border-radius: 2px;\n          box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);\n        }\n        .google-icon-wrapper {\n            margin-top: 1px;\n            margin-left: 1px;\n            width: 40px;\n            height: 40px;\n            border-radius: 2px;\n            background-color: #fff;\n          }\n          .google-icon {\n            position: absolute;\n            margin-top: 11px;\n            margin-left: 11px;\n            width: 18px;\n            height: 18px;\n          }\n          .btn-text {\n            float: right;\n            margin: 11px 11px 0 11px;\n            color: #fff;\n            font-size: 14px;\n            letter-spacing: 0.2px;\n            font-family: Roboto, Verdana, sans-serif;\n          }\n          .google-btn:hover {\n            box-shadow: 0 0 6px #4285f4;\n          }\n          .google-btn:active {\n            background: #1669F2;\n          }\n\n    </style>\n</head>\n<body>\n\n<h3>Connexion à DossierFacile:</h3>\n\n\n    <a href=\"oauth2/authorization/google\" >\n        <div class=\"google-btn\">\n          <div class=\"google-icon-wrapper\">\n            <img alt=\"\" class=\"google-icon\" src=\"/assets/public/logo-google.svg\"/>\n          </div>\n          <div class=\"btn-text\">\n            <strong>Google</strong>\n          </div>\n        </div>\n    </a>\n\n\n</body>\n</html>\n",
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:15:43.112663983Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "referrer-policy",
+      "type": "http",
+      "host": "https://bo.dossierfacile.fr",
+      "matched-at": "https://bo.dossierfacile.fr/login",
+      "request": "GET / HTTP/1.1\r\nHost: bo.dossierfacile.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 \r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: no-cache, no-store, max-age=0, must-revalidate\r\nContent-Language: en\r\nContent-Security-Policy: frame-ancestors *.dossierfacile.fr; frame-src *.dossierfacile.fr; child-src 'none'; upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' fonts.googleapis.com 'unsafe-inline'; object-src *.dossierfacile.fr; img-src 'self' *.dossierfacile.fr data:; font-src 'self' fonts.gstatic.com; connect-src *.dossierfacile.fr; base-uri 'self'; media-src 'none'; worker-src *.dossierfacile.fr; manifest-src 'none';\r\nContent-Type: text/html;charset=UTF-8\r\nDate: Tue, 17 Oct 2023 16:15:43 GMT\r\nExpires: 0\r\nPragma: no-cache\r\nSet-Cookie: JSESSIONID=5CB200FAD65F35122EF91CEC4D1F1180; Path=/; Secure; HttpOnly\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: f007d0ea-0f3e-4bd1-a875-3115eb2e390c\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>DossierFacile</title>\n    <link rel=\"stylesheet\" type=\"text/css\" href=\"//fonts.googleapis.com/css?family=Open+Sans\" />\n    <style lang=\"css\">\n        @import url(https://fonts.googleapis.com/css?family=Roboto:500);\n        .google-btn {\n          display:inline-flex;\n          width: 184px;\n          height: 42px;\n          background-color: #4285f4;\n          border-radius: 2px;\n          box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);\n        }\n        .google-icon-wrapper {\n            margin-top: 1px;\n            margin-left: 1px;\n            width: 40px;\n            height: 40px;\n            border-radius: 2px;\n            background-color: #fff;\n          }\n          .google-icon {\n            position: absolute;\n            margin-top: 11px;\n            margin-left: 11px;\n            width: 18px;\n            height: 18px;\n          }\n          .btn-text {\n            float: right;\n            margin: 11px 11px 0 11px;\n            color: #fff;\n            font-size: 14px;\n            letter-spacing: 0.2px;\n            font-family: Roboto, Verdana, sans-serif;\n          }\n          .google-btn:hover {\n            box-shadow: 0 0 6px #4285f4;\n          }\n          .google-btn:active {\n            background: #1669F2;\n          }\n\n    </style>\n</head>\n<body>\n\n<h3>Connexion à DossierFacile:</h3>\n\n\n    <a href=\"oauth2/authorization/google\" >\n        <div class=\"google-btn\">\n          <div class=\"google-icon-wrapper\">\n            <img alt=\"\" class=\"google-icon\" src=\"/assets/public/logo-google.svg\"/>\n          </div>\n          <div class=\"btn-text\">\n            <strong>Google</strong>\n          </div>\n        </div>\n    </a>\n\n\n</body>\n</html>\n",
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:15:43.112674084Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://bo.dossierfacile.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/detect-ssl-issuer.yaml",
+      "template-url": "https://templates.nuclei.sh/public/ssl-issuer",
+      "template-id": "ssl-issuer",
+      "template-path": "/home/runner/nuclei-templates/ssl/detect-ssl-issuer.yaml",
+      "info": {
+        "name": "Detect SSL Certificate Issuer",
+        "author": [
+          "lingtren"
+        ],
+        "tags": [
+          "ssl"
+        ],
+        "description": "Extract the issuer's organization from the target's certificate. Issuers are entities which sign and distribute certificates.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "ssl",
+      "host": "bo.dossierfacile.fr",
+      "matched-at": "bo.dossierfacile.fr:443",
+      "extracted-results": [
+        "Let's Encrypt"
+      ],
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:20:38.905072489Z",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/ssl-dns-names.yaml",
+      "template-url": "https://templates.nuclei.sh/public/ssl-dns-names",
+      "template-id": "ssl-dns-names",
+      "template-path": "/home/runner/nuclei-templates/ssl/ssl-dns-names.yaml",
+      "info": {
+        "name": "SSL DNS Names",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "ssl"
+        ],
+        "description": "Extract the Subject Alternative Name (SAN) from the target's certificate. SAN facilitates the usage of additional hostnames with the same certificate.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "ssl",
+      "host": "bo.dossierfacile.fr",
+      "matched-at": "bo.dossierfacile.fr:443",
+      "extracted-results": [
+        "bo.dossierfacile.fr"
+      ],
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:20:38.905187889Z",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/tls-version.yaml",
+      "template-url": "https://templates.nuclei.sh/public/tls-version",
+      "template-id": "tls-version",
+      "template-path": "/home/runner/nuclei-templates/ssl/tls-version.yaml",
+      "info": {
+        "name": "TLS Version - Detect",
+        "author": [
+          "pdteam",
+          "pussycat0x"
+        ],
+        "tags": [
+          "ssl"
+        ],
+        "description": "TLS version detection is a security process used to determine the version of the Transport Layer Security (TLS) protocol used by a computer or server.\nIt is important to detect the TLS version in order to ensure secure communication between two computers or servers.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 4
+        }
+      },
+      "type": "ssl",
+      "host": "bo.dossierfacile.fr",
+      "matched-at": "bo.dossierfacile.fr:443",
+      "extracted-results": [
+        "tls12"
+      ],
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:20:45.085587896Z",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/tls-version.yaml",
+      "template-url": "https://templates.nuclei.sh/public/tls-version",
+      "template-id": "tls-version",
+      "template-path": "/home/runner/nuclei-templates/ssl/tls-version.yaml",
+      "info": {
+        "name": "TLS Version - Detect",
+        "author": [
+          "pdteam",
+          "pussycat0x"
+        ],
+        "tags": [
+          "ssl"
+        ],
+        "description": "TLS version detection is a security process used to determine the version of the Transport Layer Security (TLS) protocol used by a computer or server.\nIt is important to detect the TLS version in order to ensure secure communication between two computers or servers.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 4
+        }
+      },
+      "type": "ssl",
+      "host": "bo.dossierfacile.fr",
+      "matched-at": "bo.dossierfacile.fr:443",
+      "extracted-results": [
+        "tls13"
+      ],
+      "ip": "80.247.13.145",
+      "timestamp": "2023-10-17T16:20:45.337145907Z",
+      "matcher-status": true
+    }
+  ]
+]
