@@ -1,6 +1,84 @@
 [
   [
     {
+      "template": "dns/caa-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
+      "template-id": "caa-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
+      "info": {
+        "name": "CAA Record",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "caa"
+        ],
+        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
+        "reference": [
+          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "carbure.beta.gouv.fr.",
+      "matched-at": "carbure.beta.gouv.fr",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 36133\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t CAA\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 36133\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1698229734 3600 900 1209600 300\n",
+      "timestamp": "2023-11-05T01:58:19.035840576Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/txt-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
+      "template-id": "txt-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
+      "info": {
+        "name": "DNS TXT Record Detected",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "txt"
+        ],
+        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+        "reference": [
+          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "carbure.beta.gouv.fr.",
+      "matched-at": "carbure.beta.gouv.fr",
+      "extracted-results": [
+        "\"v=spf1 include:spf.sendinblue.com mx ~all\"",
+        "\"Sendinblue-code:07db1fc27102305f5a6e93cc26fc4775\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 34620\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 34620\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.sendinblue.com mx ~all\"\ncarbure.beta.gouv.fr.\t300\tIN\tTXT\t\"Sendinblue-code:07db1fc27102305f5a6e93cc26fc4775\"\n",
+      "timestamp": "2023-11-05T01:58:19.866387916Z",
+      "matcher-status": true
+    },
+    {
       "template": "dns/dmarc-detect.yaml",
       "template-url": "https://templates.nuclei.sh/public/dmarc-detect",
       "template-id": "dmarc-detect",
@@ -37,50 +115,9 @@
       "extracted-results": [
         "\"v=DMARC1; p=none; sp=none; rua=mailto:dmarc@mailinblue.com!10m; ruf=mailto:dmarc@mailinblue.com!10m; rf=afrf; pct=100; ri=86400\""
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 57370\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.carbure.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 57370\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;_dmarc.carbure.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.carbure.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1; p=none; sp=none; rua=mailto:dmarc@mailinblue.com!10m; ruf=mailto:dmarc@mailinblue.com!10m; rf=afrf; pct=100; ri=86400\"\n",
-      "timestamp": "2023-10-29T02:04:21.942919806Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/txt-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
-      "template-id": "txt-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
-      "info": {
-        "name": "DNS TXT Record Detected",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "txt"
-        ],
-        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
-        "reference": [
-          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "carbure.beta.gouv.fr.",
-      "matched-at": "carbure.beta.gouv.fr",
-      "extracted-results": [
-        "\"Sendinblue-code:07db1fc27102305f5a6e93cc26fc4775\"",
-        "\"v=spf1 include:spf.sendinblue.com mx ~all\""
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 57625\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 57625\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tTXT\t\"Sendinblue-code:07db1fc27102305f5a6e93cc26fc4775\"\ncarbure.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.sendinblue.com mx ~all\"\n",
-      "timestamp": "2023-10-29T02:04:22.084843677Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 17332\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.carbure.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 17332\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;_dmarc.carbure.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.carbure.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1; p=none; sp=none; rua=mailto:dmarc@mailinblue.com!10m; ruf=mailto:dmarc@mailinblue.com!10m; rf=afrf; pct=100; ri=86400\"\n",
+      "timestamp": "2023-11-05T01:58:19.867592906Z",
       "matcher-status": true
     },
     {
@@ -120,9 +157,9 @@
         "20 mx2.alwaysdata.com.",
         "10 mx1.alwaysdata.com."
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 42135\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t MX\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 42135\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\ncarbure.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\n",
-      "timestamp": "2023-10-29T02:04:22.092719908Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 3719\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t MX\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 3719\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\ncarbure.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\n",
+      "timestamp": "2023-11-05T01:58:19.868158401Z",
       "matcher-status": true
     },
     {
@@ -155,12 +192,12 @@
       "host": "carbure.beta.gouv.fr.",
       "matched-at": "carbure.beta.gouv.fr",
       "extracted-results": [
-        "dns2.alwaysdata.com.",
-        "dns1.alwaysdata.com."
+        "dns1.alwaysdata.com.",
+        "dns2.alwaysdata.com."
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 64122\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t NS\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 64122\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\ncarbure.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\n",
-      "timestamp": "2023-10-29T02:04:22.648419439Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 32987\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t NS\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 32987\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\ncarbure.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\n",
+      "timestamp": "2023-11-05T01:58:20.013581282Z",
       "matcher-status": true
     },
     {
@@ -189,9 +226,9 @@
         "GET, HEAD"
       ],
       "request": "OPTIONS / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 405 Method Not Allowed\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nAllow: GET, HEAD\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 29 Oct 2023 02:04:34 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: d6d1d11c-56f3-46e5-b663-cb2f10482717\r\n\r\n",
+      "response": "HTTP/1.1 405 Method Not Allowed\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nAllow: GET, HEAD\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 05 Nov 2023 01:58:33 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 3cacdddc-b9e4-4699-9c67-e2d0d254dfa2\r\n\r\n",
       "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:04:34.444427211Z",
+      "timestamp": "2023-11-05T01:58:33.846621957Z",
       "curl-command": "curl -X 'OPTIONS' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -218,126 +255,9 @@
       "host": "https://carbure.beta.gouv.fr",
       "matched-at": "https://carbure.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 29 Oct 2023 02:05:11 GMT\r\nEtag: \"65376868-2bb\"\r\nLast-Modified: Tue, 24 Oct 2023 08:47:04 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 1ac32707-5104-420b-86e4-a5ed140b56fa\r\n\r\n<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" href=\"/favicon.ico\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Web site created using create-react-app\"/><link rel=\"apple-touch-icon\" href=\"/logo192.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><title>CarbuRe</title><script defer=\"defer\" src=\"/static/js/main.0a87280f.js\"></script><link href=\"/static/css/main.50a205e0.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script type=\"text/javascript\" src=\"/matomo.js\"></script></body></html>",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 05 Nov 2023 01:59:17 GMT\r\nEtag: \"6543b33e-2bb\"\r\nLast-Modified: Thu, 02 Nov 2023 15:33:34 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 47eb22dd-8111-4e92-8f4c-08a84c5eab68\r\n\r\n<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" href=\"/favicon.ico\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Web site created using create-react-app\"/><link rel=\"apple-touch-icon\" href=\"/logo192.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><title>CarbuRe</title><script defer=\"defer\" src=\"/static/js/main.1d87ee58.js\"></script><link href=\"/static/css/main.50a205e0.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script type=\"text/javascript\" src=\"/matomo.js\"></script></body></html>",
       "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:05:11.926311593Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "cross-origin-embedder-policy",
-      "type": "http",
-      "host": "https://carbure.beta.gouv.fr",
-      "matched-at": "https://carbure.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 29 Oct 2023 02:05:24 GMT\r\nEtag: \"65376868-2bb\"\r\nLast-Modified: Tue, 24 Oct 2023 08:47:04 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 81f39a62-9f14-42a9-a80d-3c863177ab21\r\n\r\n<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" href=\"/favicon.ico\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Web site created using create-react-app\"/><link rel=\"apple-touch-icon\" href=\"/logo192.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><title>CarbuRe</title><script defer=\"defer\" src=\"/static/js/main.0a87280f.js\"></script><link href=\"/static/css/main.50a205e0.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script type=\"text/javascript\" src=\"/matomo.js\"></script></body></html>",
-      "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:05:24.547887698Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "cross-origin-resource-policy",
-      "type": "http",
-      "host": "https://carbure.beta.gouv.fr",
-      "matched-at": "https://carbure.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 29 Oct 2023 02:05:24 GMT\r\nEtag: \"65376868-2bb\"\r\nLast-Modified: Tue, 24 Oct 2023 08:47:04 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 81f39a62-9f14-42a9-a80d-3c863177ab21\r\n\r\n<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" href=\"/favicon.ico\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Web site created using create-react-app\"/><link rel=\"apple-touch-icon\" href=\"/logo192.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><title>CarbuRe</title><script defer=\"defer\" src=\"/static/js/main.0a87280f.js\"></script><link href=\"/static/css/main.50a205e0.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script type=\"text/javascript\" src=\"/matomo.js\"></script></body></html>",
-      "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:05:24.5479432Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "permissions-policy",
-      "type": "http",
-      "host": "https://carbure.beta.gouv.fr",
-      "matched-at": "https://carbure.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 29 Oct 2023 02:05:24 GMT\r\nEtag: \"65376868-2bb\"\r\nLast-Modified: Tue, 24 Oct 2023 08:47:04 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 81f39a62-9f14-42a9-a80d-3c863177ab21\r\n\r\n<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" href=\"/favicon.ico\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Web site created using create-react-app\"/><link rel=\"apple-touch-icon\" href=\"/logo192.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><title>CarbuRe</title><script defer=\"defer\" src=\"/static/js/main.0a87280f.js\"></script><link href=\"/static/css/main.50a205e0.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script type=\"text/javascript\" src=\"/matomo.js\"></script></body></html>",
-      "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:05:24.5479551Z",
+      "timestamp": "2023-11-05T01:59:17.61053123Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -374,9 +294,9 @@
       "host": "https://carbure.beta.gouv.fr",
       "matched-at": "https://carbure.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 29 Oct 2023 02:05:24 GMT\r\nEtag: \"65376868-2bb\"\r\nLast-Modified: Tue, 24 Oct 2023 08:47:04 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 81f39a62-9f14-42a9-a80d-3c863177ab21\r\n\r\n<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" href=\"/favicon.ico\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Web site created using create-react-app\"/><link rel=\"apple-touch-icon\" href=\"/logo192.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><title>CarbuRe</title><script defer=\"defer\" src=\"/static/js/main.0a87280f.js\"></script><link href=\"/static/css/main.50a205e0.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script type=\"text/javascript\" src=\"/matomo.js\"></script></body></html>",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 05 Nov 2023 01:59:32 GMT\r\nEtag: \"6543b33e-2bb\"\r\nLast-Modified: Thu, 02 Nov 2023 15:33:34 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 3c62de61-39d0-43df-9ad3-8c2a7484236e\r\n\r\n<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" href=\"/favicon.ico\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Web site created using create-react-app\"/><link rel=\"apple-touch-icon\" href=\"/logo192.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><title>CarbuRe</title><script defer=\"defer\" src=\"/static/js/main.1d87ee58.js\"></script><link href=\"/static/css/main.50a205e0.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script type=\"text/javascript\" src=\"/matomo.js\"></script></body></html>",
       "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:05:24.547969201Z",
+      "timestamp": "2023-11-05T01:59:32.618841073Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -413,9 +333,126 @@
       "host": "https://carbure.beta.gouv.fr",
       "matched-at": "https://carbure.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 29 Oct 2023 02:05:24 GMT\r\nEtag: \"65376868-2bb\"\r\nLast-Modified: Tue, 24 Oct 2023 08:47:04 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 81f39a62-9f14-42a9-a80d-3c863177ab21\r\n\r\n<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" href=\"/favicon.ico\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Web site created using create-react-app\"/><link rel=\"apple-touch-icon\" href=\"/logo192.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><title>CarbuRe</title><script defer=\"defer\" src=\"/static/js/main.0a87280f.js\"></script><link href=\"/static/css/main.50a205e0.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script type=\"text/javascript\" src=\"/matomo.js\"></script></body></html>",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 05 Nov 2023 01:59:32 GMT\r\nEtag: \"6543b33e-2bb\"\r\nLast-Modified: Thu, 02 Nov 2023 15:33:34 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 3c62de61-39d0-43df-9ad3-8c2a7484236e\r\n\r\n<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" href=\"/favicon.ico\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Web site created using create-react-app\"/><link rel=\"apple-touch-icon\" href=\"/logo192.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><title>CarbuRe</title><script defer=\"defer\" src=\"/static/js/main.1d87ee58.js\"></script><link href=\"/static/css/main.50a205e0.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script type=\"text/javascript\" src=\"/matomo.js\"></script></body></html>",
       "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:05:24.547979401Z",
+      "timestamp": "2023-11-05T01:59:32.618893972Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-embedder-policy",
+      "type": "http",
+      "host": "https://carbure.beta.gouv.fr",
+      "matched-at": "https://carbure.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 05 Nov 2023 01:59:32 GMT\r\nEtag: \"6543b33e-2bb\"\r\nLast-Modified: Thu, 02 Nov 2023 15:33:34 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 3c62de61-39d0-43df-9ad3-8c2a7484236e\r\n\r\n<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" href=\"/favicon.ico\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Web site created using create-react-app\"/><link rel=\"apple-touch-icon\" href=\"/logo192.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><title>CarbuRe</title><script defer=\"defer\" src=\"/static/js/main.1d87ee58.js\"></script><link href=\"/static/css/main.50a205e0.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script type=\"text/javascript\" src=\"/matomo.js\"></script></body></html>",
+      "ip": "109.232.236.90",
+      "timestamp": "2023-11-05T01:59:32.618912072Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-resource-policy",
+      "type": "http",
+      "host": "https://carbure.beta.gouv.fr",
+      "matched-at": "https://carbure.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 05 Nov 2023 01:59:32 GMT\r\nEtag: \"6543b33e-2bb\"\r\nLast-Modified: Thu, 02 Nov 2023 15:33:34 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 3c62de61-39d0-43df-9ad3-8c2a7484236e\r\n\r\n<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" href=\"/favicon.ico\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Web site created using create-react-app\"/><link rel=\"apple-touch-icon\" href=\"/logo192.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><title>CarbuRe</title><script defer=\"defer\" src=\"/static/js/main.1d87ee58.js\"></script><link href=\"/static/css/main.50a205e0.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script type=\"text/javascript\" src=\"/matomo.js\"></script></body></html>",
+      "ip": "109.232.236.90",
+      "timestamp": "2023-11-05T01:59:32.618923472Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "permissions-policy",
+      "type": "http",
+      "host": "https://carbure.beta.gouv.fr",
+      "matched-at": "https://carbure.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 05 Nov 2023 01:59:32 GMT\r\nEtag: \"6543b33e-2bb\"\r\nLast-Modified: Thu, 02 Nov 2023 15:33:34 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 3c62de61-39d0-43df-9ad3-8c2a7484236e\r\n\r\n<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"/><link rel=\"icon\" href=\"/favicon.ico\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Web site created using create-react-app\"/><link rel=\"apple-touch-icon\" href=\"/logo192.png\"/><link rel=\"manifest\" href=\"/manifest.json\"/><title>CarbuRe</title><script defer=\"defer\" src=\"/static/js/main.1d87ee58.js\"></script><link href=\"/static/css/main.50a205e0.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div><script type=\"text/javascript\" src=\"/matomo.js\"></script></body></html>",
+      "ip": "109.232.236.90",
+      "timestamp": "2023-11-05T01:59:32.618932872Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -443,9 +480,9 @@
       "host": "https://carbure.beta.gouv.fr",
       "matched-at": "https://carbure.beta.gouv.fr/robots.txt",
       "request": "GET /robots.txt HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 67\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/plain; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 29 Oct 2023 02:05:38 GMT\r\nEtag: \"65376868-43\"\r\nLast-Modified: Tue, 24 Oct 2023 08:47:04 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 01c8ab1d-8a3a-4909-8684-3a4cfb6fb3c2\r\n\r\n# https://www.robotstxt.org/robotstxt.html\nUser-agent: *\nDisallow:\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 67\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nContent-Type: text/plain; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 05 Nov 2023 01:59:48 GMT\r\nEtag: \"6543b33e-43\"\r\nLast-Modified: Thu, 02 Nov 2023 15:33:34 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 1484d060-32c9-4795-bf01-d0454b5f9f62\r\n\r\n# https://www.robotstxt.org/robotstxt.html\nUser-agent: *\nDisallow:\n",
       "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:05:38.595538729Z",
+      "timestamp": "2023-11-05T01:59:48.665088301Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr/robots.txt'",
       "matcher-status": true
     },
@@ -485,9 +522,9 @@
       "host": "https://carbure.beta.gouv.fr",
       "matched-at": "https://carbure.beta.gouv.fr/",
       "request": "POST / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
-      "response": "HTTP/1.1 405 Method Not Allowed\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nAllow: GET, HEAD\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 29 Oct 2023 02:05:56 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: b7879f0a-0740-454b-8119-7f67edc3d309\r\n\r\n",
+      "response": "HTTP/1.1 405 Method Not Allowed\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nAllow: GET, HEAD\r\nContent-Security-Policy: default-src 'self' stats.data.gouv.fr metabase.carbure.beta.gouv.fr\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 05 Nov 2023 02:00:10 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 0f9efb6f-2bfd-4563-9fb5-e35d71ea6b5c\r\n\r\n",
       "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:05:56.493111431Z",
+      "timestamp": "2023-11-05T02:00:10.600178492Z",
       "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: carbure.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr/'",
       "matcher-status": true
     },
@@ -517,7 +554,7 @@
         "Let's Encrypt"
       ],
       "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:08:44.273630468Z",
+      "timestamp": "2023-11-05T02:03:03.325657907Z",
       "matcher-status": true
     },
     {
@@ -546,7 +583,7 @@
         "carbure.beta.gouv.fr"
       ],
       "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:08:44.274089581Z",
+      "timestamp": "2023-11-05T02:03:03.326195803Z",
       "matcher-status": true
     },
     {
@@ -576,7 +613,7 @@
         "tls12"
       ],
       "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:08:48.969780485Z",
+      "timestamp": "2023-11-05T02:03:08.25845236Z",
       "matcher-status": true
     },
     {
@@ -606,7 +643,7 @@
         "tls13"
       ],
       "ip": "109.232.236.90",
-      "timestamp": "2023-10-29T02:08:49.370186451Z",
+      "timestamp": "2023-11-05T02:03:08.575628989Z",
       "matcher-status": true
     }
   ]
