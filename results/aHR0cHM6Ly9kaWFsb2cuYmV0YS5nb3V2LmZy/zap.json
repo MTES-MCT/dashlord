@@ -1,7 +1,7 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.14.0",
-	"@generated": "Sun, 3 Dec 2023 06:02:24",
+	"@generated": "Sun, 10 Dec 2023 06:11:32",
 	"site":[ 
 		{
 			"@name": "https://dialog.beta.gouv.fr",
@@ -9,6 +9,41 @@
 			"@port": "443",
 			"@ssl": "true",
 			"alerts": [ 
+				{
+					"pluginid": "10202",
+					"alertRef": "10202",
+					"alert": "Absence of Anti-CSRF Tokens",
+					"name": "Absence of Anti-CSRF Tokens",
+					"riskcode": "2",
+					"confidence": "1",
+					"riskdesc": "Medium (Low)",
+					"desc": "<p>No Anti-CSRF tokens were found in a HTML submission form.</p><p>A cross-site request forgery is an attack that involves forcing a victim to send an HTTP request to a target destination without their knowledge or intent in order to perform an action as the victim. The underlying cause is application functionality using predictable URL/form actions in a repeatable way. The nature of the attack is that CSRF exploits the trust that a web site has for a user. By contrast, cross-site scripting (XSS) exploits the trust that a user has for a web site. Like XSS, CSRF attacks are not necessarily cross-site, but they can be. Cross-site request forgery is also known as CSRF, XSRF, one-click attack, session riding, confused deputy, and sea surf.</p><p></p><p>CSRF attacks are effective in a number of situations, including:</p><p>    * The victim has an active session on the target site.</p><p>    * The victim is authenticated via HTTP auth on the target site.</p><p>    * The victim is on the same local network as the target site.</p><p></p><p>CSRF has primarily been used to perform an action against a target site using the victim's privileges, but recent techniques have been discovered to disclose information by gaining access to the response. The risk of information disclosure is dramatically increased when the target site is vulnerable to XSS, because XSS can be used as a platform for CSRF, allowing the attack to operate within the bounds of the same-origin policy.</p>",
+					"instances":[ 
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<form name=\"access_request_form\" method=\"post\">",
+							"otherinfo": "No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"access_request_form__token\" \"access_request_form_consentToBeContacted\" \"access_request_form_email\" \"access_request_form_fullName\" \"access_request_form_organizationName\" \"access_request_form_organizationSiret\" \"access_request_form_password\" \"access_request_form_password-show\" ]."
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "<form name=\"access_request_form\" method=\"post\">",
+							"otherinfo": "No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"access_request_form__token\" \"access_request_form_consentToBeContacted\" \"access_request_form_email\" \"access_request_form_fullName\" \"access_request_form_organizationName\" \"access_request_form_organizationSiret\" \"access_request_form_password\" \"access_request_form_password-show\" ]."
+						}
+					],
+					"count": "2",
+					"solution": "<p>Phase: Architecture and Design</p><p>Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.</p><p>For example, use anti-CSRF packages such as the OWASP CSRFGuard.</p><p></p><p>Phase: Implementation</p><p>Ensure that your application is free of cross-site scripting issues, because most CSRF defenses can be bypassed using attacker-controlled script.</p><p></p><p>Phase: Architecture and Design</p><p>Generate a unique nonce for each form, place the nonce into the form, and verify the nonce upon receipt of the form. Be sure that the nonce is not predictable (CWE-330).</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Use the ESAPI Session Management control.</p><p>This control includes a component for CSRF.</p><p></p><p>Do not use the GET method for any request that triggers a state change.</p><p></p><p>Phase: Implementation</p><p>Check the HTTP Referer header to see if the request originated from an expected page. This could break legitimate functionality, because users or proxies may have disabled sending the Referer for privacy reasons.</p>",
+					"otherinfo": "<p>No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"access_request_form__token\" \"access_request_form_consentToBeContacted\" \"access_request_form_email\" \"access_request_form_fullName\" \"access_request_form_organizationName\" \"access_request_form_organizationSiret\" \"access_request_form_password\" \"access_request_form_password-show\" ].</p>",
+					"reference": "<p>http://projects.webappsec.org/Cross-Site-Request-Forgery</p><p>https://cwe.mitre.org/data/definitions/352.html</p>",
+					"cweid": "352",
+					"wascid": "9",
+					"sourceid": "37"
+				},
 				{
 					"pluginid": "10055",
 					"alertRef": "10055-4",
@@ -24,7 +59,7 @@
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-d0k+4j6UPRxM7bLKvnb4Hw=='; style-src 'self' 'unsafe-inline' 'nonce-d0k+4j6UPRxM7bLKvnb4Hw=='",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-dnUGZpiqrKFYWbxgU+iDYg=='; style-src 'self' 'unsafe-inline' 'nonce-dnUGZpiqrKFYWbxgU+iDYg=='",
 							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
 						},
 						{
@@ -32,7 +67,7 @@
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-lTWsRpJAaYorrKoqV3a+Mw=='; style-src 'self' 'unsafe-inline' 'nonce-lTWsRpJAaYorrKoqV3a+Mw=='",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-o/5jyyPteJRjjR1rckgSaw=='; style-src 'self' 'unsafe-inline' 'nonce-o/5jyyPteJRjjR1rckgSaw=='",
 							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
 						},
 						{
@@ -40,7 +75,23 @@
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-j0YkMkMK7RpNu6P8XPQkwg=='; style-src 'self' 'unsafe-inline' 'nonce-j0YkMkMK7RpNu6P8XPQkwg=='",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-ZfjvbEfkiU9gGQ8J4DqaLQ=='; style-src 'self' 'unsafe-inline' 'nonce-ZfjvbEfkiU9gGQ8J4DqaLQ=='",
+							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "GET",
+							"param": "Content-Security-Policy",
+							"attack": "",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-kOY0X/FAR1ic11SPDImThA=='; style-src 'self' 'unsafe-inline' 'nonce-kOY0X/FAR1ic11SPDImThA=='",
+							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/accessibility",
+							"method": "GET",
+							"param": "Content-Security-Policy",
+							"attack": "",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-XTArXfleadJc/JxAURNzFA=='; style-src 'self' 'unsafe-inline' 'nonce-XTArXfleadJc/JxAURNzFA=='",
 							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
 						},
 						{
@@ -48,7 +99,7 @@
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-Ma4u80G4BXvnuGhA9kvcrw=='; style-src 'self' 'unsafe-inline' 'nonce-Ma4u80G4BXvnuGhA9kvcrw=='",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-FK1KBFlnJpQrppTb8ctnCA=='; style-src 'self' 'unsafe-inline' 'nonce-FK1KBFlnJpQrppTb8ctnCA=='",
 							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
 						},
 						{
@@ -56,19 +107,11 @@
 							"method": "GET",
 							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-MUMLoNf3DJCV8TJ80ryJYA=='; style-src 'self' 'unsafe-inline' 'nonce-MUMLoNf3DJCV8TJ80ryJYA=='",
-							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
-						},
-						{
-							"uri": "https://dialog.beta.gouv.fr/usagers",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-p8Pe1blSZSgIJNgLha69jw=='; style-src 'self' 'unsafe-inline' 'nonce-p8Pe1blSZSgIJNgLha69jw=='",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-PMaPd3sjiVId/buO+o7NnQ=='; style-src 'self' 'unsafe-inline' 'nonce-PMaPd3sjiVId/buO+o7NnQ=='",
 							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
 						}
 					],
-					"count": "6",
+					"count": "7",
 					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is properly configured to set the Content-Security-Policy header.</p>",
 					"otherinfo": "<p>The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: </p><p>frame-ancestors, form-action</p><p></p><p>The directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything.</p>",
 					"reference": "<p>http://www.w3.org/TR/CSP2/</p><p>http://www.w3.org/TR/CSP/</p><p>http://caniuse.com/#search=content+security+policy</p><p>http://content-security-policy.com/</p><p>https://github.com/shapesecurity/salvation</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p>",
@@ -101,7 +144,7 @@
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>http://www.w3.org/TR/CSP/</p><p>http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html</p><p>http://www.html5rocks.com/en/tutorials/security/content-security-policy/</p><p>http://caniuse.com/#feat=contentsecuritypolicy</p><p>http://content-security-policy.com/</p>",
 					"cweid": "693",
 					"wascid": "15",
-					"sourceid": "36"
+					"sourceid": "66"
 				},
 				{
 					"pluginid": "10020",
@@ -176,7 +219,7 @@
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options</p>",
 					"cweid": "1021",
 					"wascid": "15",
-					"sourceid": "36"
+					"sourceid": "66"
 				},
 				{
 					"pluginid": "10044",
@@ -211,7 +254,7 @@
 					"reference": "",
 					"cweid": "201",
 					"wascid": "13",
-					"sourceid": "35"
+					"sourceid": "36"
 				},
 				{
 					"pluginid": "10110",
@@ -238,7 +281,7 @@
 					"reference": "<p>https://angular.io/guide/security</p>",
 					"cweid": "749",
 					"wascid": "-1",
-					"sourceid": "117"
+					"sourceid": "96"
 				},
 				{
 					"pluginid": "10063",
@@ -260,6 +303,14 @@
 						},
 						{
 							"uri": "https://dialog.beta.gouv.fr/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -329,14 +380,6 @@
 							"attack": "",
 							"evidence": "",
 							"otherinfo": ""
-						},
-						{
-							"uri": "https://dialog.beta.gouv.fr/usagers",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
 						}
 					],
 					"count": "11",
@@ -345,7 +388,7 @@
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
 					"cweid": "693",
 					"wascid": "15",
-					"sourceid": "1"
+					"sourceid": "9"
 				},
 				{
 					"pluginid": "10035",
@@ -367,6 +410,14 @@
 						},
 						{
 							"uri": "https://dialog.beta.gouv.fr/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -436,14 +487,6 @@
 							"attack": "",
 							"evidence": "",
 							"otherinfo": ""
-						},
-						{
-							"uri": "https://dialog.beta.gouv.fr/usagers",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
 						}
 					],
 					"count": "11",
@@ -473,7 +516,7 @@
 							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
 						},
 						{
-							"uri": "https://dialog.beta.gouv.fr/build/app.e9364b2f.css",
+							"uri": "https://dialog.beta.gouv.fr/build/app.fb9128be.css",
 							"method": "GET",
 							"param": "x-content-type-options",
 							"attack": "",
@@ -529,7 +572,7 @@
 							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
 						},
 						{
-							"uri": "https://dialog.beta.gouv.fr/images/landing/illustration-gps.webp",
+							"uri": "https://dialog.beta.gouv.fr/images/landing/community.png",
 							"method": "GET",
 							"param": "x-content-type-options",
 							"attack": "",
@@ -537,7 +580,7 @@
 							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
 						},
 						{
-							"uri": "https://dialog.beta.gouv.fr/images/landing/map.png",
+							"uri": "https://dialog.beta.gouv.fr/images/landing/illustration-gps.webp",
 							"method": "GET",
 							"param": "x-content-type-options",
 							"attack": "",
@@ -567,7 +610,7 @@
 					"reference": "<p>http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx</p><p>https://owasp.org/www-community/Security_Headers</p>",
 					"cweid": "693",
 					"wascid": "15",
-					"sourceid": "36"
+					"sourceid": "66"
 				},
 				{
 					"pluginid": "10111",
@@ -575,10 +618,42 @@
 					"alert": "Authentication Request Identified",
 					"name": "Authentication Request Identified",
 					"riskcode": "0",
-					"confidence": "3",
-					"riskdesc": "Informational (High)",
+					"confidence": "1",
+					"riskdesc": "Informational (Low)",
 					"desc": "<p>The given request has been identified as an authentication request. The 'Other Info' field contains a set of key=value lines which identify any relevant fields. If the request is in a context which has an Authentication Method set to \"Auto-Detect\" then this rule will change the authentication to match the request identified.</p>",
 					"instances":[ 
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "POST",
+							"param": "access_request_form[_token]",
+							"attack": "",
+							"evidence": "access_request_form[password]",
+							"otherinfo": "userParam=access_request_form[_token]\nuserValue=63d.4hJp3TE6rkBPFwu1hT9n2qIIgYnPAmn3FaGR7Np4oJ8.hmI2sXdP93MKVX7SzHgjvOx7w-O7UhildMbbovco0_24VjqzWUP8Li1-fA\npasswordParam=access_request_form[password]\nreferer=https://dialog.beta.gouv.fr/access-request\ncsrfToken=access_request_form__token"
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "POST",
+							"param": "access_request_form[_token]",
+							"attack": "",
+							"evidence": "access_request_form[password]",
+							"otherinfo": "userParam=access_request_form[_token]\nuserValue=aa56497f8b535d8551b23298c394b5.XXQt-ejdSTY-fZJtqZkvN_MkuCF_T3mRmM-vD_HktJk.OQRyla6oEAV7P-cK4N5rUb1X-ksLHwjD-ajlQdy0x_sHMH6XgKQbWFwU5Q\npasswordParam=access_request_form[password]\nreferer=https://dialog.beta.gouv.fr/access-request\ncsrfToken=access_request_form__token"
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "POST",
+							"param": "access_request_form[_token]",
+							"attack": "",
+							"evidence": "access_request_form[password]",
+							"otherinfo": "userParam=access_request_form[_token]\nuserValue=ac0556b7eda01a2f67.cSceNmrC1m3n-D32W-y4g8erBLz5oOndiiOyx_Di8Fk.FVdBWiy3j16iukiREqv85YnYRtaN8JiP60T4id2ygzsrY01YAruEA4WRSg\npasswordParam=access_request_form[password]\nreferer=https://dialog.beta.gouv.fr/access-request\ncsrfToken=access_request_form__token"
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "POST",
+							"param": "access_request_form[_token]",
+							"attack": "",
+							"evidence": "access_request_form[password]",
+							"otherinfo": "userParam=access_request_form[_token]\nuserValue=f467305b250299fe0b3088611.uOoGkZZ4c9bDa5Av9AHxj3UTrR87otbXuW6EBZgD52I.3JpZ_dANKuWGKeVIvUa16Ttg73VP8qeF2AnOS7VTlADirlX__gEhuKEC5w\npasswordParam=access_request_form[password]\nreferer=https://dialog.beta.gouv.fr/access-request\ncsrfToken=access_request_form__token"
+						},
 						{
 							"uri": "https://dialog.beta.gouv.fr/login",
 							"method": "POST",
@@ -588,13 +663,13 @@
 							"otherinfo": "userParam=email\nuserValue=zaproxy@example.com\npasswordParam=password\nreferer=https://dialog.beta.gouv.fr/login\ncsrfToken=_csrf_token"
 						}
 					],
-					"count": "1",
+					"count": "5",
 					"solution": "<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>",
-					"otherinfo": "<p>userParam=email</p><p>userValue=zaproxy@example.com</p><p>passwordParam=password</p><p>referer=https://dialog.beta.gouv.fr/login</p><p>csrfToken=_csrf_token</p>",
+					"otherinfo": "<p>userParam=access_request_form[_token]</p><p>userValue=63d.4hJp3TE6rkBPFwu1hT9n2qIIgYnPAmn3FaGR7Np4oJ8.hmI2sXdP93MKVX7SzHgjvOx7w-O7UhildMbbovco0_24VjqzWUP8Li1-fA</p><p>passwordParam=access_request_form[password]</p><p>referer=https://dialog.beta.gouv.fr/access-request</p><p>csrfToken=access_request_form__token</p>",
 					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/auth-req-id/</p>",
 					"cweid": "-1",
 					"wascid": "-1",
-					"sourceid": "166"
+					"sourceid": "194"
 				},
 				{
 					"pluginid": "10094",
@@ -606,6 +681,14 @@
 					"riskdesc": "Informational (Medium)",
 					"desc": "<p>Base64 encoded data was disclosed by the application/web server. Note: in the interests of performance not all base64 strings in the response were analyzed individually, the entire response should be looked at by the analyst/security team/developer(s).</p>",
 					"instances":[ 
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "XXQt-ejdSTY-fZJtqZkvN_MkuCF_T3mRmM-vD_HktJk",
+							"otherinfo": "]t-\uFFFD\uFFFD\uFFFDI6>}\uFFFDm\uFFFD\uFFFD/7\uFFFD$\uFFFD!Oy\uFFFD\uFFFD\u03EF\\x000f\uFFFD\u4D19"
+						},
 						{
 							"uri": "https://dialog.beta.gouv.fr/blog/css/dsfr.min.css",
 							"method": "GET",
@@ -623,7 +706,7 @@
 							"otherinfo": "r\uFFFD\uFFFD\\x0016)\u069D\u021A\uFFFD\uFFFD\uFFFD\uFFFD?\uFFFD\uFFFDr~)e\uFFFD\u01EB\uFFFD'\\x001e\uFFFD+,\uFFFD\uFFFD?\uFFFD^"
 						},
 						{
-							"uri": "https://dialog.beta.gouv.fr/build/634.48bce1d6.css",
+							"uri": "https://dialog.beta.gouv.fr/build/634.f1ec8748.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -643,17 +726,49 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "B6S2dGXBmb2KTmvpVZoYjhEKhvsx49rmOPuZYzTkp1Q",
-							"otherinfo": "\\x0007\uFFFD\uFFFDte\uFFFD\uFFFD\uFFFD\uFFFDNk\uFFFDU\uFFFD\\x0018\uFFFD\\x0011\n\uFFFD\uFFFD1\uFFFD\uFFFD\uFFFD8\uFFFD\uFFFDc4\uFFFDT"
+							"evidence": "cy7tJuQoO74nVl1S0GbE8hOeBfjXH00Nct9HI97feaI",
+							"otherinfo": "s.\uFFFD&\uFFFD(;\uFFFD'V]R\uFFFDf\uFFFD\uFFFD\\x0013\uFFFD\\x0005\uFFFD\uFFFD\\x001fM\rr\uFFFDG#\uFFFD\uFFFDy\uFFFD"
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "M7MnpiK5tx9TDgDJfo4cwsOWP6oZF5lDcGD9iUMV64Q",
+							"otherinfo": "3\uFFFD'\uFFFD\"\uFFFD\uFFFD\\x001fS\\x000e\\x0000\uFFFD~\uFFFD\\x001c\uFFFD\u00D6?\uFFFD\\x0019\\x0017\uFFFDCp`\uFFFD\uFFFDC\\x0015\uFFFD"
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "cSceNmrC1m3n-D32W-y4g8erBLz5oOndiiOyx_Di8Fk",
+							"otherinfo": "q'\\x001e6j\uFFFD\uFFFDm\uFFFD\uFFFD=\uFFFD[\uCE03\u01EB\\x0004\uFFFD\uFFFD\uFFFD\uFFFD\u074A#\uFFFD\uFFFD\uFFFD\uFFFD\uFFFDY"
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "4hJp3TE6rkBPFwu1hT9n2qIIgYnPAmn3FaGR7Np4oJ8",
+							"otherinfo": "\uFFFD\\x0012i\uFFFD1:\uFFFD@O\\x0017\\x000b\uFFFD\uFFFD?g\u06A2\\x0008\uFFFD\uFFFD\uFFFD\\x0002i\uFFFD\\x0015\uFFFD\uFFFD\uFFFD\uFFFDx\uFFFD\uFFFD"
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "POST",
+							"param": "",
+							"attack": "",
+							"evidence": "uOoGkZZ4c9bDa5Av9AHxj3UTrR87otbXuW6EBZgD52I",
+							"otherinfo": "\uFFFD\uFFFD\\x0006\uFFFD\uFFFDxs\uFFFD\uFFFDk\uFFFD/\uFFFD\\x0001\uFFFDu\\x0013\uFFFD\\x001f;\uFFFD\uFFFD\u05F9n\uFFFD\\x0005\uFFFD\\x0003\uFFFDb"
 						}
 					],
-					"count": "5",
+					"count": "10",
 					"solution": "<p>Manually confirm that the Base64 data does not leak sensitive information, and that the data cannot be aggregated/used to exploit other vulnerabilities.</p>",
-					"otherinfo": "<p>\uFFFDo\uFFFD~\uFFFD\uFFFD~/\uFFFD\\x001dzW\uFFFD~\uFFFD\uFFFD\uFFFD\uFFFDey\uFFFDn</p>",
+					"otherinfo": "<p>]t-\uFFFD\uFFFD\uFFFDI6>}\uFFFDm\uFFFD\uFFFD/7\uFFFD$\uFFFD!Oy\uFFFD\uFFFD\u03EF\\x000f\uFFFD\u4D19</p>",
 					"reference": "<p>https://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "172"
+					"sourceid": "37"
 				},
 				{
 					"pluginid": "10055",
@@ -670,7 +785,7 @@
 							"method": "GET",
 							"param": "X-Content-Security-Policy",
 							"attack": "",
-							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-d0k+4j6UPRxM7bLKvnb4Hw=='; style-src 'self' 'unsafe-inline' 'nonce-d0k+4j6UPRxM7bLKvnb4Hw=='",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-dnUGZpiqrKFYWbxgU+iDYg=='; style-src 'self' 'unsafe-inline' 'nonce-dnUGZpiqrKFYWbxgU+iDYg=='",
 							"otherinfo": "The header X-Content-Security-Policy was found on this response. While it is a good sign that CSP is implemented to some degree the policy specified in this header has not been analyzed by ZAP. To ensure full support by modern browsers ensure that the Content-Security-Policy header is defined and attached to responses."
 						},
 						{
@@ -678,7 +793,7 @@
 							"method": "GET",
 							"param": "X-Content-Security-Policy",
 							"attack": "",
-							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-lTWsRpJAaYorrKoqV3a+Mw=='; style-src 'self' 'unsafe-inline' 'nonce-lTWsRpJAaYorrKoqV3a+Mw=='",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-o/5jyyPteJRjjR1rckgSaw=='; style-src 'self' 'unsafe-inline' 'nonce-o/5jyyPteJRjjR1rckgSaw=='",
 							"otherinfo": "The header X-Content-Security-Policy was found on this response. While it is a good sign that CSP is implemented to some degree the policy specified in this header has not been analyzed by ZAP. To ensure full support by modern browsers ensure that the Content-Security-Policy header is defined and attached to responses."
 						},
 						{
@@ -686,7 +801,23 @@
 							"method": "GET",
 							"param": "X-Content-Security-Policy",
 							"attack": "",
-							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-j0YkMkMK7RpNu6P8XPQkwg=='; style-src 'self' 'unsafe-inline' 'nonce-j0YkMkMK7RpNu6P8XPQkwg=='",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-ZfjvbEfkiU9gGQ8J4DqaLQ=='; style-src 'self' 'unsafe-inline' 'nonce-ZfjvbEfkiU9gGQ8J4DqaLQ=='",
+							"otherinfo": "The header X-Content-Security-Policy was found on this response. While it is a good sign that CSP is implemented to some degree the policy specified in this header has not been analyzed by ZAP. To ensure full support by modern browsers ensure that the Content-Security-Policy header is defined and attached to responses."
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "GET",
+							"param": "X-Content-Security-Policy",
+							"attack": "",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-kOY0X/FAR1ic11SPDImThA=='; style-src 'self' 'unsafe-inline' 'nonce-kOY0X/FAR1ic11SPDImThA=='",
+							"otherinfo": "The header X-Content-Security-Policy was found on this response. While it is a good sign that CSP is implemented to some degree the policy specified in this header has not been analyzed by ZAP. To ensure full support by modern browsers ensure that the Content-Security-Policy header is defined and attached to responses."
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/accessibility",
+							"method": "GET",
+							"param": "X-Content-Security-Policy",
+							"attack": "",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-XTArXfleadJc/JxAURNzFA=='; style-src 'self' 'unsafe-inline' 'nonce-XTArXfleadJc/JxAURNzFA=='",
 							"otherinfo": "The header X-Content-Security-Policy was found on this response. While it is a good sign that CSP is implemented to some degree the policy specified in this header has not been analyzed by ZAP. To ensure full support by modern browsers ensure that the Content-Security-Policy header is defined and attached to responses."
 						},
 						{
@@ -694,7 +825,7 @@
 							"method": "GET",
 							"param": "X-Content-Security-Policy",
 							"attack": "",
-							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-Ma4u80G4BXvnuGhA9kvcrw=='; style-src 'self' 'unsafe-inline' 'nonce-Ma4u80G4BXvnuGhA9kvcrw=='",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-FK1KBFlnJpQrppTb8ctnCA=='; style-src 'self' 'unsafe-inline' 'nonce-FK1KBFlnJpQrppTb8ctnCA=='",
 							"otherinfo": "The header X-Content-Security-Policy was found on this response. While it is a good sign that CSP is implemented to some degree the policy specified in this header has not been analyzed by ZAP. To ensure full support by modern browsers ensure that the Content-Security-Policy header is defined and attached to responses."
 						},
 						{
@@ -702,19 +833,11 @@
 							"method": "GET",
 							"param": "X-Content-Security-Policy",
 							"attack": "",
-							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-MUMLoNf3DJCV8TJ80ryJYA=='; style-src 'self' 'unsafe-inline' 'nonce-MUMLoNf3DJCV8TJ80ryJYA=='",
-							"otherinfo": "The header X-Content-Security-Policy was found on this response. While it is a good sign that CSP is implemented to some degree the policy specified in this header has not been analyzed by ZAP. To ensure full support by modern browsers ensure that the Content-Security-Policy header is defined and attached to responses."
-						},
-						{
-							"uri": "https://dialog.beta.gouv.fr/usagers",
-							"method": "GET",
-							"param": "X-Content-Security-Policy",
-							"attack": "",
-							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-p8Pe1blSZSgIJNgLha69jw=='; style-src 'self' 'unsafe-inline' 'nonce-p8Pe1blSZSgIJNgLha69jw=='",
+							"evidence": "default-src 'self'; block-all-mixed-content; img-src 'self' data:; script-src 'self' 'unsafe-inline' 'nonce-PMaPd3sjiVId/buO+o7NnQ=='; style-src 'self' 'unsafe-inline' 'nonce-PMaPd3sjiVId/buO+o7NnQ=='",
 							"otherinfo": "The header X-Content-Security-Policy was found on this response. While it is a good sign that CSP is implemented to some degree the policy specified in this header has not been analyzed by ZAP. To ensure full support by modern browsers ensure that the Content-Security-Policy header is defined and attached to responses."
 						}
 					],
-					"count": "6",
+					"count": "7",
 					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is properly configured to set the Content-Security-Policy header.</p>",
 					"otherinfo": "<p>The header X-Content-Security-Policy was found on this response. While it is a good sign that CSP is implemented to some degree the policy specified in this header has not been analyzed by ZAP. To ensure full support by modern browsers ensure that the Content-Security-Policy header is defined and attached to responses.</p>",
 					"reference": "<p>http://www.w3.org/TR/CSP2/</p><p>http://www.w3.org/TR/CSP/</p><p>http://caniuse.com/#search=content+security+policy</p><p>http://content-security-policy.com/</p><p>https://github.com/shapesecurity/salvation</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p>",
@@ -803,7 +926,7 @@
 					"reference": "",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "124"
+					"sourceid": "186"
 				},
 				{
 					"pluginid": "10109",
@@ -825,6 +948,14 @@
 						},
 						{
 							"uri": "https://dialog.beta.gouv.fr/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<a class=\"fr-footer__bottom-link\" href=\"#\">Mentions l\u00E9gales</a>",
+							"otherinfo": "Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application."
+						},
+						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -894,14 +1025,6 @@
 							"attack": "",
 							"evidence": "<a class=\"fr-footer__bottom-link\" href=\"#\">Mentions l\u00E9gales</a>",
 							"otherinfo": "Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application."
-						},
-						{
-							"uri": "https://dialog.beta.gouv.fr/usagers",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "<a class=\"fr-footer__bottom-link\" href=\"#\">Mentions l\u00E9gales</a>",
-							"otherinfo": "Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application."
 						}
 					],
 					"count": "11",
@@ -939,6 +1062,14 @@
 							"otherinfo": ""
 						},
 						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "private",
+							"otherinfo": ""
+						},
+						{
 							"uri": "https://dialog.beta.gouv.fr/collectivites",
 							"method": "GET",
 							"param": "",
@@ -963,14 +1094,6 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://dialog.beta.gouv.fr/services-numeriques",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "private",
-							"otherinfo": ""
-						},
-						{
 							"uri": "https://dialog.beta.gouv.fr/sitemap.xml",
 							"method": "GET",
 							"param": "",
@@ -979,7 +1102,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://dialog.beta.gouv.fr/usagers",
+							"uri": "https://dialog.beta.gouv.fr/stats",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -993,7 +1116,7 @@
 					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "1"
+					"sourceid": "9"
 				},
 				{
 					"pluginid": "10038",
@@ -1022,6 +1145,14 @@
 							"otherinfo": ""
 						},
 						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
 							"uri": "https://dialog.beta.gouv.fr/accessibility",
 							"method": "GET",
 							"param": "",
@@ -1076,14 +1207,6 @@
 							"attack": "",
 							"evidence": "",
 							"otherinfo": ""
-						},
-						{
-							"uri": "https://dialog.beta.gouv.fr/usagers",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
 						}
 					],
 					"count": "10",
@@ -1092,7 +1215,7 @@
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>http://www.w3.org/TR/CSP/</p><p>http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html</p><p>http://www.html5rocks.com/en/tutorials/security/content-security-policy/</p><p>http://caniuse.com/#feat=contentsecuritypolicy</p><p>http://content-security-policy.com/</p>",
 					"cweid": "693",
 					"wascid": "15",
-					"sourceid": "1"
+					"sourceid": "9"
 				},
 				{
 					"pluginid": "10015",
@@ -1121,6 +1244,14 @@
 							"otherinfo": ""
 						},
 						{
+							"uri": "https://dialog.beta.gouv.fr/access-request",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "max-age=0, must-revalidate, private",
+							"otherinfo": ""
+						},
+						{
 							"uri": "https://dialog.beta.gouv.fr/accessibility",
 							"method": "GET",
 							"param": "cache-control",
@@ -1183,14 +1314,6 @@
 							"attack": "",
 							"evidence": "max-age=0, must-revalidate, private",
 							"otherinfo": ""
-						},
-						{
-							"uri": "https://dialog.beta.gouv.fr/usagers",
-							"method": "GET",
-							"param": "cache-control",
-							"attack": "",
-							"evidence": "max-age=0, must-revalidate, private",
-							"otherinfo": ""
 						}
 					],
 					"count": "11",
@@ -1199,7 +1322,7 @@
 					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
 					"cweid": "525",
 					"wascid": "13",
-					"sourceid": "1"
+					"sourceid": "9"
 				},
 				{
 					"pluginid": "90005",
@@ -1212,14 +1335,6 @@
 					"desc": "<p>Specifies how and where the data would be used. For instance, if the value is audio, then the requested resource must be audio data and not any other type of resource.</p>",
 					"instances":[ 
 						{
-							"uri": "https://dialog.beta.gouv.fr",
-							"method": "GET",
-							"param": "Sec-Fetch-Dest",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
 							"uri": "https://dialog.beta.gouv.fr/regulations",
 							"method": "GET",
 							"param": "Sec-Fetch-Dest",
@@ -1244,13 +1359,13 @@
 							"otherinfo": ""
 						}
 					],
-					"count": "4",
+					"count": "3",
 					"solution": "<p>Ensure that Sec-Fetch-Dest header is included in request headers.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Dest</p>",
 					"cweid": "352",
 					"wascid": "9",
-					"sourceid": "1"
+					"sourceid": "36"
 				},
 				{
 					"pluginid": "90005",
@@ -1263,14 +1378,6 @@
 					"desc": "<p>Allows to differentiate between requests for navigating between HTML pages and requests for loading resources like images, audio etc.</p>",
 					"instances":[ 
 						{
-							"uri": "https://dialog.beta.gouv.fr",
-							"method": "GET",
-							"param": "Sec-Fetch-Mode",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
 							"uri": "https://dialog.beta.gouv.fr/regulations",
 							"method": "GET",
 							"param": "Sec-Fetch-Mode",
@@ -1295,13 +1402,13 @@
 							"otherinfo": ""
 						}
 					],
-					"count": "4",
+					"count": "3",
 					"solution": "<p>Ensure that Sec-Fetch-Mode header is included in request headers.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Mode</p>",
 					"cweid": "352",
 					"wascid": "9",
-					"sourceid": "1"
+					"sourceid": "36"
 				},
 				{
 					"pluginid": "90005",
@@ -1314,14 +1421,6 @@
 					"desc": "<p>Specifies the relationship between request initiator's origin and target's origin.</p>",
 					"instances":[ 
 						{
-							"uri": "https://dialog.beta.gouv.fr",
-							"method": "GET",
-							"param": "Sec-Fetch-Site",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
 							"uri": "https://dialog.beta.gouv.fr/regulations",
 							"method": "GET",
 							"param": "Sec-Fetch-Site",
@@ -1346,13 +1445,13 @@
 							"otherinfo": ""
 						}
 					],
-					"count": "4",
+					"count": "3",
 					"solution": "<p>Ensure that Sec-Fetch-Site header is included in request headers.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Site</p>",
 					"cweid": "352",
 					"wascid": "9",
-					"sourceid": "1"
+					"sourceid": "36"
 				},
 				{
 					"pluginid": "90005",
@@ -1365,14 +1464,6 @@
 					"desc": "<p>Specifies if a navigation request was initiated by a user.</p>",
 					"instances":[ 
 						{
-							"uri": "https://dialog.beta.gouv.fr",
-							"method": "GET",
-							"param": "Sec-Fetch-User",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
 							"uri": "https://dialog.beta.gouv.fr/regulations",
 							"method": "GET",
 							"param": "Sec-Fetch-User",
@@ -1397,13 +1488,13 @@
 							"otherinfo": ""
 						}
 					],
-					"count": "4",
+					"count": "3",
 					"solution": "<p>Ensure that Sec-Fetch-User header is included in user initiated requests.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-User</p>",
 					"cweid": "352",
 					"wascid": "9",
-					"sourceid": "1"
+					"sourceid": "36"
 				},
 				{
 					"pluginid": "10112",
@@ -1420,7 +1511,7 @@
 							"method": "GET",
 							"param": "PHPSESSID",
 							"attack": "",
-							"evidence": "e39d81117f789be5fde6e39c3825f157",
+							"evidence": "1736369b6420af81d393e77c7aec4c6a",
 							"otherinfo": "\ncookie:PHPSESSID"
 						},
 						{
@@ -1428,7 +1519,7 @@
 							"method": "GET",
 							"param": "PHPSESSID",
 							"attack": "",
-							"evidence": "e39d81117f789be5fde6e39c3825f157",
+							"evidence": "1736369b6420af81d393e77c7aec4c6a",
 							"otherinfo": "\ncookie:PHPSESSID"
 						}
 					],
@@ -1438,7 +1529,7 @@
 					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id</p>",
 					"cweid": "-1",
 					"wascid": "-1",
-					"sourceid": "35"
+					"sourceid": "36"
 				},
 				{
 					"pluginid": "10049",
@@ -1451,12 +1542,12 @@
 					"desc": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users.  If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
 					"instances":[ 
 						{
-							"uri": "https://dialog.beta.gouv.fr/blog/fr/",
+							"uri": "https://dialog.beta.gouv.fr/accessibility",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "",
-							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
+							"evidence": "s-maxage=86400",
+							"otherinfo": ""
 						},
 						{
 							"uri": "https://dialog.beta.gouv.fr/ecoconception",
@@ -1477,11 +1568,11 @@
 					],
 					"count": "3",
 					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. </p>",
-					"otherinfo": "<p>In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234.</p>",
+					"otherinfo": "",
 					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "36"
+					"sourceid": "40"
 				}
 			]
 		}
