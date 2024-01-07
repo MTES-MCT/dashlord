@@ -1,7 +1,7 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.14.0",
-	"@generated": "Sun, 31 Dec 2023 01:30:28",
+	"@generated": "Sun, 7 Jan 2024 01:30:16",
 	"site":[ 
 		{
 			"@name": "https://apilos.beta.gouv.fr",
@@ -10,304 +10,112 @@
 			"@ssl": "true",
 			"alerts": [ 
 				{
-					"pluginid": "10055",
-					"alertRef": "10055-4",
-					"alert": "CSP: Wildcard Directive",
-					"name": "CSP: Wildcard Directive",
+					"pluginid": "10202",
+					"alertRef": "10202",
+					"alert": "Absence of Anti-CSRF Tokens",
+					"name": "Absence of Anti-CSRF Tokens",
+					"riskcode": "2",
+					"confidence": "1",
+					"riskdesc": "Medium (Low)",
+					"desc": "<p>No Anti-CSRF tokens were found in a HTML submission form.</p><p>A cross-site request forgery is an attack that involves forcing a victim to send an HTTP request to a target destination without their knowledge or intent in order to perform an action as the victim. The underlying cause is application functionality using predictable URL/form actions in a repeatable way. The nature of the attack is that CSRF exploits the trust that a web site has for a user. By contrast, cross-site scripting (XSS) exploits the trust that a user has for a web site. Like XSS, CSRF attacks are not necessarily cross-site, but they can be. Cross-site request forgery is also known as CSRF, XSRF, one-click attack, session riding, confused deputy, and sea surf.</p><p></p><p>CSRF attacks are effective in a number of situations, including:</p><p>    * The victim has an active session on the target site.</p><p>    * The victim is authenticated via HTTP auth on the target site.</p><p>    * The victim is on the same local network as the target site.</p><p></p><p>CSRF has primarily been used to perform an action against a target site using the victim's privileges, but recent techniques have been discovered to disclose information by gaining access to the response. The risk of information disclosure is dramatically increased when the target site is vulnerable to XSS, because XSS can be used as a platform for CSRF, allowing the attack to operate within the bounds of the same-origin policy.</p>",
+					"instances":[ 
+						{
+							"uri": "https://apilos.beta.gouv.fr",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<form id=\"connectAppliForm\" action=\"/authSAML/connexion/formulaire.do\" method=\"POST\">",
+							"otherinfo": "No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"appId\" \"authRequestId\" \"backURL\" \"login\" \"password\" \"protocol\" \"ssoCas\" ]."
+						}
+					],
+					"count": "1",
+					"solution": "<p>Phase: Architecture and Design</p><p>Use a vetted library or framework that does not allow this weakness to occur or provides constructs that make this weakness easier to avoid.</p><p>For example, use anti-CSRF packages such as the OWASP CSRFGuard.</p><p></p><p>Phase: Implementation</p><p>Ensure that your application is free of cross-site scripting issues, because most CSRF defenses can be bypassed using attacker-controlled script.</p><p></p><p>Phase: Architecture and Design</p><p>Generate a unique nonce for each form, place the nonce into the form, and verify the nonce upon receipt of the form. Be sure that the nonce is not predictable (CWE-330).</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Identify especially dangerous operations. When the user performs a dangerous operation, send a separate confirmation request to ensure that the user intended to perform that operation.</p><p>Note that this can be bypassed using XSS.</p><p></p><p>Use the ESAPI Session Management control.</p><p>This control includes a component for CSRF.</p><p></p><p>Do not use the GET method for any request that triggers a state change.</p><p></p><p>Phase: Implementation</p><p>Check the HTTP Referer header to see if the request originated from an expected page. This could break legitimate functionality, because users or proxies may have disabled sending the Referer for privacy reasons.</p>",
+					"otherinfo": "<p>No known Anti-CSRF token [anticsrf, CSRFToken, __RequestVerificationToken, csrfmiddlewaretoken, authenticity_token, OWASP_CSRFTOKEN, anoncsrf, csrf_token, _csrf, _csrfSecret, __csrf_magic, CSRF, _token, _csrf_token] was found in the following HTML form: [Form 1: \"appId\" \"authRequestId\" \"backURL\" \"login\" \"password\" \"protocol\" \"ssoCas\" ].</p>",
+					"reference": "<p>http://projects.webappsec.org/Cross-Site-Request-Forgery</p><p>https://cwe.mitre.org/data/definitions/352.html</p>",
+					"cweid": "352",
+					"wascid": "9",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10038",
+					"alertRef": "10038-1",
+					"alert": "Content Security Policy (CSP) Header Not Set",
+					"name": "Content Security Policy (CSP) Header Not Set",
 					"riskcode": "2",
 					"confidence": "3",
 					"riskdesc": "Medium (High)",
-					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks. Including (but not limited to) Cross Site Scripting (XSS), and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
 					"instances":[ 
 						{
 							"uri": "https://apilos.beta.gouv.fr",
 							"method": "GET",
-							"param": "Content-Security-Policy",
+							"param": "",
 							"attack": "",
-							"evidence": "frame-src 'self' https://www.dailymotion.com/embed/video/x8fkp4y https://www.dailymotion.com/embed/video/x8frr91 https://game.crisp.chat https://metabase.apilos.beta.gouv.fr/public/dashboard/b91cd727-95e2-44c7-b8ae-0cf4a235abfb; object-src 'none'; default-src 'none'; media-src https://client.crisp.chat; font-src 'self' data: https://client.crisp.chat; script-src https://stats.data.gouv.fr/piwik.js 'self' 'sha256-zaYxlJmjbzgo2YczX5XHFlvamZUNy264d7XlOOUwMME=' 'sha256-928U3JmFf9xytJJBtEU5V1FVGcqsTfwaVnI2vmHmamA=' 'sha256-lkrKw/baCFdnI+tB9T+0yFMewpXSk9yct2ZbWEGPDhY=' 'sha256-J71e5kr85q2XGRl+qwOA/tpMsXmKDjeTnvlzBhBsz/0=' 'sha256-h7boyH6dI/JQnsm6Iw1sAtEbdb/+638kREPj4sfWmMs=' 'sha256-7uHmVaAHWxl0RElSoWED7kK+9kRSQ+E6SQ3aBK1prkU=' https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-bundle.js https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-standalone-preset.js https://client.crisp.chat https://settings.crisp.chat 'nonce-r9j/CHy37+5dZOdcmrJOVg=='; manifest-src 'self'; img-src 'self' data: https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png https://client.crisp.chat https://image.crisp.chat https://storage.crisp.chat; style-src 'self' https://code.highcharts.com/css/highcharts.css https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css 'unsafe-inline' https://client.crisp.chat; connect-src 'self' https://stats.data.gouv.fr/piwik.php https://client.crisp.chat https://storage.crisp.chat wss://client.relay.crisp.chat wss://stream.relay.crisp.chat",
-							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "frame-src 'self' https://www.dailymotion.com/embed/video/x8fkp4y https://www.dailymotion.com/embed/video/x8frr91 https://game.crisp.chat https://metabase.apilos.beta.gouv.fr/public/dashboard/b91cd727-95e2-44c7-b8ae-0cf4a235abfb; object-src 'none'; script-src https://stats.data.gouv.fr/piwik.js 'self' 'sha256-zaYxlJmjbzgo2YczX5XHFlvamZUNy264d7XlOOUwMME=' 'sha256-928U3JmFf9xytJJBtEU5V1FVGcqsTfwaVnI2vmHmamA=' 'sha256-lkrKw/baCFdnI+tB9T+0yFMewpXSk9yct2ZbWEGPDhY=' 'sha256-J71e5kr85q2XGRl+qwOA/tpMsXmKDjeTnvlzBhBsz/0=' 'sha256-h7boyH6dI/JQnsm6Iw1sAtEbdb/+638kREPj4sfWmMs=' 'sha256-7uHmVaAHWxl0RElSoWED7kK+9kRSQ+E6SQ3aBK1prkU=' https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-bundle.js https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-standalone-preset.js https://client.crisp.chat https://settings.crisp.chat 'nonce-dcLl2U87tv7tGu0jMq2J2w=='; connect-src 'self' https://stats.data.gouv.fr/piwik.php https://client.crisp.chat https://storage.crisp.chat wss://client.relay.crisp.chat wss://stream.relay.crisp.chat; font-src 'self' data: https://client.crisp.chat; manifest-src 'self'; media-src https://client.crisp.chat; img-src 'self' data: https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png https://client.crisp.chat https://image.crisp.chat https://storage.crisp.chat; default-src 'none'; style-src 'self' https://code.highcharts.com/css/highcharts.css https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css 'unsafe-inline' https://client.crisp.chat",
-							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accessibilite",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "frame-src 'self' https://www.dailymotion.com/embed/video/x8fkp4y https://www.dailymotion.com/embed/video/x8frr91 https://game.crisp.chat https://metabase.apilos.beta.gouv.fr/public/dashboard/b91cd727-95e2-44c7-b8ae-0cf4a235abfb; object-src 'none'; default-src 'none'; media-src https://client.crisp.chat; font-src 'self' data: https://client.crisp.chat; script-src https://stats.data.gouv.fr/piwik.js 'self' 'sha256-zaYxlJmjbzgo2YczX5XHFlvamZUNy264d7XlOOUwMME=' 'sha256-928U3JmFf9xytJJBtEU5V1FVGcqsTfwaVnI2vmHmamA=' 'sha256-lkrKw/baCFdnI+tB9T+0yFMewpXSk9yct2ZbWEGPDhY=' 'sha256-J71e5kr85q2XGRl+qwOA/tpMsXmKDjeTnvlzBhBsz/0=' 'sha256-h7boyH6dI/JQnsm6Iw1sAtEbdb/+638kREPj4sfWmMs=' 'sha256-7uHmVaAHWxl0RElSoWED7kK+9kRSQ+E6SQ3aBK1prkU=' https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-bundle.js https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-standalone-preset.js https://client.crisp.chat https://settings.crisp.chat 'nonce-OW4s/ys1N/0qrXI2XcFGjQ=='; manifest-src 'self'; img-src 'self' data: https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png https://client.crisp.chat https://image.crisp.chat https://storage.crisp.chat; style-src 'self' https://code.highcharts.com/css/highcharts.css https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css 'unsafe-inline' https://client.crisp.chat; connect-src 'self' https://stats.data.gouv.fr/piwik.php https://client.crisp.chat https://storage.crisp.chat wss://client.relay.crisp.chat wss://stream.relay.crisp.chat",
-							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "frame-src 'self' https://www.dailymotion.com/embed/video/x8fkp4y https://www.dailymotion.com/embed/video/x8frr91 https://game.crisp.chat https://metabase.apilos.beta.gouv.fr/public/dashboard/b91cd727-95e2-44c7-b8ae-0cf4a235abfb; object-src 'none'; default-src 'none'; media-src https://client.crisp.chat; font-src 'self' data: https://client.crisp.chat; script-src https://stats.data.gouv.fr/piwik.js 'self' 'sha256-zaYxlJmjbzgo2YczX5XHFlvamZUNy264d7XlOOUwMME=' 'sha256-928U3JmFf9xytJJBtEU5V1FVGcqsTfwaVnI2vmHmamA=' 'sha256-lkrKw/baCFdnI+tB9T+0yFMewpXSk9yct2ZbWEGPDhY=' 'sha256-J71e5kr85q2XGRl+qwOA/tpMsXmKDjeTnvlzBhBsz/0=' 'sha256-h7boyH6dI/JQnsm6Iw1sAtEbdb/+638kREPj4sfWmMs=' 'sha256-7uHmVaAHWxl0RElSoWED7kK+9kRSQ+E6SQ3aBK1prkU=' https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-bundle.js https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-standalone-preset.js https://client.crisp.chat https://settings.crisp.chat 'nonce-eIu8oCdwbMvmRaznnXjoRw=='; manifest-src 'self'; img-src 'self' data: https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png https://client.crisp.chat https://image.crisp.chat https://storage.crisp.chat; style-src 'self' https://code.highcharts.com/css/highcharts.css https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css 'unsafe-inline' https://client.crisp.chat; connect-src 'self' https://stats.data.gouv.fr/piwik.php https://client.crisp.chat https://storage.crisp.chat wss://client.relay.crisp.chat wss://stream.relay.crisp.chat",
-							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/?instructeur=1",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "frame-src 'self' https://www.dailymotion.com/embed/video/x8fkp4y https://www.dailymotion.com/embed/video/x8frr91 https://game.crisp.chat https://metabase.apilos.beta.gouv.fr/public/dashboard/b91cd727-95e2-44c7-b8ae-0cf4a235abfb; object-src 'none'; script-src https://stats.data.gouv.fr/piwik.js 'self' 'sha256-zaYxlJmjbzgo2YczX5XHFlvamZUNy264d7XlOOUwMME=' 'sha256-928U3JmFf9xytJJBtEU5V1FVGcqsTfwaVnI2vmHmamA=' 'sha256-lkrKw/baCFdnI+tB9T+0yFMewpXSk9yct2ZbWEGPDhY=' 'sha256-J71e5kr85q2XGRl+qwOA/tpMsXmKDjeTnvlzBhBsz/0=' 'sha256-h7boyH6dI/JQnsm6Iw1sAtEbdb/+638kREPj4sfWmMs=' 'sha256-7uHmVaAHWxl0RElSoWED7kK+9kRSQ+E6SQ3aBK1prkU=' https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-bundle.js https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-standalone-preset.js https://client.crisp.chat https://settings.crisp.chat 'nonce-yqFF/mI9MWr0UHOKepxv2g=='; connect-src 'self' https://stats.data.gouv.fr/piwik.php https://client.crisp.chat https://storage.crisp.chat wss://client.relay.crisp.chat wss://stream.relay.crisp.chat; font-src 'self' data: https://client.crisp.chat; manifest-src 'self'; media-src https://client.crisp.chat; img-src 'self' data: https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png https://client.crisp.chat https://image.crisp.chat https://storage.crisp.chat; default-src 'none'; style-src 'self' https://code.highcharts.com/css/highcharts.css https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css 'unsafe-inline' https://client.crisp.chat",
-							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/robots.txt",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "frame-src 'self' https://www.dailymotion.com/embed/video/x8fkp4y https://www.dailymotion.com/embed/video/x8frr91 https://game.crisp.chat https://metabase.apilos.beta.gouv.fr/public/dashboard/b91cd727-95e2-44c7-b8ae-0cf4a235abfb; object-src 'none'; default-src 'none'; media-src https://client.crisp.chat; font-src 'self' data: https://client.crisp.chat; script-src https://stats.data.gouv.fr/piwik.js 'self' 'sha256-zaYxlJmjbzgo2YczX5XHFlvamZUNy264d7XlOOUwMME=' 'sha256-928U3JmFf9xytJJBtEU5V1FVGcqsTfwaVnI2vmHmamA=' 'sha256-lkrKw/baCFdnI+tB9T+0yFMewpXSk9yct2ZbWEGPDhY=' 'sha256-J71e5kr85q2XGRl+qwOA/tpMsXmKDjeTnvlzBhBsz/0=' 'sha256-h7boyH6dI/JQnsm6Iw1sAtEbdb/+638kREPj4sfWmMs=' 'sha256-7uHmVaAHWxl0RElSoWED7kK+9kRSQ+E6SQ3aBK1prkU=' https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-bundle.js https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-standalone-preset.js https://client.crisp.chat https://settings.crisp.chat 'nonce-/zNNFcNT6HYdZQeDLfY5aw=='; manifest-src 'self'; img-src 'self' data: https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png https://client.crisp.chat https://image.crisp.chat https://storage.crisp.chat; style-src 'self' https://code.highcharts.com/css/highcharts.css https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css 'unsafe-inline' https://client.crisp.chat; connect-src 'self' https://stats.data.gouv.fr/piwik.php https://client.crisp.chat https://storage.crisp.chat wss://client.relay.crisp.chat wss://stream.relay.crisp.chat",
-							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
-						}
-					],
-					"count": "6",
-					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is properly configured to set the Content-Security-Policy header.</p>",
-					"otherinfo": "<p>The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: </p><p>frame-ancestors, form-action</p><p></p><p>The directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything.</p>",
-					"reference": "<p>http://www.w3.org/TR/CSP2/</p><p>http://www.w3.org/TR/CSP/</p><p>http://caniuse.com/#search=content+security+policy</p><p>http://content-security-policy.com/</p><p>https://github.com/shapesecurity/salvation</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p>",
-					"cweid": "693",
-					"wascid": "15",
-					"sourceid": "6"
-				},
-				{
-					"pluginid": "10055",
-					"alertRef": "10055-6",
-					"alert": "CSP: style-src unsafe-inline",
-					"name": "CSP: style-src unsafe-inline",
-					"riskcode": "2",
-					"confidence": "3",
-					"riskdesc": "Medium (High)",
-					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks. Including (but not limited to) Cross Site Scripting (XSS), and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
-					"instances":[ 
-						{
-							"uri": "https://apilos.beta.gouv.fr",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "frame-src 'self' https://www.dailymotion.com/embed/video/x8fkp4y https://www.dailymotion.com/embed/video/x8frr91 https://game.crisp.chat https://metabase.apilos.beta.gouv.fr/public/dashboard/b91cd727-95e2-44c7-b8ae-0cf4a235abfb; object-src 'none'; default-src 'none'; media-src https://client.crisp.chat; font-src 'self' data: https://client.crisp.chat; script-src https://stats.data.gouv.fr/piwik.js 'self' 'sha256-zaYxlJmjbzgo2YczX5XHFlvamZUNy264d7XlOOUwMME=' 'sha256-928U3JmFf9xytJJBtEU5V1FVGcqsTfwaVnI2vmHmamA=' 'sha256-lkrKw/baCFdnI+tB9T+0yFMewpXSk9yct2ZbWEGPDhY=' 'sha256-J71e5kr85q2XGRl+qwOA/tpMsXmKDjeTnvlzBhBsz/0=' 'sha256-h7boyH6dI/JQnsm6Iw1sAtEbdb/+638kREPj4sfWmMs=' 'sha256-7uHmVaAHWxl0RElSoWED7kK+9kRSQ+E6SQ3aBK1prkU=' https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-bundle.js https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-standalone-preset.js https://client.crisp.chat https://settings.crisp.chat 'nonce-r9j/CHy37+5dZOdcmrJOVg=='; manifest-src 'self'; img-src 'self' data: https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png https://client.crisp.chat https://image.crisp.chat https://storage.crisp.chat; style-src 'self' https://code.highcharts.com/css/highcharts.css https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css 'unsafe-inline' https://client.crisp.chat; connect-src 'self' https://stats.data.gouv.fr/piwik.php https://client.crisp.chat https://storage.crisp.chat wss://client.relay.crisp.chat wss://stream.relay.crisp.chat",
-							"otherinfo": "style-src includes unsafe-inline."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "frame-src 'self' https://www.dailymotion.com/embed/video/x8fkp4y https://www.dailymotion.com/embed/video/x8frr91 https://game.crisp.chat https://metabase.apilos.beta.gouv.fr/public/dashboard/b91cd727-95e2-44c7-b8ae-0cf4a235abfb; object-src 'none'; script-src https://stats.data.gouv.fr/piwik.js 'self' 'sha256-zaYxlJmjbzgo2YczX5XHFlvamZUNy264d7XlOOUwMME=' 'sha256-928U3JmFf9xytJJBtEU5V1FVGcqsTfwaVnI2vmHmamA=' 'sha256-lkrKw/baCFdnI+tB9T+0yFMewpXSk9yct2ZbWEGPDhY=' 'sha256-J71e5kr85q2XGRl+qwOA/tpMsXmKDjeTnvlzBhBsz/0=' 'sha256-h7boyH6dI/JQnsm6Iw1sAtEbdb/+638kREPj4sfWmMs=' 'sha256-7uHmVaAHWxl0RElSoWED7kK+9kRSQ+E6SQ3aBK1prkU=' https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-bundle.js https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-standalone-preset.js https://client.crisp.chat https://settings.crisp.chat 'nonce-dcLl2U87tv7tGu0jMq2J2w=='; connect-src 'self' https://stats.data.gouv.fr/piwik.php https://client.crisp.chat https://storage.crisp.chat wss://client.relay.crisp.chat wss://stream.relay.crisp.chat; font-src 'self' data: https://client.crisp.chat; manifest-src 'self'; media-src https://client.crisp.chat; img-src 'self' data: https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png https://client.crisp.chat https://image.crisp.chat https://storage.crisp.chat; default-src 'none'; style-src 'self' https://code.highcharts.com/css/highcharts.css https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css 'unsafe-inline' https://client.crisp.chat",
-							"otherinfo": "style-src includes unsafe-inline."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accessibilite",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "frame-src 'self' https://www.dailymotion.com/embed/video/x8fkp4y https://www.dailymotion.com/embed/video/x8frr91 https://game.crisp.chat https://metabase.apilos.beta.gouv.fr/public/dashboard/b91cd727-95e2-44c7-b8ae-0cf4a235abfb; object-src 'none'; default-src 'none'; media-src https://client.crisp.chat; font-src 'self' data: https://client.crisp.chat; script-src https://stats.data.gouv.fr/piwik.js 'self' 'sha256-zaYxlJmjbzgo2YczX5XHFlvamZUNy264d7XlOOUwMME=' 'sha256-928U3JmFf9xytJJBtEU5V1FVGcqsTfwaVnI2vmHmamA=' 'sha256-lkrKw/baCFdnI+tB9T+0yFMewpXSk9yct2ZbWEGPDhY=' 'sha256-J71e5kr85q2XGRl+qwOA/tpMsXmKDjeTnvlzBhBsz/0=' 'sha256-h7boyH6dI/JQnsm6Iw1sAtEbdb/+638kREPj4sfWmMs=' 'sha256-7uHmVaAHWxl0RElSoWED7kK+9kRSQ+E6SQ3aBK1prkU=' https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-bundle.js https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-standalone-preset.js https://client.crisp.chat https://settings.crisp.chat 'nonce-OW4s/ys1N/0qrXI2XcFGjQ=='; manifest-src 'self'; img-src 'self' data: https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png https://client.crisp.chat https://image.crisp.chat https://storage.crisp.chat; style-src 'self' https://code.highcharts.com/css/highcharts.css https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css 'unsafe-inline' https://client.crisp.chat; connect-src 'self' https://stats.data.gouv.fr/piwik.php https://client.crisp.chat https://storage.crisp.chat wss://client.relay.crisp.chat wss://stream.relay.crisp.chat",
-							"otherinfo": "style-src includes unsafe-inline."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "frame-src 'self' https://www.dailymotion.com/embed/video/x8fkp4y https://www.dailymotion.com/embed/video/x8frr91 https://game.crisp.chat https://metabase.apilos.beta.gouv.fr/public/dashboard/b91cd727-95e2-44c7-b8ae-0cf4a235abfb; object-src 'none'; default-src 'none'; media-src https://client.crisp.chat; font-src 'self' data: https://client.crisp.chat; script-src https://stats.data.gouv.fr/piwik.js 'self' 'sha256-zaYxlJmjbzgo2YczX5XHFlvamZUNy264d7XlOOUwMME=' 'sha256-928U3JmFf9xytJJBtEU5V1FVGcqsTfwaVnI2vmHmamA=' 'sha256-lkrKw/baCFdnI+tB9T+0yFMewpXSk9yct2ZbWEGPDhY=' 'sha256-J71e5kr85q2XGRl+qwOA/tpMsXmKDjeTnvlzBhBsz/0=' 'sha256-h7boyH6dI/JQnsm6Iw1sAtEbdb/+638kREPj4sfWmMs=' 'sha256-7uHmVaAHWxl0RElSoWED7kK+9kRSQ+E6SQ3aBK1prkU=' https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-bundle.js https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-standalone-preset.js https://client.crisp.chat https://settings.crisp.chat 'nonce-eIu8oCdwbMvmRaznnXjoRw=='; manifest-src 'self'; img-src 'self' data: https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png https://client.crisp.chat https://image.crisp.chat https://storage.crisp.chat; style-src 'self' https://code.highcharts.com/css/highcharts.css https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css 'unsafe-inline' https://client.crisp.chat; connect-src 'self' https://stats.data.gouv.fr/piwik.php https://client.crisp.chat https://storage.crisp.chat wss://client.relay.crisp.chat wss://stream.relay.crisp.chat",
-							"otherinfo": "style-src includes unsafe-inline."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/?instructeur=1",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "frame-src 'self' https://www.dailymotion.com/embed/video/x8fkp4y https://www.dailymotion.com/embed/video/x8frr91 https://game.crisp.chat https://metabase.apilos.beta.gouv.fr/public/dashboard/b91cd727-95e2-44c7-b8ae-0cf4a235abfb; object-src 'none'; script-src https://stats.data.gouv.fr/piwik.js 'self' 'sha256-zaYxlJmjbzgo2YczX5XHFlvamZUNy264d7XlOOUwMME=' 'sha256-928U3JmFf9xytJJBtEU5V1FVGcqsTfwaVnI2vmHmamA=' 'sha256-lkrKw/baCFdnI+tB9T+0yFMewpXSk9yct2ZbWEGPDhY=' 'sha256-J71e5kr85q2XGRl+qwOA/tpMsXmKDjeTnvlzBhBsz/0=' 'sha256-h7boyH6dI/JQnsm6Iw1sAtEbdb/+638kREPj4sfWmMs=' 'sha256-7uHmVaAHWxl0RElSoWED7kK+9kRSQ+E6SQ3aBK1prkU=' https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-bundle.js https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-standalone-preset.js https://client.crisp.chat https://settings.crisp.chat 'nonce-yqFF/mI9MWr0UHOKepxv2g=='; connect-src 'self' https://stats.data.gouv.fr/piwik.php https://client.crisp.chat https://storage.crisp.chat wss://client.relay.crisp.chat wss://stream.relay.crisp.chat; font-src 'self' data: https://client.crisp.chat; manifest-src 'self'; media-src https://client.crisp.chat; img-src 'self' data: https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png https://client.crisp.chat https://image.crisp.chat https://storage.crisp.chat; default-src 'none'; style-src 'self' https://code.highcharts.com/css/highcharts.css https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css 'unsafe-inline' https://client.crisp.chat",
-							"otherinfo": "style-src includes unsafe-inline."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/robots.txt",
-							"method": "GET",
-							"param": "Content-Security-Policy",
-							"attack": "",
-							"evidence": "frame-src 'self' https://www.dailymotion.com/embed/video/x8fkp4y https://www.dailymotion.com/embed/video/x8frr91 https://game.crisp.chat https://metabase.apilos.beta.gouv.fr/public/dashboard/b91cd727-95e2-44c7-b8ae-0cf4a235abfb; object-src 'none'; default-src 'none'; media-src https://client.crisp.chat; font-src 'self' data: https://client.crisp.chat; script-src https://stats.data.gouv.fr/piwik.js 'self' 'sha256-zaYxlJmjbzgo2YczX5XHFlvamZUNy264d7XlOOUwMME=' 'sha256-928U3JmFf9xytJJBtEU5V1FVGcqsTfwaVnI2vmHmamA=' 'sha256-lkrKw/baCFdnI+tB9T+0yFMewpXSk9yct2ZbWEGPDhY=' 'sha256-J71e5kr85q2XGRl+qwOA/tpMsXmKDjeTnvlzBhBsz/0=' 'sha256-h7boyH6dI/JQnsm6Iw1sAtEbdb/+638kREPj4sfWmMs=' 'sha256-7uHmVaAHWxl0RElSoWED7kK+9kRSQ+E6SQ3aBK1prkU=' https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-bundle.js https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui-standalone-preset.js https://client.crisp.chat https://settings.crisp.chat 'nonce-/zNNFcNT6HYdZQeDLfY5aw=='; manifest-src 'self'; img-src 'self' data: https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/favicon-32x32.png https://client.crisp.chat https://image.crisp.chat https://storage.crisp.chat; style-src 'self' https://code.highcharts.com/css/highcharts.css https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest/swagger-ui.css 'unsafe-inline' https://client.crisp.chat; connect-src 'self' https://stats.data.gouv.fr/piwik.php https://client.crisp.chat https://storage.crisp.chat wss://client.relay.crisp.chat wss://stream.relay.crisp.chat",
-							"otherinfo": "style-src includes unsafe-inline."
-						}
-					],
-					"count": "6",
-					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is properly configured to set the Content-Security-Policy header.</p>",
-					"otherinfo": "<p>style-src includes unsafe-inline.</p>",
-					"reference": "<p>http://www.w3.org/TR/CSP2/</p><p>http://www.w3.org/TR/CSP/</p><p>http://caniuse.com/#search=content+security+policy</p><p>http://content-security-policy.com/</p><p>https://github.com/shapesecurity/salvation</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p>",
-					"cweid": "693",
-					"wascid": "15",
-					"sourceid": "6"
-				},
-				{
-					"pluginid": "10010",
-					"alertRef": "10010",
-					"alert": "Cookie No HttpOnly Flag",
-					"name": "Cookie No HttpOnly Flag",
-					"riskcode": "1",
-					"confidence": "2",
-					"riskdesc": "Low (Medium)",
-					"desc": "<p>A cookie has been set without the HttpOnly flag, which means that the cookie can be accessed by JavaScript. If a malicious script can be run on this page then the cookie will be accessible and can be transmitted to another site. If this is a session cookie then session hijacking may be possible.</p>",
-					"instances":[ 
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "GET",
-							"param": "csrftoken",
-							"attack": "",
-							"evidence": "Set-Cookie: csrftoken",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/?instructeur=1",
-							"method": "GET",
-							"param": "csrftoken",
-							"attack": "",
-							"evidence": "Set-Cookie: csrftoken",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/?next=/conventions/en-cours",
-							"method": "GET",
-							"param": "csrftoken",
-							"attack": "",
-							"evidence": "Set-Cookie: csrftoken",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/password_reset/",
-							"method": "GET",
-							"param": "csrftoken",
-							"attack": "",
-							"evidence": "Set-Cookie: csrftoken",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "POST",
-							"param": "csrftoken",
-							"attack": "",
-							"evidence": "Set-Cookie: csrftoken",
+							"evidence": "",
 							"otherinfo": ""
 						}
 					],
-					"count": "5",
-					"solution": "<p>Ensure that the HttpOnly flag is set for all cookies.</p>",
+					"count": "1",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
 					"otherinfo": "",
-					"reference": "<p>https://owasp.org/www-community/HttpOnly</p>",
-					"cweid": "1004",
-					"wascid": "13",
-					"sourceid": "27"
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>http://www.w3.org/TR/CSP/</p><p>http://w3c.github.io/webappsec/specs/content-security-policy/csp-specification.dev.html</p><p>http://www.html5rocks.com/en/tutorials/security/content-security-policy/</p><p>http://caniuse.com/#feat=contentsecuritypolicy</p><p>http://content-security-policy.com/</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10020",
+					"alertRef": "10020-1",
+					"alert": "Missing Anti-clickjacking Header",
+					"name": "Missing Anti-clickjacking Header",
+					"riskcode": "2",
+					"confidence": "2",
+					"riskdesc": "Medium (Medium)",
+					"desc": "<p>The response does not include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options to protect against 'ClickJacking' attacks.</p>",
+					"instances":[ 
+						{
+							"uri": "https://apilos.beta.gouv.fr",
+							"method": "GET",
+							"param": "x-frame-options",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p><p>If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options</p>",
+					"cweid": "1021",
+					"wascid": "15",
+					"sourceid": "1"
 				},
 				{
 					"pluginid": "10054",
 					"alertRef": "10054",
-					"alert": "Cookie with SameSite Attribute None",
-					"name": "Cookie with SameSite Attribute None",
+					"alert": "Cookie without SameSite Attribute",
+					"name": "Cookie without SameSite Attribute",
 					"riskcode": "1",
 					"confidence": "2",
 					"riskdesc": "Low (Medium)",
-					"desc": "<p>A cookie has been set with its SameSite attribute set to \"none\", which means that the cookie can be sent as a result of a 'cross-site' request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.</p>",
+					"desc": "<p>A cookie has been set without the SameSite attribute, which means that the cookie can be sent as a result of a 'cross-site' request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.</p>",
 					"instances":[ 
 						{
 							"uri": "https://apilos.beta.gouv.fr",
 							"method": "GET",
-							"param": "sc-sticky-session",
+							"param": "JSESSIONID",
 							"attack": "",
-							"evidence": "Set-Cookie: sc-sticky-session",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "Set-Cookie: sc-sticky-session",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accessibilite",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "Set-Cookie: sc-sticky-session",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "Set-Cookie: sc-sticky-session",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/?instructeur=1",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "Set-Cookie: sc-sticky-session",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/robots.txt",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "Set-Cookie: sc-sticky-session",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/sitemap.xml",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "Set-Cookie: sc-sticky-session",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/apple-touch-icon.09be1cc5f435.png",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "Set-Cookie: sc-sticky-session",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/favicon.643092a0caac.ico",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "Set-Cookie: sc-sticky-session",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/favicon.7718992eb76d.svg",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "Set-Cookie: sc-sticky-session",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/stats/",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "Set-Cookie: sc-sticky-session",
+							"evidence": "Set-Cookie: JSESSIONID",
 							"otherinfo": ""
 						}
 					],
-					"count": "11",
+					"count": "1",
 					"solution": "<p>Ensure that the SameSite attribute is set to either 'lax' or ideally 'strict' for all cookies.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site</p>",
 					"cweid": "1275",
 					"wascid": "13",
-					"sourceid": "6"
+					"sourceid": "1"
 				},
 				{
 					"pluginid": "10063",
@@ -326,49 +134,28 @@
 							"attack": "",
 							"evidence": "",
 							"otherinfo": ""
-						},
+						}
+					],
+					"count": "1",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+					"otherinfo": "",
+					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10035",
+					"alertRef": "10035",
+					"alert": "Strict-Transport-Security Header Not Set",
+					"name": "Strict-Transport-Security Header Not Set",
+					"riskcode": "1",
+					"confidence": "3",
+					"riskdesc": "Low (High)",
+					"desc": "<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>",
+					"instances":[ 
 						{
-							"uri": "https://apilos.beta.gouv.fr/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accessibilite",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/?instructeur=1",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/password_reset/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/cgu",
+							"uri": "https://apilos.beta.gouv.fr",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -384,23 +171,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/dsfr/dsfr.module.min.e8ee0a2e4b42.js",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/js/main.a713467838c4.js",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/stats/",
+							"uri": "https://apilos.beta.gouv.fr/sitemap.xml",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -408,11 +179,11 @@
 							"otherinfo": ""
 						}
 					],
-					"count": "11",
-					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
+					"count": "3",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>",
 					"otherinfo": "",
-					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
-					"cweid": "693",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</p><p>https://owasp.org/www-community/Security_Headers</p><p>http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</p><p>http://caniuse.com/stricttransportsecurity</p><p>http://tools.ietf.org/html/rfc6797</p>",
+					"cweid": "319",
 					"wascid": "15",
 					"sourceid": "6"
 				},
@@ -427,95 +198,7 @@
 					"desc": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
 					"instances":[ 
 						{
-							"uri": "https://apilos.beta.gouv.fr/static/css/main.23ce435fa87e.css",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/css/ui_siap.865095701d0d.css",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/css/user_feedback.45880174f789.css",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/dsfr/dsfr.module.min.e8ee0a2e4b42.js",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/apple-touch-icon.09be1cc5f435.png",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/favicon.643092a0caac.ico",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/favicon.7718992eb76d.svg",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/manifest.0c3ee350fbfb.webmanifest",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/utility/icons/icons.65a730e1259c.css",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/icons/information.628a6f756769.svg",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/img/accueil.90c15d7223b8.jpg",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/js/main.a713467838c4.js",
+							"uri": "https://apilos.beta.gouv.fr",
 							"method": "GET",
 							"param": "x-content-type-options",
 							"attack": "",
@@ -523,64 +206,13 @@
 							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
 						}
 					],
-					"count": "12",
+					"count": "1",
 					"solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
 					"otherinfo": "<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.</p>",
 					"reference": "<p>http://msdn.microsoft.com/en-us/library/ie/gg622941%28v=vs.85%29.aspx</p><p>https://owasp.org/www-community/Security_Headers</p>",
 					"cweid": "693",
 					"wascid": "15",
-					"sourceid": "48"
-				},
-				{
-					"pluginid": "10111",
-					"alertRef": "10111",
-					"alert": "Authentication Request Identified",
-					"name": "Authentication Request Identified",
-					"riskcode": "0",
-					"confidence": "3",
-					"riskdesc": "Informational (High)",
-					"desc": "<p>The given request has been identified as an authentication request. The 'Other Info' field contains a set of key=value lines which identify any relevant fields. If the request is in a context which has an Authentication Method set to \"Auto-Detect\" then this rule will change the authentication to match the request identified.</p>",
-					"instances":[ 
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "POST",
-							"param": "username",
-							"attack": "",
-							"evidence": "password",
-							"otherinfo": "userParam=username\nuserValue=ZAP\npasswordParam=password\nreferer=https://apilos.beta.gouv.fr/accounts/login/"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "POST",
-							"param": "username",
-							"attack": "",
-							"evidence": "password",
-							"otherinfo": "userParam=username\nuserValue=ZAP\npasswordParam=password\nreferer=https://apilos.beta.gouv.fr/accounts/login/\ncsrfToken=csrfmiddlewaretoken"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "POST",
-							"param": "username",
-							"attack": "",
-							"evidence": "password",
-							"otherinfo": "userParam=username\nuserValue=ZAP\npasswordParam=password\nreferer=https://apilos.beta.gouv.fr/accounts/login/?instructeur=1\ncsrfToken=csrfmiddlewaretoken"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "POST",
-							"param": "username",
-							"attack": "",
-							"evidence": "password",
-							"otherinfo": "userParam=username\nuserValue=ZAP\npasswordParam=password\nreferer=https://apilos.beta.gouv.fr/accounts/login/?next=/conventions/en-cours\ncsrfToken=csrfmiddlewaretoken"
-						}
-					],
-					"count": "4",
-					"solution": "<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>",
-					"otherinfo": "<p>userParam=username</p><p>userValue=ZAP</p><p>passwordParam=password</p><p>referer=https://apilos.beta.gouv.fr/accounts/login/</p>",
-					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/auth-req-id/</p>",
-					"cweid": "-1",
-					"wascid": "-1",
-					"sourceid": "90"
+					"sourceid": "1"
 				},
 				{
 					"pluginid": "10094",
@@ -597,175 +229,44 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "L5y6InewVvoiDLJmVlfNtz2erVAKHZJNLm5dYdq81OrjSKgVsz9F7xHpdHmcawJkV3arjSvMXjvO3zc7UDJkUw==",
-							"otherinfo": "/\uFFFD\uFFFD\"w\uFFFDV\uFFFD\"\\x000c\uFFFDfVW\u0377=\uFFFD\uFFFDP\n\\x001d\uFFFDM.n]a\u06BC\uFFFD\uFFFD\uFFFDH\uFFFD\\x0015\uFFFD?E\uFFFD\\x0011\uFFFDty\uFFFDk\\x0002dWv\uFFFD\uFFFD+\uFFFD^;\uFFFD\uFFFD7;P2dS"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "L5y6InewVvoiDLJmVlfNt6XFHnxEMGsrEaZSomZ6JZbkJMZHVRcCoCNAWIAUvcIWTN6KnQR9JkFuMZLP0X18bw==",
-							"otherinfo": "/\uFFFD\uFFFD\"w\uFFFDV\uFFFD\"\\x000c\uFFFDfVW\u0377\uFFFD\uFFFD\\x001e|D0k+\\x0011\uFFFDR\uFFFDfz%\uFFFD\uFFFD$\uFFFDGU\\x0017\\x0002\uFFFD#@X\uFFFD\\x0014\uFFFD\uFFFD\\x0016L\u078A\uFFFD\\x0004}&An1\uFFFD\uFFFD\uFFFD}|o"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "6sOw3TDGjOLzRP2uNK40G2TP+SsPx5hFHyVH9Eju/GPp06LkJQlDDZF19QF7HV/McZSpmJFxpH8GJOw3G5vj0A==",
-							"otherinfo": "\uFFFD\u00F0\uFFFD0\u018C\uFFFD\uFFFDD\uFFFD\uFFFD4\uFFFD4\\x001bd\uFFFD\uFFFD+\\x000f\u01D8E\\x001f%G\uFFFDH\uFFFD\uFFFDc\uFFFD\u04E2\uFFFD%\tC\r\uFFFDu\uFFFD\\x0001{\\x001d_\uFFFDq\uFFFD\uFFFD\uFFFD\uFFFDq\uFFFD\\x0006$\uFFFD7\\x001b\uFFFD\uFFFD\uFFFD"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accessibilite",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "4mARbfbRhCYBi7yMkZ/H9UpStC32mWKa6Ecv7ShYE3vJ8PMijcdeHGi44AU4NTX6/yYfeBtDN+Ldpi+Ukn2Txw==",
-							"otherinfo": "\uFFFD`\\x0011m\uFFFD\u0444&\\x0001\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFDJR\uFFFD-\uFFFD\uFFFDb\uFFFD\uFFFDG/\uFFFD(X\\x0013{\uFFFD\uFFFD\uFFFD\"\uFFFD\uFFFD^\\x001ch\uFFFD\uFFFD\\x0005855\uFFFD\uFFFD&\\x001fx\\x001bC7\uFFFD\u0766/\uFFFD\uFFFD}\uFFFD\uFFFD"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "5E1SJ2v6PhTQcddU8K0Ngwoz5CWy87kv",
-							"otherinfo": "\uFFFDMR'k\uFFFD>\\x0014\uFFFDq\uFFFDT\uFFFD\r\uFFFD\n3\uFFFD%\uFFFD\uFFFD/"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/?instructeur=1",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "5E1SJ2v6PhTQcddU8K0Ngwoz5CWy87kv",
-							"otherinfo": "\uFFFDMR'k\uFFFD>\\x0014\uFFFDq\uFFFDT\uFFFD\r\uFFFD\n3\uFFFD%\uFFFD\uFFFD/"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/robots.txt",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "sFwWGYmn491ujmLADFTpnFgsB4nlt0vss1y6KDOfNJOCqipm9DQ66iYTxZF8S82aBpRV0pewpEKygPvagiliXw==",
-							"otherinfo": "\uFFFD\\\\x0016\\x0019\uFFFD\uFFFD\uFFFD\uFFFDn\uFFFDb\uFFFD\\x000cT\uFFFDX,\\x0007\uFFFD\uFFFDK\uFFFD\\\uFFFD(3\uFFFD4\uFFFD\uFFFD\uFFFD*f\uFFFD4:\uFFFD&\\x0013\u0151|K\u035A\\x0006\uFFFDU\u0497\uFFFD\uFFFDB\uFFFD\uFFFD\uFFFD\u0682)b_"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/sitemap.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "L5y6InewVvoiDLJmVlfNt6XFHnxEMGsrEaZSomZ6JZbkJMZHVRcCoCNAWIAUvcIWTN6KnQR9JkFuMZLP0X18bw==",
-							"otherinfo": "/\uFFFD\uFFFD\"w\uFFFDV\uFFFD\"\\x000c\uFFFDfVW\u0377\uFFFD\uFFFD\\x001e|D0k+\\x0011\uFFFDR\uFFFDfz%\uFFFD\uFFFD$\uFFFDGU\\x0017\\x0002\uFFFD#@X\uFFFD\\x0014\uFFFD\uFFFD\\x0016L\u078A\uFFFD\\x0004}&An1\uFFFD\uFFFD\uFFFD}|o"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/css/user_feedback.45880174f789.css",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "L5y6InewVvoiDLJmVlfNtz2erVAKHZJNLm5dYdq81OrjSKgVsz9F7xHpdHmcawJkV3arjSvMXjvO3zc7UDJkUw==",
-							"otherinfo": "/\uFFFD\uFFFD\"w\uFFFDV\uFFFD\"\\x000c\uFFFDfVW\u0377=\uFFFD\uFFFDP\n\\x001d\uFFFDM.n]a\u06BC\uFFFD\uFFFD\uFFFDH\uFFFD\\x0015\uFFFD?E\uFFFD\\x0011\uFFFDty\uFFFDk\\x0002dWv\uFFFD\uFFFD+\uFFFD^;\uFFFD\uFFFD7;P2dS"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/apple-touch-icon.09be1cc5f435.png",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "L5y6InewVvoiDLJmVlfNt6XFHnxEMGsrEaZSomZ6JZbkJMZHVRcCoCNAWIAUvcIWTN6KnQR9JkFuMZLP0X18bw==",
-							"otherinfo": "/\uFFFD\uFFFD\"w\uFFFDV\uFFFD\"\\x000c\uFFFDfVW\u0377\uFFFD\uFFFD\\x001e|D0k+\\x0011\uFFFDR\uFFFDfz%\uFFFD\uFFFD$\uFFFDGU\\x0017\\x0002\uFFFD#@X\uFFFD\\x0014\uFFFD\uFFFD\\x0016L\u078A\uFFFD\\x0004}&An1\uFFFD\uFFFD\uFFFD}|o"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/favicon.643092a0caac.ico",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "sFwWGYmn491ujmLADFTpnFgsB4nlt0vss1y6KDOfNJOCqipm9DQ66iYTxZF8S82aBpRV0pewpEKygPvagiliXw==",
-							"otherinfo": "\uFFFD\\\\x0016\\x0019\uFFFD\uFFFD\uFFFD\uFFFDn\uFFFDb\uFFFD\\x000cT\uFFFDX,\\x0007\uFFFD\uFFFDK\uFFFD\\\uFFFD(3\uFFFD4\uFFFD\uFFFD\uFFFD*f\uFFFD4:\uFFFD&\\x0013\u0151|K\u035A\\x0006\uFFFDU\u0497\uFFFD\uFFFDB\uFFFD\uFFFD\uFFFD\u0682)b_"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/favicon.7718992eb76d.svg",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "L5y6InewVvoiDLJmVlfNt6XFHnxEMGsrEaZSomZ6JZbkJMZHVRcCoCNAWIAUvcIWTN6KnQR9JkFuMZLP0X18bw==",
-							"otherinfo": "/\uFFFD\uFFFD\"w\uFFFDV\uFFFD\"\\x000c\uFFFDfVW\u0377\uFFFD\uFFFD\\x001e|D0k+\\x0011\uFFFDR\uFFFDfz%\uFFFD\uFFFD$\uFFFDGU\\x0017\\x0002\uFFFD#@X\uFFFD\\x0014\uFFFD\uFFFD\\x0016L\u078A\uFFFD\\x0004}&An1\uFFFD\uFFFD\uFFFD}|o"
+							"evidence": "/authSAML/charte/acai-v3/assets/favicon",
+							"otherinfo": "\uFFFD\uFFFD\uFFFD\uFFFD \\x000c/\uFFFD!j\uFFFD^\uFFFD\uFFFD\\x001a\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD,z\uFFFD?}\uFFFD\uFFFDr\uFFFD"
 						}
 					],
-					"count": "12",
+					"count": "1",
 					"solution": "<p>Manually confirm that the Base64 data does not leak sensitive information, and that the data cannot be aggregated/used to exploit other vulnerabilities.</p>",
-					"otherinfo": "<p>/\uFFFD\uFFFD\"w\uFFFDV\uFFFD\"\\x000c\uFFFDfVW\u0377=\uFFFD\uFFFDP</p><p>\\x001d\uFFFDM.n]a\u06BC\uFFFD\uFFFD\uFFFDH\uFFFD\\x0015\uFFFD?E\uFFFD\\x0011\uFFFDty\uFFFDk\\x0002dWv\uFFFD\uFFFD+\uFFFD^;\uFFFD\uFFFD7;P2dS</p>",
+					"otherinfo": "<p>\uFFFD\uFFFD\uFFFD\uFFFD \\x000c/\uFFFD!j\uFFFD^\uFFFD\uFFFD\\x001a\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD,z\uFFFD?}\uFFFD\uFFFDr\uFFFD</p>",
 					"reference": "<p>https://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
 					"sourceid": "1"
 				},
 				{
-					"pluginid": "10027",
-					"alertRef": "10027",
-					"alert": "Information Disclosure - Suspicious Comments",
-					"name": "Information Disclosure - Suspicious Comments",
-					"riskcode": "0",
-					"confidence": "1",
-					"riskdesc": "Informational (Low)",
-					"desc": "<p>The response appears to contain suspicious comments which may help an attacker. Note: Matches made within script blocks or files are against the entire content not only comments.</p>",
-					"instances":[ 
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/dsfr/dsfr.module.min.e8ee0a2e4b42.js",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "query",
-							"otherinfo": "The following pattern was used: \\bQUERY\\b and was detected in the element starting with: \"const e=new class{constructor(){this.modules={}}create(e){const t=new e;this.modules[t.type]=t}getModule(e){return this.modules[\", see evidence field for the suspicious comment/snippet."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/dsfr/dsfr.nomodule.min.ad578b2d330d.js",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "query",
-							"otherinfo": "The following pattern was used: \\bQUERY\\b and was detected in the element starting with: \"!function(){\"use strict\";var t=function(){this.modules={}},e={isActive:{configurable:!0},isLegacy:{configurable:!0}};t.prototype\", see evidence field for the suspicious comment/snippet."
-						}
-					],
-					"count": "2",
-					"solution": "<p>Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.</p>",
-					"otherinfo": "<p>The following pattern was used: \\bQUERY\\b and was detected in the element starting with: \"const e=new class{constructor(){this.modules={}}create(e){const t=new e;this.modules[t.type]=t}getModule(e){return this.modules[\", see evidence field for the suspicious comment/snippet.</p>",
-					"reference": "",
-					"cweid": "200",
-					"wascid": "13",
-					"sourceid": "53"
-				},
-				{
-					"pluginid": "10049",
-					"alertRef": "10049",
-					"alert": "Non-Storable Content",
-					"name": "Non-Storable Content",
+					"pluginid": "10109",
+					"alertRef": "10109",
+					"alert": "Modern Web Application",
+					"name": "Modern Web Application",
 					"riskcode": "0",
 					"confidence": "2",
 					"riskdesc": "Informational (Medium)",
-					"desc": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>",
+					"desc": "<p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p>",
 					"instances":[ 
 						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
+							"uri": "https://apilos.beta.gouv.fr",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "no-store",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/?instructeur=1",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "no-store",
-							"otherinfo": ""
+							"evidence": "<a href=\"#\" title=\"haut de page\" id=\"top\"></a>",
+							"otherinfo": "Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application."
 						}
 					],
-					"count": "2",
-					"solution": "<p>The content may be marked as storable by ensuring that the following conditions are satisfied:</p><p>The request method must be understood by the cache and defined as being cacheable (\"GET\", \"HEAD\", and \"POST\" are currently defined as cacheable)</p><p>The response status code must be understood by the cache (one of the 1XX, 2XX, 3XX, 4XX, or 5XX response classes are generally understood)</p><p>The \"no-store\" cache directive must not appear in the request or response header fields</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"private\" response directive must not appear in the response</p><p>For caching by \"shared\" caches such as \"proxy\" caches, the \"Authorization\" header field must not appear in the request, unless the response explicitly allows it (using one of the \"must-revalidate\", \"public\", or \"s-maxage\" Cache-Control response directives)</p><p>In addition to the conditions above, at least one of the following conditions must also be satisfied by the response:</p><p>It must contain an \"Expires\" header field</p><p>It must contain a \"max-age\" response directive</p><p>For \"shared\" caches such as \"proxy\" caches, it must contain a \"s-maxage\" response directive</p><p>It must contain a \"Cache Control Extension\" that allows it to be cached</p><p>It must have a status code that is defined as cacheable by default (200, 203, 204, 206, 300, 301, 404, 405, 410, 414, 501).   </p>",
-					"otherinfo": "",
-					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
-					"cweid": "524",
-					"wascid": "13",
-					"sourceid": "27"
+					"count": "1",
+					"solution": "<p>This is an informational alert and so no changes are required.</p>",
+					"otherinfo": "<p>Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application.</p>",
+					"reference": "",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "1"
 				},
 				{
 					"pluginid": "10015",
@@ -784,81 +285,9 @@
 							"attack": "",
 							"evidence": "",
 							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/",
-							"method": "GET",
-							"param": "cache-control",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accessibilite",
-							"method": "GET",
-							"param": "cache-control",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/password_reset/",
-							"method": "GET",
-							"param": "cache-control",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/password_reset/done/",
-							"method": "GET",
-							"param": "cache-control",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/cgu",
-							"method": "GET",
-							"param": "cache-control",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/sitemap.xml",
-							"method": "GET",
-							"param": "cache-control",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/manifest.0c3ee350fbfb.webmanifest",
-							"method": "GET",
-							"param": "cache-control",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/stats/",
-							"method": "GET",
-							"param": "cache-control",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "POST",
-							"param": "cache-control",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
 						}
 					],
-					"count": "10",
+					"count": "1",
 					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
 					"otherinfo": "",
 					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
@@ -885,7 +314,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
+							"uri": "https://apilos.beta.gouv.fr/robots.txt",
 							"method": "GET",
 							"param": "Sec-Fetch-Dest",
 							"attack": "",
@@ -907,7 +336,7 @@
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Dest</p>",
 					"cweid": "352",
 					"wascid": "9",
-					"sourceid": "6"
+					"sourceid": "1"
 				},
 				{
 					"pluginid": "90005",
@@ -928,7 +357,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
+							"uri": "https://apilos.beta.gouv.fr/robots.txt",
 							"method": "GET",
 							"param": "Sec-Fetch-Mode",
 							"attack": "",
@@ -950,7 +379,7 @@
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Mode</p>",
 					"cweid": "352",
 					"wascid": "9",
-					"sourceid": "6"
+					"sourceid": "1"
 				},
 				{
 					"pluginid": "90005",
@@ -971,7 +400,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
+							"uri": "https://apilos.beta.gouv.fr/robots.txt",
 							"method": "GET",
 							"param": "Sec-Fetch-Site",
 							"attack": "",
@@ -993,7 +422,7 @@
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-Site</p>",
 					"cweid": "352",
 					"wascid": "9",
-					"sourceid": "6"
+					"sourceid": "1"
 				},
 				{
 					"pluginid": "90005",
@@ -1014,7 +443,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
+							"uri": "https://apilos.beta.gouv.fr/robots.txt",
 							"method": "GET",
 							"param": "Sec-Fetch-User",
 							"attack": "",
@@ -1036,7 +465,7 @@
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-User</p>",
 					"cweid": "352",
 					"wascid": "9",
-					"sourceid": "6"
+					"sourceid": "1"
 				},
 				{
 					"pluginid": "10112",
@@ -1051,83 +480,19 @@
 						{
 							"uri": "https://apilos.beta.gouv.fr",
 							"method": "GET",
-							"param": "sc-sticky-session",
+							"param": "JSESSIONID",
 							"attack": "",
-							"evidence": "L5y6InewVvoiDLJmVlfNt6XFHnxEMGsrEaZSomZ6JZbkJMZHVRcCoCNAWIAUvcIWTN6KnQR9JkFuMZLP0X18bw==",
-							"otherinfo": "\ncookie:sc-sticky-session"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "L5y6InewVvoiDLJmVlfNtz2erVAKHZJNLm5dYdq81OrjSKgVsz9F7xHpdHmcawJkV3arjSvMXjvO3zc7UDJkUw==",
-							"otherinfo": "\ncookie:sc-sticky-session"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "GET",
-							"param": "csrftoken",
-							"attack": "",
-							"evidence": "5E1SJ2v6PhTQcddU8K0Ngwoz5CWy87kv",
-							"otherinfo": "\ncookie:csrftoken\ncookie:sc-sticky-session"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/robots.txt",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "sFwWGYmn491ujmLADFTpnFgsB4nlt0vss1y6KDOfNJOCqipm9DQ66iYTxZF8S82aBpRV0pewpEKygPvagiliXw==",
-							"otherinfo": "\ncookie:sc-sticky-session"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/sitemap.xml",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "L5y6InewVvoiDLJmVlfNt6XFHnxEMGsrEaZSomZ6JZbkJMZHVRcCoCNAWIAUvcIWTN6KnQR9JkFuMZLP0X18bw==",
-							"otherinfo": "\ncookie:sc-sticky-session"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/apple-touch-icon.09be1cc5f435.png",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "L5y6InewVvoiDLJmVlfNt6XFHnxEMGsrEaZSomZ6JZbkJMZHVRcCoCNAWIAUvcIWTN6KnQR9JkFuMZLP0X18bw==",
-							"otherinfo": "\ncookie:sc-sticky-session"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/favicon.7718992eb76d.svg",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "L5y6InewVvoiDLJmVlfNt6XFHnxEMGsrEaZSomZ6JZbkJMZHVRcCoCNAWIAUvcIWTN6KnQR9JkFuMZLP0X18bw==",
-							"otherinfo": "\ncookie:sc-sticky-session"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/password_reset/",
-							"method": "GET",
-							"param": "csrftoken",
-							"attack": "",
-							"evidence": "5E1SJ2v6PhTQcddU8K0Ngwoz5CWy87kv",
-							"otherinfo": "\ncookie:csrftoken"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/stats/",
-							"method": "GET",
-							"param": "sc-sticky-session",
-							"attack": "",
-							"evidence": "L5y6InewVvoiDLJmVlfNt6XFHnxEMGsrEaZSomZ6JZbkJMZHVRcCoCNAWIAUvcIWTN6KnQR9JkFuMZLP0X18bw==",
-							"otherinfo": "\ncookie:sc-sticky-session"
+							"evidence": "F976807D6D34891D603A41DC84819538.tc_cerbere-auth_172_182",
+							"otherinfo": "\ncookie:JSESSIONID"
 						}
 					],
-					"count": "9",
+					"count": "1",
 					"solution": "<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>",
-					"otherinfo": "<p></p><p>cookie:sc-sticky-session</p>",
+					"otherinfo": "<p></p><p>cookie:JSESSIONID</p>",
 					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id</p>",
 					"cweid": "-1",
 					"wascid": "-1",
-					"sourceid": "6"
+					"sourceid": "1"
 				},
 				{
 					"pluginid": "10049",
@@ -1148,22 +513,6 @@
 							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
 						},
 						{
-							"uri": "https://apilos.beta.gouv.fr/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accessibilite",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
-						},
-						{
 							"uri": "https://apilos.beta.gouv.fr/robots.txt",
 							"method": "GET",
 							"param": "",
@@ -1178,90 +527,15 @@
 							"attack": "",
 							"evidence": "",
 							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/css/user_feedback.45880174f789.css",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/apple-touch-icon.09be1cc5f435.png",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/favicon.643092a0caac.ico",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/static/dsfr/favicon/favicon.7718992eb76d.svg",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
 						}
 					],
-					"count": "9",
+					"count": "3",
 					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request. </p>",
 					"otherinfo": "<p>In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234.</p>",
 					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "6"
-				},
-				{
-					"pluginid": "10031",
-					"alertRef": "10031",
-					"alert": "User Controllable HTML Element Attribute (Potential XSS)",
-					"name": "User Controllable HTML Element Attribute (Potential XSS)",
-					"riskcode": "0",
-					"confidence": "1",
-					"riskdesc": "Informational (Low)",
-					"desc": "<p>This check looks at user-supplied input in query string parameters and POST data to identify where certain HTML attribute values might be controlled. This provides hot-spot detection for XSS (cross-site scripting) that will require further review by a security analyst to determine exploitability.</p>",
-					"instances":[ 
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/?instructeur=1",
-							"method": "GET",
-							"param": "instructeur",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "User-controlled HTML attribute values were found. Try injecting special characters to see if XSS might be possible. The page at the following URL:\r\n\r\nhttps://apilos.beta.gouv.fr/accounts/login/?instructeur=1\r\n\r\nappears to include user input in: \r\n\r\na(n) [meta] tag [content] attribute \r\n\r\nThe user input found was:\r\ninstructeur=1\r\n\r\nThe user-controlled value was:\r\nwidth=device-width, initial-scale=1, shrink-to-fit=no"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/?next=/conventions/en-cours",
-							"method": "GET",
-							"param": "next",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "User-controlled HTML attribute values were found. Try injecting special characters to see if XSS might be possible. The page at the following URL:\r\n\r\nhttps://apilos.beta.gouv.fr/accounts/login/?next=/conventions/en-cours\r\n\r\nappears to include user input in: \r\n\r\na(n) [input] tag [value] attribute \r\n\r\nThe user input found was:\r\nnext=/conventions/en-cours\r\n\r\nThe user-controlled value was:\r\n/conventions/en-cours"
-						},
-						{
-							"uri": "https://apilos.beta.gouv.fr/accounts/login/",
-							"method": "POST",
-							"param": "next",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "User-controlled HTML attribute values were found. Try injecting special characters to see if XSS might be possible. The page at the following URL:\r\n\r\nhttps://apilos.beta.gouv.fr/accounts/login/\r\n\r\nappears to include user input in: \r\n\r\na(n) [input] tag [value] attribute \r\n\r\nThe user input found was:\r\nnext=/conventions/en-cours\r\n\r\nThe user-controlled value was:\r\n/conventions/en-cours"
-						}
-					],
-					"count": "3",
-					"solution": "<p>Validate all input and sanitize output it before writing to any HTML attributes.</p>",
-					"otherinfo": "<p>User-controlled HTML attribute values were found. Try injecting special characters to see if XSS might be possible. The page at the following URL:</p><p></p><p>https://apilos.beta.gouv.fr/accounts/login/?instructeur=1</p><p></p><p>appears to include user input in: </p><p></p><p>a(n) [meta] tag [content] attribute </p><p></p><p>The user input found was:</p><p>instructeur=1</p><p></p><p>The user-controlled value was:</p><p>width=device-width, initial-scale=1, shrink-to-fit=no</p>",
-					"reference": "<p>http://websecuritytool.codeplex.com/wikipage?title=Checks#user-controlled-html-attribute</p>",
-					"cweid": "20",
-					"wascid": "20",
-					"sourceid": "41"
+					"sourceid": "1"
 				}
 			]
 		}
