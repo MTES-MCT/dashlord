@@ -1,22 +1,22 @@
 [
   [
     {
-      "template": "dns/caa-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
-      "template-id": "caa-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
+      "template": "dns/txt-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
+      "template-id": "txt-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
       "info": {
-        "name": "CAA Record",
+        "name": "DNS TXT Record Detected",
         "author": [
           "pdteam"
         ],
         "tags": [
           "dns",
-          "caa"
+          "txt"
         ],
-        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
+        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
         "reference": [
-          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
+          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
         ],
         "severity": "info",
         "metadata": {
@@ -32,9 +32,13 @@
       "type": "dns",
       "host": "apilos.beta.gouv.fr.",
       "matched-at": "apilos.beta.gouv.fr",
-      "request": ";; opcode: QUERY, status: NOERROR, id: 57286\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t CAA\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 57286\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\napilos.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1704535226 3600 900 1209600 300\n",
-      "timestamp": "2024-01-07T01:39:17.519280028Z",
+      "extracted-results": [
+        "\"Sendinblue-code:ac3d8899405118724d0bd7fba6e3ba55\"",
+        "\"v=spf1 include:_spf.alwaysdata.com ~all\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 53823\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 53823\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\napilos.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com ~all\"\napilos.beta.gouv.fr.\t300\tIN\tTXT\t\"Sendinblue-code:ac3d8899405118724d0bd7fba6e3ba55\"\n",
+      "timestamp": "2024-01-21T01:36:02.704302356Z",
       "matcher-status": true
     },
     {
@@ -74,47 +78,9 @@
       "extracted-results": [
         "\"v=DMARC1;p=none; sp=none; rua=mailto:dmarc@mailinblue.com!10m; ruf=mailto:dmarc@mailinblue.com!10m; rf=afrf; pct=100; ri=86400\""
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 53451\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.apilos.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 53451\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;_dmarc.apilos.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.apilos.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1;p=none; sp=none; rua=mailto:dmarc@mailinblue.com!10m; ruf=mailto:dmarc@mailinblue.com!10m; rf=afrf; pct=100; ri=86400\"\n",
-      "timestamp": "2024-01-07T01:39:17.653098167Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/nameserver-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
-      "template-id": "nameserver-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
-      "info": {
-        "name": "NS Record Detection",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "ns"
-        ],
-        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "apilos.beta.gouv.fr.",
-      "matched-at": "apilos.beta.gouv.fr",
-      "extracted-results": [
-        "dns1.alwaysdata.com.",
-        "dns2.alwaysdata.com."
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 19902\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t NS\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 19902\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napilos.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\napilos.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\n",
-      "timestamp": "2024-01-07T01:39:17.680377892Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 42865\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.apilos.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 42865\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;_dmarc.apilos.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.apilos.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1;p=none; sp=none; rua=mailto:dmarc@mailinblue.com!10m; ruf=mailto:dmarc@mailinblue.com!10m; rf=afrf; pct=100; ri=86400\"\n",
+      "timestamp": "2024-01-21T01:36:02.789749055Z",
       "matcher-status": true
     },
     {
@@ -154,28 +120,28 @@
         "20 mx2.alwaysdata.com.",
         "10 mx1.alwaysdata.com."
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 29110\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t MX\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 29110\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\napilos.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\napilos.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\n",
-      "timestamp": "2024-01-07T01:39:17.686639838Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 38654\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t MX\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 38654\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\napilos.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\napilos.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\n",
+      "timestamp": "2024-01-21T01:36:03.540730408Z",
       "matcher-status": true
     },
     {
-      "template": "dns/txt-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
-      "template-id": "txt-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
+      "template": "dns/caa-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
+      "template-id": "caa-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
       "info": {
-        "name": "DNS TXT Record Detected",
+        "name": "CAA Record",
         "author": [
           "pdteam"
         ],
         "tags": [
           "dns",
-          "txt"
+          "caa"
         ],
-        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
         "reference": [
-          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
         ],
         "severity": "info",
         "metadata": {
@@ -191,13 +157,47 @@
       "type": "dns",
       "host": "apilos.beta.gouv.fr.",
       "matched-at": "apilos.beta.gouv.fr",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 19\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t CAA\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 19\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\napilos.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1704535226 3600 900 1209600 300\n",
+      "timestamp": "2024-01-21T01:36:03.617483947Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/nameserver-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
+      "template-id": "nameserver-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
+      "info": {
+        "name": "NS Record Detection",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "ns"
+        ],
+        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "apilos.beta.gouv.fr.",
+      "matched-at": "apilos.beta.gouv.fr",
       "extracted-results": [
-        "\"Sendinblue-code:ac3d8899405118724d0bd7fba6e3ba55\"",
-        "\"v=spf1 include:_spf.alwaysdata.com ~all\""
+        "dns2.alwaysdata.com.",
+        "dns1.alwaysdata.com."
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 26463\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 26463\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\napilos.beta.gouv.fr.\t300\tIN\tTXT\t\"Sendinblue-code:ac3d8899405118724d0bd7fba6e3ba55\"\napilos.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com ~all\"\n",
-      "timestamp": "2024-01-07T01:39:18.518280573Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 56196\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t NS\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 56196\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;apilos.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napilos.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\napilos.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\n",
+      "timestamp": "2024-01-21T01:36:03.788561162Z",
       "matcher-status": true
     },
     {
@@ -226,8 +226,8 @@
       "extracted-results": [
         "Let's Encrypt"
       ],
-      "ip": "109.232.233.130",
-      "timestamp": "2024-01-07T01:46:49.582295275Z",
+      "ip": "109.232.236.90",
+      "timestamp": "2024-01-21T01:42:56.618909918Z",
       "matcher-status": true
     },
     {
@@ -256,8 +256,8 @@
       "extracted-results": [
         "apilos.beta.gouv.fr"
       ],
-      "ip": "109.232.233.130",
-      "timestamp": "2024-01-07T01:46:49.582425277Z",
+      "ip": "109.232.236.90",
+      "timestamp": "2024-01-21T01:42:56.619035061Z",
       "matcher-status": true
     },
     {
@@ -287,8 +287,8 @@
       "extracted-results": [
         "tls12"
       ],
-      "ip": "109.232.233.130",
-      "timestamp": "2024-01-07T01:46:51.776635944Z",
+      "ip": "109.232.236.90",
+      "timestamp": "2024-01-21T01:42:58.118092006Z",
       "matcher-status": true
     },
     {
@@ -318,8 +318,8 @@
       "extracted-results": [
         "tls13"
       ],
-      "ip": "109.232.233.130",
-      "timestamp": "2024-01-07T01:46:52.158565566Z",
+      "ip": "109.232.236.90",
+      "timestamp": "2024-01-21T01:42:58.297160852Z",
       "matcher-status": true
     }
   ]
