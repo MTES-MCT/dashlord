@@ -32,9 +32,86 @@
       "type": "dns",
       "host": "api.resorption-bidonvilles.beta.gouv.fr.",
       "matched-at": "api.resorption-bidonvilles.beta.gouv.fr",
-      "request": ";; opcode: QUERY, status: NOERROR, id: 2331\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.resorption-bidonvilles.beta.gouv.fr.\tIN\t CAA\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 2331\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;api.resorption-bidonvilles.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\nresorption-bidonvilles.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1650568788 3600 900 1209600 300\n",
-      "timestamp": "2024-03-17T05:22:09.587730457Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 65177\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.resorption-bidonvilles.beta.gouv.fr.\tIN\t CAA\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 65177\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;api.resorption-bidonvilles.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\nresorption-bidonvilles.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1650568788 3600 900 1209600 300\n",
+      "timestamp": "2024-03-24T05:27:28.900211307Z",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/xss-deprecated-header.yaml",
+      "template-url": "https://templates.nuclei.sh/public/xss-deprecated-header",
+      "template-id": "xss-deprecated-header",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/xss-deprecated-header.yaml",
+      "info": {
+        "name": "XSS-Protection Header - Cross-Site Scripting",
+        "author": [
+          "joshlarsen"
+        ],
+        "tags": [
+          "xss",
+          "misconfig",
+          "generic"
+        ],
+        "description": "Setting the XSS-Protection header is deprecated. Setting the header to anything other than `0` can actually introduce an XSS vulnerability.",
+        "reference": [
+          "https://developer.mozilla.org/en-us/docs/web/http/headers/x-xss-protection",
+          "https://owasp.org/www-project-secure-headers/#x-xss-protection"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": null,
+          "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+        }
+      },
+      "type": "http",
+      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "extracted-results": [
+        "1; mode=block"
+      ],
+      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 46\r\nAccess-Control-Allow-Origin: *\r\nContent-Security-Policy: default-src 'none';\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:27:40 GMT\r\nEtag: W/\"2e-M3EWbwP3L7kOHv6G0LYM9Flt/8E\"\r\nServer: nginx/1.19.10\r\nStrict-Transport-Security: max-age=63072000; preload\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 22\r\nX-Ratelimit-Reset: 1711258121\r\nX-Xss-Protection: 1; mode=block\r\n\r\nBienvenue sur l'API de Résorption Bidonvilles",
+      "ip": "51.178.137.38",
+      "timestamp": "2024-03-24T05:27:40.848035487Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/technologies/nginx/nginx-version.yaml",
+      "template-url": "https://templates.nuclei.sh/public/nginx-version",
+      "template-id": "nginx-version",
+      "template-path": "/home/runner/nuclei-templates/http/technologies/nginx/nginx-version.yaml",
+      "info": {
+        "name": "Nginx version detect",
+        "author": [
+          "philippedelteil",
+          "daffainfo"
+        ],
+        "tags": [
+          "tech",
+          "nginx"
+        ],
+        "description": "Some nginx servers have the version on the response header. Useful when you need to find specific CVEs on your targets.",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "http",
+      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "extracted-results": [
+        "nginx/1.19.10"
+      ],
+      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 46\r\nAccess-Control-Allow-Origin: *\r\nContent-Security-Policy: default-src 'none';\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:27:40 GMT\r\nEtag: W/\"2e-M3EWbwP3L7kOHv6G0LYM9Flt/8E\"\r\nServer: nginx/1.19.10\r\nStrict-Transport-Security: max-age=63072000; preload\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 22\r\nX-Ratelimit-Reset: 1711258121\r\nX-Xss-Protection: 1; mode=block\r\n\r\nBienvenue sur l'API de Résorption Bidonvilles",
+      "ip": "51.178.137.38",
+      "timestamp": "2024-03-24T05:27:40.85046786Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
       "matcher-status": true
     },
     {
@@ -60,9 +137,9 @@
       "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:22:51 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 39\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:05 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 35\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
       "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:22:51.986844205Z",
+      "timestamp": "2024-03-24T05:28:05.948636934Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -89,243 +166,9 @@
       "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:22:51 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 39\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:05 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 35\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
       "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:22:51.986890681Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "content-security-policy",
-      "type": "http",
-      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
-      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:23:02 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 28\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
-      "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:02.673583599Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "permissions-policy",
-      "type": "http",
-      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
-      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:23:02 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 28\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
-      "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:02.673628193Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "x-content-type-options",
-      "type": "http",
-      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
-      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:23:02 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 28\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
-      "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:02.673651786Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "cross-origin-opener-policy",
-      "type": "http",
-      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
-      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:23:02 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 28\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
-      "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:02.673670942Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "cross-origin-resource-policy",
-      "type": "http",
-      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
-      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:23:02 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 28\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
-      "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:02.673687393Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "strict-transport-security",
-      "type": "http",
-      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
-      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:23:02 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 28\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
-      "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:02.673702821Z",
+      "timestamp": "2024-03-24T05:28:05.948678732Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -362,9 +205,9 @@
       "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:23:02 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 28\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:15 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 26\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
       "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:02.673719893Z",
+      "timestamp": "2024-03-24T05:28:15.064041374Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -401,9 +244,9 @@
       "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:23:02 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 28\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:15 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 26\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
       "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:02.673735893Z",
+      "timestamp": "2024-03-24T05:28:15.064079095Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -440,9 +283,126 @@
       "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:23:02 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 28\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:15 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 26\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
       "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:02.673854594Z",
+      "timestamp": "2024-03-24T05:28:15.064096187Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-opener-policy",
+      "type": "http",
+      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:15 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 26\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
+      "ip": "51.178.137.38",
+      "timestamp": "2024-03-24T05:28:15.064112338Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "content-security-policy",
+      "type": "http",
+      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:15 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 26\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
+      "ip": "51.178.137.38",
+      "timestamp": "2024-03-24T05:28:15.064128097Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "x-content-type-options",
+      "type": "http",
+      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:15 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 26\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
+      "ip": "51.178.137.38",
+      "timestamp": "2024-03-24T05:28:15.064141312Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -479,9 +439,126 @@
       "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:23:02 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 28\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:15 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 26\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
       "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:02.673868961Z",
+      "timestamp": "2024-03-24T05:28:15.064153725Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-resource-policy",
+      "type": "http",
+      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:15 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 26\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
+      "ip": "51.178.137.38",
+      "timestamp": "2024-03-24T05:28:15.064166169Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "strict-transport-security",
+      "type": "http",
+      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:15 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 26\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
+      "ip": "51.178.137.38",
+      "timestamp": "2024-03-24T05:28:15.064179163Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "permissions-policy",
+      "type": "http",
+      "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:15 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 26\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
+      "ip": "51.178.137.38",
+      "timestamp": "2024-03-24T05:28:15.064191166Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -521,9 +598,9 @@
       "host": "https://api.resorption-bidonvilles.beta.gouv.fr",
       "matched-at": "https://api.resorption-bidonvilles.beta.gouv.fr/",
       "request": "POST / HTTP/1.1\r\nHost: api.resorption-bidonvilles.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 17 Mar 2024 05:23:29 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 1\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1710653011\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nAccess-Control-Allow-Origin: *\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 24 Mar 2024 05:28:37 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRetry-After: 3\r\nServer: nginx/1.19.10\r\nX-Frame-Options: SAMEORIGIN\r\nX-Powered-By: Express\r\nX-Ratelimit-Limit: 60\r\nX-Ratelimit-Remaining: 0\r\nX-Ratelimit-Reset: 1711258121\r\n\r\nToo many requests, please try again later.",
       "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:29.665826577Z",
+      "timestamp": "2024-03-24T05:28:38.055636721Z",
       "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: api.resorption-bidonvilles.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.resorption-bidonvilles.beta.gouv.fr/'",
       "matcher-status": true
     },
@@ -554,7 +631,7 @@
         "Let's Encrypt"
       ],
       "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:55.179655266Z",
+      "timestamp": "2024-03-24T05:29:00.101439517Z",
       "matcher-status": true
     },
     {
@@ -583,11 +660,10 @@
       "extracted-results": [
         "api.resorption-bidonvilles.beta.gouv.fr",
         "app.resorption-bidonvilles.beta.gouv.fr",
-        "m.resorption-bidonvilles.beta.gouv.fr",
         "resorption-bidonvilles.beta.gouv.fr"
       ],
       "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:55.179774598Z",
+      "timestamp": "2024-03-24T05:29:00.101564632Z",
       "matcher-status": true
     },
     {
@@ -621,9 +697,9 @@
       "host": "api.resorption-bidonvilles.beta.gouv.fr:443",
       "matched-at": "api.resorption-bidonvilles.beta.gouv.fr:443",
       "request": "2E",
-      "response": "HTTP/1.1 400 Bad Request\r\nServer: nginx/1.19.10\r\nDate: Sun, 17 Mar 2024 05:23:53 GMT\r\nContent-Type: text/html\r\nContent-Length: 158\r\nConnection: close\r\nStrict-Transport-Security: max-age=63072000\r\n\r\n<html>\r\n<head><title>400 Bad Request</title></head>\r\n<body>\r\n<center><h1>400 Bad Request</h1></center>\r\n<hr><center>nginx/1.19.10</center>\r\n</body>\r\n</html>\r\n",
+      "response": "HTTP/1.1 400 Bad Request\r\nServer: nginx/1.19.10\r\nDate: Sun, 24 Mar 2024 05:28:58 GMT\r\nContent-Type: text/html\r\nContent-Length: 158\r\nConnection: close\r\nStrict-Transport-Security: max-age=63072000\r\n\r\n<html>\r\n<head><title>400 Bad Request</title></head>\r\n<body>\r\n<center><h1>400 Bad Request</h1></center>\r\n<hr><center>nginx/1.19.10</center>\r\n</body>\r\n</html>\r\n",
       "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:55.629507123Z",
+      "timestamp": "2024-03-24T05:29:01.007120962Z",
       "matcher-status": true
     },
     {
@@ -654,7 +730,7 @@
         "tls12"
       ],
       "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:56.934322616Z",
+      "timestamp": "2024-03-24T05:29:02.567326089Z",
       "matcher-status": true
     },
     {
@@ -685,7 +761,7 @@
         "tls13"
       ],
       "ip": "51.178.137.38",
-      "timestamp": "2024-03-17T05:23:57.157137149Z",
+      "timestamp": "2024-03-24T05:29:02.743194903Z",
       "matcher-status": true
     }
   ]
