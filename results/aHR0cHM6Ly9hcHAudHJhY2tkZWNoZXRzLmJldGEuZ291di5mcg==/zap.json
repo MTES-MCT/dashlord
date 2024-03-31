@@ -1,7 +1,7 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.14.0",
-	"@generated": "Sun, 24 Mar 2024 05:43:40",
+	"@generated": "Sun, 31 Mar 2024 05:41:32",
 	"site":[ 
 		{
 			"@name": "https://app.trackdechets.beta.gouv.fr",
@@ -10,133 +10,171 @@
 			"@ssl": "true",
 			"alerts": [ 
 				{
-					"pluginid": "10038",
-					"alertRef": "10038-1",
-					"alert": "Content Security Policy (CSP) Header Not Set",
-					"name": "Content Security Policy (CSP) Header Not Set",
+					"pluginid": "10055",
+					"alertRef": "10055-4",
+					"alert": "CSP: Wildcard Directive",
+					"name": "CSP: Wildcard Directive",
 					"riskcode": "2",
 					"confidence": "3",
 					"riskdesc": "Medium (High)",
-					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks. Including (but not limited to) Cross Site Scripting (XSS), and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
 					"instances":[ 
 						{
 							"uri": "https://app.trackdechets.beta.gouv.fr",
 							"method": "GET",
-							"param": "",
+							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
+							"evidence": "default-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr;connect-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr https://api-adresse.data.gouv.fr https://sentry.incubateur.net https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io;worker-src blob:;base-uri 'self';form-action http:;font-src 'self' https: data:;object-src 'self' data:;frame-ancestors 'none';frame-src 'self' data:;img-src 'self' data: http:;script-src 'self' https: 'unsafe-inline' 'unsafe-eval';style-src 'self' https: 'unsafe-inline';media-src 'self' data:;script-src-attr 'none';upgrade-insecure-requests",
+							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nscript-src, style-src, img-src, font-src, form-action\n\nThe directive(s): form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
 						},
 						{
 							"uri": "https://app.trackdechets.beta.gouv.fr/robots.txt",
 							"method": "GET",
-							"param": "",
+							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/sitemap.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
+							"evidence": "default-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr;connect-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr https://api-adresse.data.gouv.fr https://sentry.incubateur.net https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io;worker-src blob:;base-uri 'self';form-action http:;font-src 'self' https: data:;object-src 'self' data:;frame-ancestors 'none';frame-src 'self' data:;img-src 'self' data: http:;script-src 'self' https: 'unsafe-inline' 'unsafe-eval';style-src 'self' https: 'unsafe-inline';media-src 'self' data:;script-src-attr 'none';upgrade-insecure-requests",
+							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nscript-src, style-src, img-src, font-src, form-action\n\nThe directive(s): form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
 						}
 					],
-					"count": "3",
-					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>",
-					"otherinfo": "",
-					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</p><p>https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</p><p>https://www.w3.org/TR/CSP/</p><p>https://w3c.github.io/webappsec-csp/</p><p>https://web.dev/articles/csp</p><p>https://caniuse.com/#feat=contentsecuritypolicy</p><p>https://content-security-policy.com/</p>",
+					"count": "2",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is properly configured to set the Content-Security-Policy header.</p>",
+					"otherinfo": "<p>The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: </p><p>script-src, style-src, img-src, font-src, form-action</p><p></p><p>The directive(s): form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything.</p>",
+					"reference": "<p>https://www.w3.org/TR/CSP/</p><p>https://caniuse.com/#search=content+security+policy</p><p>https://content-security-policy.com/</p><p>https://github.com/HtmlUnit/htmlunit-csp</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "6"
+				},
+				{
+					"pluginid": "10055",
+					"alertRef": "10055-10",
+					"alert": "CSP: script-src unsafe-eval",
+					"name": "CSP: script-src unsafe-eval",
+					"riskcode": "2",
+					"confidence": "3",
+					"riskdesc": "Medium (High)",
+					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks. Including (but not limited to) Cross Site Scripting (XSS), and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+					"instances":[ 
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr",
+							"method": "GET",
+							"param": "Content-Security-Policy",
+							"attack": "",
+							"evidence": "default-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr;connect-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr https://api-adresse.data.gouv.fr https://sentry.incubateur.net https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io;worker-src blob:;base-uri 'self';form-action http:;font-src 'self' https: data:;object-src 'self' data:;frame-ancestors 'none';frame-src 'self' data:;img-src 'self' data: http:;script-src 'self' https: 'unsafe-inline' 'unsafe-eval';style-src 'self' https: 'unsafe-inline';media-src 'self' data:;script-src-attr 'none';upgrade-insecure-requests",
+							"otherinfo": "script-src includes unsafe-eval."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/robots.txt",
+							"method": "GET",
+							"param": "Content-Security-Policy",
+							"attack": "",
+							"evidence": "default-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr;connect-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr https://api-adresse.data.gouv.fr https://sentry.incubateur.net https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io;worker-src blob:;base-uri 'self';form-action http:;font-src 'self' https: data:;object-src 'self' data:;frame-ancestors 'none';frame-src 'self' data:;img-src 'self' data: http:;script-src 'self' https: 'unsafe-inline' 'unsafe-eval';style-src 'self' https: 'unsafe-inline';media-src 'self' data:;script-src-attr 'none';upgrade-insecure-requests",
+							"otherinfo": "script-src includes unsafe-eval."
+						}
+					],
+					"count": "2",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is properly configured to set the Content-Security-Policy header.</p>",
+					"otherinfo": "<p>script-src includes unsafe-eval.</p>",
+					"reference": "<p>https://www.w3.org/TR/CSP/</p><p>https://caniuse.com/#search=content+security+policy</p><p>https://content-security-policy.com/</p><p>https://github.com/HtmlUnit/htmlunit-csp</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p>",
 					"cweid": "693",
 					"wascid": "15",
 					"sourceid": "1"
 				},
 				{
-					"pluginid": "10020",
-					"alertRef": "10020-1",
-					"alert": "Missing Anti-clickjacking Header",
-					"name": "Missing Anti-clickjacking Header",
+					"pluginid": "10055",
+					"alertRef": "10055-5",
+					"alert": "CSP: script-src unsafe-inline",
+					"name": "CSP: script-src unsafe-inline",
 					"riskcode": "2",
-					"confidence": "2",
-					"riskdesc": "Medium (Medium)",
-					"desc": "<p>The response does not include either Content-Security-Policy with 'frame-ancestors' directive or X-Frame-Options to protect against 'ClickJacking' attacks.</p>",
+					"confidence": "3",
+					"riskdesc": "Medium (High)",
+					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks. Including (but not limited to) Cross Site Scripting (XSS), and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
 					"instances":[ 
 						{
 							"uri": "https://app.trackdechets.beta.gouv.fr",
 							"method": "GET",
-							"param": "x-frame-options",
+							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
+							"evidence": "default-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr;connect-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr https://api-adresse.data.gouv.fr https://sentry.incubateur.net https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io;worker-src blob:;base-uri 'self';form-action http:;font-src 'self' https: data:;object-src 'self' data:;frame-ancestors 'none';frame-src 'self' data:;img-src 'self' data: http:;script-src 'self' https: 'unsafe-inline' 'unsafe-eval';style-src 'self' https: 'unsafe-inline';media-src 'self' data:;script-src-attr 'none';upgrade-insecure-requests",
+							"otherinfo": "script-src includes unsafe-inline."
 						},
 						{
 							"uri": "https://app.trackdechets.beta.gouv.fr/robots.txt",
 							"method": "GET",
-							"param": "x-frame-options",
+							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
-						},
-						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/sitemap.xml",
-							"method": "GET",
-							"param": "x-frame-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": ""
+							"evidence": "default-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr;connect-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr https://api-adresse.data.gouv.fr https://sentry.incubateur.net https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io;worker-src blob:;base-uri 'self';form-action http:;font-src 'self' https: data:;object-src 'self' data:;frame-ancestors 'none';frame-src 'self' data:;img-src 'self' data: http:;script-src 'self' https: 'unsafe-inline' 'unsafe-eval';style-src 'self' https: 'unsafe-inline';media-src 'self' data:;script-src-attr 'none';upgrade-insecure-requests",
+							"otherinfo": "script-src includes unsafe-inline."
 						}
 					],
-					"count": "3",
-					"solution": "<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p><p>If you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy's \"frame-ancestors\" directive.</p>",
-					"otherinfo": "",
-					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options</p>",
-					"cweid": "1021",
+					"count": "2",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is properly configured to set the Content-Security-Policy header.</p>",
+					"otherinfo": "<p>script-src includes unsafe-inline.</p>",
+					"reference": "<p>https://www.w3.org/TR/CSP/</p><p>https://caniuse.com/#search=content+security+policy</p><p>https://content-security-policy.com/</p><p>https://github.com/HtmlUnit/htmlunit-csp</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p>",
+					"cweid": "693",
 					"wascid": "15",
 					"sourceid": "1"
 				},
 				{
-					"pluginid": "90003",
-					"alertRef": "90003",
-					"alert": "Sub Resource Integrity Attribute Missing",
-					"name": "Sub Resource Integrity Attribute Missing",
+					"pluginid": "10055",
+					"alertRef": "10055-6",
+					"alert": "CSP: style-src unsafe-inline",
+					"name": "CSP: style-src unsafe-inline",
 					"riskcode": "2",
 					"confidence": "3",
 					"riskdesc": "Medium (High)",
-					"desc": "<p>The integrity attribute is missing on a script or link tag served by an external server. The integrity tag prevents an attacker who have gained access to this server from injecting a malicious content. </p>",
+					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks. Including (but not limited to) Cross Site Scripting (XSS), and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
 					"instances":[ 
 						{
 							"uri": "https://app.trackdechets.beta.gouv.fr",
 							"method": "GET",
-							"param": "",
+							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "<link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500&display=swap\"rel=\"stylesheet\">",
-							"otherinfo": ""
+							"evidence": "default-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr;connect-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr https://api-adresse.data.gouv.fr https://sentry.incubateur.net https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io;worker-src blob:;base-uri 'self';form-action http:;font-src 'self' https: data:;object-src 'self' data:;frame-ancestors 'none';frame-src 'self' data:;img-src 'self' data: http:;script-src 'self' https: 'unsafe-inline' 'unsafe-eval';style-src 'self' https: 'unsafe-inline';media-src 'self' data:;script-src-attr 'none';upgrade-insecure-requests",
+							"otherinfo": "style-src includes unsafe-inline."
 						},
 						{
 							"uri": "https://app.trackdechets.beta.gouv.fr/robots.txt",
 							"method": "GET",
-							"param": "",
+							"param": "Content-Security-Policy",
 							"attack": "",
-							"evidence": "<link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500&display=swap\"rel=\"stylesheet\">",
-							"otherinfo": ""
-						},
+							"evidence": "default-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr;connect-src 'self' *.trackdechets.beta.gouv.fr *.trackdechets.fr https://api-adresse.data.gouv.fr https://sentry.incubateur.net https://openmaptiles.geo.data.gouv.fr https://openmaptiles.github.io;worker-src blob:;base-uri 'self';form-action http:;font-src 'self' https: data:;object-src 'self' data:;frame-ancestors 'none';frame-src 'self' data:;img-src 'self' data: http:;script-src 'self' https: 'unsafe-inline' 'unsafe-eval';style-src 'self' https: 'unsafe-inline';media-src 'self' data:;script-src-attr 'none';upgrade-insecure-requests",
+							"otherinfo": "style-src includes unsafe-inline."
+						}
+					],
+					"count": "2",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is properly configured to set the Content-Security-Policy header.</p>",
+					"otherinfo": "<p>style-src includes unsafe-inline.</p>",
+					"reference": "<p>https://www.w3.org/TR/CSP/</p><p>https://caniuse.com/#search=content+security+policy</p><p>https://content-security-policy.com/</p><p>https://github.com/HtmlUnit/htmlunit-csp</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10110",
+					"alertRef": "10110",
+					"alert": "Dangerous JS Functions",
+					"name": "Dangerous JS Functions",
+					"riskcode": "1",
+					"confidence": "1",
+					"riskdesc": "Low (Low)",
+					"desc": "<p>A dangerous JS function seems to be in use that would leave the site vulnerable.</p>",
+					"instances":[ 
 						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/sitemap.xml",
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500&display=swap\"rel=\"stylesheet\">",
+							"evidence": "eval",
 							"otherinfo": ""
 						}
 					],
-					"count": "3",
-					"solution": "<p>Provide a valid integrity attribute to the tag.</p>",
+					"count": "1",
+					"solution": "<p>See the references for security advice on the use of these functions.</p>",
 					"otherinfo": "",
-					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity</p>",
-					"cweid": "345",
-					"wascid": "15",
-					"sourceid": "1"
+					"reference": "<p>https://angular.io/guide/security</p>",
+					"cweid": "749",
+					"wascid": "-1",
+					"sourceid": "31"
 				},
 				{
 					"pluginid": "10063",
@@ -157,6 +195,14 @@
 							"otherinfo": ""
 						},
 						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "",
+							"otherinfo": ""
+						},
+						{
 							"uri": "https://app.trackdechets.beta.gouv.fr/robots.txt",
 							"method": "GET",
 							"param": "",
@@ -173,72 +219,13 @@
 							"otherinfo": ""
 						}
 					],
-					"count": "3",
+					"count": "4",
 					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Permissions-Policy header.</p>",
 					"otherinfo": "",
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy</p><p>https://developer.chrome.com/blog/feature-policy/</p><p>https://scotthelme.co.uk/a-new-security-header-feature-policy/</p><p>https://w3c.github.io/webappsec-feature-policy/</p><p>https://www.smashingmagazine.com/2018/12/feature-policy/</p>",
 					"cweid": "693",
 					"wascid": "15",
-					"sourceid": "1"
-				},
-				{
-					"pluginid": "10021",
-					"alertRef": "10021",
-					"alert": "X-Content-Type-Options Header Missing",
-					"name": "X-Content-Type-Options Header Missing",
-					"riskcode": "1",
-					"confidence": "2",
-					"riskdesc": "Low (Medium)",
-					"desc": "<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>",
-					"instances":[ 
-						{
-							"uri": "https://app.trackdechets.beta.gouv.fr",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/.well-known/baleen/challengejs/assets/logo.svg",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/.well-known/baleen/challengejs/assets/style.css",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/robots.txt",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						},
-						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/sitemap.xml",
-							"method": "GET",
-							"param": "x-content-type-options",
-							"attack": "",
-							"evidence": "",
-							"otherinfo": "This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.\nAt \"High\" threshold this scan rule will not alert on client or server error responses."
-						}
-					],
-					"count": "5",
-					"solution": "<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages.</p><p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>",
-					"otherinfo": "<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p><p>At \"High\" threshold this scan rule will not alert on client or server error responses.</p>",
-					"reference": "<p>https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</p><p>https://owasp.org/www-community/Security_Headers</p>",
-					"cweid": "693",
-					"wascid": "15",
-					"sourceid": "1"
+					"sourceid": "6"
 				},
 				{
 					"pluginid": "10094",
@@ -251,45 +238,136 @@
 					"desc": "<p>Base64 encoded data was disclosed by the application/web server. Note: in the interests of performance not all base64 strings in the response were analyzed individually, the entire response should be looked at by the analyst/security team/developer(s).</p>",
 					"instances":[ 
 						{
-							"uri": "https://app.trackdechets.beta.gouv.fr",
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-BoiPd9yI.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "ZOwYtoJrStNM8UiU242WsMX5H2UCvEqsrGdcIpHAvP2iO9qnBGr7_liUKJGL4SwztR-WgA-wjinRl9zRmqJIO6rG1W-8J9giPfioTCS8J3mESW-AU67x6ncX00q-kjln5ZHw5V30wykcrQNtT3jIHdvo1ZNEidj9KXusG1TJAlQ-EEM2jmW35Gj7V77aAoaLK_htLNzfiJ8l0EqlBmAsLC2lKNn5EOloDUaxq8X8PHYJTnqrw_mYnDd155ZxDNxF",
-							"otherinfo": "d\uFFFD\\x0018\uFFFD\uFFFDkJ\uFFFDL\uFFFDH\uFFFD\u06CD\uFFFD\uFFFD\uFFFD\uFFFD\\x001fe\\x0002\uFFFDJ\uFFFD\uFFFDg\\\"\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD;\u06A7\\x0004j\uFFFD\uFFFDX\uFFFD(\uFFFD\uFFFD\uFFFD,3\uFFFD\\x001f\uFFFD\uFFFD\\x000f\uFFFD\uFFFD)\u0457\uFFFD\u045A\uFFFDH;\uFFFD\uFFFD\uFFFDo\uFFFD'\uFFFD\"=\uFFFD\uFFFDL$\uFFFD'y\uFFFDIo\uFFFDS\uFFFD\uFFFD\uFFFDw\\x0017\uFFFDJ\uFFFD\uFFFD9g\uFFFD\uFFFD\uFFFD]\uFFFD\uFFFD)\\x001c\uFFFD\\x0003mOx\uFFFD\\x001d\uFFFD\uFFFD\u0553D\uFFFD\uFFFD\uFFFD){\uFFFD\\x001bT\uFFFD\\x0002T>\\x0010C6\uFFFDe\uFFFD\uFFFDh\uFFFDW\uFFFD\uFFFD\\x0002\uFFFD\uFFFD+\uFFFDm,\uFFFD\u07C8\uFFFD%\uFFFDJ\uFFFD\\x0006`,,-\uFFFD(\uFFFD\uFFFD\\x0010\uFFFDh\rF\uFFFD\uFFFD\uFFFD\uFFFD<v\tNz\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD7u\uFFFDq\\x000c\uFFFDE"
+							"evidence": "_BlankslateDescription_3xpva_23",
+							"otherinfo": "\uFFFD\\x0019Z\uFFFDK%j\u05C3z\uFFFD+\uFFFD\uFFFDb\uFFFD\uFFFD\u019B\uFFFD\uFFFDm"
 						},
 						{
-							"uri": "https://app.trackdechets.beta.gouv.fr",
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "_uaOP36wt29IDMGGHSr7xp8rV0F2bcODBWKhmF2twvmEz0fm-BiIIzwPHETO5UD8FFl2Xl1cYrzYDCkXiWKRcTQIWRW_jYNI4rLg8Nrj7imt5Sjg8zulZtoug8NjQno168PtWI7NRUEjlTOjvvsWf1z6OuyXEYw9oxAq9z8OvlgbSYRAdF9FPNxQRnmgwFCvuPyKrGZb-392lH-RyIqsWO6l2_pLUOyJng-IC4Cxsr5qBc3S-4u6nVHAUYud7new",
-							"otherinfo": "\uFFFD\uFFFD?~\uFFFD\uFFFDoH\\x000c\uFFFD\uFFFD\\x001d*\uFFFD\u019F+WAvm\u00C3\\x0005b\uFFFD\uFFFD]\uFFFD\uFFFD\uFFFD\uFFFD\uFFFDG\uFFFD\uFFFD\\x0018\uFFFD#<\\x000f\\x001cD\uFFFD\uFFFD@\uFFFD\\x0014Yv^]\\b\uFFFD\uFFFD\\x000c)\\x0017\uFFFDb\uFFFDq4\\x0008Y\\x0015\uFFFD\uFFFD\uFFFDH\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD)\uFFFD\uFFFD(\uFFFD\uFFFD;\uFFFDf\uFFFD.\uFFFD\uFFFDcBz5\uFFFD\uFFFD\uFFFDX\uFFFD\uFFFDEA#\uFFFD3\uFFFD\uFFFD\uFFFD\\x0016\\\uFFFD:\uFFFD\\x0011\uFFFD=\uFFFD\\x0010*\uFFFD?\\x000e\uFFFDX\\x001bI\uFFFD@t_E<\uFFFDPFy\uFFFD\uFFFDP\uFFFD\uFFFD\uFFFD\uFFFD\uFFFDf[\uFFFDv\uFFFD\uFFFD\u020A\uFFFDX\uFFFD\uFFFD\uFFFDKP\uC25E\\x000f\uFFFD\\x000b\uFFFD\uFFFD\uFFFD\uFFFDj\\x0005\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFDQ\uFFFDQ\uFFFD\uFFFD\uFFFDw\uFFFD"
+							"evidence": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+							"otherinfo": "\\x0000\\x0010\uFFFD\\x0010Q\uFFFD \uFFFD\uFFFD0\u04CFA\\x0014\uFFFDQU\uFFFDa\uFFFD\uFFFDq\u05DF\uFFFD\\x0018\uFFFD\uFFFDY\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\u06EF\uFFFD\\x001c\uFFFD\uFFFD]\uFFFD\u37BB\uFFFD"
 						},
 						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/robots.txt",
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/dsfr.min.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "_uaOP36wt29IDMGGHSr7xh8u7Ub7T3HFcT2kR27Zv7cqjHHZ2P4pQ6yaBE34bfnyxQjI5Lrs9zS6wkjpmIsoCwOm42hWhBv-cP-7h71Z5wihaKqhhC-4Sd_oRm5dquVa_cjn3fdjDRBsAtUeMODthKX-VL8t-gNrOPNnEo0OQarE3gP-d01CbGTWtXRExZQIHvTcrcUH2SHpvMiPJWFVgW1jBYDw0xhz6CyqbSp8bZt7GOsAMuBBL51Z_G0ZcU-I",
-							"otherinfo": "\uFFFD\uFFFD?~\uFFFD\uFFFDoH\\x000c\uFFFD\uFFFD\\x001d*\uFFFD\uFFFD\\x001f.\uFFFDF\uFFFDOq\uFFFDq=\uFFFDGn\u067F\uFFFD*\uFFFDq\uFFFD\uFFFD\uFFFD)C\uFFFD\uFFFD\\x0004M\uFFFDm\uFFFD\uFFFD\uFFFD\\x0008\uFFFD\uFFFD\uFFFD\uFFFD4\uFFFD\uFFFDH\u960B(\\x000b\\x0003\uFFFD\uFFFDhV\uFFFD\\x001b\uFFFDp\uFFFD\uFFFD\uFFFD\uFFFDY\uFFFD\\x0008\uFFFDh\uFFFD\uFFFD\uFFFD/\uFFFDI\uFFFD\uFFFDFn]\uFFFD\uFFFDZ\uFFFD\uFFFD\uFFFD\uFFFD\uFFFDc\r\\x0010l\\x0002\uFFFD\\x001e0\uFFFD\uD125\uFFFDT\uFFFD-\uFFFD\\x0003k8\uFFFDg\\x0012\uFFFD\\x000eA\uFFFD\uFFFD\uFFFD\\x0003\uFFFDwMBld\u05B5tD\u0154\\x0008\\x001e\uFFFD\u072D\uFFFD\\x0007\uFFFD!\uFFFD\u020F%aU\uFFFDmc\\x0005\uFFFD\uFFFD\uFFFD\\x0018s\uFFFD,\uFFFDm*|m\uFFFD{\\x0018\uFFFD\\x00002\uFFFDA/\uFFFDY\uFFFDm\\x0019qO\uFFFD"
-						},
-						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/sitemap.xml",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "ZOwYtoJrStNM8UiU242WsEG5P-HU2U8y1EyG2x8wrM2tdQ0T-ucV3U48yeBJtKTK6BFx4DAFIIeBzoxf-yvHgtlG7QycyxZOHJa4FZ_zGNEYtaTCOK4mikgiM9h0KficHorkeHB8QTn4oe7fj9m-LqDmIVGnb4YDs9oUOkf3icoWcIdjQ9lwi_KQGhB6L6DrvByLDVtt539qaEviUcq1XfNNnt-UEKk5YmDv_9JiwWnWKFjlzGHkdLRrXG8nALjd",
-							"otherinfo": "d\uFFFD\\x0018\uFFFD\uFFFDkJ\uFFFDL\uFFFDH\uFFFD\u06CD\uFFFD\uFFFDA\uFFFD?\uFFFD\uFFFD\uFFFDO2\uFFFDL\uFFFD\uFFFD\\x001f0\uFFFD\u036Du\r\\x0013\uFFFD\uFFFD\\x0015\uFFFDN<\uFFFD\uFFFDI\uFFFD\uFFFD\uFFFD\uFFFD\\x0011q\uFFFD0\\x0005 \uFFFD\uFFFD\u038C_\uFFFD+\u01C2\uFFFDF\uFFFD\\x000c\uFFFD\uFFFD\\x0016N\\x001c\uFFFD\uFFFD\\x0015\uFFFD\uFFFD\\x0018\uFFFD\\x0018\uFFFD\uFFFD\uFFFD8\uFFFD&\uFFFDH\"3\uFFFDt)\uFFFD\uFFFD\\x001e\uFFFD\uFFFDxp|A9\uFFFD\uFFFD\uFFFD\u07CF\u067E.\uFFFD\uFFFD!Q\uFFFDo\uFFFD\\x0003\uFFFD\uFFFD\\x0014:G\uFFFD\uFFFD\uFFFD\\x0016p\uFFFDcC\uFFFDp\uFFFD\uFFFD\\x001a\\x0010z/\uFFFD\uFFFD\\x001c\uFFFD\r[m\uFFFDjhK\uFFFDQ\u02B5]\uFFFDM\uFFFD\u07D4\\x0010\uFFFD9b`\uFFFD\uFFFD\uFFFDb\uFFFDi\uFFFD(X\uFFFD\uFFFDa\uFFFDt\uFFFDk\\o'\\x0000\uFFFD\uFFFD"
+							"evidence": "2H9v2H7V5H4v4h16V5h-3v2h-2V5zm5",
+							"otherinfo": "\uFFFDo\uFFFD~\uFFFD\uFFFD~/\uFFFD\\x001dzW\uFFFD~\uFFFD\uFFFD\uFFFD\uFFFDey\uFFFDn"
 						}
 					],
-					"count": "4",
+					"count": "3",
 					"solution": "<p>Manually confirm that the Base64 data does not leak sensitive information, and that the data cannot be aggregated/used to exploit other vulnerabilities.</p>",
-					"otherinfo": "<p>d\uFFFD\\x0018\uFFFD\uFFFDkJ\uFFFDL\uFFFDH\uFFFD\u06CD\uFFFD\uFFFD\uFFFD\uFFFD\\x001fe\\x0002\uFFFDJ\uFFFD\uFFFDg\\\"\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD;\u06A7\\x0004j\uFFFD\uFFFDX\uFFFD(\uFFFD\uFFFD\uFFFD,3\uFFFD\\x001f\uFFFD\uFFFD\\x000f\uFFFD\uFFFD)\u0457\uFFFD\u045A\uFFFDH;\uFFFD\uFFFD\uFFFDo\uFFFD'\uFFFD\"=\uFFFD\uFFFDL$\uFFFD'y\uFFFDIo\uFFFDS\uFFFD\uFFFD\uFFFDw\\x0017\uFFFDJ\uFFFD\uFFFD9g\uFFFD\uFFFD\uFFFD]\uFFFD\uFFFD)\\x001c\uFFFD\\x0003mOx\uFFFD\\x001d\uFFFD\uFFFD\u0553D\uFFFD\uFFFD\uFFFD){\uFFFD\\x001bT\uFFFD\\x0002T>\\x0010C6\uFFFDe\uFFFD\uFFFDh\uFFFDW\uFFFD\uFFFD\\x0002\uFFFD\uFFFD+\uFFFDm,\uFFFD\u07C8\uFFFD%\uFFFDJ\uFFFD\\x0006`,,-\uFFFD(\uFFFD\uFFFD\\x0010\uFFFDh\rF\uFFFD\uFFFD\uFFFD\uFFFD<v\tNz\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD7u\uFFFDq\\x000c\uFFFDE</p>",
+					"otherinfo": "<p>\uFFFD\\x0019Z\uFFFDK%j\u05C3z\uFFFD+\uFFFD\uFFFDb\uFFFD\uFFFD\u019B\uFFFD\uFFFDm</p>",
 					"reference": "<p>https://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
 					"cweid": "200",
 					"wascid": "13",
-					"sourceid": "1"
+					"sourceid": "25"
+				},
+				{
+					"pluginid": "10027",
+					"alertRef": "10027",
+					"alert": "Information Disclosure - Suspicious Comments",
+					"name": "Information Disclosure - Suspicious Comments",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "Informational (Low)",
+					"desc": "<p>The response appears to contain suspicious comments which may help an attacker. Note: Matches made within script blocks or files are against the entire content not only comments.</p>",
+					"instances":[ 
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Admin",
+							"otherinfo": "The following pattern was used: \\bADMIN\\b and was detected 4 times, the first in the element starting with: \"`,eKe=e=>e.length>=BGe&&e.length<=UGe,tKe=()=>{const e=window.localStorage.getItem(xx);return e&&JSON.parse(e)},rKe=e=>{window.l\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "bug",
+							"otherinfo": "The following pattern was used: \\bBUG\\b and was detected 2 times, the first in the element starting with: \"`+c},a)}function OPe(e,t,r){var n=[{type:\"client_report\"},{timestamp:r||q2(),discarded_events:e}];return V2(t?{dsn:t}:{},[n])}va\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "dB",
+							"otherinfo": "The following pattern was used: \\bDB\\b and was detected 2 times, the first in the element starting with: \"`;function uft(){var o,s;const{orgId:e}=Tb(),{data:t,loading:r}=vl(sft,{onCompleted:({me:u})=>{u.email&&APe({email:u.email})}}),\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Debug",
+							"otherinfo": "The following pattern was used: \\bDEBUG\\b and was detected 2 times, the first in the element starting with: \"***************************************************************************** */var S_=function(e,t){return S_=Object.setPrototy\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "from",
+							"otherinfo": "The following pattern was used: \\bFROM\\b and was detected 23 times, the first in the element starting with: \"`).forEach(function(c){console.warn(\"  \"+c)})}function o(s,u){return u.some(function(l){return s instanceof l})}return i0}var C$\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "query",
+							"otherinfo": "The following pattern was used: \\bQUERY\\b and was detected 21 times, the first in the element starting with: \"`)&&(m=\"(?: \"+m+\")\",g=\" \"+g,v++),s=new RegExp(\"^(?:\"+m+\")\",y)),e_&&(s=new RegExp(\"^\"+m+\"$(?!\\\\s)\",y)),ZE&&(u=r.lastIndex),l=yc(z\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "select",
+							"otherinfo": "The following pattern was used: \\bSELECT\\b and was detected 4 times, the first in the element starting with: \"`+a[o].replace(\" at new \",\" at \");return e.displayName&&u.includes(\"<anonymous>\")&&(u=u.replace(\"<anonymous>\",e.displayName)),u}\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "user",
+							"otherinfo": "The following pattern was used: \\bUSER\\b and was detected 3 times, the first in the element starting with: \"***************************************************************************** */var T_=function(e,t){return T_=Object.setPrototy\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "where",
+							"otherinfo": "The following pattern was used: \\bWHERE\\b and was detected 7 times, the first in the element starting with: \"    $where: BsdWhere\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-xQcs23Xx.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "XXX",
+							"otherinfo": "The following pattern was used: \\bXXX\\b and was detected 2 times, the first in the element starting with: \" */var Or=typeof Symbol==\"function\"&&Symbol.for,Vx=Or?Symbol.for(\"react.element\"):60103,Hx=Or?Symbol.for(\"react.portal\"):60106,P\", see evidence field for the suspicious comment/snippet."
+						}
+					],
+					"count": "10",
+					"solution": "<p>Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.</p>",
+					"otherinfo": "<p>The following pattern was used: \\bADMIN\\b and was detected 4 times, the first in the element starting with: \"`,eKe=e=>e.length>=BGe&&e.length<=UGe,tKe=()=>{const e=window.localStorage.getItem(xx);return e&&JSON.parse(e)},rKe=e=>{window.l\", see evidence field for the suspicious comment/snippet.</p>",
+					"reference": "",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "31"
 				},
 				{
 					"pluginid": "10109",
@@ -306,7 +384,7 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<noscript><div class=\"challengejs-container\"><div class=\"container\"><div class=\"challengejs-body\"><div class=\"challengejs-card\"><img src=\"/.well-known/baleen/challengejs/assets/logo.svg\"><div class=\"challengejs-message-1\">Le JavaScript n'est pas activ\u00E9 sur votre navigateur.</div><div class=\"separator\"></div><div class=\"challengejs-message-2\">Le JavaScript n'est pas activ\u00E9 sur votre navigateur. Pour vous permettre de naviguer correctement sur notre site, il est n\u00E9cessaire qu'il soit activ\u00E9.</div><div class=\"challengejs-message-3\"><div class=\"how\"><span>Comment activer le JavaScript ?</span></div><div class=\"drop\"><div class=\"how-to chrome\"><div>Chrome</div><a href=\"https://support.google.com/chrome\">https://support.google.com/chrome</a></div><div class=\"how-to firefox\"><div>Mozilla Firefox</div><a href=\"https://support.mozilla.org/fr/home\">https://support.mozilla.org/fr/home</a></div><div class=\"how-to safari\"><div>Safari</div><a href=\"https://www.apple.com/support/safari/\">https://www.apple.com/support/safari/</a></div><div class=\"how-to opera\"><div>Opera</div><a href=\"https://support.google.com/adsense/answer/12654?hl=fr\">https://support.google.com/adsense/answer/12654?hl=fr</a></div><div class=\"how-to explorer\"><div>Internet Explorer</div><a href=\"https://support.microsoft.com/product/internet-explorer\">https://support.microsoft.com/product/internet-explorer</a></div></div></div></div></div></div></div></noscript>",
+							"evidence": "<noscript>\n      Pour acc\u00E9der \u00E0 toutes les fonctionnalit\u00E9s de ce site, vous devez activer\n      JavaScript. Voici les\n      <a href=\"https://www.enable-javascript.com/fr/\">\n        instructions pour activer JavaScript dans votre navigateur Web</a\n      >.\n    </noscript>",
 							"otherinfo": "A noScript tag has been found, which is an indication that the application works differently with JavaScript enabled compared to when it is not."
 						},
 						{
@@ -314,7 +392,7 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<noscript><div class=\"challengejs-container\"><div class=\"container\"><div class=\"challengejs-body\"><div class=\"challengejs-card\"><img src=\"/.well-known/baleen/challengejs/assets/logo.svg\"><div class=\"challengejs-message-1\">Le JavaScript n'est pas activ\u00E9 sur votre navigateur.</div><div class=\"separator\"></div><div class=\"challengejs-message-2\">Le JavaScript n'est pas activ\u00E9 sur votre navigateur. Pour vous permettre de naviguer correctement sur notre site, il est n\u00E9cessaire qu'il soit activ\u00E9.</div><div class=\"challengejs-message-3\"><div class=\"how\"><span>Comment activer le JavaScript ?</span></div><div class=\"drop\"><div class=\"how-to chrome\"><div>Chrome</div><a href=\"https://support.google.com/chrome\">https://support.google.com/chrome</a></div><div class=\"how-to firefox\"><div>Mozilla Firefox</div><a href=\"https://support.mozilla.org/fr/home\">https://support.mozilla.org/fr/home</a></div><div class=\"how-to safari\"><div>Safari</div><a href=\"https://www.apple.com/support/safari/\">https://www.apple.com/support/safari/</a></div><div class=\"how-to opera\"><div>Opera</div><a href=\"https://support.google.com/adsense/answer/12654?hl=fr\">https://support.google.com/adsense/answer/12654?hl=fr</a></div><div class=\"how-to explorer\"><div>Internet Explorer</div><a href=\"https://support.microsoft.com/product/internet-explorer\">https://support.microsoft.com/product/internet-explorer</a></div></div></div></div></div></div></div></noscript>",
+							"evidence": "<noscript>\n      Pour acc\u00E9der \u00E0 toutes les fonctionnalit\u00E9s de ce site, vous devez activer\n      JavaScript. Voici les\n      <a href=\"https://www.enable-javascript.com/fr/\">\n        instructions pour activer JavaScript dans votre navigateur Web</a\n      >.\n    </noscript>",
 							"otherinfo": "A noScript tag has been found, which is an indication that the application works differently with JavaScript enabled compared to when it is not."
 						},
 						{
@@ -322,7 +400,7 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "<noscript><div class=\"challengejs-container\"><div class=\"container\"><div class=\"challengejs-body\"><div class=\"challengejs-card\"><img src=\"/.well-known/baleen/challengejs/assets/logo.svg\"><div class=\"challengejs-message-1\">Le JavaScript n'est pas activ\u00E9 sur votre navigateur.</div><div class=\"separator\"></div><div class=\"challengejs-message-2\">Le JavaScript n'est pas activ\u00E9 sur votre navigateur. Pour vous permettre de naviguer correctement sur notre site, il est n\u00E9cessaire qu'il soit activ\u00E9.</div><div class=\"challengejs-message-3\"><div class=\"how\"><span>Comment activer le JavaScript ?</span></div><div class=\"drop\"><div class=\"how-to chrome\"><div>Chrome</div><a href=\"https://support.google.com/chrome\">https://support.google.com/chrome</a></div><div class=\"how-to firefox\"><div>Mozilla Firefox</div><a href=\"https://support.mozilla.org/fr/home\">https://support.mozilla.org/fr/home</a></div><div class=\"how-to safari\"><div>Safari</div><a href=\"https://www.apple.com/support/safari/\">https://www.apple.com/support/safari/</a></div><div class=\"how-to opera\"><div>Opera</div><a href=\"https://support.google.com/adsense/answer/12654?hl=fr\">https://support.google.com/adsense/answer/12654?hl=fr</a></div><div class=\"how-to explorer\"><div>Internet Explorer</div><a href=\"https://support.microsoft.com/product/internet-explorer\">https://support.microsoft.com/product/internet-explorer</a></div></div></div></div></div></div></div></noscript>",
+							"evidence": "<noscript>\n      Pour acc\u00E9der \u00E0 toutes les fonctionnalit\u00E9s de ce site, vous devez activer\n      JavaScript. Voici les\n      <a href=\"https://www.enable-javascript.com/fr/\">\n        instructions pour activer JavaScript dans votre navigateur Web</a\n      >.\n    </noscript>",
 							"otherinfo": "A noScript tag has been found, which is an indication that the application works differently with JavaScript enabled compared to when it is not."
 						}
 					],
@@ -349,7 +427,23 @@
 							"method": "GET",
 							"param": "cache-control",
 							"attack": "",
-							"evidence": "no-cache",
+							"evidence": "public, max-age=0",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/manifest.webmanifest",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "public, max-age=0",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/manifest.json",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "public, max-age=0",
 							"otherinfo": ""
 						},
 						{
@@ -357,7 +451,7 @@
 							"method": "GET",
 							"param": "cache-control",
 							"attack": "",
-							"evidence": "no-cache",
+							"evidence": "",
 							"otherinfo": ""
 						},
 						{
@@ -365,16 +459,123 @@
 							"method": "GET",
 							"param": "cache-control",
 							"attack": "",
-							"evidence": "no-cache",
+							"evidence": "",
 							"otherinfo": ""
 						}
 					],
-					"count": "3",
+					"count": "5",
 					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
 					"otherinfo": "",
 					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
 					"cweid": "525",
 					"wascid": "13",
+					"sourceid": "1"
+				},
+				{
+					"pluginid": "10050",
+					"alertRef": "10050-2",
+					"alert": "Retrieved from Cache",
+					"name": "Retrieved from Cache",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance. </p>",
+					"instances":[ 
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 0",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-BoiPd9yI.css",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 0",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/dsfr.min.css",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 0",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/apple-touch-icon.png",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 0",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/favicon.ico",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 0",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/favicon.svg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 0",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/manifest.webmanifest",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 0",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/utility/icons/icons.min.css",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 0",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/manifest.json",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 0",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/robots.txt",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 0",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/sitemap.xml",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "Age: 0",
+							"otherinfo": "The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use."
+						}
+					],
+					"count": "11",
+					"solution": "<p>Validate that the response does not contain sensitive, personal or user-specific information.  If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p><p>Cache-Control: no-cache, no-store, must-revalidate, private</p><p>Pragma: no-cache</p><p>Expires: 0</p><p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>",
+					"otherinfo": "<p>The presence of the 'Age' header indicates that that a HTTP/1.1 compliant caching server is in use.</p>",
+					"reference": "<p>https://tools.ietf.org/html/rfc7234</p><p>https://tools.ietf.org/html/rfc7231</p><p>https://www.rfc-editor.org/rfc/rfc9110.html</p>",
+					"cweid": "-1",
+					"wascid": "-1",
 					"sourceid": "1"
 				},
 				{
@@ -396,7 +597,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/.well-known/baleen/challengejs/assets/style.css",
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/apple-touch-icon.png",
 							"method": "GET",
 							"param": "Sec-Fetch-Dest",
 							"attack": "",
@@ -439,7 +640,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/.well-known/baleen/challengejs/assets/style.css",
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/apple-touch-icon.png",
 							"method": "GET",
 							"param": "Sec-Fetch-Mode",
 							"attack": "",
@@ -482,7 +683,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/.well-known/baleen/challengejs/assets/style.css",
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/apple-touch-icon.png",
 							"method": "GET",
 							"param": "Sec-Fetch-Site",
 							"attack": "",
@@ -525,7 +726,7 @@
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/.well-known/baleen/challengejs/assets/style.css",
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/apple-touch-icon.png",
 							"method": "GET",
 							"param": "Sec-Fetch-User",
 							"attack": "",
@@ -547,7 +748,7 @@
 					"reference": "<p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Sec-Fetch-User</p>",
 					"cweid": "352",
 					"wascid": "9",
-					"sourceid": "1"
+					"sourceid": "6"
 				},
 				{
 					"pluginid": "10049",
@@ -560,7 +761,7 @@
 					"desc": "<p>The response contents are storable by caching components such as proxy servers, and may be retrieved directly from the cache, rather than from the origin server by the caching servers, in response to similar requests from other users.  If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where \"shared\" caching servers such as \"proxy\" caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>",
 					"instances":[ 
 						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/.well-known/baleen/challengejs/assets/logo.svg",
+							"uri": "https://app.trackdechets.beta.gouv.fr/robots.txt",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -568,7 +769,7 @@
 							"otherinfo": "In the absence of an explicitly specified caching lifetime directive in the response, a liberal lifetime heuristic of 1 year was assumed. This is permitted by rfc7234."
 						},
 						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/.well-known/baleen/challengejs/assets/style.css",
+							"uri": "https://app.trackdechets.beta.gouv.fr/sitemap.xml",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -582,7 +783,7 @@
 					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "16"
+					"sourceid": "19"
 				},
 				{
 					"pluginid": "10049",
@@ -599,33 +800,81 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "no-cache",
+							"evidence": "max-age=0",
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/robots.txt",
+							"uri": "https://app.trackdechets.beta.gouv.fr/assets/index-BoiPd9yI.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "no-cache",
+							"evidence": "max-age=0",
 							"otherinfo": ""
 						},
 						{
-							"uri": "https://app.trackdechets.beta.gouv.fr/sitemap.xml",
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/dsfr.min.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "no-cache",
+							"evidence": "max-age=0",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/apple-touch-icon.png",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/favicon.ico",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/favicon.svg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/favicon/manifest.webmanifest",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/dsfr/utility/icons/icons.min.css",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0",
+							"otherinfo": ""
+						},
+						{
+							"uri": "https://app.trackdechets.beta.gouv.fr/manifest.json",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "max-age=0",
 							"otherinfo": ""
 						}
 					],
-					"count": "3",
+					"count": "9",
 					"solution": "",
 					"otherinfo": "",
 					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "1"
+					"sourceid": "6"
 				}
 			]
 		}
