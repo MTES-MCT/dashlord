@@ -1,6 +1,90 @@
 [
   [
     {
+      "template": "dns/dmarc-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/dmarc-detect",
+      "template-id": "dmarc-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/dmarc-detect.yaml",
+      "info": {
+        "name": "DNS DMARC - Detect",
+        "author": [
+          "juliosmelo"
+        ],
+        "tags": [
+          "dns",
+          "dmarc"
+        ],
+        "description": "DNS DMARC information was detected.\n",
+        "reference": [
+          "https://dmarc.org/",
+          "https://dmarc.org/wiki/faq#why_is_dmarc_important.3f"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ],
+          "cvss-metrics": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+        }
+      },
+      "type": "dns",
+      "host": "camino.beta.gouv.fr.",
+      "matched-at": "_dmarc.camino.beta.gouv.fr",
+      "extracted-results": [
+        "\"v=DMARC1; p=none; rua=mailto:camino@beta.gouv.fr; ruf=mailto:camino@beta.gouv.fr\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 43339\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.camino.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 43339\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;_dmarc.camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.camino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1; p=none; rua=mailto:camino@beta.gouv.fr; ruf=mailto:camino@beta.gouv.fr\"\n",
+      "timestamp": "2024-06-30T01:44:02.648038673Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/mx-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/mx-fingerprint",
+      "template-id": "mx-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/mx-fingerprint.yaml",
+      "info": {
+        "name": "MX Record Detection",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "mx"
+        ],
+        "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
+        "reference": [
+          "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
+          "https://mxtoolbox.com/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "camino.beta.gouv.fr.",
+      "matched-at": "camino.beta.gouv.fr",
+      "extracted-results": [
+        "20 mx2.alwaysdata.com.",
+        "10 mx1.alwaysdata.com."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 33801\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t MX\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 33801\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\n",
+      "timestamp": "2024-06-30T01:44:02.734699627Z",
+      "matcher-status": true
+    },
+    {
       "template": "dns/nameserver-fingerprint.yaml",
       "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
       "template-id": "nameserver-fingerprint",
@@ -33,9 +117,46 @@
         "dns1.alwaysdata.com.",
         "dns2.alwaysdata.com."
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 30915\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t NS\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 30915\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\n",
-      "timestamp": "2024-06-23T01:39:48.389048812Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 61037\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t NS\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 61037\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\n",
+      "timestamp": "2024-06-30T01:44:02.815437095Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/caa-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
+      "template-id": "caa-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
+      "info": {
+        "name": "CAA Record",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "caa"
+        ],
+        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
+        "reference": [
+          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "camino.beta.gouv.fr.",
+      "matched-at": "camino.beta.gouv.fr",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 29337\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t CAA\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 29337\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1710844139 3600 900 1209600 300\n",
+      "timestamp": "2024-06-30T01:44:02.966388271Z",
       "matcher-status": true
     },
     {
@@ -67,9 +188,9 @@
       "extracted-results": [
         "v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\""
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 55943\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 55943\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"\n",
-      "timestamp": "2024-06-23T01:39:48.541790609Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 435\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 435\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"\n",
+      "timestamp": "2024-06-30T01:44:03.648609476Z",
       "matcher-status": true
     },
     {
@@ -108,130 +229,9 @@
         "\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"",
         "\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\""
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 55943\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 55943\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"\n",
-      "timestamp": "2024-06-23T01:39:48.541897918Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/caa-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
-      "template-id": "caa-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
-      "info": {
-        "name": "CAA Record",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "caa"
-        ],
-        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
-        "reference": [
-          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "camino.beta.gouv.fr.",
-      "matched-at": "camino.beta.gouv.fr",
-      "request": ";; opcode: QUERY, status: NOERROR, id: 24769\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t CAA\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 24769\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1710844139 3600 900 1209600 300\n",
-      "timestamp": "2024-06-23T01:39:49.467177019Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/mx-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/mx-fingerprint",
-      "template-id": "mx-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/mx-fingerprint.yaml",
-      "info": {
-        "name": "MX Record Detection",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "mx"
-        ],
-        "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
-        "reference": [
-          "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
-          "https://mxtoolbox.com/"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "camino.beta.gouv.fr.",
-      "matched-at": "camino.beta.gouv.fr",
-      "extracted-results": [
-        "10 mx1.alwaysdata.com.",
-        "20 mx2.alwaysdata.com."
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 243\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t MX\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 243\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\n",
-      "timestamp": "2024-06-23T01:39:49.468193029Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/dmarc-detect.yaml",
-      "template-url": "https://templates.nuclei.sh/public/dmarc-detect",
-      "template-id": "dmarc-detect",
-      "template-path": "/home/runner/nuclei-templates/dns/dmarc-detect.yaml",
-      "info": {
-        "name": "DNS DMARC - Detect",
-        "author": [
-          "juliosmelo"
-        ],
-        "tags": [
-          "dns",
-          "dmarc"
-        ],
-        "description": "DNS DMARC information was detected.\n",
-        "reference": [
-          "https://dmarc.org/",
-          "https://dmarc.org/wiki/faq#why_is_dmarc_important.3f"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ],
-          "cvss-metrics": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
-        }
-      },
-      "type": "dns",
-      "host": "camino.beta.gouv.fr.",
-      "matched-at": "_dmarc.camino.beta.gouv.fr",
-      "extracted-results": [
-        "\"v=DMARC1; p=none; rua=mailto:camino@beta.gouv.fr; ruf=mailto:camino@beta.gouv.fr\""
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 33122\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.camino.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 33122\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;_dmarc.camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.camino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1; p=none; rua=mailto:camino@beta.gouv.fr; ruf=mailto:camino@beta.gouv.fr\"\n",
-      "timestamp": "2024-06-23T01:39:49.541261155Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 435\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 435\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"\n",
+      "timestamp": "2024-06-30T01:44:03.648695637Z",
       "matcher-status": true
     },
     {
@@ -263,9 +263,9 @@
       "host": "https://camino.beta.gouv.fr",
       "matched-at": "https://camino.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 23 Jun 2024 01:40:00 GMT\r\nEtag: W/\"667133e9-557\"\r\nExpires: Sun, 23 Jun 2024 01:40:00 GMT\r\nLast-Modified: Tue, 18 Jun 2024 07:14:49 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BFsKpaUa.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 30 Jun 2024 01:44:13 GMT\r\nEtag: W/\"66796539-557\"\r\nExpires: Sun, 30 Jun 2024 01:44:13 GMT\r\nLast-Modified: Mon, 24 Jun 2024 12:23:21 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BI4QiFgS.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:40:00.142917399Z",
+      "timestamp": "2024-06-30T01:44:13.840001272Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -306,9 +306,9 @@
         "1; mode=block"
       ],
       "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 23 Jun 2024 01:40:00 GMT\r\nEtag: W/\"667133e9-557\"\r\nExpires: Sun, 23 Jun 2024 01:40:00 GMT\r\nLast-Modified: Tue, 18 Jun 2024 07:14:49 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BFsKpaUa.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 30 Jun 2024 01:44:13 GMT\r\nEtag: W/\"66796539-557\"\r\nExpires: Sun, 30 Jun 2024 01:44:13 GMT\r\nLast-Modified: Mon, 24 Jun 2024 12:23:21 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BI4QiFgS.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:40:00.14553878Z",
+      "timestamp": "2024-06-30T01:44:13.842506487Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -336,87 +336,9 @@
       "host": "https://camino.beta.gouv.fr",
       "matched-at": "https://camino.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 23 Jun 2024 01:40:26 GMT\r\nEtag: W/\"667133e9-557\"\r\nExpires: Sun, 23 Jun 2024 01:40:26 GMT\r\nLast-Modified: Tue, 18 Jun 2024 07:14:49 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BFsKpaUa.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 30 Jun 2024 01:44:40 GMT\r\nEtag: W/\"66796539-557\"\r\nExpires: Sun, 30 Jun 2024 01:44:40 GMT\r\nLast-Modified: Mon, 24 Jun 2024 12:23:21 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BI4QiFgS.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:40:26.950390705Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "cross-origin-opener-policy",
-      "type": "http",
-      "host": "https://camino.beta.gouv.fr",
-      "matched-at": "https://camino.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 23 Jun 2024 01:40:36 GMT\r\nEtag: W/\"667133e9-557\"\r\nExpires: Sun, 23 Jun 2024 01:40:36 GMT\r\nLast-Modified: Tue, 18 Jun 2024 07:14:49 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BFsKpaUa.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
-      "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:40:36.941961437Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "cross-origin-resource-policy",
-      "type": "http",
-      "host": "https://camino.beta.gouv.fr",
-      "matched-at": "https://camino.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 23 Jun 2024 01:40:36 GMT\r\nEtag: W/\"667133e9-557\"\r\nExpires: Sun, 23 Jun 2024 01:40:36 GMT\r\nLast-Modified: Tue, 18 Jun 2024 07:14:49 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BFsKpaUa.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
-      "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:40:36.942001421Z",
+      "timestamp": "2024-06-30T01:44:40.529957258Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -453,9 +375,9 @@
       "host": "https://camino.beta.gouv.fr",
       "matched-at": "https://camino.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 23 Jun 2024 01:40:36 GMT\r\nEtag: W/\"667133e9-557\"\r\nExpires: Sun, 23 Jun 2024 01:40:36 GMT\r\nLast-Modified: Tue, 18 Jun 2024 07:14:49 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BFsKpaUa.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 30 Jun 2024 01:44:50 GMT\r\nEtag: W/\"66796539-557\"\r\nExpires: Sun, 30 Jun 2024 01:44:50 GMT\r\nLast-Modified: Mon, 24 Jun 2024 12:23:21 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BI4QiFgS.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:40:36.942019895Z",
+      "timestamp": "2024-06-30T01:44:50.059432958Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -492,9 +414,9 @@
       "host": "https://camino.beta.gouv.fr",
       "matched-at": "https://camino.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 23 Jun 2024 01:40:36 GMT\r\nEtag: W/\"667133e9-557\"\r\nExpires: Sun, 23 Jun 2024 01:40:36 GMT\r\nLast-Modified: Tue, 18 Jun 2024 07:14:49 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BFsKpaUa.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 30 Jun 2024 01:44:50 GMT\r\nEtag: W/\"66796539-557\"\r\nExpires: Sun, 30 Jun 2024 01:44:50 GMT\r\nLast-Modified: Mon, 24 Jun 2024 12:23:21 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BI4QiFgS.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:40:36.942034813Z",
+      "timestamp": "2024-06-30T01:44:50.059483703Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -531,9 +453,87 @@
       "host": "https://camino.beta.gouv.fr",
       "matched-at": "https://camino.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 23 Jun 2024 01:40:36 GMT\r\nEtag: W/\"667133e9-557\"\r\nExpires: Sun, 23 Jun 2024 01:40:36 GMT\r\nLast-Modified: Tue, 18 Jun 2024 07:14:49 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BFsKpaUa.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 30 Jun 2024 01:44:50 GMT\r\nEtag: W/\"66796539-557\"\r\nExpires: Sun, 30 Jun 2024 01:44:50 GMT\r\nLast-Modified: Mon, 24 Jun 2024 12:23:21 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BI4QiFgS.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:40:36.942047346Z",
+      "timestamp": "2024-06-30T01:44:50.059503209Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-opener-policy",
+      "type": "http",
+      "host": "https://camino.beta.gouv.fr",
+      "matched-at": "https://camino.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 30 Jun 2024 01:44:50 GMT\r\nEtag: W/\"66796539-557\"\r\nExpires: Sun, 30 Jun 2024 01:44:50 GMT\r\nLast-Modified: Mon, 24 Jun 2024 12:23:21 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BI4QiFgS.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
+      "ip": "91.134.91.128",
+      "timestamp": "2024-06-30T01:44:50.059518828Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-resource-policy",
+      "type": "http",
+      "host": "https://camino.beta.gouv.fr",
+      "matched-at": "https://camino.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://audience-sites.din.developpement-durable.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://audience-sites.din.developpement-durable.gouv.fr https://etalab-tiles.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://wxs.ign.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr wxs.ign.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Sun, 30 Jun 2024 01:44:50 GMT\r\nEtag: W/\"66796539-557\"\r\nExpires: Sun, 30 Jun 2024 01:44:50 GMT\r\nLast-Modified: Mon, 24 Jun 2024 12:23:21 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: same-origin\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-BI4QiFgS.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-DCzKU3QX.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
+      "ip": "91.134.91.128",
+      "timestamp": "2024-06-30T01:44:50.059531462Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -562,9 +562,9 @@
       "host": "https://camino.beta.gouv.fr",
       "matched-at": "https://camino.beta.gouv.fr/robots.txt",
       "request": "GET /robots.txt HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 26\r\nContent-Type: text/plain; charset=utf-8\r\nDate: Sun, 23 Jun 2024 01:40:47 GMT\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\n\r\nUser-agent: *\nDisallow: /\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 26\r\nContent-Type: text/plain; charset=utf-8\r\nDate: Sun, 30 Jun 2024 01:44:59 GMT\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\n\r\nUser-agent: *\nDisallow: /\n",
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:40:47.288232217Z",
+      "timestamp": "2024-06-30T01:44:59.913984549Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr/robots.txt'",
       "matcher-status": true
     },
@@ -604,9 +604,9 @@
       "host": "https://camino.beta.gouv.fr",
       "matched-at": "https://camino.beta.gouv.fr/",
       "request": "POST / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
-      "response": "HTTP/1.1 405 Method Not Allowed\r\nConnection: close\r\nContent-Length: 157\r\nContent-Type: text/html\r\nDate: Sun, 23 Jun 2024 01:41:01 GMT\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\n\r\n<html>\r\n<head><title>405 Not Allowed</title></head>\r\n<body>\r\n<center><h1>405 Not Allowed</h1></center>\r\n<hr><center>nginx/1.26.0</center>\r\n</body>\r\n</html>\r\n",
+      "response": "HTTP/1.1 405 Method Not Allowed\r\nConnection: close\r\nContent-Length: 157\r\nContent-Type: text/html\r\nDate: Sun, 30 Jun 2024 01:45:13 GMT\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\n\r\n<html>\r\n<head><title>405 Not Allowed</title></head>\r\n<body>\r\n<center><h1>405 Not Allowed</h1></center>\r\n<hr><center>nginx/1.26.0</center>\r\n</body>\r\n</html>\r\n",
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:41:01.487600881Z",
+      "timestamp": "2024-06-30T01:45:13.655380831Z",
       "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: camino.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr/'",
       "matcher-status": true
     },
@@ -659,7 +659,7 @@
       ],
       "response": "SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u2\r\n",
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:41:23.457125417Z",
+      "timestamp": "2024-06-30T01:45:35.196779038Z",
       "matcher-status": true
     },
     {
@@ -689,7 +689,7 @@
         "Let's Encrypt"
       ],
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:41:24.920574943Z",
+      "timestamp": "2024-06-30T01:45:36.560864123Z",
       "matcher-status": true
     },
     {
@@ -719,7 +719,7 @@
         "camino.beta.gouv.fr"
       ],
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:41:24.920688965Z",
+      "timestamp": "2024-06-30T01:45:36.561000907Z",
       "matcher-status": true
     },
     {
@@ -750,7 +750,7 @@
         "tls12"
       ],
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:41:27.020372365Z",
+      "timestamp": "2024-06-30T01:45:38.20249879Z",
       "matcher-status": true
     },
     {
@@ -781,7 +781,7 @@
         "tls13"
       ],
       "ip": "91.134.91.128",
-      "timestamp": "2024-06-23T01:41:27.232862594Z",
+      "timestamp": "2024-06-30T01:45:38.385931975Z",
       "matcher-status": true
     }
   ]
