@@ -1,6 +1,81 @@
 [
   [
     {
+      "template": "dns/spf-record-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/spf-record-detect",
+      "template-id": "spf-record-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
+      "info": {
+        "name": "SPF Record - Detection",
+        "author": [
+          "rxerium"
+        ],
+        "tags": [
+          "dns",
+          "spf"
+        ],
+        "description": "An SPF TXT record was detected\n",
+        "reference": [
+          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "dns",
+      "host": "api.camino.beta.gouv.fr.",
+      "matched-at": "api.camino.beta.gouv.fr",
+      "extracted-results": [
+        "v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 37449\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 37449\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"\n",
+      "timestamp": "2024-10-27T01:59:34.890793669Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/txt-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
+      "template-id": "txt-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
+      "info": {
+        "name": "DNS TXT Record Detected",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "txt"
+        ],
+        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+        "reference": [
+          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "api.camino.beta.gouv.fr.",
+      "matched-at": "api.camino.beta.gouv.fr",
+      "extracted-results": [
+        "\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"",
+        "\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 37449\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 37449\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"\n",
+      "timestamp": "2024-10-27T01:59:34.890915397Z",
+      "matcher-status": true
+    },
+    {
       "template": "dns/dns-saas-service-detection.yaml",
       "template-url": "https://templates.nuclei.sh/public/dns-saas-service-detection",
       "template-id": "dns-saas-service-detection",
@@ -32,9 +107,87 @@
       "extracted-results": [
         "camino.beta.gouv.fr."
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 7098\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t CNAME\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 7098\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t CNAME\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\n",
-      "timestamp": "2024-10-20T01:59:55.938031351Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 12404\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t CNAME\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 12404\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t CNAME\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\n",
+      "timestamp": "2024-10-27T01:59:34.893303033Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/nameserver-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
+      "template-id": "nameserver-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
+      "info": {
+        "name": "NS Record Detection",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "ns"
+        ],
+        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "api.camino.beta.gouv.fr.",
+      "matched-at": "api.camino.beta.gouv.fr",
+      "extracted-results": [
+        "nsc.perf1.com.",
+        "a.ns.developpement-durable.gouv.fr.",
+        "nsb.perf1.com.",
+        "nsa.perf1.fr.",
+        "b.ns.developpement-durable.gouv.fr."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 34042\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t NS\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 34042\n;; flags: qr rd ra; QUERY: 1, ANSWER: 6, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t21600\tIN\tNS\tb.ns.developpement-durable.gouv.fr.\ncamino.beta.gouv.fr.\t21600\tIN\tNS\tnsc.perf1.com.\ncamino.beta.gouv.fr.\t21600\tIN\tNS\ta.ns.developpement-durable.gouv.fr.\ncamino.beta.gouv.fr.\t21600\tIN\tNS\tnsb.perf1.com.\ncamino.beta.gouv.fr.\t21600\tIN\tNS\tnsa.perf1.fr.\n",
+      "timestamp": "2024-10-27T01:59:34.895546471Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/caa-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
+      "template-id": "caa-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
+      "info": {
+        "name": "CAA Record",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "caa"
+        ],
+        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
+        "reference": [
+          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "api.camino.beta.gouv.fr.",
+      "matched-at": "api.camino.beta.gouv.fr",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 38121\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t CAA\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 38121\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t CAA\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\n\n;; AUTHORITY SECTION:\ncamino.beta.gouv.fr.\t1800\tIN\tSOA\ta.ns.developpement-durable.gouv.fr. gestiondns-tech.developpement-durable.gouv.fr. 2024100710 14400 3600 3000000 3600\n",
+      "timestamp": "2024-10-27T01:59:34.90576266Z",
       "matcher-status": true
     },
     {
@@ -74,162 +227,9 @@
         "10 mx1.alwaysdata.com.",
         "20 mx2.alwaysdata.com."
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 53459\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t MX\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 53459\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\n",
-      "timestamp": "2024-10-20T01:59:55.939490353Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/spf-record-detect.yaml",
-      "template-url": "https://templates.nuclei.sh/public/spf-record-detect",
-      "template-id": "spf-record-detect",
-      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
-      "info": {
-        "name": "SPF Record - Detection",
-        "author": [
-          "rxerium"
-        ],
-        "tags": [
-          "dns",
-          "spf"
-        ],
-        "description": "An SPF TXT record was detected\n",
-        "reference": [
-          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "type": "dns",
-      "host": "api.camino.beta.gouv.fr.",
-      "matched-at": "api.camino.beta.gouv.fr",
-      "extracted-results": [
-        "v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\""
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 46857\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 46857\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"\n",
-      "timestamp": "2024-10-20T01:59:55.941723352Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/txt-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
-      "template-id": "txt-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
-      "info": {
-        "name": "DNS TXT Record Detected",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "txt"
-        ],
-        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
-        "reference": [
-          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "api.camino.beta.gouv.fr.",
-      "matched-at": "api.camino.beta.gouv.fr",
-      "extracted-results": [
-        "\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"",
-        "\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\""
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 46857\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 46857\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"\n",
-      "timestamp": "2024-10-20T01:59:55.941918026Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/nameserver-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
-      "template-id": "nameserver-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
-      "info": {
-        "name": "NS Record Detection",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "ns"
-        ],
-        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "api.camino.beta.gouv.fr.",
-      "matched-at": "api.camino.beta.gouv.fr",
-      "extracted-results": [
-        "nsb.perf1.com.",
-        "nsc.perf1.com.",
-        "nsa.perf1.fr.",
-        "b.ns.developpement-durable.gouv.fr.",
-        "a.ns.developpement-durable.gouv.fr."
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 35132\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t NS\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 35132\n;; flags: qr rd ra; QUERY: 1, ANSWER: 6, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t24000\tIN\tNS\tnsb.perf1.com.\ncamino.beta.gouv.fr.\t24000\tIN\tNS\tnsc.perf1.com.\ncamino.beta.gouv.fr.\t24000\tIN\tNS\tnsa.perf1.fr.\ncamino.beta.gouv.fr.\t24000\tIN\tNS\tb.ns.developpement-durable.gouv.fr.\ncamino.beta.gouv.fr.\t24000\tIN\tNS\ta.ns.developpement-durable.gouv.fr.\n",
-      "timestamp": "2024-10-20T01:59:56.024424663Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/caa-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
-      "template-id": "caa-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
-      "info": {
-        "name": "CAA Record",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "caa"
-        ],
-        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
-        "reference": [
-          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "api.camino.beta.gouv.fr.",
-      "matched-at": "api.camino.beta.gouv.fr",
-      "request": ";; opcode: QUERY, status: NOERROR, id: 52100\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t CAA\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 52100\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t CAA\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\n\n;; AUTHORITY SECTION:\ncamino.beta.gouv.fr.\t3600\tIN\tSOA\ta.ns.developpement-durable.gouv.fr. gestiondns-tech.developpement-durable.gouv.fr. 2024100710 14400 3600 3000000 3600\n",
-      "timestamp": "2024-10-20T01:59:56.025949258Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 54984\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t MX\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 54984\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;api.camino.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\napi.camino.beta.gouv.fr.\t300\tIN\tCNAME\tcamino.beta.gouv.fr.\ncamino.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\n",
+      "timestamp": "2024-10-27T01:59:35.1438518Z",
       "matcher-status": true
     },
     {
@@ -256,49 +256,9 @@
       "host": "https://api.camino.beta.gouv.fr",
       "matched-at": "https://api.camino.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:00:37 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 19\r\nRetry-After: 19\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:00:22 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 13\r\nRetry-After: 13\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
       "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:00:37.765391248Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "permissions-policy",
-      "type": "http",
-      "host": "https://api.camino.beta.gouv.fr",
-      "matched-at": "https://api.camino.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:00:48 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 8\r\nRetry-After: 8\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
-      "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:00:48.711379224Z",
+      "timestamp": "2024-10-27T02:00:22.515541022Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -336,209 +296,9 @@
       "host": "https://api.camino.beta.gouv.fr",
       "matched-at": "https://api.camino.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:00:48 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 8\r\nRetry-After: 8\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:00:34 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 1\r\nRetry-After: 1\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
       "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:00:48.711416133Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "x-permitted-cross-domain-policies",
-      "type": "http",
-      "host": "https://api.camino.beta.gouv.fr",
-      "matched-at": "https://api.camino.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:00:48 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 8\r\nRetry-After: 8\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
-      "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:00:48.711430229Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "cross-origin-embedder-policy",
-      "type": "http",
-      "host": "https://api.camino.beta.gouv.fr",
-      "matched-at": "https://api.camino.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:00:48 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 8\r\nRetry-After: 8\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
-      "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:00:48.711449415Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "cross-origin-opener-policy",
-      "type": "http",
-      "host": "https://api.camino.beta.gouv.fr",
-      "matched-at": "https://api.camino.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:00:48 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 8\r\nRetry-After: 8\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
-      "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:00:48.711855474Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "content-security-policy",
-      "type": "http",
-      "host": "https://api.camino.beta.gouv.fr",
-      "matched-at": "https://api.camino.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:00:48 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 8\r\nRetry-After: 8\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
-      "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:00:48.711872827Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "x-frame-options",
-      "type": "http",
-      "host": "https://api.camino.beta.gouv.fr",
-      "matched-at": "https://api.camino.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:00:48 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 8\r\nRetry-After: 8\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
-      "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:00:48.711882655Z",
+      "timestamp": "2024-10-27T02:00:34.659054842Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -576,9 +336,9 @@
       "host": "https://api.camino.beta.gouv.fr",
       "matched-at": "https://api.camino.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:00:48 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 8\r\nRetry-After: 8\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:00:34 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 1\r\nRetry-After: 1\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
       "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:00:48.712035629Z",
+      "timestamp": "2024-10-27T02:00:34.659091801Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -616,9 +376,169 @@
       "host": "https://api.camino.beta.gouv.fr",
       "matched-at": "https://api.camino.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:00:48 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 8\r\nRetry-After: 8\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:00:34 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 1\r\nRetry-After: 1\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
       "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:00:48.712060054Z",
+      "timestamp": "2024-10-27T02:00:34.659108382Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "content-security-policy",
+      "type": "http",
+      "host": "https://api.camino.beta.gouv.fr",
+      "matched-at": "https://api.camino.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:00:34 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 1\r\nRetry-After: 1\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
+      "ip": "91.134.91.128",
+      "timestamp": "2024-10-27T02:00:34.659126166Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "x-frame-options",
+      "type": "http",
+      "host": "https://api.camino.beta.gouv.fr",
+      "matched-at": "https://api.camino.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:00:34 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 1\r\nRetry-After: 1\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
+      "ip": "91.134.91.128",
+      "timestamp": "2024-10-27T02:00:34.659140713Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-embedder-policy",
+      "type": "http",
+      "host": "https://api.camino.beta.gouv.fr",
+      "matched-at": "https://api.camino.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:00:34 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 1\r\nRetry-After: 1\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
+      "ip": "91.134.91.128",
+      "timestamp": "2024-10-27T02:00:34.659153908Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-opener-policy",
+      "type": "http",
+      "host": "https://api.camino.beta.gouv.fr",
+      "matched-at": "https://api.camino.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:00:34 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 1\r\nRetry-After: 1\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
+      "ip": "91.134.91.128",
+      "timestamp": "2024-10-27T02:00:34.659166651Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -656,9 +576,89 @@
       "host": "https://api.camino.beta.gouv.fr",
       "matched-at": "https://api.camino.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:00:48 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 8\r\nRetry-After: 8\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:00:34 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 1\r\nRetry-After: 1\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
       "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:00:48.71207896Z",
+      "timestamp": "2024-10-27T02:00:34.659179626Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "permissions-policy",
+      "type": "http",
+      "host": "https://api.camino.beta.gouv.fr",
+      "matched-at": "https://api.camino.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:00:34 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 1\r\nRetry-After: 1\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
+      "ip": "91.134.91.128",
+      "timestamp": "2024-10-27T02:00:34.65919794Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "x-permitted-cross-domain-policies",
+      "type": "http",
+      "host": "https://api.camino.beta.gouv.fr",
+      "matched-at": "https://api.camino.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:00:34 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 1\r\nRetry-After: 1\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
+      "ip": "91.134.91.128",
+      "timestamp": "2024-10-27T02:00:34.659210494Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -698,9 +698,9 @@
       "host": "https://api.camino.beta.gouv.fr",
       "matched-at": "https://api.camino.beta.gouv.fr/",
       "request": "POST / HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
-      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:01:20 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 37\r\nRetry-After: 37\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
+      "response": "HTTP/1.1 429 Too Many Requests\r\nConnection: close\r\nContent-Length: 42\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:01:05 GMT\r\nEtag: W/\"2a-UpTsLJ74nYuiLgNgEwlQMxGqwrE\"\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 0\r\nRatelimit-Reset: 30\r\nRetry-After: 30\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\nToo many requests, please try again later.",
       "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:01:20.059339273Z",
+      "timestamp": "2024-10-27T02:01:05.612013723Z",
       "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: api.camino.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr/'",
       "matcher-status": true
     },
@@ -753,7 +753,42 @@
       ],
       "response": "SSH-2.0-OpenSSH_9.2p1 Debian-2+deb12u3\r\n",
       "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:01:50.702582805Z",
+      "timestamp": "2024-10-27T02:01:34.860347709Z",
+      "matcher-status": true
+    },
+    {
+      "template": "http/technologies/graphql-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/graphql-detect",
+      "template-id": "graphql-detect",
+      "template-path": "/home/runner/nuclei-templates/http/technologies/graphql-detect.yaml",
+      "info": {
+        "name": "GraphQL API Detection",
+        "author": [
+          "nkxxkn",
+          "elsfa7110",
+          "ofjaaah",
+          "exceed"
+        ],
+        "tags": [
+          "tech",
+          "graphql"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 124
+        }
+      },
+      "type": "http",
+      "host": "https://api.camino.beta.gouv.fr",
+      "matched-at": "https://api.camino.beta.gouv.fr/v3/graphql.php",
+      "request": "POST /v3/graphql.php HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 67\r\nAccept: */*\r\nAccept-Language: en\r\nContent-Type: application/json\r\nAccept-Encoding: gzip\r\n\r\n{\"query\":\"query IntrospectionQuery{__schema {queryType { name }}}\"}",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Type: application/json; charset=utf-8\r\nDate: Sun, 27 Oct 2024 02:01:35 GMT\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 93\r\nRatelimit-Reset: 60\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\n{\"data\":{\"__schema\":{\"queryType\":{\"name\":\"Query\"}}}}",
+      "meta": {
+        "paths": "/v3/graphql.php"
+      },
+      "ip": "91.134.91.128",
+      "timestamp": "2024-10-27T02:01:35.528982197Z",
+      "curl-command": "curl -X 'POST' -d '{\"query\":\"query IntrospectionQuery{__schema {queryType { name }}}\"}' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Content-Type: application/json' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr/v3/graphql.php'",
       "matcher-status": true
     },
     {
@@ -783,7 +818,7 @@
         "Let's Encrypt"
       ],
       "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:01:53.225531222Z",
+      "timestamp": "2024-10-27T02:01:37.349538087Z",
       "matcher-status": true
     },
     {
@@ -813,7 +848,7 @@
         "api.camino.beta.gouv.fr"
       ],
       "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:01:53.22565322Z",
+      "timestamp": "2024-10-27T02:01:37.349650207Z",
       "matcher-status": true
     },
     {
@@ -844,7 +879,7 @@
         "tls12"
       ],
       "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:01:54.546860889Z",
+      "timestamp": "2024-10-27T02:01:38.96680206Z",
       "matcher-status": true
     },
     {
@@ -875,42 +910,7 @@
         "tls13"
       ],
       "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:01:54.772339635Z",
-      "matcher-status": true
-    },
-    {
-      "template": "http/technologies/graphql-detect.yaml",
-      "template-url": "https://templates.nuclei.sh/public/graphql-detect",
-      "template-id": "graphql-detect",
-      "template-path": "/home/runner/nuclei-templates/http/technologies/graphql-detect.yaml",
-      "info": {
-        "name": "GraphQL API Detection",
-        "author": [
-          "nkxxkn",
-          "elsfa7110",
-          "ofjaaah",
-          "exceed"
-        ],
-        "tags": [
-          "tech",
-          "graphql"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 124
-        }
-      },
-      "type": "http",
-      "host": "https://api.camino.beta.gouv.fr",
-      "matched-at": "https://api.camino.beta.gouv.fr/v4/graphiql/finland",
-      "request": "POST /v4/graphiql/finland HTTP/1.1\r\nHost: api.camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 67\r\nAccept: */*\r\nAccept-Language: en\r\nContent-Type: application/json\r\nAccept-Encoding: gzip\r\n\r\n{\"query\":\"query IntrospectionQuery{__schema {queryType { name }}}\"}",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Type: application/json; charset=utf-8\r\nDate: Sun, 20 Oct 2024 02:01:56 GMT\r\nRatelimit-Limit: 100\r\nRatelimit-Policy: 100;w=60\r\nRatelimit-Remaining: 93\r\nRatelimit-Reset: 60\r\nServer: nginx\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\n\r\n{\"data\":{\"__schema\":{\"queryType\":{\"name\":\"Query\"}}}}",
-      "meta": {
-        "paths": "/v4/graphiql/finland"
-      },
-      "ip": "91.134.91.128",
-      "timestamp": "2024-10-20T02:01:56.312676949Z",
-      "curl-command": "curl -X 'POST' -d '{\"query\":\"query IntrospectionQuery{__schema {queryType { name }}}\"}' -H 'Accept: */*' -H 'Accept-Language: en' -H 'Content-Type: application/json' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://api.camino.beta.gouv.fr/v4/graphiql/finland'",
+      "timestamp": "2024-10-27T02:01:39.194534655Z",
       "matcher-status": true
     }
   ]
