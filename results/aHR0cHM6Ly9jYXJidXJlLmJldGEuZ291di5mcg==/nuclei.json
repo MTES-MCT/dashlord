@@ -1,22 +1,94 @@
 [
   [
     {
-      "template": "dns/caa-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
-      "template-id": "caa-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
+      "template": "dns/nameserver-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
+      "template-id": "nameserver-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
       "info": {
-        "name": "CAA Record",
+        "name": "NS Record Detection",
         "author": [
           "pdteam"
         ],
         "tags": [
           "dns",
-          "caa"
+          "ns"
         ],
-        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
+        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "carbure.beta.gouv.fr.",
+      "matched-at": "carbure.beta.gouv.fr",
+      "extracted-results": [
+        "dns2.alwaysdata.com.",
+        "dns1.alwaysdata.com."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 65404\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t NS\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 65404\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\ncarbure.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\n",
+      "timestamp": "2024-10-27T02:23:21.74853174Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/spf-record-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/spf-record-detect",
+      "template-id": "spf-record-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
+      "info": {
+        "name": "SPF Record - Detection",
+        "author": [
+          "rxerium"
+        ],
+        "tags": [
+          "dns",
+          "spf"
+        ],
+        "description": "An SPF TXT record was detected\n",
         "reference": [
-          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
+          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "dns",
+      "host": "carbure.beta.gouv.fr.",
+      "matched-at": "carbure.beta.gouv.fr",
+      "extracted-results": [
+        "v=spf1 include:spf.sendinblue.com mx ~all\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 34338\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 34338\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tTXT\t\"Sendinblue-code:07db1fc27102305f5a6e93cc26fc4775\"\ncarbure.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.sendinblue.com mx ~all\"\n",
+      "timestamp": "2024-10-27T02:23:22.403253062Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/txt-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
+      "template-id": "txt-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
+      "info": {
+        "name": "DNS TXT Record Detected",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "txt"
+        ],
+        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+        "reference": [
+          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
         ],
         "severity": "info",
         "metadata": {
@@ -32,9 +104,55 @@
       "type": "dns",
       "host": "carbure.beta.gouv.fr.",
       "matched-at": "carbure.beta.gouv.fr",
-      "request": ";; opcode: QUERY, status: NOERROR, id: 2830\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t CAA\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 2830\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1723451739 3600 900 1209600 300\n",
-      "timestamp": "2024-10-20T02:24:00.681361825Z",
+      "extracted-results": [
+        "\"v=spf1 include:spf.sendinblue.com mx ~all\"",
+        "\"Sendinblue-code:07db1fc27102305f5a6e93cc26fc4775\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 34338\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 34338\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tTXT\t\"Sendinblue-code:07db1fc27102305f5a6e93cc26fc4775\"\ncarbure.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.sendinblue.com mx ~all\"\n",
+      "timestamp": "2024-10-27T02:23:22.403363797Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/mx-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/mx-fingerprint",
+      "template-id": "mx-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/mx-fingerprint.yaml",
+      "info": {
+        "name": "MX Record Detection",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "mx"
+        ],
+        "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
+        "reference": [
+          "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
+          "https://mxtoolbox.com/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "carbure.beta.gouv.fr.",
+      "matched-at": "carbure.beta.gouv.fr",
+      "extracted-results": [
+        "20 mx2.alwaysdata.com.",
+        "10 mx1.alwaysdata.com."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 10601\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t MX\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 10601\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\ncarbure.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\n",
+      "timestamp": "2024-10-27T02:23:22.405075272Z",
       "matcher-status": true
     },
     {
@@ -74,100 +192,28 @@
       "extracted-results": [
         "\"v=DMARC1; p=none; sp=none; rua=mailto:dmarc@mailinblue.com!10m; ruf=mailto:dmarc@mailinblue.com!10m; rf=afrf; pct=100; ri=86400\""
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 14658\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.carbure.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 14658\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;_dmarc.carbure.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.carbure.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1; p=none; sp=none; rua=mailto:dmarc@mailinblue.com!10m; ruf=mailto:dmarc@mailinblue.com!10m; rf=afrf; pct=100; ri=86400\"\n",
-      "timestamp": "2024-10-20T02:24:00.681390912Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 47163\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.carbure.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 47163\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;_dmarc.carbure.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.carbure.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1; p=none; sp=none; rua=mailto:dmarc@mailinblue.com!10m; ruf=mailto:dmarc@mailinblue.com!10m; rf=afrf; pct=100; ri=86400\"\n",
+      "timestamp": "2024-10-27T02:23:22.49044632Z",
       "matcher-status": true
     },
     {
-      "template": "dns/nameserver-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
-      "template-id": "nameserver-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
+      "template": "dns/caa-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
+      "template-id": "caa-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
       "info": {
-        "name": "NS Record Detection",
+        "name": "CAA Record",
         "author": [
           "pdteam"
         ],
         "tags": [
           "dns",
-          "ns"
+          "caa"
         ],
-        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "carbure.beta.gouv.fr.",
-      "matched-at": "carbure.beta.gouv.fr",
-      "extracted-results": [
-        "dns1.alwaysdata.com.",
-        "dns2.alwaysdata.com."
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 23664\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t NS\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 23664\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\ncarbure.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\n",
-      "timestamp": "2024-10-20T02:24:00.682781882Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/spf-record-detect.yaml",
-      "template-url": "https://templates.nuclei.sh/public/spf-record-detect",
-      "template-id": "spf-record-detect",
-      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
-      "info": {
-        "name": "SPF Record - Detection",
-        "author": [
-          "rxerium"
-        ],
-        "tags": [
-          "dns",
-          "spf"
-        ],
-        "description": "An SPF TXT record was detected\n",
+        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
         "reference": [
-          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "type": "dns",
-      "host": "carbure.beta.gouv.fr.",
-      "matched-at": "carbure.beta.gouv.fr",
-      "extracted-results": [
-        "v=spf1 include:spf.sendinblue.com mx ~all\""
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 44640\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 44640\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tTXT\t\"Sendinblue-code:07db1fc27102305f5a6e93cc26fc4775\"\ncarbure.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.sendinblue.com mx ~all\"\n",
-      "timestamp": "2024-10-20T02:24:00.7512674Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/txt-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
-      "template-id": "txt-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
-      "info": {
-        "name": "DNS TXT Record Detected",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "txt"
-        ],
-        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
-        "reference": [
-          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
         ],
         "severity": "info",
         "metadata": {
@@ -183,55 +229,9 @@
       "type": "dns",
       "host": "carbure.beta.gouv.fr.",
       "matched-at": "carbure.beta.gouv.fr",
-      "extracted-results": [
-        "\"Sendinblue-code:07db1fc27102305f5a6e93cc26fc4775\"",
-        "\"v=spf1 include:spf.sendinblue.com mx ~all\""
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 44640\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 44640\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tTXT\t\"Sendinblue-code:07db1fc27102305f5a6e93cc26fc4775\"\ncarbure.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.sendinblue.com mx ~all\"\n",
-      "timestamp": "2024-10-20T02:24:00.751339907Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/mx-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/mx-fingerprint",
-      "template-id": "mx-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/mx-fingerprint.yaml",
-      "info": {
-        "name": "MX Record Detection",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "mx"
-        ],
-        "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
-        "reference": [
-          "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
-          "https://mxtoolbox.com/"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "carbure.beta.gouv.fr.",
-      "matched-at": "carbure.beta.gouv.fr",
-      "extracted-results": [
-        "10 mx1.alwaysdata.com.",
-        "20 mx2.alwaysdata.com."
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 29329\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t MX\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 29329\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\ncarbure.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\n",
-      "timestamp": "2024-10-20T02:24:00.752714834Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 51775\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t CAA\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 51775\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;carbure.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\ncarbure.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1723451739 3600 900 1209600 300\n",
+      "timestamp": "2024-10-27T02:23:22.560440997Z",
       "matcher-status": true
     },
     {
@@ -261,9 +261,9 @@
         "GET, HEAD"
       ],
       "request": "OPTIONS / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 405 Method Not Allowed\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nAllow: GET, HEAD\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 20 Oct 2024 02:24:06 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 47cec85e-0e07-4318-8b18-755a1fce95ee\r\n\r\n",
+      "response": "HTTP/1.1 405 Method Not Allowed\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nAllow: GET, HEAD\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 27 Oct 2024 02:23:27 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: eaedc0d1-b569-4ec6-9b68-7b60bcac18b8\r\n\r\n",
       "ip": "148.253.96.193",
-      "timestamp": "2024-10-20T02:24:06.949619277Z",
+      "timestamp": "2024-10-27T02:23:27.663165358Z",
       "curl-command": "curl -X 'OPTIONS' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -304,130 +304,10 @@
       "host": "https://carbure.beta.gouv.fr",
       "matched-at": "https://carbure.beta.gouv.fr/admin/login/?next=/admin/",
       "request": "GET /admin/login/?next=/admin/ HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0, no-cache, no-store, must-revalidate, private\r\nContent-Language: en\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 20 Oct 2024 02:24:41 GMT\r\nExpires: Sun, 20 Oct 2024 02:24:41 GMT\r\nReferrer-Policy: same-origin\r\nSet-Cookie: csrftoken=DYDur6BF6dGjg9LBbptFgJGPnmhQfS4S; expires=Sun, 19 Oct 2025 02:24:41 GMT; Max-Age=31449600; Path=/; SameSite=Strict; Secure\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Cookie, Accept-Language\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 8ce43589-9df4-431a-93aa-cd22b1c156cf\r\n\r\n<!DOCTYPE html>\n\n<html lang=\"en\" dir=\"ltr\">\n<head>\n<title>Log in | Django site admin</title>\n<link rel=\"stylesheet\" href=\"/assets/admin/css/base.9f65b5cd54b3.css\">\n\n  <link rel=\"stylesheet\" href=\"/assets/admin/css/dark_mode.e18e9a052429.css\">\n  <script src=\"/assets/admin/js/theme.ab270f56bb9c.js\" defer></script>\n\n\n  <link rel=\"stylesheet\" href=\"/assets/admin/css/nav_sidebar.dd925738f4cc.css\">\n  <script src=\"/assets/admin/js/nav_sidebar.3b9190d420b1.js\" defer></script>\n\n<link rel=\"stylesheet\" href=\"/assets/admin/css/login.586129c60a93.css\">\n\n\n\n\n\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <link rel=\"stylesheet\" href=\"/assets/admin/css/responsive.eafb93ff084c.css\">\n    \n\n<meta name=\"robots\" content=\"NONE,NOARCHIVE\">\n</head>\n\n<body class=\" login\"\n  data-admin-utc-offset=\"7200\">\n<a href=\"#content-start\" class=\"skip-to-content-link\">Skip to main content</a>\n<!-- Container -->\n<div id=\"container\">\n\n    \n    <!-- Header -->\n    \n      <header id=\"header\">\n        <div id=\"branding\">\n        \n<div id=\"site-name\"><a href=\"/admin/\">Django administration</a></div>\n\n  \n<button class=\"theme-toggle\">\n  <div class=\"visually-hidden theme-label-when-auto\">Toggle theme (current theme: auto)</div>\n  <div class=\"visually-hidden theme-label-when-light\">Toggle theme (current theme: light)</div>\n  <div class=\"visually-hidden theme-label-when-dark\">Toggle theme (current theme: dark)</div>\n  <svg aria-hidden=\"true\" class=\"theme-icon-when-auto\">\n    <use xlink:href=\"#icon-auto\" />\n  </svg>\n  <svg aria-hidden=\"true\" class=\"theme-icon-when-dark\">\n    <use xlink:href=\"#icon-moon\" />\n  </svg>\n  <svg aria-hidden=\"true\" class=\"theme-icon-when-light\">\n    <use xlink:href=\"#icon-sun\" />\n  </svg>\n</button>\n\n\n\n        </div>\n        \n        \n      </header>\n    \n    <!-- END Header -->\n    \n    \n\n    <div class=\"main\" id=\"main\">\n      \n        \n      \n      <main id=\"content-start\" class=\"content\" tabindex=\"-1\">\n        \n          \n        \n        <!-- Content -->\n        <div id=\"content\" class=\"colM\">\n          \n          \n          \n          \n\n\n\n\n<div id=\"content-main\">\n\n\n\n<form action=\"/admin/login/?next=/admin/\" method=\"post\" id=\"login-form\"><input type=\"hidden\" name=\"csrfmiddlewaretoken\" value=\"CHBSGX5LYrhudrXulxKEqJQFjZcU7mQv5v4cXTwgUuNDjqyVmM39wimkwbjAc4Kd\">\n  <div class=\"form-row\">\n    \n    <label for=\"id_username\" class=\"required\">Email address:</label> <input type=\"text\" name=\"username\" autofocus autocapitalize=\"none\" autocomplete=\"username\" maxlength=\"255\" required id=\"id_username\">\n  </div>\n  <div class=\"form-row\">\n    \n    <label for=\"id_password\" class=\"required\">Password:</label> <input type=\"password\" name=\"password\" autocomplete=\"current-password\" required id=\"id_password\">\n    <input type=\"hidden\" name=\"next\" value=\"/admin/\">\n  </div>\n  \n  \n  <div class=\"submit-row\">\n    <input type=\"submit\" value=\"Log in\">\n  </div>\n</form>\n\n</div>\n\n          \n          <br class=\"clear\">\n        </div>\n        <!-- END Content -->\n        <div id=\"footer\"></div>\n      </main>\n    </div>\n</div>\n<!-- END Container -->\n\n<!-- SVGs -->\n<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"base-svgs\">\n  <symbol viewBox=\"0 0 24 24\" width=\"1rem\" height=\"1rem\" id=\"icon-auto\"><path d=\"M0 0h24v24H0z\" fill=\"currentColor\"/><path d=\"M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z\"/></symbol>\n  <symbol viewBox=\"0 0 24 24\" width=\"1rem\" height=\"1rem\" id=\"icon-moon\"><path d=\"M0 0h24v24H0z\" fill=\"currentColor\"/><path d=\"M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z\"/></symbol>\n  <symbol viewBox=\"0 0 24 24\" width=\"1rem\" height=\"1rem\" id=\"icon-sun\"><path d=\"M0 0h24v24H0z\" fill=\"currentColor\"/><path d=\"M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z\"/></symbol>\n</svg>\n<!-- END SVGs -->\n</body>\n</html>\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nCache-Control: max-age=0, no-cache, no-store, must-revalidate, private\r\nContent-Language: en\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 27 Oct 2024 02:24:02 GMT\r\nExpires: Sun, 27 Oct 2024 02:24:02 GMT\r\nReferrer-Policy: same-origin\r\nSet-Cookie: csrftoken=JT3ivJvrwhSN7vrMme54Rahb5KT58qlG; expires=Sun, 26 Oct 2025 02:24:02 GMT; Max-Age=31449600; Path=/; SameSite=Strict; Secure\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Cookie, Accept-Language\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: baf5da05-94f7-429c-8158-1ff665a7dd24\r\n\r\n<!DOCTYPE html>\n\n<html lang=\"en\" dir=\"ltr\">\n<head>\n<title>Log in | Django site admin</title>\n<link rel=\"stylesheet\" href=\"/assets/admin/css/base.9f65b5cd54b3.css\">\n\n  <link rel=\"stylesheet\" href=\"/assets/admin/css/dark_mode.e18e9a052429.css\">\n  <script src=\"/assets/admin/js/theme.ab270f56bb9c.js\" defer></script>\n\n\n  <link rel=\"stylesheet\" href=\"/assets/admin/css/nav_sidebar.dd925738f4cc.css\">\n  <script src=\"/assets/admin/js/nav_sidebar.3b9190d420b1.js\" defer></script>\n\n<link rel=\"stylesheet\" href=\"/assets/admin/css/login.586129c60a93.css\">\n\n\n\n\n\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <link rel=\"stylesheet\" href=\"/assets/admin/css/responsive.eafb93ff084c.css\">\n    \n\n<meta name=\"robots\" content=\"NONE,NOARCHIVE\">\n</head>\n\n<body class=\" login\"\n  data-admin-utc-offset=\"3600\">\n<a href=\"#content-start\" class=\"skip-to-content-link\">Skip to main content</a>\n<!-- Container -->\n<div id=\"container\">\n\n    \n    <!-- Header -->\n    \n      <header id=\"header\">\n        <div id=\"branding\">\n        \n<div id=\"site-name\"><a href=\"/admin/\">Django administration</a></div>\n\n  \n<button class=\"theme-toggle\">\n  <div class=\"visually-hidden theme-label-when-auto\">Toggle theme (current theme: auto)</div>\n  <div class=\"visually-hidden theme-label-when-light\">Toggle theme (current theme: light)</div>\n  <div class=\"visually-hidden theme-label-when-dark\">Toggle theme (current theme: dark)</div>\n  <svg aria-hidden=\"true\" class=\"theme-icon-when-auto\">\n    <use xlink:href=\"#icon-auto\" />\n  </svg>\n  <svg aria-hidden=\"true\" class=\"theme-icon-when-dark\">\n    <use xlink:href=\"#icon-moon\" />\n  </svg>\n  <svg aria-hidden=\"true\" class=\"theme-icon-when-light\">\n    <use xlink:href=\"#icon-sun\" />\n  </svg>\n</button>\n\n\n\n        </div>\n        \n        \n      </header>\n    \n    <!-- END Header -->\n    \n    \n\n    <div class=\"main\" id=\"main\">\n      \n        \n      \n      <main id=\"content-start\" class=\"content\" tabindex=\"-1\">\n        \n          \n        \n        <!-- Content -->\n        <div id=\"content\" class=\"colM\">\n          \n          \n          \n          \n\n\n\n\n<div id=\"content-main\">\n\n\n\n<form action=\"/admin/login/?next=/admin/\" method=\"post\" id=\"login-form\"><input type=\"hidden\" name=\"csrfmiddlewaretoken\" value=\"UXPTpwvfIBgZRMhge23jIPrVGnUW3VEmtGI1K5Qw4IYCO7ySq6YdpPyWBXDR1bPS\">\n  <div class=\"form-row\">\n    \n    <label for=\"id_username\" class=\"required\">Email address:</label> <input type=\"text\" name=\"username\" autofocus autocapitalize=\"none\" autocomplete=\"username\" maxlength=\"255\" required id=\"id_username\">\n  </div>\n  <div class=\"form-row\">\n    \n    <label for=\"id_password\" class=\"required\">Password:</label> <input type=\"password\" name=\"password\" autocomplete=\"current-password\" required id=\"id_password\">\n    <input type=\"hidden\" name=\"next\" value=\"/admin/\">\n  </div>\n  \n  \n  <div class=\"submit-row\">\n    <input type=\"submit\" value=\"Log in\">\n  </div>\n</form>\n\n</div>\n\n          \n          <br class=\"clear\">\n        </div>\n        <!-- END Content -->\n        <div id=\"footer\"></div>\n      </main>\n    </div>\n</div>\n<!-- END Container -->\n\n<!-- SVGs -->\n<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"base-svgs\">\n  <symbol viewBox=\"0 0 24 24\" width=\"1rem\" height=\"1rem\" id=\"icon-auto\"><path d=\"M0 0h24v24H0z\" fill=\"currentColor\"/><path d=\"M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2V4a8 8 0 1 0 0 16z\"/></symbol>\n  <symbol viewBox=\"0 0 24 24\" width=\"1rem\" height=\"1rem\" id=\"icon-moon\"><path d=\"M0 0h24v24H0z\" fill=\"currentColor\"/><path d=\"M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z\"/></symbol>\n  <symbol viewBox=\"0 0 24 24\" width=\"1rem\" height=\"1rem\" id=\"icon-sun\"><path d=\"M0 0h24v24H0z\" fill=\"currentColor\"/><path d=\"M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm0-2a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM11 1h2v3h-2V1zm0 19h2v3h-2v-3zM3.515 4.929l1.414-1.414L7.05 5.636 5.636 7.05 3.515 4.93zM16.95 18.364l1.414-1.414 2.121 2.121-1.414 1.414-2.121-2.121zm2.121-14.85l1.414 1.415-2.121 2.121-1.414-1.414 2.121-2.121zM5.636 16.95l1.414 1.414-2.121 2.121-1.414-1.414 2.121-2.121zM23 11v2h-3v-2h3zM4 11v2H1v-2h3z\"/></symbol>\n</svg>\n<!-- END SVGs -->\n</body>\n</html>\n",
       "ip": "148.253.96.193",
-      "timestamp": "2024-10-20T02:24:41.825083018Z",
+      "timestamp": "2024-10-27T02:24:02.523562518Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr/admin/login/?next=/admin/'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "permissions-policy",
-      "type": "http",
-      "host": "https://carbure.beta.gouv.fr",
-      "matched-at": "https://carbure.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 20 Oct 2024 02:24:49 GMT\r\nEtag: \"67077247-448\"\r\nLast-Modified: Thu, 10 Oct 2024 08:20:55 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 5e737a9d-469e-4ec8-aaf1-6389b3944c4d\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n\n  <head>\n    <link rel=\"apple-touch-icon\" href=\"logo192.png\" />\n    <link rel=\"icon\" href=\"favicon.ico\" />\n    <link rel=\"manifest\" href=\"manifest.json\" />\n    <link rel=\"apple-touch-icon\" href=\"/static/apple-touch-icon.DrfPSIlu.png\" />\n\n    <meta charset=\"utf-8\" />\n    <meta name=\"description\" content=\"Carbure - La plateforme de gestion des flux de biocarburants\" />\n    <meta name=\"theme-color\" content=\"#000000\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta property=\"og:site_name\" content=\"Carbure\">\n    <title>CarbuRe</title>\n    <script type=\"application/ld+json\">\n    {\n      \"name\" : \"Carbure\",\n      \"url\" : \"https://carbure.beta.gouv.fr/\"\n    }\n  </script>\n    <script type=\"module\" crossorigin src=\"/static/index.B9Qc16Sv.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/static/index.BgHW4FR0.css\">\n  </head>\n\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"text/javascript\" src=\"matomo.js\"></script>\n  </body>\n\n</html>",
-      "ip": "148.253.96.193",
-      "timestamp": "2024-10-20T02:24:49.61109324Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "x-permitted-cross-domain-policies",
-      "type": "http",
-      "host": "https://carbure.beta.gouv.fr",
-      "matched-at": "https://carbure.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 20 Oct 2024 02:24:49 GMT\r\nEtag: \"67077247-448\"\r\nLast-Modified: Thu, 10 Oct 2024 08:20:55 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 5e737a9d-469e-4ec8-aaf1-6389b3944c4d\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n\n  <head>\n    <link rel=\"apple-touch-icon\" href=\"logo192.png\" />\n    <link rel=\"icon\" href=\"favicon.ico\" />\n    <link rel=\"manifest\" href=\"manifest.json\" />\n    <link rel=\"apple-touch-icon\" href=\"/static/apple-touch-icon.DrfPSIlu.png\" />\n\n    <meta charset=\"utf-8\" />\n    <meta name=\"description\" content=\"Carbure - La plateforme de gestion des flux de biocarburants\" />\n    <meta name=\"theme-color\" content=\"#000000\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta property=\"og:site_name\" content=\"Carbure\">\n    <title>CarbuRe</title>\n    <script type=\"application/ld+json\">\n    {\n      \"name\" : \"Carbure\",\n      \"url\" : \"https://carbure.beta.gouv.fr/\"\n    }\n  </script>\n    <script type=\"module\" crossorigin src=\"/static/index.B9Qc16Sv.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/static/index.BgHW4FR0.css\">\n  </head>\n\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"text/javascript\" src=\"matomo.js\"></script>\n  </body>\n\n</html>",
-      "ip": "148.253.96.193",
-      "timestamp": "2024-10-20T02:24:49.611134908Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "clear-site-data",
-      "type": "http",
-      "host": "https://carbure.beta.gouv.fr",
-      "matched-at": "https://carbure.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 20 Oct 2024 02:24:49 GMT\r\nEtag: \"67077247-448\"\r\nLast-Modified: Thu, 10 Oct 2024 08:20:55 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 5e737a9d-469e-4ec8-aaf1-6389b3944c4d\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n\n  <head>\n    <link rel=\"apple-touch-icon\" href=\"logo192.png\" />\n    <link rel=\"icon\" href=\"favicon.ico\" />\n    <link rel=\"manifest\" href=\"manifest.json\" />\n    <link rel=\"apple-touch-icon\" href=\"/static/apple-touch-icon.DrfPSIlu.png\" />\n\n    <meta charset=\"utf-8\" />\n    <meta name=\"description\" content=\"Carbure - La plateforme de gestion des flux de biocarburants\" />\n    <meta name=\"theme-color\" content=\"#000000\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta property=\"og:site_name\" content=\"Carbure\">\n    <title>CarbuRe</title>\n    <script type=\"application/ld+json\">\n    {\n      \"name\" : \"Carbure\",\n      \"url\" : \"https://carbure.beta.gouv.fr/\"\n    }\n  </script>\n    <script type=\"module\" crossorigin src=\"/static/index.B9Qc16Sv.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/static/index.BgHW4FR0.css\">\n  </head>\n\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"text/javascript\" src=\"matomo.js\"></script>\n  </body>\n\n</html>",
-      "ip": "148.253.96.193",
-      "timestamp": "2024-10-20T02:24:49.611157511Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
       "matcher-status": true
     },
     {
@@ -464,9 +344,9 @@
       "host": "https://carbure.beta.gouv.fr",
       "matched-at": "https://carbure.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 20 Oct 2024 02:24:49 GMT\r\nEtag: \"67077247-448\"\r\nLast-Modified: Thu, 10 Oct 2024 08:20:55 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 5e737a9d-469e-4ec8-aaf1-6389b3944c4d\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n\n  <head>\n    <link rel=\"apple-touch-icon\" href=\"logo192.png\" />\n    <link rel=\"icon\" href=\"favicon.ico\" />\n    <link rel=\"manifest\" href=\"manifest.json\" />\n    <link rel=\"apple-touch-icon\" href=\"/static/apple-touch-icon.DrfPSIlu.png\" />\n\n    <meta charset=\"utf-8\" />\n    <meta name=\"description\" content=\"Carbure - La plateforme de gestion des flux de biocarburants\" />\n    <meta name=\"theme-color\" content=\"#000000\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta property=\"og:site_name\" content=\"Carbure\">\n    <title>CarbuRe</title>\n    <script type=\"application/ld+json\">\n    {\n      \"name\" : \"Carbure\",\n      \"url\" : \"https://carbure.beta.gouv.fr/\"\n    }\n  </script>\n    <script type=\"module\" crossorigin src=\"/static/index.B9Qc16Sv.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/static/index.BgHW4FR0.css\">\n  </head>\n\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"text/javascript\" src=\"matomo.js\"></script>\n  </body>\n\n</html>",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 27 Oct 2024 02:24:10 GMT\r\nEtag: \"6717a529-448\"\r\nLast-Modified: Tue, 22 Oct 2024 15:14:17 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 036ab09f-493c-4b7c-b40d-7a9fddfc40d5\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n\n  <head>\n    <link rel=\"apple-touch-icon\" href=\"logo192.png\" />\n    <link rel=\"icon\" href=\"favicon.ico\" />\n    <link rel=\"manifest\" href=\"manifest.json\" />\n    <link rel=\"apple-touch-icon\" href=\"/static/apple-touch-icon.DrfPSIlu.png\" />\n\n    <meta charset=\"utf-8\" />\n    <meta name=\"description\" content=\"Carbure - La plateforme de gestion des flux de biocarburants\" />\n    <meta name=\"theme-color\" content=\"#000000\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta property=\"og:site_name\" content=\"Carbure\">\n    <title>CarbuRe</title>\n    <script type=\"application/ld+json\">\n    {\n      \"name\" : \"Carbure\",\n      \"url\" : \"https://carbure.beta.gouv.fr/\"\n    }\n  </script>\n    <script type=\"module\" crossorigin src=\"/static/index.B-xtJEs5.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/static/index.BgHW4FR0.css\">\n  </head>\n\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"text/javascript\" src=\"matomo.js\"></script>\n  </body>\n\n</html>",
       "ip": "148.253.96.193",
-      "timestamp": "2024-10-20T02:24:49.611176466Z",
+      "timestamp": "2024-10-27T02:24:10.294983213Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -504,9 +384,129 @@
       "host": "https://carbure.beta.gouv.fr",
       "matched-at": "https://carbure.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 20 Oct 2024 02:24:49 GMT\r\nEtag: \"67077247-448\"\r\nLast-Modified: Thu, 10 Oct 2024 08:20:55 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 5e737a9d-469e-4ec8-aaf1-6389b3944c4d\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n\n  <head>\n    <link rel=\"apple-touch-icon\" href=\"logo192.png\" />\n    <link rel=\"icon\" href=\"favicon.ico\" />\n    <link rel=\"manifest\" href=\"manifest.json\" />\n    <link rel=\"apple-touch-icon\" href=\"/static/apple-touch-icon.DrfPSIlu.png\" />\n\n    <meta charset=\"utf-8\" />\n    <meta name=\"description\" content=\"Carbure - La plateforme de gestion des flux de biocarburants\" />\n    <meta name=\"theme-color\" content=\"#000000\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta property=\"og:site_name\" content=\"Carbure\">\n    <title>CarbuRe</title>\n    <script type=\"application/ld+json\">\n    {\n      \"name\" : \"Carbure\",\n      \"url\" : \"https://carbure.beta.gouv.fr/\"\n    }\n  </script>\n    <script type=\"module\" crossorigin src=\"/static/index.B9Qc16Sv.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/static/index.BgHW4FR0.css\">\n  </head>\n\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"text/javascript\" src=\"matomo.js\"></script>\n  </body>\n\n</html>",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 27 Oct 2024 02:24:10 GMT\r\nEtag: \"6717a529-448\"\r\nLast-Modified: Tue, 22 Oct 2024 15:14:17 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 036ab09f-493c-4b7c-b40d-7a9fddfc40d5\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n\n  <head>\n    <link rel=\"apple-touch-icon\" href=\"logo192.png\" />\n    <link rel=\"icon\" href=\"favicon.ico\" />\n    <link rel=\"manifest\" href=\"manifest.json\" />\n    <link rel=\"apple-touch-icon\" href=\"/static/apple-touch-icon.DrfPSIlu.png\" />\n\n    <meta charset=\"utf-8\" />\n    <meta name=\"description\" content=\"Carbure - La plateforme de gestion des flux de biocarburants\" />\n    <meta name=\"theme-color\" content=\"#000000\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta property=\"og:site_name\" content=\"Carbure\">\n    <title>CarbuRe</title>\n    <script type=\"application/ld+json\">\n    {\n      \"name\" : \"Carbure\",\n      \"url\" : \"https://carbure.beta.gouv.fr/\"\n    }\n  </script>\n    <script type=\"module\" crossorigin src=\"/static/index.B-xtJEs5.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/static/index.BgHW4FR0.css\">\n  </head>\n\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"text/javascript\" src=\"matomo.js\"></script>\n  </body>\n\n</html>",
       "ip": "148.253.96.193",
-      "timestamp": "2024-10-20T02:24:49.611195472Z",
+      "timestamp": "2024-10-27T02:24:10.295028427Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "permissions-policy",
+      "type": "http",
+      "host": "https://carbure.beta.gouv.fr",
+      "matched-at": "https://carbure.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 27 Oct 2024 02:24:10 GMT\r\nEtag: \"6717a529-448\"\r\nLast-Modified: Tue, 22 Oct 2024 15:14:17 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 036ab09f-493c-4b7c-b40d-7a9fddfc40d5\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n\n  <head>\n    <link rel=\"apple-touch-icon\" href=\"logo192.png\" />\n    <link rel=\"icon\" href=\"favicon.ico\" />\n    <link rel=\"manifest\" href=\"manifest.json\" />\n    <link rel=\"apple-touch-icon\" href=\"/static/apple-touch-icon.DrfPSIlu.png\" />\n\n    <meta charset=\"utf-8\" />\n    <meta name=\"description\" content=\"Carbure - La plateforme de gestion des flux de biocarburants\" />\n    <meta name=\"theme-color\" content=\"#000000\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta property=\"og:site_name\" content=\"Carbure\">\n    <title>CarbuRe</title>\n    <script type=\"application/ld+json\">\n    {\n      \"name\" : \"Carbure\",\n      \"url\" : \"https://carbure.beta.gouv.fr/\"\n    }\n  </script>\n    <script type=\"module\" crossorigin src=\"/static/index.B-xtJEs5.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/static/index.BgHW4FR0.css\">\n  </head>\n\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"text/javascript\" src=\"matomo.js\"></script>\n  </body>\n\n</html>",
+      "ip": "148.253.96.193",
+      "timestamp": "2024-10-27T02:24:10.295039237Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "x-permitted-cross-domain-policies",
+      "type": "http",
+      "host": "https://carbure.beta.gouv.fr",
+      "matched-at": "https://carbure.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 27 Oct 2024 02:24:10 GMT\r\nEtag: \"6717a529-448\"\r\nLast-Modified: Tue, 22 Oct 2024 15:14:17 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 036ab09f-493c-4b7c-b40d-7a9fddfc40d5\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n\n  <head>\n    <link rel=\"apple-touch-icon\" href=\"logo192.png\" />\n    <link rel=\"icon\" href=\"favicon.ico\" />\n    <link rel=\"manifest\" href=\"manifest.json\" />\n    <link rel=\"apple-touch-icon\" href=\"/static/apple-touch-icon.DrfPSIlu.png\" />\n\n    <meta charset=\"utf-8\" />\n    <meta name=\"description\" content=\"Carbure - La plateforme de gestion des flux de biocarburants\" />\n    <meta name=\"theme-color\" content=\"#000000\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta property=\"og:site_name\" content=\"Carbure\">\n    <title>CarbuRe</title>\n    <script type=\"application/ld+json\">\n    {\n      \"name\" : \"Carbure\",\n      \"url\" : \"https://carbure.beta.gouv.fr/\"\n    }\n  </script>\n    <script type=\"module\" crossorigin src=\"/static/index.B-xtJEs5.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/static/index.BgHW4FR0.css\">\n  </head>\n\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"text/javascript\" src=\"matomo.js\"></script>\n  </body>\n\n</html>",
+      "ip": "148.253.96.193",
+      "timestamp": "2024-10-27T02:24:10.295055908Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "clear-site-data",
+      "type": "http",
+      "host": "https://carbure.beta.gouv.fr",
+      "matched-at": "https://carbure.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nContent-Type: text/html; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 27 Oct 2024 02:24:10 GMT\r\nEtag: \"6717a529-448\"\r\nLast-Modified: Tue, 22 Oct 2024 15:14:17 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 036ab09f-493c-4b7c-b40d-7a9fddfc40d5\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n\n  <head>\n    <link rel=\"apple-touch-icon\" href=\"logo192.png\" />\n    <link rel=\"icon\" href=\"favicon.ico\" />\n    <link rel=\"manifest\" href=\"manifest.json\" />\n    <link rel=\"apple-touch-icon\" href=\"/static/apple-touch-icon.DrfPSIlu.png\" />\n\n    <meta charset=\"utf-8\" />\n    <meta name=\"description\" content=\"Carbure - La plateforme de gestion des flux de biocarburants\" />\n    <meta name=\"theme-color\" content=\"#000000\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta property=\"og:site_name\" content=\"Carbure\">\n    <title>CarbuRe</title>\n    <script type=\"application/ld+json\">\n    {\n      \"name\" : \"Carbure\",\n      \"url\" : \"https://carbure.beta.gouv.fr/\"\n    }\n  </script>\n    <script type=\"module\" crossorigin src=\"/static/index.B-xtJEs5.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/static/index.BgHW4FR0.css\">\n  </head>\n\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"text/javascript\" src=\"matomo.js\"></script>\n  </body>\n\n</html>",
+      "ip": "148.253.96.193",
+      "timestamp": "2024-10-27T02:24:10.295070825Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -535,9 +535,9 @@
       "host": "https://carbure.beta.gouv.fr",
       "matched-at": "https://carbure.beta.gouv.fr/robots.txt",
       "request": "GET /robots.txt HTTP/1.1\r\nHost: carbure.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 67\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nContent-Type: text/plain; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 20 Oct 2024 02:25:02 GMT\r\nEtag: \"67077247-43\"\r\nLast-Modified: Thu, 10 Oct 2024 08:20:55 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 1995ce76-10d6-4a39-8f40-093807da6980\r\n\r\n# https://www.robotstxt.org/robotstxt.html\nUser-agent: *\nDisallow:\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: 67\r\nCache-Control: max-age=60, public\r\nContent-Security-Policy: default-src 'self' stats.beta.gouv.fr metabase.carbure.beta.gouv.fr www.data.gouv.fr https://*.tile.openstreetmap.org/\r\nContent-Type: text/plain; charset=\"utf-8\"\r\nCross-Origin-Opener-Policy: same-origin\r\nDate: Sun, 27 Oct 2024 02:24:20 GMT\r\nEtag: \"6717a529-43\"\r\nLast-Modified: Tue, 22 Oct 2024 15:14:17 GMT\r\nReferrer-Policy: same-origin\r\nStrict-Transport-Security: max-age=31536000\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Request-Id: 378f6ee2-5578-46b2-9c88-02fc732f96b4\r\n\r\n# https://www.robotstxt.org/robotstxt.html\nUser-agent: *\nDisallow:\n",
       "ip": "148.253.96.193",
-      "timestamp": "2024-10-20T02:25:02.816811471Z",
+      "timestamp": "2024-10-27T02:24:20.812395824Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://carbure.beta.gouv.fr/robots.txt'",
       "matcher-status": true
     },
@@ -568,7 +568,7 @@
         "Let's Encrypt"
       ],
       "ip": "148.253.96.193",
-      "timestamp": "2024-10-20T02:30:48.053421561Z",
+      "timestamp": "2024-10-27T02:30:15.940452325Z",
       "matcher-status": true
     },
     {
@@ -598,7 +598,7 @@
         "carbure.beta.gouv.fr"
       ],
       "ip": "148.253.96.193",
-      "timestamp": "2024-10-20T02:30:48.053522831Z",
+      "timestamp": "2024-10-27T02:30:15.940551308Z",
       "matcher-status": true
     },
     {
@@ -629,7 +629,7 @@
         "tls12"
       ],
       "ip": "148.253.96.193",
-      "timestamp": "2024-10-20T02:30:51.097174977Z",
+      "timestamp": "2024-10-27T02:30:17.337998696Z",
       "matcher-status": true
     },
     {
@@ -660,7 +660,7 @@
         "tls13"
       ],
       "ip": "148.253.96.193",
-      "timestamp": "2024-10-20T02:30:51.275059657Z",
+      "timestamp": "2024-10-27T02:30:17.514421541Z",
       "matcher-status": true
     }
   ]
