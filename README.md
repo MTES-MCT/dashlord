@@ -6,7 +6,7 @@ Tableau de bord des bonnes pratiques techniques de la fabrique numérique du MTE
 
 ### Ajouter une URL dans le dashlord
 
-Vous devez éditer le fichier [./dashlord.yml](./dashlord.yaml) et ajouter une entrée pour votre URL.
+Vous devez éditer le fichier [./dashlord.yml](./dashlord.yml) et ajouter une entrée pour votre URL.
 
 💡 Bonne pratique : enlever les slashs à la fin des urls
 
