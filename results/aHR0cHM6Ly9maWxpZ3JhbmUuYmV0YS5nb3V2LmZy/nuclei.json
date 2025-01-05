@@ -1,65 +1,20 @@
 [
   [
     {
-      "template": "dns/dmarc-detect.yaml",
-      "template-url": "https://templates.nuclei.sh/public/dmarc-detect",
-      "template-id": "dmarc-detect",
-      "template-path": "/home/runner/nuclei-templates/dns/dmarc-detect.yaml",
+      "template": "dns/nameserver-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
+      "template-id": "nameserver-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
       "info": {
-        "name": "DNS DMARC - Detect",
-        "author": [
-          "juliosmelo"
-        ],
-        "tags": [
-          "dns",
-          "dmarc"
-        ],
-        "description": "DNS DMARC information was detected.\n",
-        "reference": [
-          "https://dmarc.org/",
-          "https://dmarc.org/wiki/faq#why_is_dmarc_important.3f"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ],
-          "cvss-metrics": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
-        }
-      },
-      "type": "dns",
-      "host": "filigrane.beta.gouv.fr.",
-      "matched-at": "_dmarc.filigrane.beta.gouv.fr",
-      "extracted-results": [
-        "\"v=DMARC1; p=quarantine; rua=mailto:dmarc@filigrane.beta.gouv.fr!10m; ruf=mailto:dmarc@filigrane.beta.gouv.fr!10m; rf=afrf; pct=100; ri=86400\""
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 34382\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.filigrane.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 34382\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;_dmarc.filigrane.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.filigrane.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1; p=quarantine; rua=mailto:dmarc@filigrane.beta.gouv.fr!10m; ruf=mailto:dmarc@filigrane.beta.gouv.fr!10m; rf=afrf; pct=100; ri=86400\"\n",
-      "timestamp": "2024-12-22T04:51:46.723587423Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/caa-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
-      "template-id": "caa-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
-      "info": {
-        "name": "CAA Record",
+        "name": "NS Record Detection",
         "author": [
           "pdteam"
         ],
         "tags": [
           "dns",
-          "caa"
+          "ns"
         ],
-        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
-        "reference": [
-          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
-        ],
+        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
         "severity": "info",
         "metadata": {
           "max-request": 1
@@ -74,9 +29,13 @@
       "type": "dns",
       "host": "filigrane.beta.gouv.fr.",
       "matched-at": "filigrane.beta.gouv.fr",
-      "request": ";; opcode: QUERY, status: NOERROR, id: 40411\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t CAA\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 40411\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\nfiligrane.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1723451768 3600 900 1209600 300\n",
-      "timestamp": "2024-12-22T04:51:46.724886733Z",
+      "extracted-results": [
+        "dns2.alwaysdata.com.",
+        "dns1.alwaysdata.com."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 42858\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t NS\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 42858\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nfiligrane.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\nfiligrane.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\n",
+      "timestamp": "2025-01-05T04:49:06.396794646Z",
       "matcher-status": true
     },
     {
@@ -108,9 +67,9 @@
       "extracted-results": [
         "v=spf1 mx include:_spf.alwaysdata.com include:helpscoutemail.com ~all\""
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 13424\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 13424\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nfiligrane.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=iQX_r6ZSWsiR2oL04_MLF9cnlOT4IepZkfjCpvbnuA4\"\nfiligrane.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 mx include:_spf.alwaysdata.com include:helpscoutemail.com ~all\"\n",
-      "timestamp": "2024-12-22T04:51:46.811183366Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 1581\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 1581\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nfiligrane.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 mx include:_spf.alwaysdata.com include:helpscoutemail.com ~all\"\nfiligrane.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=iQX_r6ZSWsiR2oL04_MLF9cnlOT4IepZkfjCpvbnuA4\"\n",
+      "timestamp": "2025-01-05T04:49:07.228186378Z",
       "matcher-status": true
     },
     {
@@ -146,50 +105,12 @@
       "host": "filigrane.beta.gouv.fr.",
       "matched-at": "filigrane.beta.gouv.fr",
       "extracted-results": [
-        "\"google-site-verification=iQX_r6ZSWsiR2oL04_MLF9cnlOT4IepZkfjCpvbnuA4\"",
-        "\"v=spf1 mx include:_spf.alwaysdata.com include:helpscoutemail.com ~all\""
+        "\"v=spf1 mx include:_spf.alwaysdata.com include:helpscoutemail.com ~all\"",
+        "\"google-site-verification=iQX_r6ZSWsiR2oL04_MLF9cnlOT4IepZkfjCpvbnuA4\""
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 13424\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 13424\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nfiligrane.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=iQX_r6ZSWsiR2oL04_MLF9cnlOT4IepZkfjCpvbnuA4\"\nfiligrane.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 mx include:_spf.alwaysdata.com include:helpscoutemail.com ~all\"\n",
-      "timestamp": "2024-12-22T04:51:46.811257003Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/nameserver-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
-      "template-id": "nameserver-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
-      "info": {
-        "name": "NS Record Detection",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "ns"
-        ],
-        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "filigrane.beta.gouv.fr.",
-      "matched-at": "filigrane.beta.gouv.fr",
-      "extracted-results": [
-        "dns1.alwaysdata.com.",
-        "dns2.alwaysdata.com."
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 34071\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t NS\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 34071\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nfiligrane.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\nfiligrane.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\n",
-      "timestamp": "2024-12-22T04:51:46.879087719Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 1581\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 1581\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nfiligrane.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 mx include:_spf.alwaysdata.com include:helpscoutemail.com ~all\"\nfiligrane.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=iQX_r6ZSWsiR2oL04_MLF9cnlOT4IepZkfjCpvbnuA4\"\n",
+      "timestamp": "2025-01-05T04:49:07.228769317Z",
       "matcher-status": true
     },
     {
@@ -226,12 +147,131 @@
       "host": "filigrane.beta.gouv.fr.",
       "matched-at": "filigrane.beta.gouv.fr",
       "extracted-results": [
-        "20 mx2.alwaysdata.com.",
-        "10 mx1.alwaysdata.com."
+        "10 mx1.alwaysdata.com.",
+        "20 mx2.alwaysdata.com."
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 3926\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t MX\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 3926\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\nfiligrane.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\nfiligrane.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\n",
-      "timestamp": "2024-12-22T04:51:46.899733808Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 12213\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t MX\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 12213\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\nfiligrane.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\nfiligrane.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\n",
+      "timestamp": "2025-01-05T04:49:07.309577759Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/caa-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
+      "template-id": "caa-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
+      "info": {
+        "name": "CAA Record",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "caa"
+        ],
+        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
+        "reference": [
+          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "filigrane.beta.gouv.fr.",
+      "matched-at": "filigrane.beta.gouv.fr",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 64017\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t CAA\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 64017\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;filigrane.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\nfiligrane.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1723451768 3600 900 1209600 300\n",
+      "timestamp": "2025-01-05T04:49:07.495534765Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/dmarc-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/dmarc-detect",
+      "template-id": "dmarc-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/dmarc-detect.yaml",
+      "info": {
+        "name": "DNS DMARC - Detect",
+        "author": [
+          "juliosmelo"
+        ],
+        "tags": [
+          "dns",
+          "dmarc"
+        ],
+        "description": "DNS DMARC information was detected.\n",
+        "reference": [
+          "https://dmarc.org/",
+          "https://dmarc.org/wiki/faq#why_is_dmarc_important.3f"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ],
+          "cvss-metrics": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+        }
+      },
+      "type": "dns",
+      "host": "filigrane.beta.gouv.fr.",
+      "matched-at": "_dmarc.filigrane.beta.gouv.fr",
+      "extracted-results": [
+        "\"v=DMARC1; p=quarantine; rua=mailto:dmarc@filigrane.beta.gouv.fr!10m; ruf=mailto:dmarc@filigrane.beta.gouv.fr!10m; rf=afrf; pct=100; ri=86400\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 9944\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.filigrane.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 9944\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;_dmarc.filigrane.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.filigrane.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1; p=quarantine; rua=mailto:dmarc@filigrane.beta.gouv.fr!10m; ruf=mailto:dmarc@filigrane.beta.gouv.fr!10m; rf=afrf; pct=100; ri=86400\"\n",
+      "timestamp": "2025-01-05T04:49:07.508562884Z",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "permissions-policy",
+      "type": "http",
+      "host": "https://filigrane.beta.gouv.fr",
+      "matched-at": "https://filigrane.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: filigrane.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 05 Jan 2025 04:49:56 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: a8723090-202d-44cb-8962-05037bf951e2\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
+      "ip": "185.21.194.105",
+      "timestamp": "2025-01-05T04:49:56.60558565Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://filigrane.beta.gouv.fr'",
       "matcher-status": true
     },
     {
@@ -268,9 +308,9 @@
       "host": "https://filigrane.beta.gouv.fr",
       "matched-at": "https://filigrane.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: filigrane.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 Dec 2024 04:52:35 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: 079ba300-8ab8-4a51-b9f4-20da214d6e34\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
-      "ip": "80.247.12.255",
-      "timestamp": "2024-12-22T04:52:35.402207094Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 05 Jan 2025 04:49:56 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: a8723090-202d-44cb-8962-05037bf951e2\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
+      "ip": "185.21.194.105",
+      "timestamp": "2025-01-05T04:49:56.605654289Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://filigrane.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -308,9 +348,9 @@
       "host": "https://filigrane.beta.gouv.fr",
       "matched-at": "https://filigrane.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: filigrane.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 Dec 2024 04:52:35 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: 079ba300-8ab8-4a51-b9f4-20da214d6e34\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
-      "ip": "80.247.12.255",
-      "timestamp": "2024-12-22T04:52:35.402252859Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 05 Jan 2025 04:49:56 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: a8723090-202d-44cb-8962-05037bf951e2\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
+      "ip": "185.21.194.105",
+      "timestamp": "2025-01-05T04:49:56.6056759Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://filigrane.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -348,9 +388,9 @@
       "host": "https://filigrane.beta.gouv.fr",
       "matched-at": "https://filigrane.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: filigrane.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 Dec 2024 04:52:35 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: 079ba300-8ab8-4a51-b9f4-20da214d6e34\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
-      "ip": "80.247.12.255",
-      "timestamp": "2024-12-22T04:52:35.402269811Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 05 Jan 2025 04:49:56 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: a8723090-202d-44cb-8962-05037bf951e2\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
+      "ip": "185.21.194.105",
+      "timestamp": "2025-01-05T04:49:56.605693473Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://filigrane.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -388,9 +428,9 @@
       "host": "https://filigrane.beta.gouv.fr",
       "matched-at": "https://filigrane.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: filigrane.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 Dec 2024 04:52:35 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: 079ba300-8ab8-4a51-b9f4-20da214d6e34\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
-      "ip": "80.247.12.255",
-      "timestamp": "2024-12-22T04:52:35.402288906Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 05 Jan 2025 04:49:56 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: a8723090-202d-44cb-8962-05037bf951e2\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
+      "ip": "185.21.194.105",
+      "timestamp": "2025-01-05T04:49:56.605711768Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://filigrane.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -428,9 +468,9 @@
       "host": "https://filigrane.beta.gouv.fr",
       "matched-at": "https://filigrane.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: filigrane.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 Dec 2024 04:52:35 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: 079ba300-8ab8-4a51-b9f4-20da214d6e34\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
-      "ip": "80.247.12.255",
-      "timestamp": "2024-12-22T04:52:35.402304666Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 05 Jan 2025 04:49:56 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: a8723090-202d-44cb-8962-05037bf951e2\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
+      "ip": "185.21.194.105",
+      "timestamp": "2025-01-05T04:49:56.605727747Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://filigrane.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -468,49 +508,9 @@
       "host": "https://filigrane.beta.gouv.fr",
       "matched-at": "https://filigrane.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: filigrane.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 Dec 2024 04:52:35 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: 079ba300-8ab8-4a51-b9f4-20da214d6e34\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
-      "ip": "80.247.12.255",
-      "timestamp": "2024-12-22T04:52:35.402463632Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://filigrane.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "permissions-policy",
-      "type": "http",
-      "host": "https://filigrane.beta.gouv.fr",
-      "matched-at": "https://filigrane.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: filigrane.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 Dec 2024 04:52:35 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: 079ba300-8ab8-4a51-b9f4-20da214d6e34\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
-      "ip": "80.247.12.255",
-      "timestamp": "2024-12-22T04:52:35.402479892Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nTransfer-Encoding: chunked\r\nContent-Security-Policy: default-src 'none'; script-src 'self' *.filigrane.beta.gouv.fr 'unsafe-inline' 'unsafe-eval' stats.beta.gouv.fr blob:; style-src 'self' 'unsafe-inline'; img-src 'self' stats.beta.gouv.fr data:; font-src 'self' data:; object-src 'none'; connect-src https://sentry.incubateur.net stats.beta.gouv.fr *.filigrane.beta.gouv.fr blob:; frame-src *.dossierfacile.fr; manifest-src https://filigrane.beta.gouv.fr; child-src *.dossierfacile.fr 'self'\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 05 Jan 2025 04:49:56 GMT\r\nEtag: W/\"6762d82b-2ec\"\r\nLast-Modified: Wed, 18 Dec 2024 14:11:55 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: deny\r\nX-Request-Id: a8723090-202d-44cb-8962-05037bf951e2\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon.png\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <script nomodule type=\"text/javascript\">\n      import(\"/assets/dsfr.nomodule.min-BJEnSs5M.js\");\n    </script>\n    <title>Filigrane Facile</title>\n    <meta name=\"theme-color\" content=\"#000091\">\n    <script type=\"module\" crossorigin src=\"/assets/index-CvzDpEpq.js\"></script>\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-Bs04Gkv6.css\">\n  <link rel=\"manifest\" href=\"/manifest.webmanifest\"><script id=\"vite-plugin-pwa:register-sw\" src=\"/registerSW.js\"></script></head>\n  <body>\n    <div id=\"app\"></div>\n  </body>\n</html>\n",
+      "ip": "185.21.194.105",
+      "timestamp": "2025-01-05T04:49:56.605744739Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://filigrane.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -550,9 +550,9 @@
       "host": "https://filigrane.beta.gouv.fr",
       "matched-at": "https://filigrane.beta.gouv.fr/",
       "request": "POST / HTTP/1.1\r\nHost: filigrane.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
-      "response": "HTTP/1.1 405 Not Allowed\r\nConnection: close\r\nContent-Length: 150\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 22 Dec 2024 04:52:59 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Request-Id: b43791b1-d078-4e49-940e-f6863a211911\r\n\r\n<html>\r\n<head><title>405 Not Allowed</title></head>\r\n<body>\r\n<center><h1>405 Not Allowed</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
-      "ip": "80.247.12.255",
-      "timestamp": "2024-12-22T04:52:59.659632706Z",
+      "response": "HTTP/1.1 405 Not Allowed\r\nConnection: close\r\nContent-Length: 150\r\nContent-Type: text/html; charset=utf-8\r\nDate: Sun, 05 Jan 2025 04:50:21 GMT\r\nStrict-Transport-Security: max-age=31536000\r\nX-Request-Id: 9ba000dd-8a53-47b0-a8ff-ea3870dac183\r\n\r\n<html>\r\n<head><title>405 Not Allowed</title></head>\r\n<body>\r\n<center><h1>405 Not Allowed</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
+      "ip": "185.21.194.105",
+      "timestamp": "2025-01-05T04:50:21.511739068Z",
       "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: filigrane.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://filigrane.beta.gouv.fr/'",
       "matcher-status": true
     },
@@ -582,8 +582,8 @@
       "extracted-results": [
         "Let's Encrypt"
       ],
-      "ip": "80.247.12.255",
-      "timestamp": "2024-12-22T04:58:40.988870465Z",
+      "ip": "185.21.194.105",
+      "timestamp": "2025-01-05T04:55:53.665413619Z",
       "matcher-status": true
     },
     {
@@ -612,8 +612,8 @@
       "extracted-results": [
         "filigrane.beta.gouv.fr"
       ],
-      "ip": "80.247.12.255",
-      "timestamp": "2024-12-22T04:58:40.988995077Z",
+      "ip": "185.21.194.105",
+      "timestamp": "2025-01-05T04:55:53.665574251Z",
       "matcher-status": true
     },
     {
@@ -643,8 +643,8 @@
       "extracted-results": [
         "tls12"
       ],
-      "ip": "80.247.12.255",
-      "timestamp": "2024-12-22T04:58:42.457691891Z",
+      "ip": "185.21.194.105",
+      "timestamp": "2025-01-05T04:55:57.860834683Z",
       "matcher-status": true
     },
     {
@@ -674,8 +674,8 @@
       "extracted-results": [
         "tls13"
       ],
-      "ip": "80.247.12.255",
-      "timestamp": "2024-12-22T04:58:42.652058588Z",
+      "ip": "185.21.194.105",
+      "timestamp": "2025-01-05T04:55:58.052350601Z",
       "matcher-status": true
     }
   ]
