@@ -1,94 +1,20 @@
 [
   [
     {
-      "template": "dns/spf-record-detect.yaml",
-      "template-url": "https://templates.nuclei.sh/public/spf-record-detect",
-      "template-id": "spf-record-detect",
-      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
+      "template": "dns/nameserver-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
+      "template-id": "nameserver-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
       "info": {
-        "name": "SPF Record - Detection",
-        "author": [
-          "rxerium"
-        ],
-        "tags": [
-          "dns",
-          "spf"
-        ],
-        "description": "An SPF TXT record was detected\n",
-        "reference": [
-          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "type": "dns",
-      "host": "docurba.incubateur.net.",
-      "matched-at": "docurba.incubateur.net",
-      "extracted-results": [
-        "v=spf1 include:_spf.alwaysdata.com ~all\""
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 60539\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 60539\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com ~all\"\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"google-site-verification=4K6tD3XkDDfbiCAtmNfS1CjOz11Q6csnxj02q-rwI_E\"\n",
-      "timestamp": "2025-01-05T03:37:50.50544695Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/caa-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
-      "template-id": "caa-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
-      "info": {
-        "name": "CAA Record",
+        "name": "NS Record Detection",
         "author": [
           "pdteam"
         ],
         "tags": [
           "dns",
-          "caa"
+          "ns"
         ],
-        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
-        "reference": [
-          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "docurba.incubateur.net.",
-      "matched-at": "docurba.incubateur.net",
-      "request": ";; opcode: QUERY, status: NOERROR, id: 36257\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t CAA\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 36257\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t CAA\n\n;; AUTHORITY SECTION:\ndocurba.incubateur.net.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1735138645 3600 900 1209600 300\n",
-      "timestamp": "2025-01-05T03:37:50.50554089Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/txt-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
-      "template-id": "txt-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
-      "info": {
-        "name": "DNS TXT Record Detected",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "txt"
-        ],
-        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
-        "reference": [
-          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
-        ],
+        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
         "severity": "info",
         "metadata": {
           "max-request": 1
@@ -104,54 +30,12 @@
       "host": "docurba.incubateur.net.",
       "matched-at": "docurba.incubateur.net",
       "extracted-results": [
-        "\"v=spf1 include:_spf.alwaysdata.com ~all\"",
-        "\"google-site-verification=4K6tD3XkDDfbiCAtmNfS1CjOz11Q6csnxj02q-rwI_E\""
+        "dns2.alwaysdata.com.",
+        "dns1.alwaysdata.com."
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 60539\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 60539\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com ~all\"\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"google-site-verification=4K6tD3XkDDfbiCAtmNfS1CjOz11Q6csnxj02q-rwI_E\"\n",
-      "timestamp": "2025-01-05T03:37:50.505576694Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/mx-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/mx-fingerprint",
-      "template-id": "mx-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/mx-fingerprint.yaml",
-      "info": {
-        "name": "MX Record Detection",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "mx"
-        ],
-        "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
-        "reference": [
-          "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
-          "https://mxtoolbox.com/"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "docurba.incubateur.net.",
-      "matched-at": "docurba.incubateur.net",
-      "extracted-results": [
-        "10 mx1.alwaysdata.com.",
-        "20 mx2.alwaysdata.com."
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 56437\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t MX\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 56437\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t MX\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\ndocurba.incubateur.net.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\n",
-      "timestamp": "2025-01-05T03:37:50.577174065Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 19999\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t NS\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 19999\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t NS\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tNS\tdns2.alwaysdata.com.\ndocurba.incubateur.net.\t300\tIN\tNS\tdns1.alwaysdata.com.\n",
+      "timestamp": "2025-01-12T03:43:13.39875467Z",
       "matcher-status": true
     },
     {
@@ -191,26 +75,63 @@
       "extracted-results": [
         "\"v=DMARC1;p=none;\""
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 20406\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.docurba.incubateur.net.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 20406\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;_dmarc.docurba.incubateur.net.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.docurba.incubateur.net.\t300\tIN\tTXT\t\"v=DMARC1;p=none;\"\n",
-      "timestamp": "2025-01-05T03:37:50.669706142Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 9256\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.docurba.incubateur.net.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 9256\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;_dmarc.docurba.incubateur.net.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.docurba.incubateur.net.\t300\tIN\tTXT\t\"v=DMARC1;p=none;\"\n",
+      "timestamp": "2025-01-12T03:43:13.417538292Z",
       "matcher-status": true
     },
     {
-      "template": "dns/nameserver-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
-      "template-id": "nameserver-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
+      "template": "dns/spf-record-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/spf-record-detect",
+      "template-id": "spf-record-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
       "info": {
-        "name": "NS Record Detection",
+        "name": "SPF Record - Detection",
+        "author": [
+          "rxerium"
+        ],
+        "tags": [
+          "dns",
+          "spf"
+        ],
+        "description": "An SPF TXT record was detected\n",
+        "reference": [
+          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "dns",
+      "host": "docurba.incubateur.net.",
+      "matched-at": "docurba.incubateur.net",
+      "extracted-results": [
+        "v=spf1 include:_spf.alwaysdata.com ~all\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 782\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 782\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com ~all\"\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"google-site-verification=4K6tD3XkDDfbiCAtmNfS1CjOz11Q6csnxj02q-rwI_E\"\n",
+      "timestamp": "2025-01-12T03:43:13.560212558Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/txt-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
+      "template-id": "txt-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
+      "info": {
+        "name": "DNS TXT Record Detected",
         "author": [
           "pdteam"
         ],
         "tags": [
           "dns",
-          "ns"
+          "txt"
         ],
-        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
+        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+        "reference": [
+          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+        ],
         "severity": "info",
         "metadata": {
           "max-request": 1
@@ -226,12 +147,91 @@
       "host": "docurba.incubateur.net.",
       "matched-at": "docurba.incubateur.net",
       "extracted-results": [
-        "dns1.alwaysdata.com.",
-        "dns2.alwaysdata.com."
+        "\"v=spf1 include:_spf.alwaysdata.com ~all\"",
+        "\"google-site-verification=4K6tD3XkDDfbiCAtmNfS1CjOz11Q6csnxj02q-rwI_E\""
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 35246\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t NS\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 35246\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t NS\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tNS\tdns1.alwaysdata.com.\ndocurba.incubateur.net.\t300\tIN\tNS\tdns2.alwaysdata.com.\n",
-      "timestamp": "2025-01-05T03:37:50.725588703Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 782\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 782\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com ~all\"\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"google-site-verification=4K6tD3XkDDfbiCAtmNfS1CjOz11Q6csnxj02q-rwI_E\"\n",
+      "timestamp": "2025-01-12T03:43:13.560316062Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/caa-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
+      "template-id": "caa-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
+      "info": {
+        "name": "CAA Record",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "caa"
+        ],
+        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
+        "reference": [
+          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "docurba.incubateur.net.",
+      "matched-at": "docurba.incubateur.net",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 56566\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t CAA\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 56566\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t CAA\n\n;; AUTHORITY SECTION:\ndocurba.incubateur.net.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1735138645 3600 900 1209600 300\n",
+      "timestamp": "2025-01-12T03:43:13.58328272Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/mx-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/mx-fingerprint",
+      "template-id": "mx-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/mx-fingerprint.yaml",
+      "info": {
+        "name": "MX Record Detection",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "mx"
+        ],
+        "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
+        "reference": [
+          "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
+          "https://mxtoolbox.com/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "docurba.incubateur.net.",
+      "matched-at": "docurba.incubateur.net",
+      "extracted-results": [
+        "10 mx1.alwaysdata.com.",
+        "20 mx2.alwaysdata.com."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 19664\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t MX\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 19664\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t MX\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\ndocurba.incubateur.net.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\n",
+      "timestamp": "2025-01-12T03:43:13.601465927Z",
       "matcher-status": true
     }
   ]
