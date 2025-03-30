@@ -1,56 +1,23 @@
 [
   [
     {
-      "template": "dns/spf-record-detect.yaml",
-      "template-url": "https://templates.nuclei.sh/public/spf-record-detect",
-      "template-id": "spf-record-detect",
-      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
+      "template": "dns/mx-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/mx-fingerprint",
+      "template-id": "mx-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/mx-fingerprint.yaml",
       "info": {
-        "name": "SPF Record - Detection",
-        "author": [
-          "rxerium"
-        ],
-        "tags": [
-          "dns",
-          "spf"
-        ],
-        "description": "An SPF TXT record was detected\n",
-        "reference": [
-          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "type": "dns",
-      "host": "docurba.incubateur.net.",
-      "matched-at": "docurba.incubateur.net",
-      "extracted-results": [
-        "v=spf1 include:_spf.alwaysdata.com ~all\""
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 20003\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 20003\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com ~all\"\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"google-site-verification=4K6tD3XkDDfbiCAtmNfS1CjOz11Q6csnxj02q-rwI_E\"\n",
-      "timestamp": "2025-03-23T03:46:32.212311777Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/txt-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
-      "template-id": "txt-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
-      "info": {
-        "name": "DNS TXT Record Detected",
+        "name": "MX Record Detection",
         "author": [
           "pdteam"
         ],
         "tags": [
           "dns",
-          "txt"
+          "mx"
         ],
-        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+        "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
         "reference": [
-          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+          "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
+          "https://mxtoolbox.com/"
         ],
         "severity": "info",
         "metadata": {
@@ -67,12 +34,12 @@
       "host": "docurba.incubateur.net.",
       "matched-at": "docurba.incubateur.net",
       "extracted-results": [
-        "\"v=spf1 include:_spf.alwaysdata.com ~all\"",
-        "\"google-site-verification=4K6tD3XkDDfbiCAtmNfS1CjOz11Q6csnxj02q-rwI_E\""
+        "10 mx1.alwaysdata.com.",
+        "20 mx2.alwaysdata.com."
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 20003\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 20003\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com ~all\"\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"google-site-verification=4K6tD3XkDDfbiCAtmNfS1CjOz11Q6csnxj02q-rwI_E\"\n",
-      "timestamp": "2025-03-23T03:46:32.212417904Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 55485\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t MX\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 55485\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t MX\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\ndocurba.incubateur.net.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\n",
+      "timestamp": "2025-03-30T03:50:47.316675519Z",
       "matcher-status": true
     },
     {
@@ -105,12 +72,12 @@
       "host": "docurba.incubateur.net.",
       "matched-at": "docurba.incubateur.net",
       "extracted-results": [
-        "dns1.alwaysdata.com.",
-        "dns2.alwaysdata.com."
+        "dns2.alwaysdata.com.",
+        "dns1.alwaysdata.com."
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 26143\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t NS\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 26143\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t NS\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tNS\tdns1.alwaysdata.com.\ndocurba.incubateur.net.\t300\tIN\tNS\tdns2.alwaysdata.com.\n",
-      "timestamp": "2025-03-23T03:46:32.212617377Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 27473\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t NS\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 27473\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t NS\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tNS\tdns2.alwaysdata.com.\ndocurba.incubateur.net.\t300\tIN\tNS\tdns1.alwaysdata.com.\n",
+      "timestamp": "2025-03-30T03:50:47.319805814Z",
       "matcher-status": true
     },
     {
@@ -150,9 +117,9 @@
       "extracted-results": [
         "\"v=DMARC1;p=none;\""
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 35595\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.docurba.incubateur.net.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 35595\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;_dmarc.docurba.incubateur.net.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.docurba.incubateur.net.\t300\tIN\tTXT\t\"v=DMARC1;p=none;\"\n",
-      "timestamp": "2025-03-23T03:46:32.214188744Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 15380\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.docurba.incubateur.net.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 15380\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;_dmarc.docurba.incubateur.net.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.docurba.incubateur.net.\t300\tIN\tTXT\t\"v=DMARC1;p=none;\"\n",
+      "timestamp": "2025-03-30T03:50:47.390332114Z",
       "matcher-status": true
     },
     {
@@ -187,29 +154,62 @@
       "type": "dns",
       "host": "docurba.incubateur.net.",
       "matched-at": "docurba.incubateur.net",
-      "request": ";; opcode: QUERY, status: NOERROR, id: 54292\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t CAA\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 54292\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t CAA\n\n;; AUTHORITY SECTION:\ndocurba.incubateur.net.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1739439881 3600 900 1209600 300\n",
-      "timestamp": "2025-03-23T03:46:32.342779648Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 507\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t CAA\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 507\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t CAA\n\n;; AUTHORITY SECTION:\ndocurba.incubateur.net.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1739439881 3600 900 1209600 300\n",
+      "timestamp": "2025-03-30T03:50:47.392737699Z",
       "matcher-status": true
     },
     {
-      "template": "dns/mx-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/mx-fingerprint",
-      "template-id": "mx-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/mx-fingerprint.yaml",
+      "template": "dns/spf-record-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/spf-record-detect",
+      "template-id": "spf-record-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
       "info": {
-        "name": "MX Record Detection",
+        "name": "SPF Record - Detection",
+        "author": [
+          "rxerium"
+        ],
+        "tags": [
+          "dns",
+          "spf"
+        ],
+        "description": "An SPF TXT record was detected\n",
+        "reference": [
+          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "dns",
+      "host": "docurba.incubateur.net.",
+      "matched-at": "docurba.incubateur.net",
+      "extracted-results": [
+        "v=spf1 include:_spf.alwaysdata.com ~all\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 26461\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 26461\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"google-site-verification=4K6tD3XkDDfbiCAtmNfS1CjOz11Q6csnxj02q-rwI_E\"\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com ~all\"\n",
+      "timestamp": "2025-03-30T03:50:47.39947955Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/txt-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
+      "template-id": "txt-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
+      "info": {
+        "name": "DNS TXT Record Detected",
         "author": [
           "pdteam"
         ],
         "tags": [
           "dns",
-          "mx"
+          "txt"
         ],
-        "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
+        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
         "reference": [
-          "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
-          "https://mxtoolbox.com/"
+          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
         ],
         "severity": "info",
         "metadata": {
@@ -226,12 +226,12 @@
       "host": "docurba.incubateur.net.",
       "matched-at": "docurba.incubateur.net",
       "extracted-results": [
-        "10 mx1.alwaysdata.com.",
-        "20 mx2.alwaysdata.com."
+        "\"google-site-verification=4K6tD3XkDDfbiCAtmNfS1CjOz11Q6csnxj02q-rwI_E\"",
+        "\"v=spf1 include:_spf.alwaysdata.com ~all\""
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 30342\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t MX\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 30342\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t MX\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\ndocurba.incubateur.net.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\n",
-      "timestamp": "2025-03-23T03:46:32.347110242Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 26461\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 26461\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;docurba.incubateur.net.\tIN\t TXT\n\n;; ANSWER SECTION:\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"google-site-verification=4K6tD3XkDDfbiCAtmNfS1CjOz11Q6csnxj02q-rwI_E\"\ndocurba.incubateur.net.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com ~all\"\n",
+      "timestamp": "2025-03-30T03:50:47.399537428Z",
       "matcher-status": true
     }
   ]
