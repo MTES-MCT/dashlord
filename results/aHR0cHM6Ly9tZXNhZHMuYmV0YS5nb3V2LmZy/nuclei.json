@@ -1,0 +1,757 @@
+[
+  [
+    {
+      "template": "dns/caa-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
+      "template-id": "caa-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
+      "info": {
+        "name": "CAA Record",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "caa"
+        ],
+        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
+        "reference": [
+          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "mesads.beta.gouv.fr.",
+      "matched-at": "mesads.beta.gouv.fr",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 10630\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;mesads.beta.gouv.fr.\tIN\t CAA\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 10630\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;mesads.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\nmesads.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 2023010901 3600 900 1209600 300\n",
+      "timestamp": "2025-03-30T10:19:04.316732604Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/spf-record-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/spf-record-detect",
+      "template-id": "spf-record-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
+      "info": {
+        "name": "SPF Record - Detection",
+        "author": [
+          "rxerium"
+        ],
+        "tags": [
+          "dns",
+          "spf"
+        ],
+        "description": "An SPF TXT record was detected\n",
+        "reference": [
+          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "dns",
+      "host": "mesads.beta.gouv.fr.",
+      "matched-at": "mesads.beta.gouv.fr",
+      "extracted-results": [
+        "v=spf1 include:spf.sendinblue.com include:_spf.alwaysdata.com mx -all\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 8826\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;mesads.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 8826\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;mesads.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nmesads.beta.gouv.fr.\t300\tIN\tTXT\t\"sendinblue-code:35825ab866ee17a8afb7cc52439cbc0b\"\nmesads.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.sendinblue.com include:_spf.alwaysdata.com mx -all\"\n",
+      "timestamp": "2025-03-30T10:19:04.318462191Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/txt-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
+      "template-id": "txt-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
+      "info": {
+        "name": "DNS TXT Record Detected",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "txt"
+        ],
+        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+        "reference": [
+          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "mesads.beta.gouv.fr.",
+      "matched-at": "mesads.beta.gouv.fr",
+      "extracted-results": [
+        "\"v=spf1 include:spf.sendinblue.com include:_spf.alwaysdata.com mx -all\"",
+        "\"sendinblue-code:35825ab866ee17a8afb7cc52439cbc0b\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 8826\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;mesads.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 8826\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;mesads.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nmesads.beta.gouv.fr.\t300\tIN\tTXT\t\"sendinblue-code:35825ab866ee17a8afb7cc52439cbc0b\"\nmesads.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.sendinblue.com include:_spf.alwaysdata.com mx -all\"\n",
+      "timestamp": "2025-03-30T10:19:04.318536359Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/dmarc-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/dmarc-detect",
+      "template-id": "dmarc-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/dmarc-detect.yaml",
+      "info": {
+        "name": "DNS DMARC - Detect",
+        "author": [
+          "juliosmelo"
+        ],
+        "tags": [
+          "dns",
+          "dmarc"
+        ],
+        "description": "DNS DMARC information was detected.\n",
+        "reference": [
+          "https://dmarc.org/",
+          "https://dmarc.org/wiki/faq#why_is_dmarc_important.3f"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ],
+          "cvss-metrics": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+        }
+      },
+      "type": "dns",
+      "host": "mesads.beta.gouv.fr.",
+      "matched-at": "_dmarc.mesads.beta.gouv.fr",
+      "extracted-results": [
+        "\"v=DMARC1;p=quarantine;aspf=s;rua=mailto:tech@mesads.beta.gouv.fr;ruf=mailto:tech@mesads.beta.gouv.fr\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 22423\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.mesads.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 22423\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;_dmarc.mesads.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.mesads.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1;p=quarantine;aspf=s;rua=mailto:tech@mesads.beta.gouv.fr;ruf=mailto:tech@mesads.beta.gouv.fr\"\n",
+      "timestamp": "2025-03-30T10:19:05.235978247Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/nameserver-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
+      "template-id": "nameserver-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
+      "info": {
+        "name": "NS Record Detection",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "ns"
+        ],
+        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "mesads.beta.gouv.fr.",
+      "matched-at": "mesads.beta.gouv.fr",
+      "extracted-results": [
+        "dns1.alwaysdata.com.",
+        "dns2.alwaysdata.com."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 2694\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;mesads.beta.gouv.fr.\tIN\t NS\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 2694\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;mesads.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nmesads.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\nmesads.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\n",
+      "timestamp": "2025-03-30T10:19:05.391505542Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/mx-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/mx-fingerprint",
+      "template-id": "mx-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/mx-fingerprint.yaml",
+      "info": {
+        "name": "MX Record Detection",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "mx"
+        ],
+        "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
+        "reference": [
+          "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
+          "https://mxtoolbox.com/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "mesads.beta.gouv.fr.",
+      "matched-at": "mesads.beta.gouv.fr",
+      "extracted-results": [
+        "20 mx2.alwaysdata.com.",
+        "10 mx1.alwaysdata.com."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 54012\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;mesads.beta.gouv.fr.\tIN\t MX\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 54012\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;mesads.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\nmesads.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\nmesads.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\n",
+      "timestamp": "2025-03-30T10:19:05.477025991Z",
+      "matcher-status": true
+    },
+    {
+      "template": "http/miscellaneous/options-method.yaml",
+      "template-url": "https://templates.nuclei.sh/public/options-method",
+      "template-id": "options-method",
+      "template-path": "/home/runner/nuclei-templates/http/miscellaneous/options-method.yaml",
+      "info": {
+        "name": "Allowed Options Method",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "miscellaneous",
+          "misc",
+          "generic"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "http",
+      "host": "https://mesads.beta.gouv.fr",
+      "matched-at": "https://mesads.beta.gouv.fr",
+      "extracted-results": [
+        "GET, HEAD, OPTIONS"
+      ],
+      "request": "OPTIONS / HTTP/1.1\r\nHost: mesads.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nAllow: GET, HEAD, OPTIONS\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nReferrer-Policy: same-origin\r\nSozu-Id: 01JQK902NAMZJA1F1R1JVD72EN\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nContent-Length: 0\r\n\r\n",
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:19:14.661149442Z",
+      "curl-command": "curl -X 'OPTIONS' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://mesads.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-embedder-policy",
+      "type": "http",
+      "host": "https://mesads.beta.gouv.fr",
+      "matched-at": "https://mesads.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: mesads.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nContent-Length: 12021\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nReferrer-Policy: same-origin\r\nSozu-Id: 01JQK92G339SNQ0F8EMJJGGY4P\r\nVary: Cookie\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\n\r\n\n\n\n<!doctype html>\n<html lang=\"fr\" data-fr-scheme=\"light\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/dsfr/dsfr.min.css?v=20240718\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/utility/utility.css\">\n    <link rel=\"stylesheet\" href=\"/static/style.css\">\n\n    <link rel=\"apple-touch-icon\" href=\"/static/%40gouvfr/favicon/apple-touch-icon.png\"><!-- 180×180 -->\n    <link rel=\"icon\" href=\"/static/%40gouvfr/favicon/favicon.svg\" type=\"image/svg+xml\">\n    <link rel=\"shortcut icon\" href=\"/static/%40gouvfr/favicon/favicon.ico\" type=\"image/x-icon\"><!-- 32×32 -->\n\n    \n    <title>Découvrez comment MesADS peut vous aider - Choisissez votre profil</title>\n<meta name=\"description\" content=\"Trouvez comment utiliser MesADS en sélectionnant votre profil: gestionnaire ADS, chauffeur de taxi, propriétaire de véhicules relais, ou autre.\">\n\n\n    \n    <script>\n      var _paq = window._paq = window._paq || [];\n      /* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n      _paq.push(['trackPageView']);\n      _paq.push(['enableLinkTracking']);\n      (function() {\n        var u=\"https://stats.beta.gouv.fr/\";\n        _paq.push(['setTrackerUrl', u+'matomo.php']);\n        _paq.push(['setSiteId', '137']);\n        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);\n      })();\n    </script>\n    \n  </head>\n  <body>\n    <div class=\"fr-skiplinks\">\n      <nav class=\"fr-container\" role=\"navigation\" aria-label=\"Accès rapide\">\n          <ul class=\"fr-skiplinks__list\">\n              <li>\n                <a class=\"fr-link\" href=\"#content\">Contenu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#menu\">Menu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#footer\">Pied de page</a>\n              </li>\n          </ul>\n      </nav>\n    </div>\n\n    <header role=\"banner\" class=\"fr-header\">\n      <div class=\"fr-header__body\">\n        <div class=\"fr-container\">\n          <div class=\"fr-header__body-row\">\n            <div class=\"fr-header__brand fr-enlarge-link\">\n              <div class=\"fr-header__brand-top\">\n                <div class=\"fr-header__logo\">\n                  <p class=\"fr-logo\">\n                  République\n                  <br>Française\n                  </p>\n                </div>\n                <div class=\"fr-header__navbar\">\n                  <button class=\"fr-btn--menu fr-btn\" data-fr-opened=\"false\" aria-controls=\"menu\" aria-haspopup=\"menu\" title=\"Menu\" id=\"fr-btn-menu-mobile\">\n                    Menu\n                  </button>\n                </div>\n              </div>\n              <div class=\"fr-header__service\">\n                <a href=\"/\">\n                  <p class=\"fr-header__service-title\">Mes ADS</p>\n                </a>\n                <p class=\"fr-header__service-tagline\">🚖 La base Française des autorisations de stationnement Taxi <span style=\"display: inline-block; width: fit-content; transform: scale(-1, 1);\">🚕</span></p>\n              </div>\n            </div>\n            <div class=\"fr-header__tools\">\n              <div class=\"fr-header__tools-links\">\n                <ul class=\"fr-links-group\">\n                  \n                    <li>\n                      <a class=\"fr-link fr-icon-close-circle-line\" href=\"/auth/login/\">Connexion / Création de compte</a>\n                    </li>\n                  \n                </ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"fr-header__menu fr-modal\" id=\"menu\" aria-labelledby=\"fr-btn-menu-mobile\">\n        <div class=\"fr-container\">\n          <button class=\"fr-link--close fr-link\" aria-controls=\"menu\">Fermer</button>\n          <div class=\"fr-header__menu-links\"></div>\n          <nav class=\"fr-nav\" id=\"navigation-832\" role=\"navigation\" aria-label=\"Menu principal\">\n            <ul class=\"fr-nav__list\">\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/registre_ads/gestion\">📄 Registre des ADS</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/relais/\">🚖 Répertoires des Véhicules Relais</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/reglementation\">📚 Réglementation taxi</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                <a class=\"fr-nav__link\" href=\"/faq\">🙋 J'ai un problème</a>\n              </li>\n            </ul>\n          </nav>\n        </div>\n      </div>\n    </header>\n\n    \n<div id=\"banner-container\">\n  <div id=\"banner\">\n    <div id=\"banner-text\">\n        MesADS, le registre des ADS et des véhicules relais\n    </div>\n  </div>\n\n  \n  \n<main id=\"content\" class=\"fr-container fr-pt-5w fr-pb-5w\">\n  \n\n  \n\n  <h1 class=\"fr-mt-5w\">Pour savoir comment utiliser MesADS, choisissez votre profil</h1>\n\n  <p class=\"fr-text--lead\" style=\"text-align: center\">\n    MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi <strong>pour les administrations</strong> (registre des ADS) et l'accès à la liste des véhicules de remplacement <strong>pour les chauffeurs de taxi et propriétaires de véhicules relais</strong> (répertoires des taxis relais).\n  </p>\n\n  <p class=\"fr-text--lead\">\n    Vous êtes…\n  </p>\n\n  <div class=\"fr-grid-row fr-grid-row--gutters fr-grid-row--center\">\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/gestionnaire_ads\">Chargé de la gestion des ADS de votre commune ou EPCI</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              👨‍💻\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/prefecture\">Agent au sein d'une préfecture</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🇫🇷‍\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/chauffeur\">Chauffeur de taxi</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🚕\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/proprietaire_vehicules_relais\">Détenteur d'un taxi relais (véhicule de remplacement)</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🦺\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/reglementation\">Réglementation</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              📚 \n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n</main>\n\n</div>\n\n\n    <footer class=\"fr-footer fr-mt-5w\" role=\"contentinfo\" id=\"footer\">\n      <div class=\"fr-container\">\n        <div class=\"fr-footer__body\">\n          <div class=\"fr-footer__brand fr-enlarge-link\">\n            <a href=\"/\" title=\"Retour à l’accueil\">\n              <p class=\"fr-logo\" title=\"république française\">\n              république\n              <br>française\n              </p>\n            </a>\n          </div>\n          <div class=\"fr-footer__content\">\n            <p class=\"fr-footer__content-desc\">\n              MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi pour les administrations (registre des ADS) et l'accès aux listes des véhicules de remplacement pour les chauffeurs de taxi (répertoires des taxis relais).\n            </p>\n            <ul class=\"fr-footer__content-list\">\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://legifrance.gouv.fr\">legifrance.gouv.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://gouvernement.fr\">gouvernement.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://service-public.fr\">service-public.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://data.gouv.fr\">data.gouv.fr</a>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <div class=\"fr-footer__bottom\">\n          <ul class=\"fr-footer__bottom-list\">\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/suivi\">Données personnelles et cookies</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/accessibilite\">Accessibilité : non conforme</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/chiffres-cles\">Statistiques</a>\n            </li>\n          </ul>\n          <div class=\"fr-footer__bottom-copy\">\n            <p>Sauf mention contraire, tous les textes de ce site sont sous <a href=\"https://github.com/etalab/licence-ouverte/blob/master/LO.md\" target=\"_blank\">licence etalab-2.0</a>\n            </p>\n          </div>\n        </div>\n      </div>\n    </footer>\n\n    <script type=\"module\" src=\"/static/%40gouvfr/dsfr/dsfr.module.js?v=20240718\"></script>\n    <script type=\"text/javascript\" nomodule src=\"/static/%40gouvfr/js/dsfr.nomodule.js?v=20240718\"></script>\n    <script type=\"text/javascript\" src=\"/static/admin/js/vendor/jquery/jquery.js?v=20240718\"></script>\n\n    \n    <script type=\"text/javascript\">\n      window.$crisp= [];\n\n      \n\n      window.CRISP_WEBSITE_ID = \"922d0608-bda2-4c17-8803-8e24b1cfab45\";\n      (function(){\n        d = document;\n        s = d.createElement(\"script\");\n        s.src = \"https://client.crisp.chat/l.js\";\n        s.async = 1;\n        d.getElementsByTagName(\"head\")[0].appendChild(s);\n      })();\n    </script>\n    \n\n    \n    <script src=\"https://sentry.incubateur.net/js-sdk-loader/84c680aeb0172f06900d5ae97d5e5ee6.min.js\" crossorigin=\"anonymous\"></script>\n    \n\n    \n  \n\n  <script src=\"/static/assets/js/base.c3279544.js\"></script>\n\n  </body>\n</html>\n",
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:20:34.056820103Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://mesads.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-resource-policy",
+      "type": "http",
+      "host": "https://mesads.beta.gouv.fr",
+      "matched-at": "https://mesads.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: mesads.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nContent-Length: 12021\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nReferrer-Policy: same-origin\r\nSozu-Id: 01JQK92G339SNQ0F8EMJJGGY4P\r\nVary: Cookie\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\n\r\n\n\n\n<!doctype html>\n<html lang=\"fr\" data-fr-scheme=\"light\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/dsfr/dsfr.min.css?v=20240718\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/utility/utility.css\">\n    <link rel=\"stylesheet\" href=\"/static/style.css\">\n\n    <link rel=\"apple-touch-icon\" href=\"/static/%40gouvfr/favicon/apple-touch-icon.png\"><!-- 180×180 -->\n    <link rel=\"icon\" href=\"/static/%40gouvfr/favicon/favicon.svg\" type=\"image/svg+xml\">\n    <link rel=\"shortcut icon\" href=\"/static/%40gouvfr/favicon/favicon.ico\" type=\"image/x-icon\"><!-- 32×32 -->\n\n    \n    <title>Découvrez comment MesADS peut vous aider - Choisissez votre profil</title>\n<meta name=\"description\" content=\"Trouvez comment utiliser MesADS en sélectionnant votre profil: gestionnaire ADS, chauffeur de taxi, propriétaire de véhicules relais, ou autre.\">\n\n\n    \n    <script>\n      var _paq = window._paq = window._paq || [];\n      /* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n      _paq.push(['trackPageView']);\n      _paq.push(['enableLinkTracking']);\n      (function() {\n        var u=\"https://stats.beta.gouv.fr/\";\n        _paq.push(['setTrackerUrl', u+'matomo.php']);\n        _paq.push(['setSiteId', '137']);\n        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);\n      })();\n    </script>\n    \n  </head>\n  <body>\n    <div class=\"fr-skiplinks\">\n      <nav class=\"fr-container\" role=\"navigation\" aria-label=\"Accès rapide\">\n          <ul class=\"fr-skiplinks__list\">\n              <li>\n                <a class=\"fr-link\" href=\"#content\">Contenu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#menu\">Menu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#footer\">Pied de page</a>\n              </li>\n          </ul>\n      </nav>\n    </div>\n\n    <header role=\"banner\" class=\"fr-header\">\n      <div class=\"fr-header__body\">\n        <div class=\"fr-container\">\n          <div class=\"fr-header__body-row\">\n            <div class=\"fr-header__brand fr-enlarge-link\">\n              <div class=\"fr-header__brand-top\">\n                <div class=\"fr-header__logo\">\n                  <p class=\"fr-logo\">\n                  République\n                  <br>Française\n                  </p>\n                </div>\n                <div class=\"fr-header__navbar\">\n                  <button class=\"fr-btn--menu fr-btn\" data-fr-opened=\"false\" aria-controls=\"menu\" aria-haspopup=\"menu\" title=\"Menu\" id=\"fr-btn-menu-mobile\">\n                    Menu\n                  </button>\n                </div>\n              </div>\n              <div class=\"fr-header__service\">\n                <a href=\"/\">\n                  <p class=\"fr-header__service-title\">Mes ADS</p>\n                </a>\n                <p class=\"fr-header__service-tagline\">🚖 La base Française des autorisations de stationnement Taxi <span style=\"display: inline-block; width: fit-content; transform: scale(-1, 1);\">🚕</span></p>\n              </div>\n            </div>\n            <div class=\"fr-header__tools\">\n              <div class=\"fr-header__tools-links\">\n                <ul class=\"fr-links-group\">\n                  \n                    <li>\n                      <a class=\"fr-link fr-icon-close-circle-line\" href=\"/auth/login/\">Connexion / Création de compte</a>\n                    </li>\n                  \n                </ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"fr-header__menu fr-modal\" id=\"menu\" aria-labelledby=\"fr-btn-menu-mobile\">\n        <div class=\"fr-container\">\n          <button class=\"fr-link--close fr-link\" aria-controls=\"menu\">Fermer</button>\n          <div class=\"fr-header__menu-links\"></div>\n          <nav class=\"fr-nav\" id=\"navigation-832\" role=\"navigation\" aria-label=\"Menu principal\">\n            <ul class=\"fr-nav__list\">\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/registre_ads/gestion\">📄 Registre des ADS</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/relais/\">🚖 Répertoires des Véhicules Relais</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/reglementation\">📚 Réglementation taxi</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                <a class=\"fr-nav__link\" href=\"/faq\">🙋 J'ai un problème</a>\n              </li>\n            </ul>\n          </nav>\n        </div>\n      </div>\n    </header>\n\n    \n<div id=\"banner-container\">\n  <div id=\"banner\">\n    <div id=\"banner-text\">\n        MesADS, le registre des ADS et des véhicules relais\n    </div>\n  </div>\n\n  \n  \n<main id=\"content\" class=\"fr-container fr-pt-5w fr-pb-5w\">\n  \n\n  \n\n  <h1 class=\"fr-mt-5w\">Pour savoir comment utiliser MesADS, choisissez votre profil</h1>\n\n  <p class=\"fr-text--lead\" style=\"text-align: center\">\n    MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi <strong>pour les administrations</strong> (registre des ADS) et l'accès à la liste des véhicules de remplacement <strong>pour les chauffeurs de taxi et propriétaires de véhicules relais</strong> (répertoires des taxis relais).\n  </p>\n\n  <p class=\"fr-text--lead\">\n    Vous êtes…\n  </p>\n\n  <div class=\"fr-grid-row fr-grid-row--gutters fr-grid-row--center\">\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/gestionnaire_ads\">Chargé de la gestion des ADS de votre commune ou EPCI</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              👨‍💻\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/prefecture\">Agent au sein d'une préfecture</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🇫🇷‍\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/chauffeur\">Chauffeur de taxi</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🚕\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/proprietaire_vehicules_relais\">Détenteur d'un taxi relais (véhicule de remplacement)</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🦺\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/reglementation\">Réglementation</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              📚 \n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n</main>\n\n</div>\n\n\n    <footer class=\"fr-footer fr-mt-5w\" role=\"contentinfo\" id=\"footer\">\n      <div class=\"fr-container\">\n        <div class=\"fr-footer__body\">\n          <div class=\"fr-footer__brand fr-enlarge-link\">\n            <a href=\"/\" title=\"Retour à l’accueil\">\n              <p class=\"fr-logo\" title=\"république française\">\n              république\n              <br>française\n              </p>\n            </a>\n          </div>\n          <div class=\"fr-footer__content\">\n            <p class=\"fr-footer__content-desc\">\n              MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi pour les administrations (registre des ADS) et l'accès aux listes des véhicules de remplacement pour les chauffeurs de taxi (répertoires des taxis relais).\n            </p>\n            <ul class=\"fr-footer__content-list\">\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://legifrance.gouv.fr\">legifrance.gouv.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://gouvernement.fr\">gouvernement.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://service-public.fr\">service-public.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://data.gouv.fr\">data.gouv.fr</a>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <div class=\"fr-footer__bottom\">\n          <ul class=\"fr-footer__bottom-list\">\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/suivi\">Données personnelles et cookies</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/accessibilite\">Accessibilité : non conforme</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/chiffres-cles\">Statistiques</a>\n            </li>\n          </ul>\n          <div class=\"fr-footer__bottom-copy\">\n            <p>Sauf mention contraire, tous les textes de ce site sont sous <a href=\"https://github.com/etalab/licence-ouverte/blob/master/LO.md\" target=\"_blank\">licence etalab-2.0</a>\n            </p>\n          </div>\n        </div>\n      </div>\n    </footer>\n\n    <script type=\"module\" src=\"/static/%40gouvfr/dsfr/dsfr.module.js?v=20240718\"></script>\n    <script type=\"text/javascript\" nomodule src=\"/static/%40gouvfr/js/dsfr.nomodule.js?v=20240718\"></script>\n    <script type=\"text/javascript\" src=\"/static/admin/js/vendor/jquery/jquery.js?v=20240718\"></script>\n\n    \n    <script type=\"text/javascript\">\n      window.$crisp= [];\n\n      \n\n      window.CRISP_WEBSITE_ID = \"922d0608-bda2-4c17-8803-8e24b1cfab45\";\n      (function(){\n        d = document;\n        s = d.createElement(\"script\");\n        s.src = \"https://client.crisp.chat/l.js\";\n        s.async = 1;\n        d.getElementsByTagName(\"head\")[0].appendChild(s);\n      })();\n    </script>\n    \n\n    \n    <script src=\"https://sentry.incubateur.net/js-sdk-loader/84c680aeb0172f06900d5ae97d5e5ee6.min.js\" crossorigin=\"anonymous\"></script>\n    \n\n    \n  \n\n  <script src=\"/static/assets/js/base.c3279544.js\"></script>\n\n  </body>\n</html>\n",
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:20:34.056868743Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://mesads.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "strict-transport-security",
+      "type": "http",
+      "host": "https://mesads.beta.gouv.fr",
+      "matched-at": "https://mesads.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: mesads.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nContent-Length: 12021\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nReferrer-Policy: same-origin\r\nSozu-Id: 01JQK92G339SNQ0F8EMJJGGY4P\r\nVary: Cookie\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\n\r\n\n\n\n<!doctype html>\n<html lang=\"fr\" data-fr-scheme=\"light\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/dsfr/dsfr.min.css?v=20240718\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/utility/utility.css\">\n    <link rel=\"stylesheet\" href=\"/static/style.css\">\n\n    <link rel=\"apple-touch-icon\" href=\"/static/%40gouvfr/favicon/apple-touch-icon.png\"><!-- 180×180 -->\n    <link rel=\"icon\" href=\"/static/%40gouvfr/favicon/favicon.svg\" type=\"image/svg+xml\">\n    <link rel=\"shortcut icon\" href=\"/static/%40gouvfr/favicon/favicon.ico\" type=\"image/x-icon\"><!-- 32×32 -->\n\n    \n    <title>Découvrez comment MesADS peut vous aider - Choisissez votre profil</title>\n<meta name=\"description\" content=\"Trouvez comment utiliser MesADS en sélectionnant votre profil: gestionnaire ADS, chauffeur de taxi, propriétaire de véhicules relais, ou autre.\">\n\n\n    \n    <script>\n      var _paq = window._paq = window._paq || [];\n      /* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n      _paq.push(['trackPageView']);\n      _paq.push(['enableLinkTracking']);\n      (function() {\n        var u=\"https://stats.beta.gouv.fr/\";\n        _paq.push(['setTrackerUrl', u+'matomo.php']);\n        _paq.push(['setSiteId', '137']);\n        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);\n      })();\n    </script>\n    \n  </head>\n  <body>\n    <div class=\"fr-skiplinks\">\n      <nav class=\"fr-container\" role=\"navigation\" aria-label=\"Accès rapide\">\n          <ul class=\"fr-skiplinks__list\">\n              <li>\n                <a class=\"fr-link\" href=\"#content\">Contenu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#menu\">Menu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#footer\">Pied de page</a>\n              </li>\n          </ul>\n      </nav>\n    </div>\n\n    <header role=\"banner\" class=\"fr-header\">\n      <div class=\"fr-header__body\">\n        <div class=\"fr-container\">\n          <div class=\"fr-header__body-row\">\n            <div class=\"fr-header__brand fr-enlarge-link\">\n              <div class=\"fr-header__brand-top\">\n                <div class=\"fr-header__logo\">\n                  <p class=\"fr-logo\">\n                  République\n                  <br>Française\n                  </p>\n                </div>\n                <div class=\"fr-header__navbar\">\n                  <button class=\"fr-btn--menu fr-btn\" data-fr-opened=\"false\" aria-controls=\"menu\" aria-haspopup=\"menu\" title=\"Menu\" id=\"fr-btn-menu-mobile\">\n                    Menu\n                  </button>\n                </div>\n              </div>\n              <div class=\"fr-header__service\">\n                <a href=\"/\">\n                  <p class=\"fr-header__service-title\">Mes ADS</p>\n                </a>\n                <p class=\"fr-header__service-tagline\">🚖 La base Française des autorisations de stationnement Taxi <span style=\"display: inline-block; width: fit-content; transform: scale(-1, 1);\">🚕</span></p>\n              </div>\n            </div>\n            <div class=\"fr-header__tools\">\n              <div class=\"fr-header__tools-links\">\n                <ul class=\"fr-links-group\">\n                  \n                    <li>\n                      <a class=\"fr-link fr-icon-close-circle-line\" href=\"/auth/login/\">Connexion / Création de compte</a>\n                    </li>\n                  \n                </ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"fr-header__menu fr-modal\" id=\"menu\" aria-labelledby=\"fr-btn-menu-mobile\">\n        <div class=\"fr-container\">\n          <button class=\"fr-link--close fr-link\" aria-controls=\"menu\">Fermer</button>\n          <div class=\"fr-header__menu-links\"></div>\n          <nav class=\"fr-nav\" id=\"navigation-832\" role=\"navigation\" aria-label=\"Menu principal\">\n            <ul class=\"fr-nav__list\">\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/registre_ads/gestion\">📄 Registre des ADS</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/relais/\">🚖 Répertoires des Véhicules Relais</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/reglementation\">📚 Réglementation taxi</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                <a class=\"fr-nav__link\" href=\"/faq\">🙋 J'ai un problème</a>\n              </li>\n            </ul>\n          </nav>\n        </div>\n      </div>\n    </header>\n\n    \n<div id=\"banner-container\">\n  <div id=\"banner\">\n    <div id=\"banner-text\">\n        MesADS, le registre des ADS et des véhicules relais\n    </div>\n  </div>\n\n  \n  \n<main id=\"content\" class=\"fr-container fr-pt-5w fr-pb-5w\">\n  \n\n  \n\n  <h1 class=\"fr-mt-5w\">Pour savoir comment utiliser MesADS, choisissez votre profil</h1>\n\n  <p class=\"fr-text--lead\" style=\"text-align: center\">\n    MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi <strong>pour les administrations</strong> (registre des ADS) et l'accès à la liste des véhicules de remplacement <strong>pour les chauffeurs de taxi et propriétaires de véhicules relais</strong> (répertoires des taxis relais).\n  </p>\n\n  <p class=\"fr-text--lead\">\n    Vous êtes…\n  </p>\n\n  <div class=\"fr-grid-row fr-grid-row--gutters fr-grid-row--center\">\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/gestionnaire_ads\">Chargé de la gestion des ADS de votre commune ou EPCI</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              👨‍💻\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/prefecture\">Agent au sein d'une préfecture</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🇫🇷‍\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/chauffeur\">Chauffeur de taxi</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🚕\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/proprietaire_vehicules_relais\">Détenteur d'un taxi relais (véhicule de remplacement)</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🦺\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/reglementation\">Réglementation</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              📚 \n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n</main>\n\n</div>\n\n\n    <footer class=\"fr-footer fr-mt-5w\" role=\"contentinfo\" id=\"footer\">\n      <div class=\"fr-container\">\n        <div class=\"fr-footer__body\">\n          <div class=\"fr-footer__brand fr-enlarge-link\">\n            <a href=\"/\" title=\"Retour à l’accueil\">\n              <p class=\"fr-logo\" title=\"république française\">\n              république\n              <br>française\n              </p>\n            </a>\n          </div>\n          <div class=\"fr-footer__content\">\n            <p class=\"fr-footer__content-desc\">\n              MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi pour les administrations (registre des ADS) et l'accès aux listes des véhicules de remplacement pour les chauffeurs de taxi (répertoires des taxis relais).\n            </p>\n            <ul class=\"fr-footer__content-list\">\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://legifrance.gouv.fr\">legifrance.gouv.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://gouvernement.fr\">gouvernement.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://service-public.fr\">service-public.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://data.gouv.fr\">data.gouv.fr</a>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <div class=\"fr-footer__bottom\">\n          <ul class=\"fr-footer__bottom-list\">\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/suivi\">Données personnelles et cookies</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/accessibilite\">Accessibilité : non conforme</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/chiffres-cles\">Statistiques</a>\n            </li>\n          </ul>\n          <div class=\"fr-footer__bottom-copy\">\n            <p>Sauf mention contraire, tous les textes de ce site sont sous <a href=\"https://github.com/etalab/licence-ouverte/blob/master/LO.md\" target=\"_blank\">licence etalab-2.0</a>\n            </p>\n          </div>\n        </div>\n      </div>\n    </footer>\n\n    <script type=\"module\" src=\"/static/%40gouvfr/dsfr/dsfr.module.js?v=20240718\"></script>\n    <script type=\"text/javascript\" nomodule src=\"/static/%40gouvfr/js/dsfr.nomodule.js?v=20240718\"></script>\n    <script type=\"text/javascript\" src=\"/static/admin/js/vendor/jquery/jquery.js?v=20240718\"></script>\n\n    \n    <script type=\"text/javascript\">\n      window.$crisp= [];\n\n      \n\n      window.CRISP_WEBSITE_ID = \"922d0608-bda2-4c17-8803-8e24b1cfab45\";\n      (function(){\n        d = document;\n        s = d.createElement(\"script\");\n        s.src = \"https://client.crisp.chat/l.js\";\n        s.async = 1;\n        d.getElementsByTagName(\"head\")[0].appendChild(s);\n      })();\n    </script>\n    \n\n    \n    <script src=\"https://sentry.incubateur.net/js-sdk-loader/84c680aeb0172f06900d5ae97d5e5ee6.min.js\" crossorigin=\"anonymous\"></script>\n    \n\n    \n  \n\n  <script src=\"/static/assets/js/base.c3279544.js\"></script>\n\n  </body>\n</html>\n",
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:20:34.056888781Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://mesads.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "content-security-policy",
+      "type": "http",
+      "host": "https://mesads.beta.gouv.fr",
+      "matched-at": "https://mesads.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: mesads.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nContent-Length: 12021\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nReferrer-Policy: same-origin\r\nSozu-Id: 01JQK92G339SNQ0F8EMJJGGY4P\r\nVary: Cookie\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\n\r\n\n\n\n<!doctype html>\n<html lang=\"fr\" data-fr-scheme=\"light\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/dsfr/dsfr.min.css?v=20240718\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/utility/utility.css\">\n    <link rel=\"stylesheet\" href=\"/static/style.css\">\n\n    <link rel=\"apple-touch-icon\" href=\"/static/%40gouvfr/favicon/apple-touch-icon.png\"><!-- 180×180 -->\n    <link rel=\"icon\" href=\"/static/%40gouvfr/favicon/favicon.svg\" type=\"image/svg+xml\">\n    <link rel=\"shortcut icon\" href=\"/static/%40gouvfr/favicon/favicon.ico\" type=\"image/x-icon\"><!-- 32×32 -->\n\n    \n    <title>Découvrez comment MesADS peut vous aider - Choisissez votre profil</title>\n<meta name=\"description\" content=\"Trouvez comment utiliser MesADS en sélectionnant votre profil: gestionnaire ADS, chauffeur de taxi, propriétaire de véhicules relais, ou autre.\">\n\n\n    \n    <script>\n      var _paq = window._paq = window._paq || [];\n      /* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n      _paq.push(['trackPageView']);\n      _paq.push(['enableLinkTracking']);\n      (function() {\n        var u=\"https://stats.beta.gouv.fr/\";\n        _paq.push(['setTrackerUrl', u+'matomo.php']);\n        _paq.push(['setSiteId', '137']);\n        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);\n      })();\n    </script>\n    \n  </head>\n  <body>\n    <div class=\"fr-skiplinks\">\n      <nav class=\"fr-container\" role=\"navigation\" aria-label=\"Accès rapide\">\n          <ul class=\"fr-skiplinks__list\">\n              <li>\n                <a class=\"fr-link\" href=\"#content\">Contenu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#menu\">Menu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#footer\">Pied de page</a>\n              </li>\n          </ul>\n      </nav>\n    </div>\n\n    <header role=\"banner\" class=\"fr-header\">\n      <div class=\"fr-header__body\">\n        <div class=\"fr-container\">\n          <div class=\"fr-header__body-row\">\n            <div class=\"fr-header__brand fr-enlarge-link\">\n              <div class=\"fr-header__brand-top\">\n                <div class=\"fr-header__logo\">\n                  <p class=\"fr-logo\">\n                  République\n                  <br>Française\n                  </p>\n                </div>\n                <div class=\"fr-header__navbar\">\n                  <button class=\"fr-btn--menu fr-btn\" data-fr-opened=\"false\" aria-controls=\"menu\" aria-haspopup=\"menu\" title=\"Menu\" id=\"fr-btn-menu-mobile\">\n                    Menu\n                  </button>\n                </div>\n              </div>\n              <div class=\"fr-header__service\">\n                <a href=\"/\">\n                  <p class=\"fr-header__service-title\">Mes ADS</p>\n                </a>\n                <p class=\"fr-header__service-tagline\">🚖 La base Française des autorisations de stationnement Taxi <span style=\"display: inline-block; width: fit-content; transform: scale(-1, 1);\">🚕</span></p>\n              </div>\n            </div>\n            <div class=\"fr-header__tools\">\n              <div class=\"fr-header__tools-links\">\n                <ul class=\"fr-links-group\">\n                  \n                    <li>\n                      <a class=\"fr-link fr-icon-close-circle-line\" href=\"/auth/login/\">Connexion / Création de compte</a>\n                    </li>\n                  \n                </ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"fr-header__menu fr-modal\" id=\"menu\" aria-labelledby=\"fr-btn-menu-mobile\">\n        <div class=\"fr-container\">\n          <button class=\"fr-link--close fr-link\" aria-controls=\"menu\">Fermer</button>\n          <div class=\"fr-header__menu-links\"></div>\n          <nav class=\"fr-nav\" id=\"navigation-832\" role=\"navigation\" aria-label=\"Menu principal\">\n            <ul class=\"fr-nav__list\">\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/registre_ads/gestion\">📄 Registre des ADS</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/relais/\">🚖 Répertoires des Véhicules Relais</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/reglementation\">📚 Réglementation taxi</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                <a class=\"fr-nav__link\" href=\"/faq\">🙋 J'ai un problème</a>\n              </li>\n            </ul>\n          </nav>\n        </div>\n      </div>\n    </header>\n\n    \n<div id=\"banner-container\">\n  <div id=\"banner\">\n    <div id=\"banner-text\">\n        MesADS, le registre des ADS et des véhicules relais\n    </div>\n  </div>\n\n  \n  \n<main id=\"content\" class=\"fr-container fr-pt-5w fr-pb-5w\">\n  \n\n  \n\n  <h1 class=\"fr-mt-5w\">Pour savoir comment utiliser MesADS, choisissez votre profil</h1>\n\n  <p class=\"fr-text--lead\" style=\"text-align: center\">\n    MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi <strong>pour les administrations</strong> (registre des ADS) et l'accès à la liste des véhicules de remplacement <strong>pour les chauffeurs de taxi et propriétaires de véhicules relais</strong> (répertoires des taxis relais).\n  </p>\n\n  <p class=\"fr-text--lead\">\n    Vous êtes…\n  </p>\n\n  <div class=\"fr-grid-row fr-grid-row--gutters fr-grid-row--center\">\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/gestionnaire_ads\">Chargé de la gestion des ADS de votre commune ou EPCI</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              👨‍💻\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/prefecture\">Agent au sein d'une préfecture</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🇫🇷‍\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/chauffeur\">Chauffeur de taxi</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🚕\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/proprietaire_vehicules_relais\">Détenteur d'un taxi relais (véhicule de remplacement)</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🦺\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/reglementation\">Réglementation</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              📚 \n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n</main>\n\n</div>\n\n\n    <footer class=\"fr-footer fr-mt-5w\" role=\"contentinfo\" id=\"footer\">\n      <div class=\"fr-container\">\n        <div class=\"fr-footer__body\">\n          <div class=\"fr-footer__brand fr-enlarge-link\">\n            <a href=\"/\" title=\"Retour à l’accueil\">\n              <p class=\"fr-logo\" title=\"république française\">\n              république\n              <br>française\n              </p>\n            </a>\n          </div>\n          <div class=\"fr-footer__content\">\n            <p class=\"fr-footer__content-desc\">\n              MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi pour les administrations (registre des ADS) et l'accès aux listes des véhicules de remplacement pour les chauffeurs de taxi (répertoires des taxis relais).\n            </p>\n            <ul class=\"fr-footer__content-list\">\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://legifrance.gouv.fr\">legifrance.gouv.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://gouvernement.fr\">gouvernement.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://service-public.fr\">service-public.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://data.gouv.fr\">data.gouv.fr</a>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <div class=\"fr-footer__bottom\">\n          <ul class=\"fr-footer__bottom-list\">\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/suivi\">Données personnelles et cookies</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/accessibilite\">Accessibilité : non conforme</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/chiffres-cles\">Statistiques</a>\n            </li>\n          </ul>\n          <div class=\"fr-footer__bottom-copy\">\n            <p>Sauf mention contraire, tous les textes de ce site sont sous <a href=\"https://github.com/etalab/licence-ouverte/blob/master/LO.md\" target=\"_blank\">licence etalab-2.0</a>\n            </p>\n          </div>\n        </div>\n      </div>\n    </footer>\n\n    <script type=\"module\" src=\"/static/%40gouvfr/dsfr/dsfr.module.js?v=20240718\"></script>\n    <script type=\"text/javascript\" nomodule src=\"/static/%40gouvfr/js/dsfr.nomodule.js?v=20240718\"></script>\n    <script type=\"text/javascript\" src=\"/static/admin/js/vendor/jquery/jquery.js?v=20240718\"></script>\n\n    \n    <script type=\"text/javascript\">\n      window.$crisp= [];\n\n      \n\n      window.CRISP_WEBSITE_ID = \"922d0608-bda2-4c17-8803-8e24b1cfab45\";\n      (function(){\n        d = document;\n        s = d.createElement(\"script\");\n        s.src = \"https://client.crisp.chat/l.js\";\n        s.async = 1;\n        d.getElementsByTagName(\"head\")[0].appendChild(s);\n      })();\n    </script>\n    \n\n    \n    <script src=\"https://sentry.incubateur.net/js-sdk-loader/84c680aeb0172f06900d5ae97d5e5ee6.min.js\" crossorigin=\"anonymous\"></script>\n    \n\n    \n  \n\n  <script src=\"/static/assets/js/base.c3279544.js\"></script>\n\n  </body>\n</html>\n",
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:20:34.056903789Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://mesads.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "permissions-policy",
+      "type": "http",
+      "host": "https://mesads.beta.gouv.fr",
+      "matched-at": "https://mesads.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: mesads.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nContent-Length: 12021\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nReferrer-Policy: same-origin\r\nSozu-Id: 01JQK92G339SNQ0F8EMJJGGY4P\r\nVary: Cookie\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\n\r\n\n\n\n<!doctype html>\n<html lang=\"fr\" data-fr-scheme=\"light\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/dsfr/dsfr.min.css?v=20240718\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/utility/utility.css\">\n    <link rel=\"stylesheet\" href=\"/static/style.css\">\n\n    <link rel=\"apple-touch-icon\" href=\"/static/%40gouvfr/favicon/apple-touch-icon.png\"><!-- 180×180 -->\n    <link rel=\"icon\" href=\"/static/%40gouvfr/favicon/favicon.svg\" type=\"image/svg+xml\">\n    <link rel=\"shortcut icon\" href=\"/static/%40gouvfr/favicon/favicon.ico\" type=\"image/x-icon\"><!-- 32×32 -->\n\n    \n    <title>Découvrez comment MesADS peut vous aider - Choisissez votre profil</title>\n<meta name=\"description\" content=\"Trouvez comment utiliser MesADS en sélectionnant votre profil: gestionnaire ADS, chauffeur de taxi, propriétaire de véhicules relais, ou autre.\">\n\n\n    \n    <script>\n      var _paq = window._paq = window._paq || [];\n      /* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n      _paq.push(['trackPageView']);\n      _paq.push(['enableLinkTracking']);\n      (function() {\n        var u=\"https://stats.beta.gouv.fr/\";\n        _paq.push(['setTrackerUrl', u+'matomo.php']);\n        _paq.push(['setSiteId', '137']);\n        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);\n      })();\n    </script>\n    \n  </head>\n  <body>\n    <div class=\"fr-skiplinks\">\n      <nav class=\"fr-container\" role=\"navigation\" aria-label=\"Accès rapide\">\n          <ul class=\"fr-skiplinks__list\">\n              <li>\n                <a class=\"fr-link\" href=\"#content\">Contenu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#menu\">Menu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#footer\">Pied de page</a>\n              </li>\n          </ul>\n      </nav>\n    </div>\n\n    <header role=\"banner\" class=\"fr-header\">\n      <div class=\"fr-header__body\">\n        <div class=\"fr-container\">\n          <div class=\"fr-header__body-row\">\n            <div class=\"fr-header__brand fr-enlarge-link\">\n              <div class=\"fr-header__brand-top\">\n                <div class=\"fr-header__logo\">\n                  <p class=\"fr-logo\">\n                  République\n                  <br>Française\n                  </p>\n                </div>\n                <div class=\"fr-header__navbar\">\n                  <button class=\"fr-btn--menu fr-btn\" data-fr-opened=\"false\" aria-controls=\"menu\" aria-haspopup=\"menu\" title=\"Menu\" id=\"fr-btn-menu-mobile\">\n                    Menu\n                  </button>\n                </div>\n              </div>\n              <div class=\"fr-header__service\">\n                <a href=\"/\">\n                  <p class=\"fr-header__service-title\">Mes ADS</p>\n                </a>\n                <p class=\"fr-header__service-tagline\">🚖 La base Française des autorisations de stationnement Taxi <span style=\"display: inline-block; width: fit-content; transform: scale(-1, 1);\">🚕</span></p>\n              </div>\n            </div>\n            <div class=\"fr-header__tools\">\n              <div class=\"fr-header__tools-links\">\n                <ul class=\"fr-links-group\">\n                  \n                    <li>\n                      <a class=\"fr-link fr-icon-close-circle-line\" href=\"/auth/login/\">Connexion / Création de compte</a>\n                    </li>\n                  \n                </ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"fr-header__menu fr-modal\" id=\"menu\" aria-labelledby=\"fr-btn-menu-mobile\">\n        <div class=\"fr-container\">\n          <button class=\"fr-link--close fr-link\" aria-controls=\"menu\">Fermer</button>\n          <div class=\"fr-header__menu-links\"></div>\n          <nav class=\"fr-nav\" id=\"navigation-832\" role=\"navigation\" aria-label=\"Menu principal\">\n            <ul class=\"fr-nav__list\">\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/registre_ads/gestion\">📄 Registre des ADS</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/relais/\">🚖 Répertoires des Véhicules Relais</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/reglementation\">📚 Réglementation taxi</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                <a class=\"fr-nav__link\" href=\"/faq\">🙋 J'ai un problème</a>\n              </li>\n            </ul>\n          </nav>\n        </div>\n      </div>\n    </header>\n\n    \n<div id=\"banner-container\">\n  <div id=\"banner\">\n    <div id=\"banner-text\">\n        MesADS, le registre des ADS et des véhicules relais\n    </div>\n  </div>\n\n  \n  \n<main id=\"content\" class=\"fr-container fr-pt-5w fr-pb-5w\">\n  \n\n  \n\n  <h1 class=\"fr-mt-5w\">Pour savoir comment utiliser MesADS, choisissez votre profil</h1>\n\n  <p class=\"fr-text--lead\" style=\"text-align: center\">\n    MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi <strong>pour les administrations</strong> (registre des ADS) et l'accès à la liste des véhicules de remplacement <strong>pour les chauffeurs de taxi et propriétaires de véhicules relais</strong> (répertoires des taxis relais).\n  </p>\n\n  <p class=\"fr-text--lead\">\n    Vous êtes…\n  </p>\n\n  <div class=\"fr-grid-row fr-grid-row--gutters fr-grid-row--center\">\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/gestionnaire_ads\">Chargé de la gestion des ADS de votre commune ou EPCI</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              👨‍💻\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/prefecture\">Agent au sein d'une préfecture</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🇫🇷‍\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/chauffeur\">Chauffeur de taxi</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🚕\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/proprietaire_vehicules_relais\">Détenteur d'un taxi relais (véhicule de remplacement)</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🦺\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/reglementation\">Réglementation</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              📚 \n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n</main>\n\n</div>\n\n\n    <footer class=\"fr-footer fr-mt-5w\" role=\"contentinfo\" id=\"footer\">\n      <div class=\"fr-container\">\n        <div class=\"fr-footer__body\">\n          <div class=\"fr-footer__brand fr-enlarge-link\">\n            <a href=\"/\" title=\"Retour à l’accueil\">\n              <p class=\"fr-logo\" title=\"république française\">\n              république\n              <br>française\n              </p>\n            </a>\n          </div>\n          <div class=\"fr-footer__content\">\n            <p class=\"fr-footer__content-desc\">\n              MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi pour les administrations (registre des ADS) et l'accès aux listes des véhicules de remplacement pour les chauffeurs de taxi (répertoires des taxis relais).\n            </p>\n            <ul class=\"fr-footer__content-list\">\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://legifrance.gouv.fr\">legifrance.gouv.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://gouvernement.fr\">gouvernement.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://service-public.fr\">service-public.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://data.gouv.fr\">data.gouv.fr</a>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <div class=\"fr-footer__bottom\">\n          <ul class=\"fr-footer__bottom-list\">\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/suivi\">Données personnelles et cookies</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/accessibilite\">Accessibilité : non conforme</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/chiffres-cles\">Statistiques</a>\n            </li>\n          </ul>\n          <div class=\"fr-footer__bottom-copy\">\n            <p>Sauf mention contraire, tous les textes de ce site sont sous <a href=\"https://github.com/etalab/licence-ouverte/blob/master/LO.md\" target=\"_blank\">licence etalab-2.0</a>\n            </p>\n          </div>\n        </div>\n      </div>\n    </footer>\n\n    <script type=\"module\" src=\"/static/%40gouvfr/dsfr/dsfr.module.js?v=20240718\"></script>\n    <script type=\"text/javascript\" nomodule src=\"/static/%40gouvfr/js/dsfr.nomodule.js?v=20240718\"></script>\n    <script type=\"text/javascript\" src=\"/static/admin/js/vendor/jquery/jquery.js?v=20240718\"></script>\n\n    \n    <script type=\"text/javascript\">\n      window.$crisp= [];\n\n      \n\n      window.CRISP_WEBSITE_ID = \"922d0608-bda2-4c17-8803-8e24b1cfab45\";\n      (function(){\n        d = document;\n        s = d.createElement(\"script\");\n        s.src = \"https://client.crisp.chat/l.js\";\n        s.async = 1;\n        d.getElementsByTagName(\"head\")[0].appendChild(s);\n      })();\n    </script>\n    \n\n    \n    <script src=\"https://sentry.incubateur.net/js-sdk-loader/84c680aeb0172f06900d5ae97d5e5ee6.min.js\" crossorigin=\"anonymous\"></script>\n    \n\n    \n  \n\n  <script src=\"/static/assets/js/base.c3279544.js\"></script>\n\n  </body>\n</html>\n",
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:20:34.056926181Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://mesads.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "x-permitted-cross-domain-policies",
+      "type": "http",
+      "host": "https://mesads.beta.gouv.fr",
+      "matched-at": "https://mesads.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: mesads.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nContent-Length: 12021\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nReferrer-Policy: same-origin\r\nSozu-Id: 01JQK92G339SNQ0F8EMJJGGY4P\r\nVary: Cookie\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\n\r\n\n\n\n<!doctype html>\n<html lang=\"fr\" data-fr-scheme=\"light\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/dsfr/dsfr.min.css?v=20240718\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/utility/utility.css\">\n    <link rel=\"stylesheet\" href=\"/static/style.css\">\n\n    <link rel=\"apple-touch-icon\" href=\"/static/%40gouvfr/favicon/apple-touch-icon.png\"><!-- 180×180 -->\n    <link rel=\"icon\" href=\"/static/%40gouvfr/favicon/favicon.svg\" type=\"image/svg+xml\">\n    <link rel=\"shortcut icon\" href=\"/static/%40gouvfr/favicon/favicon.ico\" type=\"image/x-icon\"><!-- 32×32 -->\n\n    \n    <title>Découvrez comment MesADS peut vous aider - Choisissez votre profil</title>\n<meta name=\"description\" content=\"Trouvez comment utiliser MesADS en sélectionnant votre profil: gestionnaire ADS, chauffeur de taxi, propriétaire de véhicules relais, ou autre.\">\n\n\n    \n    <script>\n      var _paq = window._paq = window._paq || [];\n      /* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n      _paq.push(['trackPageView']);\n      _paq.push(['enableLinkTracking']);\n      (function() {\n        var u=\"https://stats.beta.gouv.fr/\";\n        _paq.push(['setTrackerUrl', u+'matomo.php']);\n        _paq.push(['setSiteId', '137']);\n        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);\n      })();\n    </script>\n    \n  </head>\n  <body>\n    <div class=\"fr-skiplinks\">\n      <nav class=\"fr-container\" role=\"navigation\" aria-label=\"Accès rapide\">\n          <ul class=\"fr-skiplinks__list\">\n              <li>\n                <a class=\"fr-link\" href=\"#content\">Contenu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#menu\">Menu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#footer\">Pied de page</a>\n              </li>\n          </ul>\n      </nav>\n    </div>\n\n    <header role=\"banner\" class=\"fr-header\">\n      <div class=\"fr-header__body\">\n        <div class=\"fr-container\">\n          <div class=\"fr-header__body-row\">\n            <div class=\"fr-header__brand fr-enlarge-link\">\n              <div class=\"fr-header__brand-top\">\n                <div class=\"fr-header__logo\">\n                  <p class=\"fr-logo\">\n                  République\n                  <br>Française\n                  </p>\n                </div>\n                <div class=\"fr-header__navbar\">\n                  <button class=\"fr-btn--menu fr-btn\" data-fr-opened=\"false\" aria-controls=\"menu\" aria-haspopup=\"menu\" title=\"Menu\" id=\"fr-btn-menu-mobile\">\n                    Menu\n                  </button>\n                </div>\n              </div>\n              <div class=\"fr-header__service\">\n                <a href=\"/\">\n                  <p class=\"fr-header__service-title\">Mes ADS</p>\n                </a>\n                <p class=\"fr-header__service-tagline\">🚖 La base Française des autorisations de stationnement Taxi <span style=\"display: inline-block; width: fit-content; transform: scale(-1, 1);\">🚕</span></p>\n              </div>\n            </div>\n            <div class=\"fr-header__tools\">\n              <div class=\"fr-header__tools-links\">\n                <ul class=\"fr-links-group\">\n                  \n                    <li>\n                      <a class=\"fr-link fr-icon-close-circle-line\" href=\"/auth/login/\">Connexion / Création de compte</a>\n                    </li>\n                  \n                </ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"fr-header__menu fr-modal\" id=\"menu\" aria-labelledby=\"fr-btn-menu-mobile\">\n        <div class=\"fr-container\">\n          <button class=\"fr-link--close fr-link\" aria-controls=\"menu\">Fermer</button>\n          <div class=\"fr-header__menu-links\"></div>\n          <nav class=\"fr-nav\" id=\"navigation-832\" role=\"navigation\" aria-label=\"Menu principal\">\n            <ul class=\"fr-nav__list\">\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/registre_ads/gestion\">📄 Registre des ADS</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/relais/\">🚖 Répertoires des Véhicules Relais</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/reglementation\">📚 Réglementation taxi</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                <a class=\"fr-nav__link\" href=\"/faq\">🙋 J'ai un problème</a>\n              </li>\n            </ul>\n          </nav>\n        </div>\n      </div>\n    </header>\n\n    \n<div id=\"banner-container\">\n  <div id=\"banner\">\n    <div id=\"banner-text\">\n        MesADS, le registre des ADS et des véhicules relais\n    </div>\n  </div>\n\n  \n  \n<main id=\"content\" class=\"fr-container fr-pt-5w fr-pb-5w\">\n  \n\n  \n\n  <h1 class=\"fr-mt-5w\">Pour savoir comment utiliser MesADS, choisissez votre profil</h1>\n\n  <p class=\"fr-text--lead\" style=\"text-align: center\">\n    MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi <strong>pour les administrations</strong> (registre des ADS) et l'accès à la liste des véhicules de remplacement <strong>pour les chauffeurs de taxi et propriétaires de véhicules relais</strong> (répertoires des taxis relais).\n  </p>\n\n  <p class=\"fr-text--lead\">\n    Vous êtes…\n  </p>\n\n  <div class=\"fr-grid-row fr-grid-row--gutters fr-grid-row--center\">\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/gestionnaire_ads\">Chargé de la gestion des ADS de votre commune ou EPCI</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              👨‍💻\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/prefecture\">Agent au sein d'une préfecture</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🇫🇷‍\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/chauffeur\">Chauffeur de taxi</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🚕\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/proprietaire_vehicules_relais\">Détenteur d'un taxi relais (véhicule de remplacement)</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🦺\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/reglementation\">Réglementation</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              📚 \n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n</main>\n\n</div>\n\n\n    <footer class=\"fr-footer fr-mt-5w\" role=\"contentinfo\" id=\"footer\">\n      <div class=\"fr-container\">\n        <div class=\"fr-footer__body\">\n          <div class=\"fr-footer__brand fr-enlarge-link\">\n            <a href=\"/\" title=\"Retour à l’accueil\">\n              <p class=\"fr-logo\" title=\"république française\">\n              république\n              <br>française\n              </p>\n            </a>\n          </div>\n          <div class=\"fr-footer__content\">\n            <p class=\"fr-footer__content-desc\">\n              MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi pour les administrations (registre des ADS) et l'accès aux listes des véhicules de remplacement pour les chauffeurs de taxi (répertoires des taxis relais).\n            </p>\n            <ul class=\"fr-footer__content-list\">\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://legifrance.gouv.fr\">legifrance.gouv.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://gouvernement.fr\">gouvernement.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://service-public.fr\">service-public.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://data.gouv.fr\">data.gouv.fr</a>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <div class=\"fr-footer__bottom\">\n          <ul class=\"fr-footer__bottom-list\">\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/suivi\">Données personnelles et cookies</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/accessibilite\">Accessibilité : non conforme</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/chiffres-cles\">Statistiques</a>\n            </li>\n          </ul>\n          <div class=\"fr-footer__bottom-copy\">\n            <p>Sauf mention contraire, tous les textes de ce site sont sous <a href=\"https://github.com/etalab/licence-ouverte/blob/master/LO.md\" target=\"_blank\">licence etalab-2.0</a>\n            </p>\n          </div>\n        </div>\n      </div>\n    </footer>\n\n    <script type=\"module\" src=\"/static/%40gouvfr/dsfr/dsfr.module.js?v=20240718\"></script>\n    <script type=\"text/javascript\" nomodule src=\"/static/%40gouvfr/js/dsfr.nomodule.js?v=20240718\"></script>\n    <script type=\"text/javascript\" src=\"/static/admin/js/vendor/jquery/jquery.js?v=20240718\"></script>\n\n    \n    <script type=\"text/javascript\">\n      window.$crisp= [];\n\n      \n\n      window.CRISP_WEBSITE_ID = \"922d0608-bda2-4c17-8803-8e24b1cfab45\";\n      (function(){\n        d = document;\n        s = d.createElement(\"script\");\n        s.src = \"https://client.crisp.chat/l.js\";\n        s.async = 1;\n        d.getElementsByTagName(\"head\")[0].appendChild(s);\n      })();\n    </script>\n    \n\n    \n    <script src=\"https://sentry.incubateur.net/js-sdk-loader/84c680aeb0172f06900d5ae97d5e5ee6.min.js\" crossorigin=\"anonymous\"></script>\n    \n\n    \n  \n\n  <script src=\"/static/assets/js/base.c3279544.js\"></script>\n\n  </body>\n</html>\n",
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:20:34.056942241Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://mesads.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "clear-site-data",
+      "type": "http",
+      "host": "https://mesads.beta.gouv.fr",
+      "matched-at": "https://mesads.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: mesads.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nContent-Length: 12021\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nReferrer-Policy: same-origin\r\nSozu-Id: 01JQK92G339SNQ0F8EMJJGGY4P\r\nVary: Cookie\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\n\r\n\n\n\n<!doctype html>\n<html lang=\"fr\" data-fr-scheme=\"light\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/dsfr/dsfr.min.css?v=20240718\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/utility/utility.css\">\n    <link rel=\"stylesheet\" href=\"/static/style.css\">\n\n    <link rel=\"apple-touch-icon\" href=\"/static/%40gouvfr/favicon/apple-touch-icon.png\"><!-- 180×180 -->\n    <link rel=\"icon\" href=\"/static/%40gouvfr/favicon/favicon.svg\" type=\"image/svg+xml\">\n    <link rel=\"shortcut icon\" href=\"/static/%40gouvfr/favicon/favicon.ico\" type=\"image/x-icon\"><!-- 32×32 -->\n\n    \n    <title>Découvrez comment MesADS peut vous aider - Choisissez votre profil</title>\n<meta name=\"description\" content=\"Trouvez comment utiliser MesADS en sélectionnant votre profil: gestionnaire ADS, chauffeur de taxi, propriétaire de véhicules relais, ou autre.\">\n\n\n    \n    <script>\n      var _paq = window._paq = window._paq || [];\n      /* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n      _paq.push(['trackPageView']);\n      _paq.push(['enableLinkTracking']);\n      (function() {\n        var u=\"https://stats.beta.gouv.fr/\";\n        _paq.push(['setTrackerUrl', u+'matomo.php']);\n        _paq.push(['setSiteId', '137']);\n        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);\n      })();\n    </script>\n    \n  </head>\n  <body>\n    <div class=\"fr-skiplinks\">\n      <nav class=\"fr-container\" role=\"navigation\" aria-label=\"Accès rapide\">\n          <ul class=\"fr-skiplinks__list\">\n              <li>\n                <a class=\"fr-link\" href=\"#content\">Contenu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#menu\">Menu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#footer\">Pied de page</a>\n              </li>\n          </ul>\n      </nav>\n    </div>\n\n    <header role=\"banner\" class=\"fr-header\">\n      <div class=\"fr-header__body\">\n        <div class=\"fr-container\">\n          <div class=\"fr-header__body-row\">\n            <div class=\"fr-header__brand fr-enlarge-link\">\n              <div class=\"fr-header__brand-top\">\n                <div class=\"fr-header__logo\">\n                  <p class=\"fr-logo\">\n                  République\n                  <br>Française\n                  </p>\n                </div>\n                <div class=\"fr-header__navbar\">\n                  <button class=\"fr-btn--menu fr-btn\" data-fr-opened=\"false\" aria-controls=\"menu\" aria-haspopup=\"menu\" title=\"Menu\" id=\"fr-btn-menu-mobile\">\n                    Menu\n                  </button>\n                </div>\n              </div>\n              <div class=\"fr-header__service\">\n                <a href=\"/\">\n                  <p class=\"fr-header__service-title\">Mes ADS</p>\n                </a>\n                <p class=\"fr-header__service-tagline\">🚖 La base Française des autorisations de stationnement Taxi <span style=\"display: inline-block; width: fit-content; transform: scale(-1, 1);\">🚕</span></p>\n              </div>\n            </div>\n            <div class=\"fr-header__tools\">\n              <div class=\"fr-header__tools-links\">\n                <ul class=\"fr-links-group\">\n                  \n                    <li>\n                      <a class=\"fr-link fr-icon-close-circle-line\" href=\"/auth/login/\">Connexion / Création de compte</a>\n                    </li>\n                  \n                </ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"fr-header__menu fr-modal\" id=\"menu\" aria-labelledby=\"fr-btn-menu-mobile\">\n        <div class=\"fr-container\">\n          <button class=\"fr-link--close fr-link\" aria-controls=\"menu\">Fermer</button>\n          <div class=\"fr-header__menu-links\"></div>\n          <nav class=\"fr-nav\" id=\"navigation-832\" role=\"navigation\" aria-label=\"Menu principal\">\n            <ul class=\"fr-nav__list\">\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/registre_ads/gestion\">📄 Registre des ADS</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/relais/\">🚖 Répertoires des Véhicules Relais</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/reglementation\">📚 Réglementation taxi</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                <a class=\"fr-nav__link\" href=\"/faq\">🙋 J'ai un problème</a>\n              </li>\n            </ul>\n          </nav>\n        </div>\n      </div>\n    </header>\n\n    \n<div id=\"banner-container\">\n  <div id=\"banner\">\n    <div id=\"banner-text\">\n        MesADS, le registre des ADS et des véhicules relais\n    </div>\n  </div>\n\n  \n  \n<main id=\"content\" class=\"fr-container fr-pt-5w fr-pb-5w\">\n  \n\n  \n\n  <h1 class=\"fr-mt-5w\">Pour savoir comment utiliser MesADS, choisissez votre profil</h1>\n\n  <p class=\"fr-text--lead\" style=\"text-align: center\">\n    MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi <strong>pour les administrations</strong> (registre des ADS) et l'accès à la liste des véhicules de remplacement <strong>pour les chauffeurs de taxi et propriétaires de véhicules relais</strong> (répertoires des taxis relais).\n  </p>\n\n  <p class=\"fr-text--lead\">\n    Vous êtes…\n  </p>\n\n  <div class=\"fr-grid-row fr-grid-row--gutters fr-grid-row--center\">\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/gestionnaire_ads\">Chargé de la gestion des ADS de votre commune ou EPCI</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              👨‍💻\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/prefecture\">Agent au sein d'une préfecture</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🇫🇷‍\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/chauffeur\">Chauffeur de taxi</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🚕\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/proprietaire_vehicules_relais\">Détenteur d'un taxi relais (véhicule de remplacement)</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🦺\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/reglementation\">Réglementation</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              📚 \n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n</main>\n\n</div>\n\n\n    <footer class=\"fr-footer fr-mt-5w\" role=\"contentinfo\" id=\"footer\">\n      <div class=\"fr-container\">\n        <div class=\"fr-footer__body\">\n          <div class=\"fr-footer__brand fr-enlarge-link\">\n            <a href=\"/\" title=\"Retour à l’accueil\">\n              <p class=\"fr-logo\" title=\"république française\">\n              république\n              <br>française\n              </p>\n            </a>\n          </div>\n          <div class=\"fr-footer__content\">\n            <p class=\"fr-footer__content-desc\">\n              MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi pour les administrations (registre des ADS) et l'accès aux listes des véhicules de remplacement pour les chauffeurs de taxi (répertoires des taxis relais).\n            </p>\n            <ul class=\"fr-footer__content-list\">\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://legifrance.gouv.fr\">legifrance.gouv.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://gouvernement.fr\">gouvernement.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://service-public.fr\">service-public.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://data.gouv.fr\">data.gouv.fr</a>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <div class=\"fr-footer__bottom\">\n          <ul class=\"fr-footer__bottom-list\">\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/suivi\">Données personnelles et cookies</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/accessibilite\">Accessibilité : non conforme</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/chiffres-cles\">Statistiques</a>\n            </li>\n          </ul>\n          <div class=\"fr-footer__bottom-copy\">\n            <p>Sauf mention contraire, tous les textes de ce site sont sous <a href=\"https://github.com/etalab/licence-ouverte/blob/master/LO.md\" target=\"_blank\">licence etalab-2.0</a>\n            </p>\n          </div>\n        </div>\n      </div>\n    </footer>\n\n    <script type=\"module\" src=\"/static/%40gouvfr/dsfr/dsfr.module.js?v=20240718\"></script>\n    <script type=\"text/javascript\" nomodule src=\"/static/%40gouvfr/js/dsfr.nomodule.js?v=20240718\"></script>\n    <script type=\"text/javascript\" src=\"/static/admin/js/vendor/jquery/jquery.js?v=20240718\"></script>\n\n    \n    <script type=\"text/javascript\">\n      window.$crisp= [];\n\n      \n\n      window.CRISP_WEBSITE_ID = \"922d0608-bda2-4c17-8803-8e24b1cfab45\";\n      (function(){\n        d = document;\n        s = d.createElement(\"script\");\n        s.src = \"https://client.crisp.chat/l.js\";\n        s.async = 1;\n        d.getElementsByTagName(\"head\")[0].appendChild(s);\n      })();\n    </script>\n    \n\n    \n    <script src=\"https://sentry.incubateur.net/js-sdk-loader/84c680aeb0172f06900d5ae97d5e5ee6.min.js\" crossorigin=\"anonymous\"></script>\n    \n\n    \n  \n\n  <script src=\"/static/assets/js/base.c3279544.js\"></script>\n\n  </body>\n</html>\n",
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:20:34.056956858Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://mesads.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/missing-sri.yaml",
+      "template-url": "https://templates.nuclei.sh/public/missing-sri",
+      "template-id": "missing-sri",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/missing-sri.yaml",
+      "info": {
+        "name": "Missing Subresource Integrity",
+        "author": [
+          "lucky0x0d",
+          "pulsesecurity.co.nz",
+          "sullo amarsct"
+        ],
+        "tags": [
+          "compliance",
+          "js",
+          "css",
+          "sri",
+          "misconfig"
+        ],
+        "description": "Checks if external script and stylesheet tags in the HTML response are missing the Subresource Integrity (SRI) attribute.\n",
+        "reference": [
+          "https://cheatsheetseries.owasp.org/cheatsheets/third_party_javascript_management_cheat_sheet.html#subresource-integrity",
+          "https://developer.mozilla.org/en-us/docs/web/security/subresource_integrity"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "http",
+      "host": "https://mesads.beta.gouv.fr",
+      "matched-at": "https://mesads.beta.gouv.fr/",
+      "extracted-results": [
+        "https://sentry.incubateur.net/js-sdk-loader/84c680aeb0172f06900d5ae97d5e5ee6.min.js"
+      ],
+      "request": "GET / HTTP/1.1\r\nHost: mesads.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nContent-Length: 12021\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nReferrer-Policy: same-origin\r\nSozu-Id: 01JQK93CVDKX8518D61E8ZYF86\r\nVary: Cookie\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\n\r\n\n\n\n<!doctype html>\n<html lang=\"fr\" data-fr-scheme=\"light\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/dsfr/dsfr.min.css?v=20240718\">\n    <link rel=\"stylesheet\" href=\"/static/%40gouvfr/utility/utility.css\">\n    <link rel=\"stylesheet\" href=\"/static/style.css\">\n\n    <link rel=\"apple-touch-icon\" href=\"/static/%40gouvfr/favicon/apple-touch-icon.png\"><!-- 180×180 -->\n    <link rel=\"icon\" href=\"/static/%40gouvfr/favicon/favicon.svg\" type=\"image/svg+xml\">\n    <link rel=\"shortcut icon\" href=\"/static/%40gouvfr/favicon/favicon.ico\" type=\"image/x-icon\"><!-- 32×32 -->\n\n    \n    <title>Découvrez comment MesADS peut vous aider - Choisissez votre profil</title>\n<meta name=\"description\" content=\"Trouvez comment utiliser MesADS en sélectionnant votre profil: gestionnaire ADS, chauffeur de taxi, propriétaire de véhicules relais, ou autre.\">\n\n\n    \n    <script>\n      var _paq = window._paq = window._paq || [];\n      /* tracker methods like \"setCustomDimension\" should be called before \"trackPageView\" */\n      _paq.push(['trackPageView']);\n      _paq.push(['enableLinkTracking']);\n      (function() {\n        var u=\"https://stats.beta.gouv.fr/\";\n        _paq.push(['setTrackerUrl', u+'matomo.php']);\n        _paq.push(['setSiteId', '137']);\n        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];\n        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);\n      })();\n    </script>\n    \n  </head>\n  <body>\n    <div class=\"fr-skiplinks\">\n      <nav class=\"fr-container\" role=\"navigation\" aria-label=\"Accès rapide\">\n          <ul class=\"fr-skiplinks__list\">\n              <li>\n                <a class=\"fr-link\" href=\"#content\">Contenu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#menu\">Menu</a>\n              </li>\n              <li>\n                <a class=\"fr-link\" href=\"#footer\">Pied de page</a>\n              </li>\n          </ul>\n      </nav>\n    </div>\n\n    <header role=\"banner\" class=\"fr-header\">\n      <div class=\"fr-header__body\">\n        <div class=\"fr-container\">\n          <div class=\"fr-header__body-row\">\n            <div class=\"fr-header__brand fr-enlarge-link\">\n              <div class=\"fr-header__brand-top\">\n                <div class=\"fr-header__logo\">\n                  <p class=\"fr-logo\">\n                  République\n                  <br>Française\n                  </p>\n                </div>\n                <div class=\"fr-header__navbar\">\n                  <button class=\"fr-btn--menu fr-btn\" data-fr-opened=\"false\" aria-controls=\"menu\" aria-haspopup=\"menu\" title=\"Menu\" id=\"fr-btn-menu-mobile\">\n                    Menu\n                  </button>\n                </div>\n              </div>\n              <div class=\"fr-header__service\">\n                <a href=\"/\">\n                  <p class=\"fr-header__service-title\">Mes ADS</p>\n                </a>\n                <p class=\"fr-header__service-tagline\">🚖 La base Française des autorisations de stationnement Taxi <span style=\"display: inline-block; width: fit-content; transform: scale(-1, 1);\">🚕</span></p>\n              </div>\n            </div>\n            <div class=\"fr-header__tools\">\n              <div class=\"fr-header__tools-links\">\n                <ul class=\"fr-links-group\">\n                  \n                    <li>\n                      <a class=\"fr-link fr-icon-close-circle-line\" href=\"/auth/login/\">Connexion / Création de compte</a>\n                    </li>\n                  \n                </ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"fr-header__menu fr-modal\" id=\"menu\" aria-labelledby=\"fr-btn-menu-mobile\">\n        <div class=\"fr-container\">\n          <button class=\"fr-link--close fr-link\" aria-controls=\"menu\">Fermer</button>\n          <div class=\"fr-header__menu-links\"></div>\n          <nav class=\"fr-nav\" id=\"navigation-832\" role=\"navigation\" aria-label=\"Menu principal\">\n            <ul class=\"fr-nav__list\">\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/registre_ads/gestion\">📄 Registre des ADS</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/relais/\">🚖 Répertoires des Véhicules Relais</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                \n                <a class=\"fr-nav__link\" href=\"/reglementation\">📚 Réglementation taxi</a>\n              </li>\n              <li class=\"fr-nav__item\">\n                \n                <a class=\"fr-nav__link\" href=\"/faq\">🙋 J'ai un problème</a>\n              </li>\n            </ul>\n          </nav>\n        </div>\n      </div>\n    </header>\n\n    \n<div id=\"banner-container\">\n  <div id=\"banner\">\n    <div id=\"banner-text\">\n        MesADS, le registre des ADS et des véhicules relais\n    </div>\n  </div>\n\n  \n  \n<main id=\"content\" class=\"fr-container fr-pt-5w fr-pb-5w\">\n  \n\n  \n\n  <h1 class=\"fr-mt-5w\">Pour savoir comment utiliser MesADS, choisissez votre profil</h1>\n\n  <p class=\"fr-text--lead\" style=\"text-align: center\">\n    MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi <strong>pour les administrations</strong> (registre des ADS) et l'accès à la liste des véhicules de remplacement <strong>pour les chauffeurs de taxi et propriétaires de véhicules relais</strong> (répertoires des taxis relais).\n  </p>\n\n  <p class=\"fr-text--lead\">\n    Vous êtes…\n  </p>\n\n  <div class=\"fr-grid-row fr-grid-row--gutters fr-grid-row--center\">\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/gestionnaire_ads\">Chargé de la gestion des ADS de votre commune ou EPCI</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              👨‍💻\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/prefecture\">Agent au sein d'une préfecture</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🇫🇷‍\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/chauffeur\">Chauffeur de taxi</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🚕\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/proprietaire_vehicules_relais\">Détenteur d'un taxi relais (véhicule de remplacement)</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              🦺\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"fr-col-6\">\n      <div class=\"fr-tile fr-enlarge-link\">\n        <div class=\"fr-tile__body\">\n          <div class=\"fr-tile__content\">\n            <h2 class=\"fr-tile__title\">\n              <a href=\"/reglementation\">Réglementation</a>\n            </h2>\n          </div>\n        </div>\n        <div class=\"fr-tile__header\">\n          <div class=\"fr-tile__pictogram\">\n            <div style=\"font-size: 4rem\">\n              📚 \n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n</main>\n\n</div>\n\n\n    <footer class=\"fr-footer fr-mt-5w\" role=\"contentinfo\" id=\"footer\">\n      <div class=\"fr-container\">\n        <div class=\"fr-footer__body\">\n          <div class=\"fr-footer__brand fr-enlarge-link\">\n            <a href=\"/\" title=\"Retour à l’accueil\">\n              <p class=\"fr-logo\" title=\"république française\">\n              république\n              <br>française\n              </p>\n            </a>\n          </div>\n          <div class=\"fr-footer__content\">\n            <p class=\"fr-footer__content-desc\">\n              MesADS est l'outil de référence du secteur taxi. La plateforme propose actuellement deux fonctionnalités: la gestion des licences de taxi pour les administrations (registre des ADS) et l'accès aux listes des véhicules de remplacement pour les chauffeurs de taxi (répertoires des taxis relais).\n            </p>\n            <ul class=\"fr-footer__content-list\">\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://legifrance.gouv.fr\">legifrance.gouv.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://gouvernement.fr\">gouvernement.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://service-public.fr\">service-public.fr</a>\n              </li>\n              <li class=\"fr-footer__content-item\">\n                <a class=\"fr-footer__content-link\" href=\"https://data.gouv.fr\">data.gouv.fr</a>\n              </li>\n            </ul>\n          </div>\n        </div>\n        <div class=\"fr-footer__bottom\">\n          <ul class=\"fr-footer__bottom-list\">\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/suivi\">Données personnelles et cookies</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/accessibilite\">Accessibilité : non conforme</a>\n            </li>\n            <li class=\"fr-footer__bottom-item\">\n              <a class=\"fr-footer__bottom-link\" href=\"/chiffres-cles\">Statistiques</a>\n            </li>\n          </ul>\n          <div class=\"fr-footer__bottom-copy\">\n            <p>Sauf mention contraire, tous les textes de ce site sont sous <a href=\"https://github.com/etalab/licence-ouverte/blob/master/LO.md\" target=\"_blank\">licence etalab-2.0</a>\n            </p>\n          </div>\n        </div>\n      </div>\n    </footer>\n\n    <script type=\"module\" src=\"/static/%40gouvfr/dsfr/dsfr.module.js?v=20240718\"></script>\n    <script type=\"text/javascript\" nomodule src=\"/static/%40gouvfr/js/dsfr.nomodule.js?v=20240718\"></script>\n    <script type=\"text/javascript\" src=\"/static/admin/js/vendor/jquery/jquery.js?v=20240718\"></script>\n\n    \n    <script type=\"text/javascript\">\n      window.$crisp= [];\n\n      \n\n      window.CRISP_WEBSITE_ID = \"922d0608-bda2-4c17-8803-8e24b1cfab45\";\n      (function(){\n        d = document;\n        s = d.createElement(\"script\");\n        s.src = \"https://client.crisp.chat/l.js\";\n        s.async = 1;\n        d.getElementsByTagName(\"head\")[0].appendChild(s);\n      })();\n    </script>\n    \n\n    \n    <script src=\"https://sentry.incubateur.net/js-sdk-loader/84c680aeb0172f06900d5ae97d5e5ee6.min.js\" crossorigin=\"anonymous\"></script>\n    \n\n    \n  \n\n  <script src=\"/static/assets/js/base.c3279544.js\"></script>\n\n  </body>\n</html>\n",
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:21:03.40484454Z",
+      "curl-command": "curl -X 'GET' -d '' -H 'Host: mesads.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://mesads.beta.gouv.fr/'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/technologies/waf-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/waf-detect",
+      "template-id": "waf-detect",
+      "template-path": "/home/runner/nuclei-templates/http/technologies/waf-detect.yaml",
+      "info": {
+        "name": "WAF Detection",
+        "author": [
+          "dwisiswant0",
+          "lu4nx"
+        ],
+        "tags": [
+          "waf",
+          "tech",
+          "misc"
+        ],
+        "description": "A web application firewall was detected.",
+        "reference": [
+          "https://github.com/ekultek/whatwaf"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "matcher-name": "apachegeneric",
+      "type": "http",
+      "host": "https://mesads.beta.gouv.fr",
+      "matched-at": "https://mesads.beta.gouv.fr/",
+      "request": "POST / HTTP/1.1\r\nHost: mesads.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
+      "response": "HTTP/1.1 403 Forbidden\r\nContent-Length: 2087\r\nContent-Type: text/html; charset=utf-8\r\nCross-Origin-Opener-Policy: same-origin\r\nReferrer-Policy: same-origin\r\nSozu-Id: 01JQK93RQWNRJDDK63N0QAZRTV\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\n\r\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">\n  <meta name=\"robots\" content=\"NONE,NOARCHIVE\">\n  <title>403 Forbidden</title>\n  <style type=\"text/css\">\n    html * { padding:0; margin:0; }\n    body * { padding:10px 20px; }\n    body * * { padding:0; }\n    body { font:small sans-serif; background:#eee; color:#000; }\n    body>div { border-bottom:1px solid #ddd; }\n    h1 { font-weight:normal; margin-bottom:.4em; }\n    h1 span { font-size:60%; color:#666; font-weight:normal; }\n    #info { background:#f6f6f6; }\n    #info ul { margin: 0.5em 4em; }\n    #info p, #summary p { padding-top:10px; }\n    #summary { background: #ffc; }\n    #explanation { background:#eee; border-bottom: 0px none; }\n  </style>\n</head>\n<body>\n<div id=\"summary\">\n  <h1>Interdit <span>(403)</span></h1>\n  <p>La vérification CSRF a échoué. La requête a été interrompue.</p>\n\n  <p>Vous voyez ce message parce que ce site HTTPS exige que le navigateur web envoie un en-tête « Referer », ce qu’il n&#x27;a pas fait. Cet en-tête est exigé pour des raisons de sécurité, afin de s’assurer que le navigateur n’ait pas été piraté par un intervenant externe.</p>\n  <p>Si vous avez désactivé l’envoi des en-têtes « Referer » par votre navigateur, veuillez les réactiver, au moins pour ce site ou pour les connexions HTTPS, ou encore pour les requêtes de même origine (« same-origin »).</p>\n  <p>Si vous utilisez la balise &lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt; ou que vous incluez l’en-tête « Referrer-Policy: no-referrer », il est préférable de les enlever. La protection CSRF exige que l’en-tête ``Referer`` effectue un contrôle de référant strict. Si vous vous souciez de la confidentialité, utilisez des alternatives comme &lt;a rel=&quot;noreferrer&quot; …&gt; pour les liens vers des sites tiers.</p>\n\n\n</div>\n\n<div id=\"explanation\">\n  <p><small>Des informations plus détaillées sont affichées lorsque la variable DEBUG vaut True.</small></p>\n</div>\n\n</body>\n</html>\n",
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:21:15.562817084Z",
+      "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: mesads.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://mesads.beta.gouv.fr/'",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/detect-ssl-issuer.yaml",
+      "template-url": "https://templates.nuclei.sh/public/ssl-issuer",
+      "template-id": "ssl-issuer",
+      "template-path": "/home/runner/nuclei-templates/ssl/detect-ssl-issuer.yaml",
+      "info": {
+        "name": "Detect SSL Certificate Issuer",
+        "author": [
+          "lingtren"
+        ],
+        "tags": [
+          "ssl",
+          "tls"
+        ],
+        "description": "Extract the issuer's organization from the target's certificate. Issuers are entities which sign and distribute certificates.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "ssl",
+      "host": "mesads.beta.gouv.fr",
+      "matched-at": "mesads.beta.gouv.fr:443",
+      "extracted-results": [
+        "Let's Encrypt"
+      ],
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:22:06.587302648Z",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/ssl-dns-names.yaml",
+      "template-url": "https://templates.nuclei.sh/public/ssl-dns-names",
+      "template-id": "ssl-dns-names",
+      "template-path": "/home/runner/nuclei-templates/ssl/ssl-dns-names.yaml",
+      "info": {
+        "name": "SSL DNS Names",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "ssl",
+          "tls"
+        ],
+        "description": "Extract the Subject Alternative Name (SAN) from the target's certificate. SAN facilitates the usage of additional hostnames with the same certificate.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "ssl",
+      "host": "mesads.beta.gouv.fr",
+      "matched-at": "mesads.beta.gouv.fr:443",
+      "extracted-results": [
+        "mesads.beta.gouv.fr"
+      ],
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:22:06.587434433Z",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/tls-version.yaml",
+      "template-url": "https://templates.nuclei.sh/public/tls-version",
+      "template-id": "tls-version",
+      "template-path": "/home/runner/nuclei-templates/ssl/tls-version.yaml",
+      "info": {
+        "name": "TLS Version - Detect",
+        "author": [
+          "pdteam",
+          "pussycat0x"
+        ],
+        "tags": [
+          "ssl",
+          "tls"
+        ],
+        "description": "TLS version detection is a security process used to determine the version of the Transport Layer Security (TLS) protocol used by a computer or server.\nIt is important to detect the TLS version in order to ensure secure communication between two computers or servers.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 4
+        }
+      },
+      "type": "ssl",
+      "host": "mesads.beta.gouv.fr",
+      "matched-at": "mesads.beta.gouv.fr:443",
+      "extracted-results": [
+        "tls12"
+      ],
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:22:08.310499629Z",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/tls-version.yaml",
+      "template-url": "https://templates.nuclei.sh/public/tls-version",
+      "template-id": "tls-version",
+      "template-path": "/home/runner/nuclei-templates/ssl/tls-version.yaml",
+      "info": {
+        "name": "TLS Version - Detect",
+        "author": [
+          "pdteam",
+          "pussycat0x"
+        ],
+        "tags": [
+          "ssl",
+          "tls"
+        ],
+        "description": "TLS version detection is a security process used to determine the version of the Transport Layer Security (TLS) protocol used by a computer or server.\nIt is important to detect the TLS version in order to ensure secure communication between two computers or servers.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 4
+        }
+      },
+      "type": "ssl",
+      "host": "mesads.beta.gouv.fr",
+      "matched-at": "mesads.beta.gouv.fr:443",
+      "extracted-results": [
+        "tls13"
+      ],
+      "ip": "91.208.207.222",
+      "timestamp": "2025-03-30T10:22:08.482093199Z",
+      "matcher-status": true
+    }
+  ]
+]
