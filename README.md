@@ -1,3 +1,4 @@
+[![DashLord scans](https://github.com/MTES-MCT/dashlord/actions/workflows/scans.yml/badge.svg)](https://github.com/MTES-MCT/dashlord/actions/workflows/scans.yml)
 # DashLord
 
 Tableau de bord des bonnes pratiques techniques de la fabrique numérique du MTE : https://dashlord.mte.incubateur.net
