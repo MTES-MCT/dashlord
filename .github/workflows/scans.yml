@@ -165,6 +165,7 @@ jobs:
 
       - name: Déclaration RGPD
         continue-on-error: true
+        timeout-minutes: 10
         uses: SocialGouv/dashlord-actions/declaration-rgpd@v1
         if: ${{ matrix.sites.tools['declaration-rgpd'] }}
         with:
@@ -174,6 +175,7 @@ jobs:
 
       # testssl.sh action needs an hostname to save its output so we build it here
       - name: Extract hostname
+        timeout-minutes: 10
         id: hostname
         run: |
           HOSTNAME=$(echo "${{ matrix.sites.url }}" | sed -e 's/[^/]*\/\/\([^@]*@\)\?\([^:/]*\).*/\2/')
@@ -279,6 +281,7 @@ jobs:
           output: scans/codescanalerts.json
 
       - uses: SocialGouv/dashlord-actions/save@v1
+        timeout-minutes: 10
         with:
           url: ${{ matrix.sites.url }}
           # only clean up previous stats when all tools runned
