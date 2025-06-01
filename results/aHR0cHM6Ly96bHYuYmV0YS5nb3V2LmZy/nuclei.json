@@ -1,6 +1,82 @@
 [
   [
     {
+      "template": "dns/spf-record-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/spf-record-detect",
+      "template-id": "spf-record-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
+      "info": {
+        "name": "SPF Record - Detection",
+        "author": [
+          "rxerium"
+        ],
+        "tags": [
+          "dns",
+          "spf"
+        ],
+        "description": "An SPF TXT record was detected\n",
+        "reference": [
+          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "dns",
+      "host": "zlv.beta.gouv.fr.",
+      "matched-at": "zlv.beta.gouv.fr",
+      "extracted-results": [
+        "v=spf1 include:_spf.alwaysdata.com include:_spf.google.com ~all\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 38172\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 38172\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=VoBT_TGR22ABAZuPu2rRNwtftqdiVZM9uk-S8mc_Ffw\"\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=fF6Z7Kjb5zd2CZBP6OVOCMpON7Y-aKWLpmTc_stWZeU\"\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com include:_spf.google.com ~all\"\n",
+      "timestamp": "2025-06-01T08:14:10.995668082Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/txt-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
+      "template-id": "txt-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
+      "info": {
+        "name": "DNS TXT Record Detected",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "txt"
+        ],
+        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+        "reference": [
+          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "zlv.beta.gouv.fr.",
+      "matched-at": "zlv.beta.gouv.fr",
+      "extracted-results": [
+        "\"google-site-verification=fF6Z7Kjb5zd2CZBP6OVOCMpON7Y-aKWLpmTc_stWZeU\"",
+        "\"v=spf1 include:_spf.alwaysdata.com include:_spf.google.com ~all\"",
+        "\"google-site-verification=VoBT_TGR22ABAZuPu2rRNwtftqdiVZM9uk-S8mc_Ffw\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 38172\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 38172\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=VoBT_TGR22ABAZuPu2rRNwtftqdiVZM9uk-S8mc_Ffw\"\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=fF6Z7Kjb5zd2CZBP6OVOCMpON7Y-aKWLpmTc_stWZeU\"\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com include:_spf.google.com ~all\"\n",
+      "timestamp": "2025-06-01T08:14:10.99580649Z",
+      "matcher-status": true
+    },
+    {
       "template": "dns/mx-fingerprint.yaml",
       "template-url": "https://templates.nuclei.sh/public/mx-fingerprint",
       "template-id": "mx-fingerprint",
@@ -36,47 +112,9 @@
       "extracted-results": [
         "1 SMTP.GOOGLE.COM."
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 17984\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t MX\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 17984\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tMX\t1 SMTP.GOOGLE.COM.\n",
-      "timestamp": "2025-05-18T08:03:02.591609059Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/nameserver-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
-      "template-id": "nameserver-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
-      "info": {
-        "name": "NS Record Detection",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "ns"
-        ],
-        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "zlv.beta.gouv.fr.",
-      "matched-at": "zlv.beta.gouv.fr",
-      "extracted-results": [
-        "dns2.alwaysdata.com.",
-        "dns1.alwaysdata.com."
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 2163\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t NS\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 2163\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\nzlv.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\n",
-      "timestamp": "2025-05-18T08:03:02.826466596Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 48439\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t MX\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 48439\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tMX\t1 SMTP.GOOGLE.COM.\n",
+      "timestamp": "2025-06-01T08:14:12.074678077Z",
       "matcher-status": true
     },
     {
@@ -116,9 +154,47 @@
       "extracted-results": [
         "\"v=DMARC1; p=none\""
       ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 14718\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.zlv.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 14718\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;_dmarc.zlv.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.zlv.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1; p=none\"\n",
-      "timestamp": "2025-05-18T08:03:03.585688315Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 60507\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.zlv.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 60507\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;_dmarc.zlv.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.zlv.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1; p=none\"\n",
+      "timestamp": "2025-06-01T08:14:12.108088895Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/nameserver-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
+      "template-id": "nameserver-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
+      "info": {
+        "name": "NS Record Detection",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "ns"
+        ],
+        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "zlv.beta.gouv.fr.",
+      "matched-at": "zlv.beta.gouv.fr",
+      "extracted-results": [
+        "dns2.alwaysdata.com.",
+        "dns1.alwaysdata.com."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 9576\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t NS\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 9576\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\nzlv.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\n",
+      "timestamp": "2025-06-01T08:14:12.159099639Z",
       "matcher-status": true
     },
     {
@@ -153,85 +229,9 @@
       "type": "dns",
       "host": "zlv.beta.gouv.fr.",
       "matched-at": "zlv.beta.gouv.fr",
-      "request": ";; opcode: QUERY, status: NOERROR, id: 34085\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t CAA\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 34085\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1742475237 3600 900 1209600 300\n",
-      "timestamp": "2025-05-18T08:03:03.668740348Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/spf-record-detect.yaml",
-      "template-url": "https://templates.nuclei.sh/public/spf-record-detect",
-      "template-id": "spf-record-detect",
-      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
-      "info": {
-        "name": "SPF Record - Detection",
-        "author": [
-          "rxerium"
-        ],
-        "tags": [
-          "dns",
-          "spf"
-        ],
-        "description": "An SPF TXT record was detected\n",
-        "reference": [
-          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "type": "dns",
-      "host": "zlv.beta.gouv.fr.",
-      "matched-at": "zlv.beta.gouv.fr",
-      "extracted-results": [
-        "v=spf1 include:_spf.alwaysdata.com include:_spf.google.com ~all\""
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 25919\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 25919\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=VoBT_TGR22ABAZuPu2rRNwtftqdiVZM9uk-S8mc_Ffw\"\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=fF6Z7Kjb5zd2CZBP6OVOCMpON7Y-aKWLpmTc_stWZeU\"\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com include:_spf.google.com ~all\"\n",
-      "timestamp": "2025-05-18T08:03:03.835892957Z",
-      "matcher-status": true
-    },
-    {
-      "template": "dns/txt-fingerprint.yaml",
-      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
-      "template-id": "txt-fingerprint",
-      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
-      "info": {
-        "name": "DNS TXT Record Detected",
-        "author": [
-          "pdteam"
-        ],
-        "tags": [
-          "dns",
-          "txt"
-        ],
-        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
-        "reference": [
-          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
-        ],
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        },
-        "classification": {
-          "cve-id": null,
-          "cwe-id": [
-            "cwe-200"
-          ]
-        }
-      },
-      "type": "dns",
-      "host": "zlv.beta.gouv.fr.",
-      "matched-at": "zlv.beta.gouv.fr",
-      "extracted-results": [
-        "\"google-site-verification=VoBT_TGR22ABAZuPu2rRNwtftqdiVZM9uk-S8mc_Ffw\"",
-        "\"google-site-verification=fF6Z7Kjb5zd2CZBP6OVOCMpON7Y-aKWLpmTc_stWZeU\"",
-        "\"v=spf1 include:_spf.alwaysdata.com include:_spf.google.com ~all\""
-      ],
-      "request": ";; opcode: QUERY, status: NOERROR, id: 25919\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t TXT\n",
-      "response": ";; opcode: QUERY, status: NOERROR, id: 25919\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=VoBT_TGR22ABAZuPu2rRNwtftqdiVZM9uk-S8mc_Ffw\"\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=fF6Z7Kjb5zd2CZBP6OVOCMpON7Y-aKWLpmTc_stWZeU\"\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com include:_spf.google.com ~all\"\n",
-      "timestamp": "2025-05-18T08:03:03.835998234Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 16635\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t CAA\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 16635\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1742475237 3600 900 1209600 300\n",
+      "timestamp": "2025-06-01T08:14:12.195806988Z",
       "matcher-status": true
     },
     {
@@ -258,12 +258,12 @@
       "host": "https://zlv.beta.gouv.fr",
       "matched-at": "https://zlv.beta.gouv.fr",
       "extracted-results": [
-        "POST,OPTIONS,HEAD,GET"
+        "OPTIONS,HEAD,GET,POST"
       ],
       "request": "OPTIONS / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAllow: POST,OPTIONS,HEAD,GET\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:09 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6P3P5FJCW7E5G4S5MYXTY\r\nContent-Length: 0\r\n\r\n",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:09.256752368Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAllow: OPTIONS,HEAD,GET,POST\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:14:18 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8WK8YKN9M2HAZ71KSMPB2\r\nContent-Length: 0\r\n\r\n",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:14:18.552927641Z",
       "curl-command": "curl -X 'OPTIONS' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -294,169 +294,9 @@
         "Apache"
       ],
       "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:14 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6P8TQA5KH98CJS24ZZT0G\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:14.548213804Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "referrer-policy",
-      "type": "http",
-      "host": "https://zlv.beta.gouv.fr",
-      "matched-at": "https://zlv.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:55 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6QGRC54N8511QEVWV67KP\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:55.413740634Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "cross-origin-embedder-policy",
-      "type": "http",
-      "host": "https://zlv.beta.gouv.fr",
-      "matched-at": "https://zlv.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:55 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6QGRC54N8511QEVWV67KP\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:55.413804193Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "content-security-policy",
-      "type": "http",
-      "host": "https://zlv.beta.gouv.fr",
-      "matched-at": "https://zlv.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:55 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6QGRC54N8511QEVWV67KP\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:55.413820554Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "permissions-policy",
-      "type": "http",
-      "host": "https://zlv.beta.gouv.fr",
-      "matched-at": "https://zlv.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:55 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6QGRC54N8511QEVWV67KP\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:55.413833508Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:14:24 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8WSGMSYQXGAAVWEB7HT11\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:14:24.964266787Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -494,9 +334,49 @@
       "host": "https://zlv.beta.gouv.fr",
       "matched-at": "https://zlv.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:55 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6QGRC54N8511QEVWV67KP\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:55.413846332Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:12 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8Y7NF9EB058EP7ZSZJ7EE\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:12.205025819Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "referrer-policy",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:12 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8Y7NF9EB058EP7ZSZJ7EE\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:12.205078186Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -534,9 +414,49 @@
       "host": "https://zlv.beta.gouv.fr",
       "matched-at": "https://zlv.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:55 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6QGRC54N8511QEVWV67KP\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:55.413863875Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:12 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8Y7NF9EB058EP7ZSZJ7EE\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:12.205093866Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-embedder-policy",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:12 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8Y7NF9EB058EP7ZSZJ7EE\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:12.205106359Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -574,49 +494,9 @@
       "host": "https://zlv.beta.gouv.fr",
       "matched-at": "https://zlv.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:55 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6QGRC54N8511QEVWV67KP\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:55.41387696Z",
-      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
-      "matcher-status": true
-    },
-    {
-      "template": "http/misconfiguration/http-missing-security-headers.yaml",
-      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
-      "template-id": "http-missing-security-headers",
-      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
-      "info": {
-        "name": "HTTP Missing Security Headers",
-        "author": [
-          "socketz",
-          "geeknik",
-          "g4l1t0",
-          "convisoappsec",
-          "kurohost",
-          "dawid-czarnecki",
-          "forgedhallpass",
-          "jub0bs",
-          "userdehghani"
-        ],
-        "tags": [
-          "misconfig",
-          "headers",
-          "generic"
-        ],
-        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
-        "severity": "info",
-        "metadata": {
-          "max-request": 1
-        }
-      },
-      "matcher-name": "cross-origin-resource-policy",
-      "type": "http",
-      "host": "https://zlv.beta.gouv.fr",
-      "matched-at": "https://zlv.beta.gouv.fr",
-      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:55 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6QGRC54N8511QEVWV67KP\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:55.413896717Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:12 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8Y7NF9EB058EP7ZSZJ7EE\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:12.205139732Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -654,9 +534,49 @@
       "host": "https://zlv.beta.gouv.fr",
       "matched-at": "https://zlv.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:55 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6QGRC54N8511QEVWV67KP\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:55.413915291Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:12 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8Y7NF9EB058EP7ZSZJ7EE\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:12.205153347Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "permissions-policy",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:12 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8Y7NF9EB058EP7ZSZJ7EE\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:12.20516565Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -694,9 +614,49 @@
       "host": "https://zlv.beta.gouv.fr",
       "matched-at": "https://zlv.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:55 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6QGRC54N8511QEVWV67KP\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:55.413934167Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:12 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8Y7NF9EB058EP7ZSZJ7EE\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:12.205177562Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "content-security-policy",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:12 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8Y7NF9EB058EP7ZSZJ7EE\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:12.205189154Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -734,9 +694,49 @@
       "host": "https://zlv.beta.gouv.fr",
       "matched-at": "https://zlv.beta.gouv.fr",
       "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:03:55 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6QGRC54N8511QEVWV67KP\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:03:55.413974813Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:12 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8Y7NF9EB058EP7ZSZJ7EE\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:12.205201747Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-resource-policy",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:12 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8Y7NF9EB058EP7ZSZJ7EE\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:12.205217196Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
       "matcher-status": true
     },
@@ -765,9 +765,9 @@
       "host": "https://zlv.beta.gouv.fr",
       "matched-at": "https://zlv.beta.gouv.fr/robots.txt",
       "request": "GET /robots.txt HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/plain\r\nDate: Sun, 18 May 2025 08:04:06 GMT\r\nEtag: \"4a-63542469a75f1-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:17:08 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6QVMCVTW45TCA9NCD8EDF\r\nVary: Accept-Encoding\r\n\r\n# https://www.robotstxt.org/robotstxt.html\nUser-agent: *\nDisallow: /dsfr*\n",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:04:06.545290862Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/plain\r\nDate: Sun, 01 Jun 2025 08:15:25 GMT\r\nEtag: \"4a-6362e7b715308-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:05:27 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8YMP42AB8T6HJ0VG2S90C\r\nVary: Accept-Encoding\r\n\r\n# https://www.robotstxt.org/robotstxt.html\nUser-agent: *\nDisallow: /dsfr*\n",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:25.535170596Z",
       "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr/robots.txt'",
       "matcher-status": true
     },
@@ -807,9 +807,9 @@
         "https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css"
       ],
       "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept-Encoding: gzip\r\n\r\n",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:04:13 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6R24YB9D6SMD88825W25T\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:04:13.219258821Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:33 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8YW3VH78KGF4HWCWNB13V\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:33.143834976Z",
       "curl-command": "curl -X 'GET' -d '' -H 'Host: zlv.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr/'",
       "matcher-status": true
     },
@@ -849,9 +849,9 @@
       "host": "https://zlv.beta.gouv.fr",
       "matched-at": "https://zlv.beta.gouv.fr/",
       "request": "POST / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
-      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 18 May 2025 08:04:21 GMT\r\nEtag: \"5ca-635424b0b08a6-gzip\"\r\nLast-Modified: Fri, 16 May 2025 15:18:23 GMT\r\nServer: Apache\r\nSozu-Id: 01JVH6R9YP2JJZWQ9TZDYW76RZ\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.7be7251f.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:04:21.226597825Z",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 01 Jun 2025 08:15:42 GMT\r\nEtag: \"5ca-6362e7f594876-gzip\"\r\nLast-Modified: Wed, 28 May 2025 09:06:33 GMT\r\nServer: Apache\r\nSozu-Id: 01JWN8Z541B15SZH1NZM1A57XA\r\nVary: Accept-Encoding\r\n\r\n<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"/><link href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\" rel=\"stylesheet\"/><link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png\"/><link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg\" type=\"image/svg+xml\"/><link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico\" type=\"image/x-icon\"/><link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest\" crossorigin=\"use-credentials\"/><link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css\"/><link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><meta name=\"theme-color\" content=\"#000000\"/><meta name=\"description\" content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"/><script type=\"text/javascript\">window.$crisp=[],window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\",d=document,s=d.createElement(\"script\"),s.src=\"https://client.crisp.chat/l.js\",s.async=1,d.getElementsByTagName(\"head\")[0].appendChild(s)</script><title>Zéro Logement Vacant</title><script defer=\"defer\" src=\"/static/js/main.c54676fd.js\"></script><link href=\"/static/css/main.0eb6cd94.css\" rel=\"stylesheet\"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id=\"root\"></div></body></html>",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:15:42.373850253Z",
       "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: zlv.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr/'",
       "matcher-status": true
     },
@@ -881,8 +881,8 @@
       "extracted-results": [
         "Let's Encrypt"
       ],
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:04:53.899118038Z",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:16:20.065413833Z",
       "matcher-status": true
     },
     {
@@ -911,8 +911,8 @@
       "extracted-results": [
         "zlv.beta.gouv.fr"
       ],
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:04:53.899269171Z",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:16:20.065551681Z",
       "matcher-status": true
     },
     {
@@ -942,8 +942,8 @@
       "extracted-results": [
         "tls12"
       ],
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:04:55.613640074Z",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:16:21.787366768Z",
       "matcher-status": true
     },
     {
@@ -973,8 +973,8 @@
       "extracted-results": [
         "tls13"
       ],
-      "ip": "91.208.207.218",
-      "timestamp": "2025-05-18T08:04:55.823212906Z",
+      "ip": "91.208.207.214",
+      "timestamp": "2025-06-01T08:16:21.994735243Z",
       "matcher-status": true
     }
   ]
