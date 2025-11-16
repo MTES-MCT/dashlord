@@ -1,20 +1,24 @@
 [
   [
     {
-      "template": "dns/servfail-refused-hosts.yaml",
-      "template-url": "https://templates.nuclei.sh/public/servfail-refused-hosts",
-      "template-id": "servfail-refused-hosts",
-      "template-path": "/home/runner/nuclei-templates/dns/servfail-refused-hosts.yaml",
+      "template": "dns/caa-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/caa-fingerprint",
+      "template-id": "caa-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/caa-fingerprint.yaml",
       "info": {
-        "name": "DNS Servfail Host Finder",
+        "name": "CAA Record",
         "author": [
           "pdteam"
         ],
         "tags": [
           "dns",
-          "takeover"
+          "caa",
+          "discovery"
         ],
-        "description": "A DNS ServFail error occurred. ServFail errors occur when there is an error communicating with a DNS server. This could have a number of causes, including an error on the DNS server itself, or a temporary networking issue.",
+        "description": "A CAA record was discovered. A CAA record is used to specify which certificate authorities (CAs) are allowed to issue certificates for a domain.",
+        "reference": [
+          "https://support.dnsimple.com/articles/caa-record/#whats-a-caa-record"
+        ],
         "severity": "info",
         "metadata": {
           "max-request": 1
@@ -29,9 +33,983 @@
       "type": "dns",
       "host": "zlv.beta.gouv.fr.",
       "matched-at": "zlv.beta.gouv.fr",
-      "request": ";; opcode: QUERY, status: NOERROR, id: 57295\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t A\n",
-      "response": ";; opcode: QUERY, status: SERVFAIL, id: 57295\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n; EDE: 22 (No Reachable Authority): (at delegation zlv.beta.gouv.fr.)\n; EDE: 23 (Network Error): (78.142.219.71:53 rcode=REFUSED for zlv.beta.gouv.fr A)\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t A\n",
-      "timestamp": "2025-10-19T08:28:51.089531349Z",
+      "request": ";; opcode: QUERY, status: NOERROR, id: 41003\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t CAA\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 41003\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t CAA\n\n;; AUTHORITY SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tSOA\tdns1.alwaysdata.com. hostmaster.alwaysdata.com. 1762766780 3600 900 1209600 300\n",
+      "timestamp": "2025-11-16T08:35:51.479905857Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/dmarc-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/dmarc-detect",
+      "template-id": "dmarc-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/dmarc-detect.yaml",
+      "info": {
+        "name": "DNS DMARC - Detect",
+        "author": [
+          "juliosmelo"
+        ],
+        "tags": [
+          "dns",
+          "dmarc",
+          "discovery"
+        ],
+        "description": "DNS DMARC information was detected.\n",
+        "reference": [
+          "https://dmarc.org/",
+          "https://dmarc.org/wiki/faq#why_is_dmarc_important.3f"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ],
+          "cvss-metrics": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+        }
+      },
+      "type": "dns",
+      "host": "zlv.beta.gouv.fr.",
+      "matched-at": "_dmarc.zlv.beta.gouv.fr",
+      "extracted-results": [
+        "\"v=DMARC1; p=none\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 10144\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.zlv.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 10144\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;_dmarc.zlv.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.zlv.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1; p=none\"\n",
+      "timestamp": "2025-11-16T08:35:51.566057256Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/nameserver-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/nameserver-fingerprint",
+      "template-id": "nameserver-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
+      "info": {
+        "name": "NS Record Detection",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "ns",
+          "discovery"
+        ],
+        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "zlv.beta.gouv.fr.",
+      "matched-at": "zlv.beta.gouv.fr",
+      "extracted-results": [
+        "dns1.alwaysdata.com.",
+        "dns2.alwaysdata.com."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 62504\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t NS\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 62504\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tNS\tdns1.alwaysdata.com.\nzlv.beta.gouv.fr.\t300\tIN\tNS\tdns2.alwaysdata.com.\n",
+      "timestamp": "2025-11-16T08:35:51.64166137Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/mx-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/mx-fingerprint",
+      "template-id": "mx-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/mx-fingerprint.yaml",
+      "info": {
+        "name": "MX Record Detection",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "mx",
+          "discovery"
+        ],
+        "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
+        "reference": [
+          "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
+          "https://mxtoolbox.com/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "zlv.beta.gouv.fr.",
+      "matched-at": "zlv.beta.gouv.fr",
+      "extracted-results": [
+        "1 SMTP.GOOGLE.COM."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 62332\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t MX\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 62332\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tMX\t1 SMTP.GOOGLE.COM.\n",
+      "timestamp": "2025-11-16T08:35:51.643135677Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/spf-record-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/spf-record-detect",
+      "template-id": "spf-record-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
+      "info": {
+        "name": "SPF Record - Detection",
+        "author": [
+          "rxerium"
+        ],
+        "tags": [
+          "dns",
+          "spf",
+          "discovery"
+        ],
+        "description": "An SPF TXT record was detected\n",
+        "reference": [
+          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "dns",
+      "host": "zlv.beta.gouv.fr.",
+      "matched-at": "zlv.beta.gouv.fr",
+      "extracted-results": [
+        "v=spf1 include:_spf.alwaysdata.com include:_spf.google.com ~all\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 17985\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 17985\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=VoBT_TGR22ABAZuPu2rRNwtftqdiVZM9uk-S8mc_Ffw\"\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=fF6Z7Kjb5zd2CZBP6OVOCMpON7Y-aKWLpmTc_stWZeU\"\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com include:_spf.google.com ~all\"\n",
+      "timestamp": "2025-11-16T08:35:51.809446051Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/txt-fingerprint.yaml",
+      "template-url": "https://templates.nuclei.sh/public/txt-fingerprint",
+      "template-id": "txt-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
+      "info": {
+        "name": "DNS TXT Record Detected",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "txt",
+          "discovery"
+        ],
+        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+        "reference": [
+          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "zlv.beta.gouv.fr.",
+      "matched-at": "zlv.beta.gouv.fr",
+      "extracted-results": [
+        "\"google-site-verification=fF6Z7Kjb5zd2CZBP6OVOCMpON7Y-aKWLpmTc_stWZeU\"",
+        "\"v=spf1 include:_spf.alwaysdata.com include:_spf.google.com ~all\"",
+        "\"google-site-verification=VoBT_TGR22ABAZuPu2rRNwtftqdiVZM9uk-S8mc_Ffw\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 17985\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 17985\n;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;zlv.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=VoBT_TGR22ABAZuPu2rRNwtftqdiVZM9uk-S8mc_Ffw\"\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=fF6Z7Kjb5zd2CZBP6OVOCMpON7Y-aKWLpmTc_stWZeU\"\nzlv.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:_spf.alwaysdata.com include:_spf.google.com ~all\"\n",
+      "timestamp": "2025-11-16T08:35:51.809572847Z",
+      "matcher-status": true
+    },
+    {
+      "template": "http/miscellaneous/options-method.yaml",
+      "template-url": "https://templates.nuclei.sh/public/options-method",
+      "template-id": "options-method",
+      "template-path": "/home/runner/nuclei-templates/http/miscellaneous/options-method.yaml",
+      "info": {
+        "name": "Allowed Options Method",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "miscellaneous",
+          "misc",
+          "generic",
+          "vuln"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "extracted-results": [
+        "GET,POST,OPTIONS,HEAD"
+      ],
+      "request": "OPTIONS / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAllow: GET,POST,OPTIONS,HEAD\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:35:57 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WWZC2YE2R1J77H54W6AHP\r\nContent-Length: 0\r\n\r\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:35:57.054588357Z",
+      "curl-command": "curl -X 'OPTIONS' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/technologies/apache/apache-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/apache-detect",
+      "template-id": "apache-detect",
+      "template-path": "/home/runner/nuclei-templates/http/technologies/apache/apache-detect.yaml",
+      "info": {
+        "name": "Apache Detection",
+        "author": [
+          "philippedelteil"
+        ],
+        "tags": [
+          "tech",
+          "apache",
+          "discovery"
+        ],
+        "description": "Some Apache servers have the version on the response header. The OpenSSL version can be also obtained",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "extracted-results": [
+        "Apache"
+      ],
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:35:57 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WWZMGHPCJPXJGQDP8SN4V\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:35:57.36669729Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "strict-transport-security",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:36:08 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WXAS18FJ404EYNQMHCQG0\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:36:08.733367688Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "permissions-policy",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:36:08 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WXAS18FJ404EYNQMHCQG0\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:36:08.733413573Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "x-frame-options",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:36:08 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WXAS18FJ404EYNQMHCQG0\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:36:08.73342759Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "x-content-type-options",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:36:08 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WXAS18FJ404EYNQMHCQG0\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:36:08.73343854Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "x-permitted-cross-domain-policies",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:36:08 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WXAS18FJ404EYNQMHCQG0\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:36:08.733448959Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-resource-policy",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:36:08 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WXAS18FJ404EYNQMHCQG0\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:36:08.733483243Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "content-security-policy",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:36:08 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WXAS18FJ404EYNQMHCQG0\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:36:08.733502209Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "referrer-policy",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:36:08 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WXAS18FJ404EYNQMHCQG0\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:36:08.73351912Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "clear-site-data",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:36:08 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WXAS18FJ404EYNQMHCQG0\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:36:08.733533296Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-embedder-policy",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:36:08 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WXAS18FJ404EYNQMHCQG0\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:36:08.733544928Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://templates.nuclei.sh/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "matcher-name": "cross-origin-opener-policy",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:36:08 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WXAS18FJ404EYNQMHCQG0\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:36:08.733564324Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/exposures/configs/package-json.yaml",
+      "template-url": "https://templates.nuclei.sh/public/package-json",
+      "template-id": "package-json",
+      "template-path": "/home/runner/nuclei-templates/http/exposures/configs/package-json.yaml",
+      "info": {
+        "name": "NPM package.json Disclosure",
+        "author": [
+          "geeknik",
+          "afaq",
+          "noraj"
+        ],
+        "tags": [
+          "config",
+          "exposure",
+          "node",
+          "npm",
+          "vuln"
+        ],
+        "description": "All NodeJS packages contain a file, usually in the project root, called package.json - this file holds various metadata relevant to the project generated by package managers such as npm, yarn, pnpm.\n",
+        "reference": [
+          "https://docs.npmjs.com/cli/v9/configuring-npm/package-json",
+          "https://classic.yarnpkg.com/lang/en/docs/package-json/",
+          "https://pnpm.io/package_json"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 2,
+          "verified": true
+        }
+      },
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr/package.json",
+      "request": "GET /package.json HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: application/json\r\nDate: Sun, 16 Nov 2025 08:37:02 GMT\r\nEtag: \"caa-642ed0070231b-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5WYZP14XAK3DZ10CXTX6JQ\r\nVary: Accept-Encoding\r\n\r\n{\n  \"name\": \"@zerologementvacant/front\",\n  \"version\": \"0.0.1\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"icons\": \"react-dsfr update-icons\",\n    \"prebuild\": \"yarn icons\",\n    \"postbuild\": \"tsx src/scripts/generate-building-images.ts && copyfiles -V -u 1 'public/map/*.png' dist\",\n    \"predev\": \"yarn icons\",\n    \"postinstall\": \"copy-dsfr-to-public\"\n  },\n  \"browserslist\": {\n    \"production\": [\n      \">0.2%\",\n      \"not dead\",\n      \"not op_mini all\"\n    ],\n    \"development\": [\n      \"last 1 chrome version\",\n      \"last 1 firefox version\",\n      \"last 1 safari version\"\n    ]\n  },\n  \"dependencies\": {\n    \"@codegouvfr/react-dsfr\": \"1.28.0\",\n    \"@emotion/react\": \"^11.14.0\",\n    \"@emotion/styled\": \"^11.14.1\",\n    \"@hookform/resolvers\": \"^3.10.0\",\n    \"@hookform/resolvers-next\": \"npm:@hookform/resolvers@^5.2.2\",\n    \"@lexical/html\": \"^0.36.2\",\n    \"@lexical/list\": \"^0.36.2\",\n    \"@lexical/react\": \"^0.36.2\",\n    \"@lexical/text\": \"^0.36.2\",\n    \"@lexical/utils\": \"^0.36.2\",\n    \"@maplibre/maplibre-gl-style-spec\": \"^23.3.0\",\n    \"@mui/material\": \"^7.3.1\",\n    \"@reduxjs/toolkit\": \"^1.9.7\",\n    \"@sentry/react\": \"^9.45.0\",\n    \"@tanstack/react-table\": \"^8.21.3\",\n    \"@turf/turf\": \"^7.1.0\",\n    \"@typeform/embed-react\": \"^2.31.0\",\n    \"@zerologementvacant/models\": \"workspace:*\",\n    \"@zerologementvacant/queue\": \"workspace:*\",\n    \"@zerologementvacant/schemas\": \"workspace:*\",\n    \"@zerologementvacant/utils\": \"workspace:*\",\n    \"async\": \"^3.2.6\",\n    \"classnames\": \"^2.5.1\",\n    \"date-fns\": \"^2.30.0\",\n    \"effect\": \"^3.17.7\",\n    \"fetch-intercept\": \"^2.4.0\",\n    \"immutable\": \"^5.1.3\",\n    \"jose\": \"^4.15.9\",\n    \"lexical\": \"^0.36.2\",\n    \"lodash-es\": \"^4.17.21\",\n    \"maplibre-gl\": \"^5.6.2\",\n    \"mime\": \"^4.0.4\",\n    \"msw\": \"^2.10.4\",\n    \"posthog-js\": \"^1.259.0\",\n    \"prop-types\": \"^15.8.1\",\n    \"qs\": \"^6.14.0\",\n    \"react\": \"^18.3.1\",\n    \"react-dom\": \"^18.3.1\",\n    \"react-hook-form\": \"^7.62.0\",\n    \"react-map-gl\": \"^8.0.4\",\n    \"react-redux\": \"^8.1.3\",\n    \"react-redux-loading-bar\": \"^5.0.8\",\n    \"react-router-dom\": \"^6.30.1\",\n    \"react-toastify\": \"^10.0.6\",\n    \"react-use\": \"^17.6.0\",\n    \"redux\": \"^5.0.1\",\n    \"ts-essentials\": \"^10.1.1\",\n    \"ts-pattern\": \"^5.8.0\",\n    \"uuid\": \"^9.0.1\",\n    \"web-vitals\": \"^5.1.0\",\n    \"whatwg-fetch\": \"^3.6.20\",\n    \"yup\": \"^0.32.11\",\n    \"yup-next\": \"npm:yup@^1.7.0\"\n  },\n  \"devDependencies\": {\n    \"@faker-js/faker\": \"^8.4.1\",\n    \"@testing-library/dom\": \"^10.4.1\",\n    \"@testing-library/jest-dom\": \"^6.6.4\",\n    \"@testing-library/react\": \"^16.3.0\",\n    \"@testing-library/user-event\": \"^14.6.1\",\n    \"@tsconfig/vite-react\": \"^7.0.0\",\n    \"@types/async\": \"^3.2.25\",\n    \"@types/geojson\": \"^7946.0.16\",\n    \"@types/lodash\": \"^4.17.20\",\n    \"@types/lodash-es\": \"^4.17.12\",\n    \"@types/node\": \"^20.19.10\",\n    \"@types/prop-types\": \"^15.7.15\",\n    \"@types/qs\": \"^6.14.0\",\n    \"@types/randomstring\": \"^1.3.0\",\n    \"@types/react\": \"^18.3.23\",\n    \"@types/react-dom\": \"^18.3.7\",\n    \"@types/uuid\": \"^9.0.8\",\n    \"copyfiles\": \"^2.4.1\",\n    \"happy-dom\": \"^18.0.1\",\n    \"jest-extended\": \"^4.0.2\",\n    \"jest-sorted\": \"^1.0.15\",\n    \"randomstring\": \"^1.3.1\",\n    \"sass-embedded\": \"^1.90.0\",\n    \"tsx\": \"^4.20.3\",\n    \"undici\": \"^6.21.3\"\n  },\n  \"optionalDependencies\": {\n    \"sharp\": \"^0.34.3\"\n  }\n}\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:37:02.909749289Z",
+      "curl-command": "curl -X 'GET' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr/package.json'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/missing-sri.yaml",
+      "template-url": "https://templates.nuclei.sh/public/missing-sri",
+      "template-id": "missing-sri",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/missing-sri.yaml",
+      "info": {
+        "name": "Missing Subresource Integrity",
+        "author": [
+          "lucky0x0d",
+          "pulsesecurity.co.nz",
+          "sullo amarsct"
+        ],
+        "tags": [
+          "compliance",
+          "js",
+          "css",
+          "sri",
+          "misconfig",
+          "vuln"
+        ],
+        "description": "Checks if external script and stylesheet tags in the HTML response are missing the Subresource Integrity (SRI) attribute.\n",
+        "reference": [
+          "https://cheatsheetseries.owasp.org/cheatsheets/third_party_javascript_management_cheat_sheet.html#subresource-integrity",
+          "https://developer.mozilla.org/en-us/docs/web/security/subresource_integrity"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr/",
+      "extracted-results": [
+        "https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css"
+      ],
+      "request": "GET / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:40:30 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5X5AND8SBAM2FAWSK8V75A\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:40:30.762260023Z",
+      "curl-command": "curl -X 'GET' -d '' -H 'Host: zlv.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr/'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/technologies/waf-detect.yaml",
+      "template-url": "https://templates.nuclei.sh/public/waf-detect",
+      "template-id": "waf-detect",
+      "template-path": "/home/runner/nuclei-templates/http/technologies/waf-detect.yaml",
+      "info": {
+        "name": "WAF Detection",
+        "author": [
+          "dwisiswant0",
+          "lu4nx"
+        ],
+        "tags": [
+          "waf",
+          "tech",
+          "misc",
+          "discovery"
+        ],
+        "description": "A web application firewall was detected.",
+        "reference": [
+          "https://github.com/ekultek/whatwaf"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "matcher-name": "apachegeneric",
+      "type": "http",
+      "host": "https://zlv.beta.gouv.fr",
+      "matched-at": "https://zlv.beta.gouv.fr/",
+      "request": "POST / HTTP/1.1\r\nHost: zlv.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nConnection: close\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
+      "response": "HTTP/1.1 200 OK\r\nConnection: close\r\nAccept-Ranges: bytes\r\nContent-Type: text/html\r\nDate: Sun, 16 Nov 2025 08:40:44 GMT\r\nEtag: \"12fa-642ed006ff80c-gzip\"\r\nLast-Modified: Thu, 06 Nov 2025 13:25:42 GMT\r\nServer: Apache\r\nSozu-Id: 01KA5X5QPF9NQ03K3W7T69F814\r\nVary: Accept-Encoding\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n  <meta charset=\"utf-8\" />\n  <link\n    href=\"https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css\"\n    rel=\"stylesheet\"\n  />\n  <link rel=\"apple-touch-icon\" href=\"/dsfr/favicon/apple-touch-icon.png?v=1.14.2\" />\n  <link rel=\"icon\" href=\"/dsfr/favicon/favicon.svg?v=1.14.2\" type=\"image/svg+xml\" />\n  <link rel=\"shortcut icon\" href=\"/dsfr/favicon/favicon.ico?v=1.14.2\" type=\"image/x-icon\" />\n  <link rel=\"manifest\" href=\"/dsfr/favicon/manifest.webmanifest?v=1.14.2\" crossorigin=\"use-credentials\" />\n\n  <link rel=\"stylesheet\" href=\"/dsfr/utility/icons/icons.min.css?hash=cbeba1a0\" />\n  <link rel=\"stylesheet\" href=\"/dsfr/dsfr.min.css?v=1.14.2\" />\n\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n  <!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Light_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Regular_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Medium.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Medium_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<link rel=\"preload\" href=\"/dsfr/fonts/Marianne-Bold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Marianne-Bold_Italic.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-Regular.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n<!--<link rel=\"preload\" href=\"./node_modules/@codegouvfr/react-dsfr/dsfr/fonts/Spectral-ExtraBold.woff2?v=1.14.2\" as=\"font\" crossorigin=\"anonymous\" />-->\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n  <meta\n    name=\"description\"\n    content=\"Zéro Logement Vacant est un service public qui aide les propriétaires de logement vacant à rentrer en contact avec les collectivités afin de bénéficier d’accompagnements et d’aides pour la remise sur le marché\"\n  />\n  <script type=\"text/javascript\">window.$crisp=[];window.CRISP_WEBSITE_ID=\"65781ccb-c386-4dbf-b614-5581c3a1ff7e\";(function(){d=document;s=d.createElement(\"script\");s.src=\"https://client.crisp.chat/l.js\";s.async=1;d.getElementsByTagName(\"head\")[0].appendChild(s);})();</script>\n  <title>Zéro Logement Vacant</title>\n  <script type=\"module\" crossorigin src=\"/assets/index-D3gNxrK2.js\"></script>\n  <link rel=\"stylesheet\" crossorigin href=\"/assets/index-CDWkDPmp.css\">\n</head>\n<body>\n<noscript>You need to enable JavaScript to run this app.</noscript>\n<div id=\"root\"></div>\n<!--\n  This HTML file is a template.\n  If you open it directly in the browser, you will see an empty page.\n\n  You can add webfonts, meta tags, or analytics to this file.\n  The build step will place the bundled scripts into the <body> tag.\n\n  To begin the development, run `npm start` or `yarn start`.\n  To create a production bundle, use `npm run build` or `yarn build`.\n-->\n</body>\n</html>\n",
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:40:44.13288615Z",
+      "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: zlv.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://zlv.beta.gouv.fr/'",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/detect-ssl-issuer.yaml",
+      "template-url": "https://templates.nuclei.sh/public/ssl-issuer",
+      "template-id": "ssl-issuer",
+      "template-path": "/home/runner/nuclei-templates/ssl/detect-ssl-issuer.yaml",
+      "info": {
+        "name": "Detect SSL Certificate Issuer",
+        "author": [
+          "lingtren"
+        ],
+        "tags": [
+          "ssl",
+          "tls",
+          "discovery"
+        ],
+        "description": "Extract the issuer's organization from the target's certificate. Issuers are entities which sign and distribute certificates.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "ssl",
+      "host": "zlv.beta.gouv.fr",
+      "matched-at": "zlv.beta.gouv.fr:443",
+      "extracted-results": [
+        "Let's Encrypt"
+      ],
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:41:26.310032718Z",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/ssl-dns-names.yaml",
+      "template-url": "https://templates.nuclei.sh/public/ssl-dns-names",
+      "template-id": "ssl-dns-names",
+      "template-path": "/home/runner/nuclei-templates/ssl/ssl-dns-names.yaml",
+      "info": {
+        "name": "SSL DNS Names",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "ssl",
+          "tls",
+          "vuln"
+        ],
+        "description": "Extract the Subject Alternative Name (SAN) from the target's certificate. SAN facilitates the usage of additional hostnames with the same certificate.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "ssl",
+      "host": "zlv.beta.gouv.fr",
+      "matched-at": "zlv.beta.gouv.fr:443",
+      "extracted-results": [
+        "zlv.beta.gouv.fr"
+      ],
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:41:26.310192816Z",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/tls-version.yaml",
+      "template-url": "https://templates.nuclei.sh/public/tls-version",
+      "template-id": "tls-version",
+      "template-path": "/home/runner/nuclei-templates/ssl/tls-version.yaml",
+      "info": {
+        "name": "TLS Version - Detect",
+        "author": [
+          "pdteam",
+          "pussycat0x"
+        ],
+        "tags": [
+          "ssl",
+          "tls",
+          "discovery"
+        ],
+        "description": "TLS version detection is a security process used to determine the version of the Transport Layer Security (TLS) protocol used by a computer or server.\nIt is important to detect the TLS version in order to ensure secure communication between two computers or servers.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 4
+        }
+      },
+      "type": "ssl",
+      "host": "zlv.beta.gouv.fr",
+      "matched-at": "zlv.beta.gouv.fr:443",
+      "extracted-results": [
+        "tls12"
+      ],
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:41:27.685439152Z",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/tls-version.yaml",
+      "template-url": "https://templates.nuclei.sh/public/tls-version",
+      "template-id": "tls-version",
+      "template-path": "/home/runner/nuclei-templates/ssl/tls-version.yaml",
+      "info": {
+        "name": "TLS Version - Detect",
+        "author": [
+          "pdteam",
+          "pussycat0x"
+        ],
+        "tags": [
+          "ssl",
+          "tls",
+          "discovery"
+        ],
+        "description": "TLS version detection is a security process used to determine the version of the Transport Layer Security (TLS) protocol used by a computer or server.\nIt is important to detect the TLS version in order to ensure secure communication between two computers or servers.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 4
+        }
+      },
+      "type": "ssl",
+      "host": "zlv.beta.gouv.fr",
+      "matched-at": "zlv.beta.gouv.fr:443",
+      "extracted-results": [
+        "tls13"
+      ],
+      "ip": "91.208.207.216",
+      "timestamp": "2025-11-16T08:41:27.854735531Z",
       "matcher-status": true
     }
   ]
