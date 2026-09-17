@@ -1,0 +1,158 @@
+[
+  [
+    {
+      "template": "dns/wildcard-dns-detect.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/wildcard-dns-detect",
+      "template-id": "wildcard-dns-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/wildcard-dns-detect.yaml",
+      "info": {
+        "name": "Wildcard DNS Configuration - Detection",
+        "author": [
+          "rxerium"
+        ],
+        "tags": [
+          "dns",
+          "wildcard",
+          "discovery"
+        ],
+        "description": "A wildcard DNS configuration was detected. Wildcard DNS records can resolve all subdomains to the same IP address, which may indicate a catch-all configuration.\n",
+        "reference": [
+          "https://en.wikipedia.org/wiki/Wildcard_DNS_record",
+          "https://developers.cloudflare.com/dns/manage-dns-records/reference/wildcard-dns-records/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 2
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "app.covoiturage.beta.gouv.fr",
+      "matched-at": "3JRvp2m8vnrwYtvPw062bZPPVPL-3JRvp2m8vnrwYtvPw062bZPPVPL.app.covoiturage.beta.gouv.fr",
+      "extracted-results": [
+        "51.159.8.177"
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 28246\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;3JRvp2m8vnrwYtvPw062bZPPVPL-3JRvp2m8vnrwYtvPw062bZPPVPL.app.covoiturage.beta.gouv.fr.\tIN\t A\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 28246\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;3JRvp2m8vnrwYtvPw062bZPPVPL-3JRvp2m8vnrwYtvPw062bZPPVPL.app.covoiturage.beta.gouv.fr.\tIN\t A\n\n;; ANSWER SECTION:\n3JRvp2m8vnrwYtvPw062bZPPVPL-3JRvp2m8vnrwYtvPw062bZPPVPL.app.covoiturage.beta.gouv.fr.\t300\tIN\tA\t51.159.8.177\n",
+      "timestamp": "2026-09-17T09:21:19.088294901Z",
+      "matcher-status": true
+    },
+    {
+      "template": "http/technologies/waf-detect.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/waf-detect",
+      "template-id": "waf-detect",
+      "template-path": "/home/runner/nuclei-templates/http/technologies/waf-detect.yaml",
+      "info": {
+        "name": "WAF Detection",
+        "author": [
+          "dwisiswant0",
+          "lu4nx",
+          "s4e-io"
+        ],
+        "tags": [
+          "waf",
+          "tech",
+          "misc",
+          "discovery"
+        ],
+        "description": "A web application firewall was detected.",
+        "reference": [
+          "https://github.com/Ekultek/WhatWaf"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "matcher-name": "nginxgeneric",
+      "type": "http",
+      "host": "app.covoiturage.beta.gouv.fr",
+      "port": "443",
+      "scheme": "https",
+      "url": "https://app.covoiturage.beta.gouv.fr/",
+      "path": "/",
+      "matched-at": "https://app.covoiturage.beta.gouv.fr/",
+      "request": "POST / HTTP/1.1\r\nHost: app.covoiturage.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
+      "response": "HTTP/1.1 301 Moved Permanently\r\nContent-Length: 162\r\nAccess-Control-Allow-Credentials: true\r\nAccess-Control-Allow-Headers: DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization\r\nAccess-Control-Allow-Methods: GET, PUT, POST, DELETE, PATCH, OPTIONS\r\nAccess-Control-Allow-Origin: *\r\nAccess-Control-Max-Age: 1728000\r\nConnection: keep-alive\r\nContent-Type: text/html\r\nDate: Thu, 17 Sep 2026 09:22:14 GMT\r\nLocation: https://partenaire.covoiturage.beta.gouv.fr\r\nStrict-Transport-Security: max-age=31536000; includeSubDomains\r\n\r\n<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body>\r\n<center><h1>301 Moved Permanently</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n",
+      "ip": "51.159.8.177",
+      "timestamp": "2026-09-17T09:22:14.512635655Z",
+      "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: app.covoiturage.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://app.covoiturage.beta.gouv.fr/'",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/detect-ssl-issuer.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/ssl-issuer",
+      "template-id": "ssl-issuer",
+      "template-path": "/home/runner/nuclei-templates/ssl/detect-ssl-issuer.yaml",
+      "info": {
+        "name": "Detect SSL Certificate Issuer",
+        "author": [
+          "lingtren"
+        ],
+        "tags": [
+          "ssl",
+          "tls",
+          "discovery"
+        ],
+        "description": "Extract the issuer's organization from the target's certificate. Issuers are entities which sign and distribute certificates.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "ssl",
+      "host": "app.covoiturage.beta.gouv.fr",
+      "port": "443",
+      "matched-at": "app.covoiturage.beta.gouv.fr:443",
+      "extracted-results": [
+        "Let's Encrypt"
+      ],
+      "ip": "51.159.8.177",
+      "timestamp": "2026-09-17T09:22:45.980634485Z",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/ssl-dns-names.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/ssl-dns-names",
+      "template-id": "ssl-dns-names",
+      "template-path": "/home/runner/nuclei-templates/ssl/ssl-dns-names.yaml",
+      "info": {
+        "name": "SSL DNS Names",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "ssl",
+          "tls",
+          "vuln"
+        ],
+        "description": "Extract the Subject Alternative Name (SAN) from the target's certificate. SAN facilitates the usage of additional hostnames with the same certificate.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "ssl",
+      "host": "app.covoiturage.beta.gouv.fr",
+      "port": "443",
+      "matched-at": "app.covoiturage.beta.gouv.fr:443",
+      "extracted-results": [
+        "app.covoiturage.beta.gouv.fr"
+      ],
+      "ip": "51.159.8.177",
+      "timestamp": "2026-09-17T09:22:45.980817017Z",
+      "matcher-status": true
+    }
+  ]
+]
