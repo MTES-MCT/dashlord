@@ -1,0 +1,663 @@
+[
+  [
+    {
+      "template": "http/misconfiguration/cookies-without-secure.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/cookies-without-secure",
+      "template-id": "cookies-without-secure",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/cookies-without-secure.yaml",
+      "info": {
+        "name": "Cookies without Secure attribute - Detect",
+        "author": [
+          "vthiery",
+          "rj coleman"
+        ],
+        "tags": [
+          "misconfig",
+          "http",
+          "cookie",
+          "generic",
+          "vuln"
+        ],
+        "description": "Checks whether cookies in the HTTP response contain the Secure attribute. If the Secure flag is set, it means that the cookie can only be transmitted over HTTPS\n",
+        "impact": "Lack of Secure flag on cookies allows the cookie to be sent over unsecure HTTP, making it vulnerable to man-in-the-middle (MITM) attacks.\n",
+        "reference": [
+          "https://owasp.org/www-community/controls/SecureCookieAttribute"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1,
+          "verified": true
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-614"
+          ],
+          "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+        },
+        "remediation": "Ensure that all cookies are set with the Secure attribute to prevent MITM attacks.\n"
+      },
+      "type": "javascript",
+      "host": "camino.beta.gouv.fr",
+      "port": "443",
+      "url": "https://camino.beta.gouv.fr",
+      "matched-at": "camino.beta.gouv.fr",
+      "extracted-results": [
+        "SRV"
+      ],
+      "request": "content = template.http_all_headers\nconst setCookieLines = content\n    .split(/\\r\\n/)\n    .filter(line => line.trim().toLowerCase().startsWith('set-cookie:'***\nconst nonSecureCookies = setCookieLines.filter(line => !line.toLowerCase().includes('secure'));\nconst cookieNames = nonSecureCookies.map(line => {\n    const match = line.match(/set-cookie:***\n    return match ? match[1] : null;\n}).filter(Boolean);\ncookieNames",
+      "response": "[SRV]",
+      "timestamp": "2026-09-17T09:12:51.121069846Z",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/cookies-without-httponly.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/cookies-without-httponly",
+      "template-id": "cookies-without-httponly",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/cookies-without-httponly.yaml",
+      "info": {
+        "name": "Cookies without HttpOnly attribute - Detect",
+        "author": [
+          "rj coleman",
+          "mr.bobo hp"
+        ],
+        "tags": [
+          "misconfig",
+          "http",
+          "cookie",
+          "generic",
+          "vuln"
+        ],
+        "description": "Checks whether cookies in the HTTP response contain the HttpOnly attribute. If the HttpOnly flag is set, it means that the cookie is HTTP-only\n",
+        "impact": "Lack of HttpOnly flag on cookies increases the risk of client-side attacks, compromising user session security and data privacy.\n",
+        "reference": [
+          "https://owasp.org/www-community/HttpOnly"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1,
+          "verified": true
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-1004"
+          ],
+          "cvss-metrics": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+        },
+        "remediation": "Ensure that all cookies are set with the HttpOnly attribute to prevent client-side access.\n"
+      },
+      "type": "javascript",
+      "host": "camino.beta.gouv.fr",
+      "port": "443",
+      "url": "https://camino.beta.gouv.fr",
+      "matched-at": "camino.beta.gouv.fr",
+      "extracted-results": [
+        "SRV"
+      ],
+      "request": "content = template.http_all_headers\nconst setCookieLines = content\n    .split(/\\r\\n/)\n    .filter(line => line.trim().toLowerCase().startsWith('set-cookie:'***\n\nconst nonHttpOnlyCookies = setCookieLines.filter(line => !line.toLowerCase().includes('httponly'));\n\nconst cookieNames = nonHttpOnlyCookies.map(line => {\n    const match = line.match(/set-cookie:***\n    return match ? match[1] : null;\n}).filter(Boolean);\ncookieNames",
+      "response": "[SRV]",
+      "timestamp": "2026-09-17T09:12:51.204548908Z",
+      "matcher-status": true
+    },
+    {
+      "template": "http/technologies/waf-detect.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/waf-detect",
+      "template-id": "waf-detect",
+      "template-path": "/home/runner/nuclei-templates/http/technologies/waf-detect.yaml",
+      "info": {
+        "name": "WAF Detection",
+        "author": [
+          "dwisiswant0",
+          "lu4nx",
+          "s4e-io"
+        ],
+        "tags": [
+          "waf",
+          "tech",
+          "misc",
+          "discovery"
+        ],
+        "description": "A web application firewall was detected.",
+        "reference": [
+          "https://github.com/Ekultek/WhatWaf"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "matcher-name": "nginxgeneric",
+      "type": "http",
+      "host": "camino.beta.gouv.fr",
+      "port": "443",
+      "scheme": "https",
+      "url": "https://camino.beta.gouv.fr",
+      "matched-at": "https://camino.beta.gouv.fr",
+      "request": "POST / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nContent-Length: 27\r\nContent-Type: application/x-www-form-urlencoded\r\nAccept-Encoding: gzip\r\n\r\n_=<script>alert(1)</script>",
+      "response": "HTTP/1.1 405 Method Not Allowed\r\nContent-Length: 157\r\nContent-Type: text/html\r\nDate: Thu, 17 Sep 2026 09:12:58 GMT\r\nServer: nginx\r\nSet-Cookie: ***\r\nStrict-Transport-Security: max-age=63072000; includeSubDomains\r\n\r\n<html>\r\n<head><title>405 Not Allowed</title></head>\r\n<body>\r\n<center><h1>405 Not Allowed</h1></center>\r\n<hr><center>nginx/1.31.3</center>\r\n</body>\r\n</html>\r\n",
+      "ip": "194.5.170.186",
+      "timestamp": "2026-09-17T09:12:58.759484554Z",
+      "curl-command": "curl -X 'POST' -d '_=<script>alert(1)</script>' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Host: camino.beta.gouv.fr' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/miscellaneous/robots-txt.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/robots-txt",
+      "template-id": "robots-txt",
+      "template-path": "/home/runner/nuclei-templates/http/miscellaneous/robots-txt.yaml",
+      "info": {
+        "name": "robots.txt file",
+        "author": [
+          "caspergn",
+          "thezakman"
+        ],
+        "tags": [
+          "miscellaneous",
+          "misc",
+          "generic",
+          "vuln"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 2
+        }
+      },
+      "type": "http",
+      "host": "camino.beta.gouv.fr",
+      "port": "443",
+      "scheme": "https",
+      "url": "https://camino.beta.gouv.fr",
+      "matched-at": "https://camino.beta.gouv.fr/robots.txt",
+      "request": "GET /robots.txt HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nContent-Length: 26\r\nContent-Type: text/plain; charset=utf-8\r\nDate: Thu, 17 Sep 2026 09:13:07 GMT\r\nServer: nginx\r\nSet-Cookie: ***\r\nStrict-Transport-Security: max-age=63072000; includeSubDomains\r\n\r\nUser-agent: *\nDisallow: /\n",
+      "ip": "194.5.170.186",
+      "timestamp": "2026-09-17T09:13:07.142468182Z",
+      "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr/robots.txt'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani",
+          "celbahraoui",
+          "safejulian"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-693"
+          ]
+        }
+      },
+      "matcher-name": "cross-origin-opener-policy",
+      "type": "http",
+      "host": "camino.beta.gouv.fr",
+      "port": "443",
+      "scheme": "https",
+      "url": "https://camino.beta.gouv.fr",
+      "matched-at": "https://camino.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src 'self' blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://stats.data.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://stats.data.gouv.fr https://openmaptiles.data.gouv.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://data.geopf.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr https://mapsref.brgm.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr data.geopf.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr mapsref.brgm.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Thu, 17 Sep 2026 09:13:20 GMT\r\nEtag: \"6a9ee630-101e-gzip\"\r\nExpires: Thu, 17 Sep 2026 09:13:20 GMT\r\nLast-Modified: Mon, 07 Sep 2026 16:28:32 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: strict-origin-when-cross-origin\r\nServer: nginx\r\nSet-Cookie: ***\r\nStrict-Transport-Security: max-age=63072000; includeSubDomains\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-DlAujflH.js\"></script>\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/runtime-core.esm-bundler-B6XhSIwK.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/rolldown-runtime-QTnfLwEv.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/document-D1FG-tGy.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typescript-tools-CA-Ls5Q8.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/vue-tsx-utils-XkTjpU_i.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/useApi-CROJJdhE-DzAYRnEN.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/camino-router-link-B3dx7SvY.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/tag-B8lr0xrk.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/domaine-D6jE86kj.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/fiscalite-CyX28l5n.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/fr-BS5NvPvt.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/badge-WkPPjeSB.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/titre-statut-jsN3nyoZ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/legends-common-D2tizzEZ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/dsfr-input-BO_9Pcdr.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/http-CnBXMt9m.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/strings-BbzI4y0y.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/alert-n55LsK0P.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/functional-loader-BQlAHGKg.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/legend-Fp1-5eHq.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typeahead.module-CM7-PQbQ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typeahead-single-DOkllrFB.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/dsfr-button-C0Z303Uq.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/activitesTypesDocumentsTypes-C-lpBG1N.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/administrationsTitresTypes-RtEp_LYI.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/activitesTypesTitresTypes-tP5E20wW.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/titres-DJZW4dXw.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/dsfr-input-radio-DbtlrOeY.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/functional-popup-CYpIG-KM.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typeahead-multiple-BJa9KWAH.js\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/domaine-C8k5xa_I.css\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/functional-loader-BzoOeH-k.css\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/typeahead-BOGWA8kO.css\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-BiOkaSei.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
+      "ip": "194.5.170.186",
+      "timestamp": "2026-09-17T09:13:20.884113823Z",
+      "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani",
+          "celbahraoui",
+          "safejulian"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-693"
+          ]
+        }
+      },
+      "matcher-name": "cross-origin-resource-policy",
+      "type": "http",
+      "host": "camino.beta.gouv.fr",
+      "port": "443",
+      "scheme": "https",
+      "url": "https://camino.beta.gouv.fr",
+      "matched-at": "https://camino.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src 'self' blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://stats.data.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://stats.data.gouv.fr https://openmaptiles.data.gouv.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://data.geopf.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr https://mapsref.brgm.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr data.geopf.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr mapsref.brgm.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Thu, 17 Sep 2026 09:13:20 GMT\r\nEtag: \"6a9ee630-101e-gzip\"\r\nExpires: Thu, 17 Sep 2026 09:13:20 GMT\r\nLast-Modified: Mon, 07 Sep 2026 16:28:32 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: strict-origin-when-cross-origin\r\nServer: nginx\r\nSet-Cookie: ***\r\nStrict-Transport-Security: max-age=63072000; includeSubDomains\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-DlAujflH.js\"></script>\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/runtime-core.esm-bundler-B6XhSIwK.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/rolldown-runtime-QTnfLwEv.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/document-D1FG-tGy.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typescript-tools-CA-Ls5Q8.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/vue-tsx-utils-XkTjpU_i.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/useApi-CROJJdhE-DzAYRnEN.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/camino-router-link-B3dx7SvY.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/tag-B8lr0xrk.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/domaine-D6jE86kj.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/fiscalite-CyX28l5n.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/fr-BS5NvPvt.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/badge-WkPPjeSB.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/titre-statut-jsN3nyoZ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/legends-common-D2tizzEZ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/dsfr-input-BO_9Pcdr.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/http-CnBXMt9m.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/strings-BbzI4y0y.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/alert-n55LsK0P.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/functional-loader-BQlAHGKg.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/legend-Fp1-5eHq.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typeahead.module-CM7-PQbQ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typeahead-single-DOkllrFB.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/dsfr-button-C0Z303Uq.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/activitesTypesDocumentsTypes-C-lpBG1N.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/administrationsTitresTypes-RtEp_LYI.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/activitesTypesTitresTypes-tP5E20wW.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/titres-DJZW4dXw.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/dsfr-input-radio-DbtlrOeY.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/functional-popup-CYpIG-KM.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typeahead-multiple-BJa9KWAH.js\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/domaine-C8k5xa_I.css\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/functional-loader-BzoOeH-k.css\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/typeahead-BOGWA8kO.css\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-BiOkaSei.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
+      "ip": "194.5.170.186",
+      "timestamp": "2026-09-17T09:13:20.884915326Z",
+      "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani",
+          "celbahraoui",
+          "safejulian"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-693"
+          ]
+        }
+      },
+      "matcher-name": "x-permitted-cross-domain-policies",
+      "type": "http",
+      "host": "camino.beta.gouv.fr",
+      "port": "443",
+      "scheme": "https",
+      "url": "https://camino.beta.gouv.fr",
+      "matched-at": "https://camino.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src 'self' blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://stats.data.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://stats.data.gouv.fr https://openmaptiles.data.gouv.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://data.geopf.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr https://mapsref.brgm.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr data.geopf.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr mapsref.brgm.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Thu, 17 Sep 2026 09:13:20 GMT\r\nEtag: \"6a9ee630-101e-gzip\"\r\nExpires: Thu, 17 Sep 2026 09:13:20 GMT\r\nLast-Modified: Mon, 07 Sep 2026 16:28:32 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: strict-origin-when-cross-origin\r\nServer: nginx\r\nSet-Cookie: ***\r\nStrict-Transport-Security: max-age=63072000; includeSubDomains\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-DlAujflH.js\"></script>\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/runtime-core.esm-bundler-B6XhSIwK.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/rolldown-runtime-QTnfLwEv.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/document-D1FG-tGy.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typescript-tools-CA-Ls5Q8.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/vue-tsx-utils-XkTjpU_i.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/useApi-CROJJdhE-DzAYRnEN.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/camino-router-link-B3dx7SvY.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/tag-B8lr0xrk.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/domaine-D6jE86kj.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/fiscalite-CyX28l5n.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/fr-BS5NvPvt.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/badge-WkPPjeSB.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/titre-statut-jsN3nyoZ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/legends-common-D2tizzEZ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/dsfr-input-BO_9Pcdr.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/http-CnBXMt9m.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/strings-BbzI4y0y.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/alert-n55LsK0P.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/functional-loader-BQlAHGKg.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/legend-Fp1-5eHq.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typeahead.module-CM7-PQbQ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typeahead-single-DOkllrFB.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/dsfr-button-C0Z303Uq.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/activitesTypesDocumentsTypes-C-lpBG1N.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/administrationsTitresTypes-RtEp_LYI.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/activitesTypesTitresTypes-tP5E20wW.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/titres-DJZW4dXw.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/dsfr-input-radio-DbtlrOeY.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/functional-popup-CYpIG-KM.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typeahead-multiple-BJa9KWAH.js\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/domaine-C8k5xa_I.css\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/functional-loader-BzoOeH-k.css\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/typeahead-BOGWA8kO.css\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-BiOkaSei.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
+      "ip": "194.5.170.186",
+      "timestamp": "2026-09-17T09:13:20.885602618Z",
+      "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "http/misconfiguration/http-missing-security-headers.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/http-missing-security-headers",
+      "template-id": "http-missing-security-headers",
+      "template-path": "/home/runner/nuclei-templates/http/misconfiguration/http-missing-security-headers.yaml",
+      "info": {
+        "name": "HTTP Missing Security Headers",
+        "author": [
+          "socketz",
+          "geeknik",
+          "g4l1t0",
+          "convisoappsec",
+          "kurohost",
+          "dawid-czarnecki",
+          "forgedhallpass",
+          "jub0bs",
+          "userdehghani",
+          "celbahraoui",
+          "safejulian"
+        ],
+        "tags": [
+          "misconfig",
+          "headers",
+          "generic",
+          "vuln"
+        ],
+        "description": "This template searches for missing HTTP security headers. The impact of these missing headers can vary.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-693"
+          ]
+        }
+      },
+      "matcher-name": "cross-origin-embedder-policy",
+      "type": "http",
+      "host": "camino.beta.gouv.fr",
+      "port": "443",
+      "scheme": "https",
+      "url": "https://camino.beta.gouv.fr",
+      "matched-at": "https://camino.beta.gouv.fr",
+      "request": "GET / HTTP/1.1\r\nHost: camino.beta.gouv.fr\r\nUser-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)\r\nAccept: */*\r\nAccept-Language: en\r\nAccept-Encoding: gzip\r\n\r\n",
+      "response": "HTTP/1.1 200 OK\r\nCache-Control: max-age=0\r\nCache-Control: no-cache\r\nContent-Security-Policy: worker-src 'self' blob: ; child-src blob: ;default-src 'none'; script-src 'self' https://stats.data.gouv.fr 'sha256-quOgp+M4pH4TUco5DwHuTMyTY9AY+DOk4jkIMuGgSJs='; style-src 'self'; font-src 'self'; object-src 'self'; frame-src 'self'; connect-src 'self' https://stats.data.gouv.fr https://openmaptiles.data.gouv.fr https://*.tile.openstreetmap.org https://*.tile.openstreetmap.fr https://geoservices.brgm.fr https://data.geopf.fr https://datacarto.geoguyane.fr https://gisdata.cerema.fr https://services.data.shom.fr https://mapsref.brgm.fr; img-src data: 'self' tile.openstreetmap.org a.tile.openstreetmap.org b.tile.openstreetmap.org c.tile.openstreetmap.org tile.openstreetmap.fr a.tile.openstreetmap.fr b.tile.openstreetmap.fr c.tile.openstreetmap.fr geoservices.brgm.fr data.geopf.fr datacarto.geoguyane.fr gisdata.cerema.fr services.data.shom.fr mapsref.brgm.fr; base-uri 'none'; form-action 'self'; frame-ancestors 'none';\r\nContent-Type: text/html\r\nDate: Thu, 17 Sep 2026 09:13:20 GMT\r\nEtag: \"6a9ee630-101e-gzip\"\r\nExpires: Thu, 17 Sep 2026 09:13:20 GMT\r\nLast-Modified: Mon, 07 Sep 2026 16:28:32 GMT\r\nPermissions-Policy: accelerometer=(), attribution-reporting=(), autoplay=(), browsing-topics=(), camera=(), ch-device-memory=(), ch-downlink=(), ch-dpr=(), ch-ect=(), ch-prefers-color-scheme=(), ch-prefers-reduced-motion=(), ch-prefers-reduced-transparency=(), ch-rtt=(), ch-save-data=(), ch-ua=(), ch-ua-arch=(), ch-ua-bitness=(), ch-ua-form-factor=(), ch-ua-full-version=(), ch-ua-full-version-list=(), ch-ua-mobile=(), ch-ua-model=(), ch-ua-platform=(), ch-ua-platform-version=(), ch-ua-wow64=(), ch-viewport-height=(), ch-viewport-width=(), ch-width=(), clipboard-read=(), clipboard-write=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), identity-credentials-get=(), idle-detection=(), interest-cohort=(), join-ad-interest-group=(), keyboard-map=(), local-fonts=(), magnetometer=(), microphone=(), midi=(), otp-credentials=(), payment=(), picture-in-picture=(), private-aggregation=(), private-state-token-issuance=(), private-state-token-redemption=(), publickey-credentials-get=(), run-ad-auction=(), screen-wake-lock=(), serial=(), shared-storage=(), shared-storage-select-url=(), storage-access=(), sync-xhr=(), unload=(), usb=(), window-management=(), xr-spatial-tracking=()\r\nReferrer-Policy: strict-origin-when-cross-origin\r\nServer: nginx\r\nSet-Cookie: ***\r\nStrict-Transport-Security: max-age=63072000; includeSubDomains\r\nVary: Accept-Encoding\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: DENY\r\nX-Xss-Protection: 1; mode=block\r\n\r\n<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />\n    <link rel=\"shortcut icon\" href=\"./favicon.ico\" />\n    <title>Le cadastre minier numérique ouvert - Camino</title>\n    <script type=\"module\" crossorigin src=\"/assets/index-DlAujflH.js\"></script>\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/runtime-core.esm-bundler-B6XhSIwK.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/rolldown-runtime-QTnfLwEv.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/document-D1FG-tGy.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typescript-tools-CA-Ls5Q8.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/vue-tsx-utils-XkTjpU_i.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/useApi-CROJJdhE-DzAYRnEN.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/camino-router-link-B3dx7SvY.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/tag-B8lr0xrk.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/domaine-D6jE86kj.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/fiscalite-CyX28l5n.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/fr-BS5NvPvt.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/badge-WkPPjeSB.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/titre-statut-jsN3nyoZ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/legends-common-D2tizzEZ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/dsfr-input-BO_9Pcdr.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/http-CnBXMt9m.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/strings-BbzI4y0y.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/alert-n55LsK0P.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/functional-loader-BQlAHGKg.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/legend-Fp1-5eHq.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typeahead.module-CM7-PQbQ.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typeahead-single-DOkllrFB.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/dsfr-button-C0Z303Uq.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/activitesTypesDocumentsTypes-C-lpBG1N.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/administrationsTitresTypes-RtEp_LYI.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/activitesTypesTitresTypes-tP5E20wW.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/titres-DJZW4dXw.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/dsfr-input-radio-DbtlrOeY.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/functional-popup-CYpIG-KM.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/assets/typeahead-multiple-BJa9KWAH.js\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/domaine-C8k5xa_I.css\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/functional-loader-BzoOeH-k.css\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/typeahead-BOGWA8kO.css\">\n    <link rel=\"stylesheet\" crossorigin href=\"/assets/index-BiOkaSei.css\">\n  </head>\n\n  <body class=\"bg-bg\">\n    <noscript>\n      <h1>Camino</h1>\n      <h2>le cadastre minier numérique ouvert</h2>\n\n      <p>\n        Camino ouvre les projets miniers pour mieux les gérer. Il présente les caractéristiques des titres miniers sur une carte, détaille chaque étape de leur vie et expose les données publiques dans\n        un format ouvert et réutilisable.\n      </p>\n\n      <h3>Usages</h3>\n\n      <ul>\n        <li>Les <b>entreprises</b> gagnent en visibilité sur leur business et cela simplifie leurs démarches.</li>\n        <li>Les <b>citoyens</b> accèdent simplement aux informations publiques.</li>\n        <li>Les <b>agents publics</b> centralisent leurs contributions et bénéficient d’une vision partagée.</li>\n      </ul>\n    </noscript>\n    <app-root></app-root>\n    <script>\n      window.dsfr = { mode: 'vue' }\n    </script>\n  </body>\n</html>\n",
+      "ip": "194.5.170.186",
+      "timestamp": "2026-09-17T09:13:20.886307198Z",
+      "curl-command": "curl -X 'GET' -d '' -H 'Accept: */*' -H 'Accept-Language: en' -H 'User-Agent: Nuclei - Open-source project (github.com/projectdiscovery/nuclei)' 'https://camino.beta.gouv.fr'",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/dmarc-detect.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/dmarc-detect",
+      "template-id": "dmarc-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/dmarc-detect.yaml",
+      "info": {
+        "name": "DNS DMARC - Detect",
+        "author": [
+          "juliosmelo"
+        ],
+        "tags": [
+          "dns",
+          "dmarc",
+          "discovery"
+        ],
+        "description": "DNS DMARC information was detected.\n",
+        "reference": [
+          "https://dmarc.org/",
+          "https://dmarc.org/wiki/FAQ#Why_is_DMARC_important.3F"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ],
+          "cvss-metrics": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N"
+        }
+      },
+      "type": "dns",
+      "host": "camino.beta.gouv.fr",
+      "matched-at": "_dmarc.camino.beta.gouv.fr",
+      "extracted-results": [
+        "\"v=DMARC1; p=none; rua=mailto:camino@beta.gouv.fr; ruf=mailto:camino@beta.gouv.fr\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 3066\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;_dmarc.camino.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 3066\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;_dmarc.camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\n_dmarc.camino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=DMARC1; p=none; rua=mailto:camino@beta.gouv.fr; ruf=mailto:camino@beta.gouv.fr\"\n",
+      "timestamp": "2026-09-17T09:13:27.874606369Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/spf-record-detect.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/spf-record-detect",
+      "template-id": "spf-record-detect",
+      "template-path": "/home/runner/nuclei-templates/dns/spf-record-detect.yaml",
+      "info": {
+        "name": "SPF Record - Detection",
+        "author": [
+          "rxerium"
+        ],
+        "tags": [
+          "dns",
+          "spf",
+          "discovery"
+        ],
+        "description": "An SPF TXT record was detected\n",
+        "reference": [
+          "https://www.mimecast.com/content/how-to-create-an-spf-txt-record"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "dns",
+      "host": "camino.beta.gouv.fr",
+      "matched-at": "camino.beta.gouv.fr",
+      "extracted-results": [
+        "v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 62715\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 62715\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"\n",
+      "timestamp": "2026-09-17T09:13:27.874670664Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/txt-fingerprint.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/txt-fingerprint",
+      "template-id": "txt-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/txt-fingerprint.yaml",
+      "info": {
+        "name": "DNS TXT Record Detected",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "txt",
+          "discovery"
+        ],
+        "description": "A DNS TXT record was detected. The TXT record lets a domain admin leave notes on a DNS server.",
+        "reference": [
+          "https://www.netspi.com/blog/technical/network-penetration-testing/analyzing-dns-txt-records-to-fingerprint-service-providers/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "camino.beta.gouv.fr",
+      "matched-at": "camino.beta.gouv.fr",
+      "extracted-results": [
+        "\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"",
+        "\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\""
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 62715\n;; flags: rd ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t TXT\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 62715\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t TXT\n\n;; ANSWER SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"v=spf1 include:spf.mailjet.com include:_spf.mailjet.com include:_spf.alwaysdata.com ?all\"\ncamino.beta.gouv.fr.\t300\tIN\tTXT\t\"google-site-verification=FOPR91m7L5qsKnQmfVh7JgGByfygT-tYvzY7ZDPtSSg\"\n",
+      "timestamp": "2026-09-17T09:13:27.874829661Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/nameserver-fingerprint.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/nameserver-fingerprint",
+      "template-id": "nameserver-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/nameserver-fingerprint.yaml",
+      "info": {
+        "name": "NS Record Detection",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "ns",
+          "discovery"
+        ],
+        "description": "An NS record was detected. An NS record delegates a subdomain to a set of name servers.",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "camino.beta.gouv.fr",
+      "matched-at": "camino.beta.gouv.fr",
+      "extracted-results": [
+        "b.ns.developpement-durable.gouv.fr.",
+        "nsa.perf1.fr.",
+        "nsb.perf1.com.",
+        "a.ns.developpement-durable.gouv.fr.",
+        "nsc.perf1.com."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 38099\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t NS\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 38099\n;; flags: qr rd ra; QUERY: 1, ANSWER: 5, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 1232\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t NS\n\n;; ANSWER SECTION:\ncamino.beta.gouv.fr.\t24000\tIN\tNS\tb.ns.developpement-durable.gouv.fr.\ncamino.beta.gouv.fr.\t24000\tIN\tNS\tnsa.perf1.fr.\ncamino.beta.gouv.fr.\t24000\tIN\tNS\tnsb.perf1.com.\ncamino.beta.gouv.fr.\t24000\tIN\tNS\ta.ns.developpement-durable.gouv.fr.\ncamino.beta.gouv.fr.\t24000\tIN\tNS\tnsc.perf1.com.\n",
+      "timestamp": "2026-09-17T09:13:27.876550518Z",
+      "matcher-status": true
+    },
+    {
+      "template": "dns/mx-fingerprint.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/mx-fingerprint",
+      "template-id": "mx-fingerprint",
+      "template-path": "/home/runner/nuclei-templates/dns/mx-fingerprint.yaml",
+      "info": {
+        "name": "MX Record Detection",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "dns",
+          "mx",
+          "discovery"
+        ],
+        "description": "An MX record was detected. MX records direct emails to a mail exchange server.",
+        "reference": [
+          "https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/",
+          "https://mxtoolbox.com/"
+        ],
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        },
+        "classification": {
+          "cve-id": null,
+          "cwe-id": [
+            "cwe-200"
+          ]
+        }
+      },
+      "type": "dns",
+      "host": "camino.beta.gouv.fr",
+      "matched-at": "camino.beta.gouv.fr",
+      "extracted-results": [
+        "10 mx1.alwaysdata.com.",
+        "20 mx2.alwaysdata.com."
+      ],
+      "request": ";; opcode: QUERY, status: NOERROR, id: 11081\n;; flags: rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 4096\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t MX\n",
+      "response": ";; opcode: QUERY, status: NOERROR, id: 11081\n;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version 0; flags:; udp: 512\n\n;; QUESTION SECTION:\n;camino.beta.gouv.fr.\tIN\t MX\n\n;; ANSWER SECTION:\ncamino.beta.gouv.fr.\t300\tIN\tMX\t10 mx1.alwaysdata.com.\ncamino.beta.gouv.fr.\t300\tIN\tMX\t20 mx2.alwaysdata.com.\n",
+      "timestamp": "2026-09-17T09:13:27.921517102Z",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/detect-ssl-issuer.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/ssl-issuer",
+      "template-id": "ssl-issuer",
+      "template-path": "/home/runner/nuclei-templates/ssl/detect-ssl-issuer.yaml",
+      "info": {
+        "name": "Detect SSL Certificate Issuer",
+        "author": [
+          "lingtren"
+        ],
+        "tags": [
+          "ssl",
+          "tls",
+          "discovery"
+        ],
+        "description": "Extract the issuer's organization from the target's certificate. Issuers are entities which sign and distribute certificates.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "ssl",
+      "host": "camino.beta.gouv.fr",
+      "port": "443",
+      "matched-at": "camino.beta.gouv.fr:443",
+      "extracted-results": [
+        "Let's Encrypt"
+      ],
+      "ip": "194.5.170.186",
+      "timestamp": "2026-09-17T09:13:28.17800085Z",
+      "matcher-status": true
+    },
+    {
+      "template": "ssl/ssl-dns-names.yaml",
+      "template-url": "https://cloud.projectdiscovery.io/public/ssl-dns-names",
+      "template-id": "ssl-dns-names",
+      "template-path": "/home/runner/nuclei-templates/ssl/ssl-dns-names.yaml",
+      "info": {
+        "name": "SSL DNS Names",
+        "author": [
+          "pdteam"
+        ],
+        "tags": [
+          "ssl",
+          "tls",
+          "vuln"
+        ],
+        "description": "Extract the Subject Alternative Name (SAN) from the target's certificate. SAN facilitates the usage of additional hostnames with the same certificate.\n",
+        "severity": "info",
+        "metadata": {
+          "max-request": 1
+        }
+      },
+      "type": "ssl",
+      "host": "camino.beta.gouv.fr",
+      "port": "443",
+      "matched-at": "camino.beta.gouv.fr:443",
+      "extracted-results": [
+        "camino.beta.gouv.fr"
+      ],
+      "ip": "194.5.170.186",
+      "timestamp": "2026-09-17T09:13:28.178142996Z",
+      "matcher-status": true
+    }
+  ]
+]
