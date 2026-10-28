@@ -1,0 +1,262 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dashlord configuration file",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "tools": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "404": {
+          "type": "boolean",
+          "description": "Enable 404 detection"
+        },
+        "screenshot": {
+          "type": "boolean",
+          "description": "Enable screenshots"
+        },
+        "lighthouse": {
+          "type": "boolean",
+          "description": "Enable Lighthouse"
+        },
+        "testssl": {
+          "type": "boolean",
+          "description": "Enable testssl.sh"
+        },
+        "wappalyzer": {
+          "type": "boolean",
+          "description": "Enable wappalyzer scan"
+        },
+        "nuclei": {
+          "type": "boolean",
+          "description": "Enable nuclei scan"
+        },
+        "zap": {
+          "type": "boolean",
+          "description": "Enable ZaProxy baseline scan"
+        },
+        "thirdparties": {
+          "type": "boolean",
+          "description": "Enable thirdparties scan"
+        },
+        "dependabot": {
+          "type": "boolean",
+          "description": "Enable dependabot alerts"
+        },
+        "codescan": {
+          "type": "boolean",
+          "description": "Enable codescan alerts"
+        },
+        "updownio": {
+          "type": "boolean",
+          "description": "Enable updown.io metrics"
+        },
+        "http": {
+          "type": "boolean",
+          "description": "Enable Mozilla HTTP Observatory scan"
+        },
+        "nmap": {
+          "type": "boolean",
+          "description": "Enable nmapvuln scan"
+        },
+        "stats": {
+          "type": "boolean",
+          "description": "Enable /stats page check"
+        },
+        "trivy": {
+          "type": "boolean",
+          "description": "Enable trivy docker scans"
+        },
+        "declaration-a11y": {
+          "type": "boolean",
+          "description": "Enable declaration a11y scan"
+        },
+        "declaration-rgpd": {
+          "type": "boolean",
+          "description": "Enable declaration RGPD scan"
+        },
+        "betagouv": {
+          "type": "boolean",
+          "description": "Enable betagouv API data"
+        },
+        "ecoindex": {
+          "type": "boolean",
+          "description": "Enable ecoindex scan"
+        },
+        "sonarcloud": {
+          "type": "boolean",
+          "description": "Enable sonarcloud API results"
+        },
+        "budget_page": {
+          "type": "boolean",
+          "description": "Enable budget page detection"
+        },
+        "dsfr": {
+          "type": "boolean",
+          "description": "Enable DSFR detection"
+        },
+        "github_repository": {
+          "type": "boolean",
+          "description": "Enable GitHub repository detection (from betagouv data)"
+        }
+      },
+      "required": []
+    }
+  },
+  "patternProperties": {
+    "^_.*": {
+      "description": "Commentaire ou configuration interne (ex.ancres YAML)",
+      "type": [
+        "string",
+        "number",
+        "object",
+        "array",
+        "boolean",
+        "null"
+      ]
+    }
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Titre du DashLord"
+    },
+    "description": {
+      "type": "string",
+      "description": "Sous-titre du dashlord"
+    },
+    "entity": {
+      "type": "string",
+      "description": "Nom de votre entité"
+    },
+    "footer": {
+      "type": "string",
+      "description": "Message dans le footer"
+    },
+    "marianne": {
+      "type": "boolean",
+      "description": "Affiche ou pas la Marianne",
+      "default": false
+    },
+    "seo": {
+      "type": "boolean",
+      "description": "Active l'indexation par les moteurs de recherche",
+      "default": false
+    },
+    "loginUrl": {
+      "type": "string"
+    },
+    "matomoId": {
+      "type": "number"
+    },
+    "matomoUrl": {
+      "type": "string"
+    },
+    "operator": {
+      "type": "object",
+      "description": "Ajoute un logo d'opérateur. Soit une URL, soit un objet avec src et direction",
+      "properties": {
+        "logo": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "src": {
+                  "type": "string"
+                },
+                "direction": {
+                  "type": "string",
+                  "default": "horizontal",
+                  "enum": ["horizontal", "vertical"]
+                }
+              },
+              "required": ["src"]
+            }
+          ]
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": ["logo", "name"]
+    },
+    "updownioStatusPage": {
+      "type": "string",
+      "description": "URL de la page de status updown.io"
+    },
+    "updownioRecipients": {
+      "description": "Notifications pour les nouvelles alertes updown.io (action updown-init)",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "examples": ["email:987634908723", "slack_compatible:0979867"]
+      }
+    },
+    "tools": {
+      "$ref": "#/definitions/tools"
+    },
+    "columns": {
+      "$ref": "#/definitions/tools"
+    },
+    "urls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "betaId": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pages": {
+            "type": "array",
+            "description": "Additionnal URLs to scan with LightHouse",
+            "examples": ["/actu", "/partners"],
+            "items": {
+              "type": "string"
+            }
+          },
+          "repositories": {
+            "type": "array",
+            "description": "Repositories no GitHub",
+            "examples": ["SocialGouv/www", "SocialGouv/template"],
+            "items": {
+              "type": "string"
+            }
+          },
+          "docker": {
+            "type": "array",
+            "description": "Docker images to scan",
+            "examples": ["ghcr.io/socialgouv/www/app"],
+            "items": {
+              "type": "string"
+            }
+          },
+          "tools": {
+            "$ref": "#/definitions/tools"
+          }
+        },
+        "required": ["url"]
+      }
+    }
+  },
+  "required": ["title", "description", "entity", "tools", "urls"]
+}
